@@ -1,4 +1,4 @@
-# CSC207 Project Phase 0
+# CSC207 Project Phase 1
 
 ## How to Install The Required Libraries
 
