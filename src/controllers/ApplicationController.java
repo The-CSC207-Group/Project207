@@ -16,9 +16,9 @@ public class ApplicationController extends TerminalController {
 
     SystemManager systemManager;
 
-    public ApplicationController(DataMapperGateway<User> database) {
-        super(database);
-        this.systemManager = new SystemManager(database);
+    public ApplicationController(Controller parent) {
+        super(parent);
+        this.systemManager = new SystemManager(getDatabase());
     }
 
     @Override
@@ -49,9 +49,9 @@ public class ApplicationController extends TerminalController {
                 presenter.successMessage("Successfully signed in");
                 systemManager.addUserLog(username);
                 if (systemManager.isUserAdmin(username)) {
-                    new AdminController(database, new AdminManager(username, database)).run();
+                    new AdminController(new AdminManager(username, getDatabase())).run();
                 } else {
-                    new UserController(database, new UserManager(username, database)).run();
+                    new UserController(getDatabase(), new UserManager(username, getDatabase())).run();
                 }
             } else {
                 presenter.errorMessage("Failed to sign in");

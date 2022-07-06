@@ -1,4 +1,5 @@
 import controllers.ApplicationController;
+import controllers.Controller;
 import database.DataMapperGateway;
 import database.UserJsonDatabase;
 import entities.User;
@@ -6,6 +7,7 @@ import entities.User;
 public class Main {
     public static void main(String[] args) {
         DataMapperGateway<User> userDatabase = new UserJsonDatabase();
-        new ApplicationController(userDatabase).run();
+        Controller c = new Controller(userDatabase);
+
     }
 }

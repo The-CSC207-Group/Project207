@@ -3,6 +3,7 @@ package controllers;
 import database.DataMapperGateway;
 import entities.User;
 import useCases.AdminManager;
+import useCases.UserManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,8 @@ public class AdminController extends UserController {
 
     AdminManager adminManager;
 
-    public AdminController(DataMapperGateway<User> database, AdminManager adminManager) {
-        super(database, adminManager);
+    public AdminController(UserManager nManager) {
+        super(adminManager);
         this.adminManager = adminManager;
     }
 

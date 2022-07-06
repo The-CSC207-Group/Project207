@@ -11,8 +11,8 @@ public class UserController extends TerminalController {
 
     private final UserManager currentUserManager;
 
-    public UserController(DataMapperGateway<User> database, UserManager currentUser) {
-        super(database);
+    public UserController(Controller parent, UserManager currentUser) {
+        super(parent);
         this.currentUserManager = currentUser;
     }
 

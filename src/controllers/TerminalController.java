@@ -13,10 +13,20 @@ import java.util.List;
 abstract class TerminalController {
 
     ApplicationPresenter presenter = new TerminalPresenter();
-    DataMapperGateway<User> database;
+    Controller context;
 
-    public TerminalController(DataMapperGateway<User> database) {
-        this.database = database;
+    public TerminalController(Controller parent) {
+        this.context = parent;
+    }
+    Controller getContext(){
+        return context;
+    }
+    DataMapperGateway<User> getDatabase(){
+        return context.database;
+    }
+
+    void exit(){
+        context.exit();
     }
 
     public HashMap<String, Command> AllCommands() {
@@ -39,7 +49,7 @@ abstract class TerminalController {
     }
 
     void ProcessCommands() {
-        database.save();
+        getDatabase().save();
 
         boolean continued = true;
         while (continued) {
@@ -48,7 +58,7 @@ abstract class TerminalController {
                 presenter.errorMessage("Invalid command: " + command);
             } else {
                 continued = AllCommands().get(command).execute(new ArrayList<>());
-                database.save();
+                getDatabase().save();
             }
         }
     }
