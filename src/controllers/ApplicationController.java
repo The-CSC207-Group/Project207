@@ -2,7 +2,6 @@ package controllers;
 
 import database.DataMapperGateway;
 import entities.User;
-import useCases.AdminManager;
 import useCases.SystemManager;
 import useCases.UserManager;
 
@@ -26,7 +25,6 @@ public class ApplicationController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("sign in", new SignInCommand());
         commands.put("register", new RegisterCommand());
-        commands.put("exit", new ExitCommand());
         return commands;
     }
 
@@ -49,9 +47,9 @@ public class ApplicationController extends TerminalController {
                 presenter.successMessage("Successfully signed in");
                 systemManager.addUserLog(username);
                 if (systemManager.isUserAdmin(username)) {
-                    new AdminController(new AdminManager(username, getDatabase())).run();
+//                    new AdminController(new AdminManager(username, getDatabase())).run();
                 } else {
-                    new UserController(getDatabase(), new UserManager(username, getDatabase())).run();
+                    changeCurrentController(new UserController(getContext(), new UserManager(username, getDatabase())));
                 }
             } else {
                 presenter.errorMessage("Failed to sign in");
@@ -78,13 +76,15 @@ public class ApplicationController extends TerminalController {
             return true;
         }
     }
-
-    class ExitCommand implements Command {
+    class BackCommand implements Command{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            return false;
+            changeCurrentController(new ApplicationController(getContext()));
+            return true;
         }
     }
+
+
 
 }
