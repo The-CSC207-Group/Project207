@@ -1,7 +1,5 @@
 package controllers;
 
-import database.DataMapperGateway;
-import entities.User;
 import useCases.SystemManager;
 import useCases.UserManager;
 
@@ -11,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class ApplicationController extends TerminalController {
+public class SignInController extends TerminalController {
 
     SystemManager systemManager;
 
-    public ApplicationController(Controller parent) {
+    public SignInController(Context parent) {
         super(parent);
         this.systemManager = new SystemManager(getDatabase());
     }
@@ -80,7 +78,7 @@ public class ApplicationController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            changeCurrentController(new ApplicationController(getContext()));
+            changeCurrentController(new SignInController(getContext()));
             return true;
         }
     }
