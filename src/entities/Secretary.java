@@ -8,6 +8,4 @@ public class Secretary extends User {
         super(username, password, "secretary", contactInfo);
     }
 
-    // methods
-
 }
