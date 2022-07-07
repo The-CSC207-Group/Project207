@@ -7,15 +7,15 @@ public class Note {
     private ZonedDateTime dateNoted;
     private String header;
     private String body;
-    private Patient patient;
-    private Doctor doctor;
+    private String patientUserID;
+    private String doctorUserID;
 
-    public Note(ZonedDateTime dateNoted, String header, String body, Patient patient, Doctor doctor) {
+    public Note(ZonedDateTime dateNoted, String header, String body, String patientUserID, String doctorUserID) {
         this.dateNoted = dateNoted;
         this.header = header;
         this.body = body;
-        this. patient = patient;
-        this.doctor = doctor;
+        this.patientUserID = patientUserID;
+        this.doctorUserID = doctorUserID;
     }
 
     public ZonedDateTime getDateNoted() {
@@ -42,19 +42,19 @@ public class Note {
         this.body = body;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public String getPatientUserID() {
+        return patientUserID;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatientUserID(String patientUserID) {
+        this.patientUserID = patientUserID;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public String getDoctorUserID() {
+        return doctorUserID;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctorUserID(String doctorUserID) {
+        this.doctorUserID = doctorUserID;
     }
 }
