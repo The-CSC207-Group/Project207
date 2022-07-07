@@ -8,7 +8,7 @@ public class Contact {
 
     private String name;
     private String email;
-    private String phoneNumber;
+    private String phoneNumber; // phoneNumber expected to only include digits from 0 to 9.
     private String address;
     private Date birthday;
     private String emergencyContactName;
