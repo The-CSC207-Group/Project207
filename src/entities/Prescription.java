@@ -1,27 +1,22 @@
 package entities;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class Prescription extends Note {
 
-    // variables
+    private ZonedDateTime expiryDate;
 
-    private Date expiryDate;
-
-    // constructor
-
-    public Prescription(Date dateNoted, String header, String body, Patient patient, Doctor doctor, Date expiryDate) {
+    public Prescription(ZonedDateTime dateNoted, String header, String body, Patient patient, Doctor doctor,
+                        ZonedDateTime expiryDate) {
         super(dateNoted, header, body, patient, doctor);
         this.expiryDate = expiryDate;
     }
 
-    // methods
-
-    public Date getExpiryDate() {
+    public ZonedDateTime getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(ZonedDateTime expiryDate) {
         this.expiryDate = expiryDate;
     }
 }

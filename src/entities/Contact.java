@@ -1,14 +1,13 @@
 package entities;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class Contact {
 
-    // variables
-
     private String name;
     private String email;
-    private String phoneNumber; // phoneNumber expected to only include digits from 0 to 9.
+    private String phoneNumber;
     private String address;
     private Date birthday;
     private String emergencyContactName;
@@ -16,14 +15,12 @@ public class Contact {
     private String emergencyContactPhoneNumber;
     private String emergencyRelationship;
 
-    // constructor
-
     public Contact(String name, String email, String phoneNumber, String address, Date birthday,
                    String emergencyContactName, String emergencyContactEmail,
                    String emergencyContactPhoneNumber, String emergencyRelationship) {
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        setPhoneNumber(phoneNumber);
         this.address = address;
         this.birthday = birthday;
         this.emergencyContactName = emergencyContactName;
@@ -31,9 +28,6 @@ public class Contact {
         this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
         this.emergencyRelationship = emergencyRelationship;
     }
-
-    // methods
-
 
     public String getName() {
         return name;
@@ -56,7 +50,11 @@ public class Contact {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (Pattern.matches("^\\d{10}$", phoneNumber)) {
+            this.phoneNumber = phoneNumber;
+        } else {
+            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
+        }
     }
 
     public String getAddress() {

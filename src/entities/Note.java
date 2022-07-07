@@ -1,20 +1,16 @@
 package entities;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 public class Note {
 
-    // variables
-
-    private Date dateNoted;
+    private ZonedDateTime dateNoted;
     private String header;
     private String body;
     private Patient patient;
     private Doctor doctor;
 
-    // constructor
-
-    public Note(Date dateNoted, String header, String body, Patient patient, Doctor doctor) {
+    public Note(ZonedDateTime dateNoted, String header, String body, Patient patient, Doctor doctor) {
         this.dateNoted = dateNoted;
         this.header = header;
         this.body = body;
@@ -22,13 +18,11 @@ public class Note {
         this.doctor = doctor;
     }
 
-    // methods
-
-    public Date getDateNoted() {
+    public ZonedDateTime getDateNoted() {
         return dateNoted;
     }
 
-    public void setDateNoted(Date dateNoted) {
+    public void setDateNoted(ZonedDateTime dateNoted) {
         this.dateNoted = dateNoted;
     }
 
