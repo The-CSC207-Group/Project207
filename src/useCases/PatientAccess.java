@@ -22,4 +22,10 @@ public class PatientAccess {
     public ArrayList<Prescription> getActivePrescriptions(Patient patient){
 
     }
+    public ArrayList<Prescription> getPrescriptionsHistory(Patient patient){
+
+    }
+    public ArrayList<Appointments> getAppointments(Patient patient){
+
+    }
 }
