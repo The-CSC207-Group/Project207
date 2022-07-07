@@ -8,70 +8,76 @@ import java.util.ArrayList;
 
 public class User implements JsonSerializable<User> {
 
+    // variables
+
     private final String username;
     private String password;
-    private boolean banned = false;
-    private boolean admin;
+    private String type;
+    private Contact contactInfo;
     private ArrayList<Log> logs = new ArrayList<>();
 
-    public User(String username, String password, Boolean admin) {
+    // constructors
+
+    public User(String username, String password, String type, Contact contactInfo) {
         this.username = username;
         this.password = password;
-        this.admin = admin;
+        this.type = type;
+        this.contactInfo = contactInfo;
     }
 
     public User(JSONObject json) {
         this.username = (String) json.get("username");
         this.password = (String) json.get("password");
-        this.banned = (Boolean) json.get("banned");
-        this.admin = (Boolean) json.get("isAdmin");
+        this.type = (String) json.get("type");
+        this.contactInfo = (Contact) json.get("contactInfo");
         for (Object jsonLog : (JSONArray) json.get("logs")) {
             addLog(new Log((JSONObject) jsonLog));
         }
+    }
+
+    // methods
+
+    public String getUsername() {
+        return this.username;
     }
 
     public boolean comparePassword(String comparedPassword) {
         return this.password.equals(comparedPassword);
     }
 
-    public void addLog(Log log) {
-        this.logs.add(log);
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setBanned(boolean Banned) {
-        this.banned = Banned;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public String getType() {
+        return this.type;
     }
 
-    public String getUsername() {
-        return this.username;
+    public Contact getContactInfo() {
+        return contactInfo;
     }
 
-    public boolean isBanned() {
-        return this.banned;
-    }
-
-    public boolean isAdmin() {
-        return this.admin;
+    public void updateContactInfo(Contact contactInfo) {
+        this.contactInfo = contactInfo;
     }
 
     public ArrayList<Log> getLogs() {
         return this.logs;
     }
 
+    public void addLog(Log log) {
+        this.logs.add(log);
+    }
+
     public JSONObject encodeToJson() {
         JSONObject json = new JSONObject();
         json.put("username", username);
         json.put("password", password);
-        json.put("banned", banned);
-        json.put("isAdmin", admin);
+        json.put("type", type);
 
         JSONArray jsonLogs = new JSONArray();
         for (Log log : logs) {
