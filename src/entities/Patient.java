@@ -4,19 +4,13 @@ import java.util.ArrayList;
 
 public class Patient extends User {
 
-    // variables
-
     private String healthNumber;
     private ArrayList<Report> reports = new ArrayList<>();
-
-    // constructors
 
     public Patient(String username, String password, Contact contactInfo, String healthNumber) {
         super(username, password, "patient", contactInfo);
         this.healthNumber = healthNumber;
     }
-
-    // methods
 
     public String getHealthNumber() {
         return healthNumber;

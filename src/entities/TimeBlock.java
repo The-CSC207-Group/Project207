@@ -1,36 +1,30 @@
 package entities;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class TimeBlock {
 
-    // variables
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-
-    // constructor
-
-    public TimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
+    public TimeBlock(ZonedDateTime startTime, ZonedDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    // methods
-
-    public LocalDateTime getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 }

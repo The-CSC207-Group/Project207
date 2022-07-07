@@ -8,25 +8,21 @@ import java.util.ArrayList;
 
 public class User implements JsonSerializable<User> {
 
-    // variables
-
-    private final String username;
+    private final String userID;
     private String password;
     private String type;
     private Contact contactInfo;
     private ArrayList<Log> logs = new ArrayList<>();
 
-    // constructors
-
-    public User(String username, String password, String type, Contact contactInfo) {
-        this.username = username;
+    public User(String userID, String password, String type, Contact contactInfo) {
+        this.userID = userID;
         this.password = password;
         this.type = type;
         this.contactInfo = contactInfo;
     }
 
     public User(JSONObject json) {
-        this.username = (String) json.get("username");
+        this.userID = (String) json.get("userID");
         this.password = (String) json.get("password");
         this.type = (String) json.get("type");
         this.contactInfo = (Contact) json.get("contactInfo");
@@ -35,10 +31,8 @@ public class User implements JsonSerializable<User> {
         }
     }
 
-    // methods
-
-    public String getUsername() {
-        return this.username;
+    public String getUserID() {
+        return this.userID;
     }
 
     public boolean comparePassword(String comparedPassword) {
@@ -75,7 +69,7 @@ public class User implements JsonSerializable<User> {
 
     public JSONObject encodeToJson() {
         JSONObject json = new JSONObject();
-        json.put("username", username);
+        json.put("userID", userID);
         json.put("password", password);
         json.put("type", type);
 
