@@ -1,28 +1,25 @@
 # CSC207 Project Phase 1
 
-## How to Install The Required Libraries
+## How to Install The Required Dependencies
 
-All libraries should be stored in `207-Project/lib` folder.
+First make you are using java 11: In order to set up the SDK, click `Setup SDK` and then select `coretto-11` (if this
+option isn't available, you'll need to add the SDK to Intellij, there are some tutorials provided by intellij you can
+follow).
 
-To add the libraries go to:
+All libraries will be automatically installed by intellij when the program first starts up.
 
-`File > Project Structure > Libraries > + > java > locate the jar file in lib folder` 
-
-In order to set up the SDK, click `Setup SDK` and then select `coretto-11` (if this option isn't available, you'll need to add the SDK to Intellij, there are some tutorials provided by intellij you can follow).
+The xml metadata for the libraries can be found in: `.idea/libraries`
 
 ## How to Run The Program
 
-If you haven't done already, in Intellij right-click the `src` folder and mark it as source directory.
-
-The selected directory must be `207-project` in intellij to run the program properly.
-
-To start the program, Run Main. If errors occur, reference the "How to install required libraries" section above.
+To start the program, Run Main.
 
 Use `help` to see all possible commands at any point of the program. 
 
 ## Exiting The Program
 
-To properly close the program, use the built-in `exit` command that lives in the user login page in order to save data to the UserJsonDatabase. If you already logged into a user, use the `sign out` command and then use the `exit` command.
+To properly close the program, use the built-in `exit` command that lives in the user login page in order to save data
+to the UserJsonDatabase. If you already logged into a user, use the `sign out` command and then use the `exit` command.
 
 ## Command List:
 
