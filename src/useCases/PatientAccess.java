@@ -1,5 +1,13 @@
 package useCases;
 
+import database.DataMapperGateway;
+import entities.Patient;
+import entities.Prescription;
+import useCases.AppointmentManager;
+import entities.Appointment;
+
+import java.util.ArrayList;
+
 public class PatientAccess {
     private DataMapperGateway<Patient> patientDatabase;
     AppointmentManager appointmentManager;
@@ -25,7 +33,7 @@ public class PatientAccess {
     public ArrayList<Prescription> getPrescriptionsHistory(Patient patient){
 
     }
-    public ArrayList<Appointments> getAppointments(Patient patient){
+    public ArrayList<Appointment> getAppointments(Patient patient){
 
     }
 }

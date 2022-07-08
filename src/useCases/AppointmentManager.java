@@ -1,7 +1,12 @@
 package useCases;
 
+import entities.Doctor;
+import entities.Patient;
+import entities.Appointment;
+
+
 public class AppointmentManager {
-    public List<Appointment> Appointments;
+    public ArrayList<Appointment> Appointments;
 
     public boolean bookAppointment(Patient patient, Doctor doctor, DateTime startTime, DateTime endTime){
 
