@@ -3,13 +3,13 @@ package controllers;
 import database.DataMapperGateway;
 import entities.User;
 
-public class Controller {
-    TerminalController currentController = new ApplicationController(this);
+public class Context {
+    TerminalController currentController = new SignInController(this);
     boolean exit = false;
 
     DataMapperGateway<User> database;
 
-    public Controller(DataMapperGateway<User> database){
+    public Context(DataMapperGateway<User> database){
         this.database = database;
     }
     public void run(){

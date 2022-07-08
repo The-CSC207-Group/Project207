@@ -13,17 +13,17 @@ import java.util.List;
 abstract class TerminalController {
 
     ApplicationPresenter presenter = new TerminalPresenter();
-    Controller context;
+    Context context;
 
-    public TerminalController(Controller parent) {
+    public TerminalController(Context parent) {
         this.context = parent;
     }
 
-    Controller getContext() {
+    Context getContext() {
         return context;
     }
-    void changeCurrentController(TerminalController next){
-        context.changeController(next);
+    void changeCurrentController(TerminalController newController){
+        context.changeController(newController);
     }
 
     DataMapperGateway<User> getDatabase() {

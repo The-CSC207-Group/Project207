@@ -1,26 +1,21 @@
 package entities;
 
 import java.time.ZoneId;
+import java.util.regex.Pattern;
 
 public class Clinic {
 
-    // variables
-
     private String name;
-    private String phoneNumber; // phoneNumber expected to only include digits from 0 to 9.
+    private String phoneNumber;
     private String address;
     private ZoneId timeZone;
 
-    // constructor
-
     public Clinic(String name, String phoneNumber, String address, ZoneId timeZone) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
+        setPhoneNumber(phoneNumber);
         this.address = address;
         this.timeZone = timeZone;
     }
-
-    // methods
 
     public String getName() {
         return name;
@@ -30,12 +25,28 @@ public class Clinic {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
+    public CharSequence getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (Pattern.matches("^\\d{10}$", phoneNumber)) {
+            this.phoneNumber = phoneNumber;
+        } else {
+            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
+        }
+
+//        int n = phoneNumber.length();
+//        ArrayList<Boolean> allDigits = new ArrayList<>();
+//        for (int i = 0; i < n; i++) {
+//            allDigits.add(Character.isDigit(phoneNumber.charAt(i)));
+//        }
+//        if (!allDigits.contains(false)) {
+//            this.phoneNumber = phoneNumber;
+//        }
+//        else {
+//            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
+//        }
     }
 
     public String getAddress() {
