@@ -1,7 +1,5 @@
 package controllers;
 
-import database.DataMapperGateway;
-import entities.User;
 import useCases.UserManager;
 
 import java.util.*;
@@ -11,7 +9,7 @@ public class UserController extends TerminalController {
 
     private final UserManager currentUserManager;
 
-    public UserController(Controller parent, UserManager currentUser) {
+    public UserController(Context parent, UserManager currentUser) {
         super(parent);
         this.currentUserManager = currentUser;
     }
