@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class User implements JsonSerializable<User> {
 
-    private final String userID;
+    private final Integer userID;
     private String password;
     private String type;
     private Contact contactInfo;
     private ArrayList<Log> logs = new ArrayList<>();
 
-    public User(String userID, String password, String type, Contact contactInfo) {
+    public User(Integer userID, String password, String type, Contact contactInfo) {
         this.userID = userID;
         this.password = password;
         this.type = type;
@@ -22,7 +22,7 @@ public class User implements JsonSerializable<User> {
     }
 
     public User(JSONObject json) {
-        this.userID = (String) json.get("userID");
+        this.userID = (Integer) json.get("userID");
         this.password = (String) json.get("password");
         this.type = (String) json.get("type");
         this.contactInfo = (Contact) json.get("contactInfo");
@@ -31,7 +31,7 @@ public class User implements JsonSerializable<User> {
         }
     }
 
-    public String getUserID() {
+    public Integer getUserID() {
         return this.userID;
     }
 

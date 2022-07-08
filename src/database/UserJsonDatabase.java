@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class UserJsonDatabase implements DataMapperGateway<User> {
     private final String filename;
-    private HashMap<String, User> users = new HashMap<>();
+    private HashMap<Integer, User> users = new HashMap<>();
 
     public UserJsonDatabase() {
         this("./src/user_database.json");
@@ -48,7 +48,7 @@ public class UserJsonDatabase implements DataMapperGateway<User> {
         JSONArray json = new JSONArray(content);
         for (Object obj : json) {
             User userObj = new User((JSONObject) obj);
-            users.put(userObj.getUsername(), userObj);
+            users.put(userObj.getUserID(), userObj);
         }
 
     }
@@ -69,30 +69,30 @@ public class UserJsonDatabase implements DataMapperGateway<User> {
     }
 
     @Override
-    public HashSet<String> getAllIds() {
+    public HashSet<Integer> getAllIds() {
         return new HashSet<>(users.keySet());
     }
 
     @Override
-    public User get(String id) {
+    public User get(Integer id) {
         return users.get(id);
     }
 
     @Override
     public boolean add(User item) {
-        if (!getAllIds().contains(item.getUsername())) {
-            users.put(item.getUsername(), item);
+        if (!getAllIds().contains(item.getUserID())) {
+            users.put(item.getUserID(), item);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean remove(String id) {
+    public boolean remove(Integer id) {
         if (getAllIds().contains(id)) {
             users.remove(id);
             return true;
         }
-        return true;
+        return false;
     }
 }
