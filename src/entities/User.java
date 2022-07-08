@@ -1,37 +1,30 @@
 package entities;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
-public class User implements JsonSerializable<User> {
+public class User {
 
-    private final Integer userID;
+    private final int id;
+    private final String userID;
     private String password;
     private String type;
-    private Contact contactInfo;
-    private ArrayList<Log> logs = new ArrayList<>();
+    private int contactInfo;
+    private ArrayList<Integer> logs = new ArrayList<>();
 
-    public User(Integer userID, String password, String type, Contact contactInfo) {
+    public User(int id, String userID, String password, String type, int contactInfo) {
+        this.id = id;
         this.userID = userID;
         this.password = password;
         this.type = type;
         this.contactInfo = contactInfo;
     }
 
-    public User(JSONObject json) {
-        this.userID = (Integer) json.get("userID");
-        this.password = (String) json.get("password");
-        this.type = (String) json.get("type");
-        this.contactInfo = (Contact) json.get("contactInfo");
-        for (Object jsonLog : (JSONArray) json.get("logs")) {
-            addLog(new Log((JSONObject) jsonLog));
-        }
+    public int getId() {
+        return id;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return this.userID;
     }
 
@@ -51,34 +44,19 @@ public class User implements JsonSerializable<User> {
         return this.type;
     }
 
-    public Contact getContactInfo() {
+    public int getContactInfo() {
         return contactInfo;
     }
 
-    public void updateContactInfo(Contact contactInfo) {
+    public void updateContactInfo(int contactInfo) {
         this.contactInfo = contactInfo;
     }
 
-    public ArrayList<Log> getLogs() {
+    public ArrayList<Integer> getLogs() {
         return this.logs;
     }
 
-    public void addLog(Log log) {
-        this.logs.add(log);
-    }
-
-    public JSONObject encodeToJson() {
-        JSONObject json = new JSONObject();
-        json.put("userID", userID);
-        json.put("password", password);
-        json.put("type", type);
-
-        JSONArray jsonLogs = new JSONArray();
-        for (Log log : logs) {
-            jsonLogs.put(log.encodeToJson());
-        }
-        json.put("logs", jsonLogs);
-
-        return json;
+    public void addLog(Integer logID) {
+        this.logs.add(logID);
     }
 }

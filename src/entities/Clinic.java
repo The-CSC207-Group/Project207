@@ -5,16 +5,22 @@ import java.util.regex.Pattern;
 
 public class Clinic {
 
+    private final int id;
     private String name;
     private String phoneNumber;
     private String address;
     private ZoneId timeZone;
 
-    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone) {
+    public Clinic(int id, String name, String phoneNumber, String address, ZoneId timeZone) {
+        this.id = id;
         this.name = name;
         setPhoneNumber(phoneNumber);
         this.address = address;
         this.timeZone = timeZone;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

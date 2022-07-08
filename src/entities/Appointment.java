@@ -1,17 +1,21 @@
 package entities;
 
-import java.sql.Time;
-
 public class Appointment {
 
+    private final int id;
     private TimeBlock timeBlock;
-    private Doctor doctor;
-    private Patient patient;
+    private int doctorID;
+    private int patientID;
 
-    public Appointment(TimeBlock timeBlock, Doctor doctor, Patient patient) {
+    public Appointment(int id, TimeBlock timeBlock, int doctorID, int patientID) {
+        this.id = id;
         this.timeBlock = timeBlock;
-        this.doctor = doctor;
-        this.patient = patient;
+        this.doctorID = doctorID;
+        this.patientID = patientID;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public TimeBlock getTimeBlock() {
@@ -22,19 +26,19 @@ public class Appointment {
         this.timeBlock = timeBlock;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public int getDoctorID() {
+        return doctorID;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctorID(int doctorID) {
+        this.doctorID = doctorID;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public int getPatientID() {
+        return patientID;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
     }
 }

@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class Contact {
 
+    private final int id;
     private String name;
     private String email;
     private String phoneNumber;
@@ -15,9 +16,10 @@ public class Contact {
     private String emergencyContactPhoneNumber;
     private String emergencyRelationship;
 
-    public Contact(String name, String email, String phoneNumber, String address, Date birthday,
+    public Contact(int id, String name, String email, String phoneNumber, String address, Date birthday,
                    String emergencyContactName, String emergencyContactEmail,
                    String emergencyContactPhoneNumber, String emergencyRelationship) {
+        this.id = id;
         this.name = name;
         this.email = email;
         setPhoneNumber(phoneNumber);
@@ -27,6 +29,10 @@ public class Contact {
         this.emergencyContactEmail = emergencyContactEmail;
         this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
         this.emergencyRelationship = emergencyRelationship;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

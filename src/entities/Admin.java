@@ -2,7 +2,8 @@ package entities;
 
 public class Admin extends User {
 
-    public Admin(String username, String password, Contact contactInfo) {
-        super(username, password, "admin", contactInfo);
+    public Admin(int id, String username, String password, int contactInfo) {
+        super(id, username, password, "admin", contactInfo);
     }
+
 }
