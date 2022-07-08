@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Patient extends User {
 
     private String healthNumber;
-    private ArrayList<Report> reports = new ArrayList<>();
+    private ArrayList<Integer> reports = new ArrayList<>();
 
-    public Patient(String username, String password, Contact contactInfo, String healthNumber) {
-        super(username, password, "patient", contactInfo);
+    public Patient(int id, String username, String password, int contactInfo, String healthNumber) {
+        super(id, username, password, "patient", contactInfo);
         this.healthNumber = healthNumber;
     }
 
@@ -20,15 +20,15 @@ public class Patient extends User {
         this.healthNumber = healthNumber;
     }
 
-    public ArrayList<Report> getReports() {
+    public ArrayList<Integer> getReports() {
         return reports;
     }
 
-    public void addReport(Report report) {
-        this.reports.add(report);
+    public void addReport(int reportID) {
+        this.reports.add(reportID);
     }
 
-    public void removeReport(Report report) {
-        this.reports.remove(report);
+    public void removeReport(int reportID) {
+        this.reports.remove(reportID);
     }
 }

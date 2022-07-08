@@ -4,18 +4,24 @@ import java.time.ZonedDateTime;
 
 public class Note {
 
+    private final int id;
     private ZonedDateTime dateNoted;
     private String header;
     private String body;
-    private String patientUserID;
-    private String doctorUserID;
+    private int patientID;
+    private int doctorID;
 
-    public Note(ZonedDateTime dateNoted, String header, String body, String patientUserID, String doctorUserID) {
+    public Note(int id, ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID) {
+        this.id = id;
         this.dateNoted = dateNoted;
         this.header = header;
         this.body = body;
-        this.patientUserID = patientUserID;
-        this.doctorUserID = doctorUserID;
+        this.patientID = patientID;
+        this.doctorID = doctorID;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public ZonedDateTime getDateNoted() {
@@ -42,19 +48,19 @@ public class Note {
         this.body = body;
     }
 
-    public String getPatientUserID() {
-        return patientUserID;
+    public int getPatientID() {
+        return patientID;
     }
 
-    public void setPatientUserID(String patientUserID) {
-        this.patientUserID = patientUserID;
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
     }
 
-    public String getDoctorUserID() {
-        return doctorUserID;
+    public int getDoctorID() {
+        return doctorID;
     }
 
-    public void setDoctorUserID(String doctorUserID) {
-        this.doctorUserID = doctorUserID;
+    public void setDoctorID(int doctorID) {
+        this.doctorID = doctorID;
     }
 }

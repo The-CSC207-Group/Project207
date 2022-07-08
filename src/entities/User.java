@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 public class User implements JsonSerializable<User> {
 
+    private final int id;
     private final String userID;
     private String password;
     private String type;
-    private Contact contactInfo;
+    private int contactInfo;
     private ArrayList<Log> logs = new ArrayList<>();
 
-    public User(String userID, String password, String type, Contact contactInfo) {
+    public User(int id, String userID, String password, String type, int contactInfo) {
+        this.id = id;
         this.userID = userID;
         this.password = password;
         this.type = type;
@@ -22,13 +24,18 @@ public class User implements JsonSerializable<User> {
     }
 
     public User(JSONObject json) {
+        this.id = (int) json.get("id");
         this.userID = (String) json.get("userID");
         this.password = (String) json.get("password");
         this.type = (String) json.get("type");
-        this.contactInfo = (Contact) json.get("contactInfo");
+        this.contactInfo = (int) json.get("contactInfo");
         for (Object jsonLog : (JSONArray) json.get("logs")) {
             addLog(new Log((JSONObject) jsonLog));
         }
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUserID() {
@@ -51,11 +58,11 @@ public class User implements JsonSerializable<User> {
         return this.type;
     }
 
-    public Contact getContactInfo() {
+    public int getContactInfo() {
         return contactInfo;
     }
 
-    public void updateContactInfo(Contact contactInfo) {
+    public void updateContactInfo(int contactInfo) {
         this.contactInfo = contactInfo;
     }
 
@@ -72,6 +79,7 @@ public class User implements JsonSerializable<User> {
         json.put("userID", userID);
         json.put("password", password);
         json.put("type", type);
+        json.put("contact", contactInfo);
 
         JSONArray jsonLogs = new JSONArray();
         for (Log log : logs) {
