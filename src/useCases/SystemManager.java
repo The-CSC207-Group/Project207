@@ -1,58 +1,65 @@
 package useCases;
 
 import database.DataMapperGateway;
-import entities.Log;
-import entities.User;
+import entities.*;
 
-
-public class SystemManager {
+public class SystemManager{
 
     private final DataMapperGateway<User> database;
+
 
     public SystemManager(DataMapperGateway<User> database) {
         this.database = database;
     }
 
-    /**
-     *
-     * @param username username of user to be checked
-     * @return true if the user exists in the database and is an admin, false otherwise.
-     */
-    public boolean isUserAdmin(String username) {
-        User user = database.get(username);
-        return user != null && user.isAdmin();
-    }
 
     /**
      *
-     * @param username username of user to be checked
-     * @param password password of user to be checked
-     * @return true if user exists in the database and password provided matches that of the user in the database. false
-     * if the user doesn't exist in the database or the password of the user in the database doesn't match the password
-     * given.
+     * @param username username of the user to check the type
+     * @return string of the user type
      */
-    public boolean canSignIn(String username, String password) {
+    public String userType(int username){
         User user = database.get(username);
-        return user != null && user.comparePassword(password) && !user.isBanned();
+        return user.getType();
     }
 
     /**
-     * Add a log to the user associated with the username provided.
-     * @param username username of user who needs logs updated
+     *
+     * @param id new userID
+     * @param username new username
+     * @param password new password
+     * @param contactInfo contact info of user created
+     * @return true if account has been created, false if account failed to create
      */
-    public void addUserLog(String username){
-        User user = database.get(username);
-        user.addLog(new Log(user.getUsername() + " logged in"));
+    //  can we create any* user using this design? that would break the system?
+    public boolean createPatient(int id, String username, String password, int contactInfo, String healthNumber) {
+        Patient patient = new Patient(id, username, password, contactInfo, healthNumber);
+        database.add(patient);
+//        HashSet<Integer> all_ids  = database.getAllIds();
+//        return all_ids.contains(user.getUserID());
+        return true;
     }
 
     /**
-     * Add new user to the database.
-     * @param username username
-     * @param password password
-     * @return Return false if user with same username already exists in database, true otherwise.
+     *
+     * @param userID userID of the user trying to sign in
+     * @param password password of user trying to sign in
+     * @return boolean, true if user can sign in, false if not
      */
-    public boolean createUser(String username, String password) {
-        User newUser = new User(username, password, false);
-        return database.add(newUser);
+    // need to have a method that checks if user is banned
+    public boolean canSignIn(int userID, String password){
+        User user = database.get(userID);
+        return user != null && user.comparePassword(password);
     }
+
+    /**
+     *
+     * @param userID userID
+     * @return boolean, true if user is admin, false if anything else
+     */
+    public boolean isUserAdmin(int userID){
+        return userType(userID).equals("admin");
+    }
+
+
 }

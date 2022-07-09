@@ -3,29 +3,21 @@ package entities;
 import java.util.ArrayList;
 
 
-public class User {
+public abstract class User extends JsonSerializable {
 
-    private final int id;
-    private final String userID;
+    private final String username;
     private String password;
-    private String type;
-    private int contactInfo;
+    private int contactInfoId;
     private ArrayList<Integer> logs = new ArrayList<>();
 
-    public User(int id, String userID, String password, String type, int contactInfo) {
-        this.id = id;
-        this.userID = userID;
+    public User(String username, String password, int contactInfoId) {
+        this.username = username;
         this.password = password;
-        this.type = type;
-        this.contactInfo = contactInfo;
+        this.contactInfoId = contactInfoId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getUserID() {
-        return this.userID;
+    public String getUsername() {
+        return this.username;
     }
 
     public boolean comparePassword(String comparedPassword) {
@@ -36,20 +28,12 @@ public class User {
         this.password = password;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public int getContactInfo() {
-        return contactInfo;
+    public int getContactInfoId() {
+        return contactInfoId;
     }
 
     public void updateContactInfo(int contactInfo) {
-        this.contactInfo = contactInfo;
+        this.contactInfoId = contactInfo;
     }
 
     public ArrayList<Integer> getLogs() {

@@ -2,26 +2,20 @@ package entities;
 
 import java.time.ZonedDateTime;
 
-public class Note {
+public class Note extends JsonSerializable {
 
-    private final int id;
     private ZonedDateTime dateNoted;
     private String header;
     private String body;
     private int patientID;
     private int doctorID;
 
-    public Note(int id, ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID) {
-        this.id = id;
+    public Note(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID) {
         this.dateNoted = dateNoted;
         this.header = header;
         this.body = body;
         this.patientID = patientID;
         this.doctorID = doctorID;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public ZonedDateTime getDateNoted() {

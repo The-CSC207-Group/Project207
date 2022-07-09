@@ -1,21 +1,15 @@
 package entities;
 
-public class Appointment {
+public class Appointment extends JsonSerializable {
 
-    private final int id;
     private TimeBlock timeBlock;
     private int doctorID;
     private int patientID;
 
-    public Appointment(int id, TimeBlock timeBlock, int doctorID, int patientID) {
-        this.id = id;
+    public Appointment(TimeBlock timeBlock, int doctorID, int patientID) {
         this.timeBlock = timeBlock;
         this.doctorID = doctorID;
         this.patientID = patientID;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public TimeBlock getTimeBlock() {

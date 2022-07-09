@@ -2,20 +2,14 @@ package entities;
 
 import java.time.LocalDateTime;
 
-public class Log {
+public class Log extends JsonSerializable {
 
-    private final int id;
     private final LocalDateTime time;
     private final String message;
 
-    public Log(int id, String message) {
-        this.id = id;
+    public Log(String message) {
         this.time = LocalDateTime.now();
         this.message = message;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public LocalDateTime getTime() {

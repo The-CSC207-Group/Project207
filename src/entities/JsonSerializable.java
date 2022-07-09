@@ -1,8 +1,14 @@
 package entities;
 
-import org.json.*;
 
-public interface JsonSerializable<T> {
+public abstract class JsonSerializable {
+    private Integer id = null;
 
-    public JSONObject encodeToJson();
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

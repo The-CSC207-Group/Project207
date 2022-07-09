@@ -3,24 +3,18 @@ package entities;
 import java.time.ZoneId;
 import java.util.regex.Pattern;
 
-public class Clinic {
+public class Clinic extends JsonSerializable {
 
-    private final int id;
     private String name;
     private String phoneNumber;
     private String address;
     private ZoneId timeZone;
 
-    public Clinic(int id, String name, String phoneNumber, String address, ZoneId timeZone) {
-        this.id = id;
+    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone) {
         this.name = name;
         setPhoneNumber(phoneNumber);
         this.address = address;
         this.timeZone = timeZone;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
