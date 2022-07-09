@@ -32,8 +32,8 @@ public class SystemManager{
      * @return true if account has been created, false if account failed to create
      */
     //  can we create any* user using this design? that would break the system?
-    public boolean createPatient(int id, String username, String password, int contactInfo, String healthNumber) {
-        Patient patient = new Patient(id, username, password, contactInfo, healthNumber);
+    public boolean createPatient(String username, String password, int contactInfo, String healthNumber) {
+        Patient patient = new Patient(username, password, contactInfo, healthNumber);
         database.add(patient);
 //        HashSet<Integer> all_ids  = database.getAllIds();
 //        return all_ids.contains(user.getUserID());
