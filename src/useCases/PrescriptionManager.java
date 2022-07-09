@@ -55,9 +55,9 @@ public class PrescriptionManager {
     }
 
 
-    public void createPrescription(int id, ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+    public void createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
                                    ZonedDateTime expiryDate){
-        Prescription prescription = new Prescription(id, dateNoted, header, body, patientID, doctorID, expiryDate);
+        Prescription prescription = new Prescription(dateNoted, header, body, patientID, doctorID, expiryDate);
         prescriptionsDatabase.add(prescription);
     }
     public void removePrescription(Integer prescriptionId){

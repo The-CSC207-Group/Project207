@@ -19,8 +19,8 @@ public class LogManager {
     public void deleteLog(Integer id){
         logDatabase.remove(id);
     }
-    public void addLog(Integer id, String message){
-        logDatabase.add(new Log(id, message));
+    public void addLog(String message){
+        logDatabase.add(new Log(message));
     }
 
 
