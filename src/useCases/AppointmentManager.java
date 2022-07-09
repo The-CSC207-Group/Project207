@@ -21,8 +21,8 @@ public class AppointmentManager {
     }
     public boolean bookAppointment(Patient patient, Doctor doctor, ZonedDateTime startTime, ZonedDateTime endTime){
         TimeBlock newTime = new TimeBlock(startTime, endTime);
-        Appointment newApp = new Appointment(idforappointment????, newTime, doctor.getId(), patient.getId());
-        this.appointmentDatabase.add(newApp);
+        //Appointment newApp = new Appointment(idforappointment????, newTime, doctor.getId(), patient.getId());
+        //this.appointmentDatabase.add(newApp);
 
         return true;
     }
@@ -52,7 +52,7 @@ public class AppointmentManager {
         }
         return doctorAppointments;
     }
-    }
+
     public ArrayList<Appointment> getAllAppointments(){
         HashSet<Integer> allAppointmentIds = appointmentDatabase.getAllIds();
         ArrayList<Appointment> allAppointments = new ArrayList<>();
@@ -65,6 +65,6 @@ public class AppointmentManager {
         return doctor.getAvailability();
     }
     public void changeAvailability(Doctor doctor){
-        doctor.
+
     }
 }
