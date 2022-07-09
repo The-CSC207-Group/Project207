@@ -36,8 +36,8 @@ public class UserJsonDatabase implements DataMapperGateway<User> {
     }
 
     @Override
-    public boolean add(User item) {
-        return false;
+    public Integer add(User item) {
+        return null;
     }
 
     @Override
