@@ -3,6 +3,7 @@ package database;
 import entities.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,7 +16,6 @@ import java.util.HashSet;
 
 public class UserJsonDatabase implements DataMapperGateway<User> {
     private final String filename;
-    private HashMap<Integer, User> users = new HashMap<>();
 
     public UserJsonDatabase() {
         this("./src/user_database.json");
@@ -23,76 +23,30 @@ public class UserJsonDatabase implements DataMapperGateway<User> {
 
     public UserJsonDatabase(String filename) {
         this.filename = filename;
-        load();
-    }
-
-    private void load() {
-        Path filePath = Path.of(filename);
-        String content;
-        try {
-            boolean created = filePath.toFile().createNewFile();
-            if (created) {
-                content = "[]";
-            } else {
-                content = Files.readString(filePath);
-                if (content.isBlank()){
-                    content = "[]";
-                }
-            }
-        } catch (IOException e) {
-            // this will only throw on malfunctioning systems or
-            // if 207-Project isn't the root folder (cwd) of the current intellij window.
-            throw new RuntimeException(e);
-        }
-
-        JSONArray json = new JSONArray(content);
-        for (Object obj : json) {
-            User userObj = new User((JSONObject) obj);
-            users.put(userObj.getUserID(), userObj);
-        }
-
-    }
-
-    @Override
-    public void save() {
-        JSONArray json = new JSONArray();
-        for (User user : users.values()) {
-            json.put(user.encodeToJson());
-        }
-
-        try (PrintWriter out = new PrintWriter(filename)) {
-            out.println(json.toString(2));
-        } catch (FileNotFoundException e) {
-            // this throw should not execute since a file is created at startup
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
     public HashSet<Integer> getAllIds() {
-        return new HashSet<>(users.keySet());
+        return null;
     }
 
     @Override
     public User get(Integer id) {
-        return users.get(id);
+        return null;
     }
 
     @Override
     public boolean add(User item) {
-        if (!getAllIds().contains(item.getUserID())) {
-            users.put(item.getUserID(), item);
-            return true;
-        }
         return false;
     }
 
     @Override
     public boolean remove(Integer id) {
-        if (getAllIds().contains(id)) {
-            users.remove(id);
-            return true;
-        }
         return false;
+    }
+
+    @Override
+    public void save() {
+
     }
 }

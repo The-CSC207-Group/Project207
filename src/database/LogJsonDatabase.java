@@ -10,7 +10,7 @@ public class LogJsonDatabase implements DataMapperGateway<Log>{
     public LogJsonDatabase() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        System.out.println(gson.toJson(new Log("Hello, World!")));
+        System.out.println(gson.toJson(new Log(12, "Hello, World!")));
     }
 
     public static void main(String[] args) {
