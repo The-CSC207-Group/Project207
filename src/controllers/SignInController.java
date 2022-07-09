@@ -1,7 +1,6 @@
 package controllers;
 
 import useCases.SystemManager;
-import useCases.UserManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,11 +64,11 @@ public class SignInController extends TerminalController {
             String username = responses.get(fields.get(0));
             String password = responses.get(fields.get(1));
 
-            if (systemManager.createUser(username, password)) {
-                presenter.successMessage("User " + username + " has been created");
-            } else {
-                presenter.errorMessage("Failed to create user: Username already exists");
-            }
+//            if (systemManager.createUser(username, password)) {
+//                presenter.successMessage("User " + username + " has been created");
+//            } else {
+//                presenter.errorMessage("Failed to create user: Username already exists");
+//            }
 
             return true;
         }
