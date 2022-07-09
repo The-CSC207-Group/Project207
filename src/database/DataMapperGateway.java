@@ -16,10 +16,11 @@ public interface DataMapperGateway<T> {
      */
     T get(Integer id);
 
+
     /**
      * Adds a new object of type T to the database.
      * @param item The item to add to the database.
-     * @return None is returned if cannot add item to database.
+     * @return null is returned if cannot add item to database.
      *         Otherwise, an integer id is returned.
      */
     Integer add(T item);
