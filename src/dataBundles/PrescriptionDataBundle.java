@@ -11,42 +11,32 @@ import java.util.Date;
  * Class solely to bundle patient data and send it around to different controllers
  */
 public class PrescriptionDataBundle {
-    private ZonedDateTime expiryDate;
-    private ZonedDateTime dateNoted;
-    private String header;
-    private String body;
-    private Integer patient;
-    private Integer doctor;
+    private Prescription prescription;
     public PrescriptionDataBundle(Prescription prescription){
-        this.expiryDate = prescription.getExpiryDate();
-        this.dateNoted = prescription.getDateNoted();
-        this.header = prescription.getHeader();
-        this.body = prescription.getBody();
-        this.patient = prescription.getPatientID();
-        this.doctor = prescription.getDoctorID();
+        this.prescription = prescription;
     }
 
     public ZonedDateTime getDateNoted() {
-        return dateNoted;
+        return prescription.getDateNoted();
     }
 
     public ZonedDateTime getExpiryDate() {
-        return expiryDate;
+        return prescription.getExpiryDate();
     }
 
     public Integer getPatient() {
-        return patient;
+        return prescription.getPatientID();
     }
 
     public Integer getDoctor() {
-        return doctor;
+        return prescription.getDoctorID();
     }
 
     public String getBody() {
-        return body;
+        return prescription.getBody();
     }
 
     public String getHeader() {
-        return header;
+        return prescription.getHeader();
     }
 }
