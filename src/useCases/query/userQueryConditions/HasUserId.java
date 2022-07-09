@@ -5,7 +5,8 @@ import useCases.query.QueryCondition;
 
 public class HasUserId extends QueryCondition {
     String id;
-    public HasUserId(String id){
+    public HasUserId(String id, Boolean desiredStatus){
+        super(desiredStatus);
         this.id = id;
     }
 
