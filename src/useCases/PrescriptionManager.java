@@ -1,0 +1,54 @@
+package useCases;
+
+import dataBundles.PrescriptionDataBundle;
+import database.DataMapperGateway;
+import entities.Prescription;
+import useCases.query.NoteQueryConditions.IsUsersNote;
+import useCases.query.Query;
+import useCases.query.QueryCondition;
+import useCases.query.prescriptionQueryConditions.IsActivePrescription;
+
+import java.time.ZonedDateTime;
+import java.util.*;
+
+public class PrescriptionManager {
+    DataMapperGateway<Prescription> prescriptionsDatabase;
+
+    //    public ArrayList<PrescriptionDataBundle> getPatientDataByUserId(String userId){
+//        HashSet<Integer> prescriptionIds = prescriptionsDatabase.getAllIds();
+//        ArrayList<PrescriptionDataBundle> res = new ArrayList<>();
+//        for (Integer prescriptionId : prescriptionIds) {
+//            Prescription currPrescription = prescriptionsDatabase.get(prescriptionId);
+//            String prescriptionUserID = currPrescription.getPatient().getUsername();
+//
+//            if (!isPatientWithId(userId, prescriptionUserID)) {return null;}
+//            if (!isActivePrescription(currPrescription)) {return null;}
+//
+//            res.add(new PrescriptionDataBundle(currPrescription));
+//        }
+//        return res;
+//    }
+    public ArrayList<PrescriptionDataBundle> getPatientDataByUserId(Integer userId) {
+        ArrayList<QueryCondition> conditions = new ArrayList<>();
+        conditions.add(new IsActivePrescription());
+        conditions.add(new IsUsersNote(userId));
+        ArrayList<Prescription> queryResults = new Query<Prescription>().execute(
+                prescriptionsDatabase, conditions);
+        ArrayList<PrescriptionDataBundle> res = new ArrayList<>();
+        for (Prescription prescription: queryResults){
+            res.add(new PrescriptionDataBundle(prescription));
+        }
+        return res;
+    }
+
+
+    public void createPrescription(int id, ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+                                   ZonedDateTime expiryDate){
+        Prescription prescription = new Prescription(id, dateNoted, header, body, patientID, doctorID, expiryDate);
+        prescriptionsDatabase.add(prescription);
+    }
+    public void removePrescription(Integer prescriptionId){
+        prescriptionsDatabase.remove(prescriptionId);
+    }
+
+}
