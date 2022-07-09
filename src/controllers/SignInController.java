@@ -22,7 +22,7 @@ public class SignInController extends TerminalController {
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("sign in", new SignInCommand());
-        commands.put("register", new RegisterCommand());
+//        commands.put("register", new RegisterCommand());
         return commands;
     }
 
@@ -37,21 +37,21 @@ public class SignInController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             List<String> fields = Arrays.asList("username", "password");
-            HashMap<String, String> responses = presenter.promptPopup(fields);
-            String username = responses.get(fields.get(0));
-            String password = responses.get(fields.get(1));
-
-            if (systemManager.canSignIn(username, password)) {
-                presenter.successMessage("Successfully signed in");
-                systemManager.addUserLog(username);
-                if (systemManager.isUserAdmin(username)) {
-//                    new AdminController(new AdminManager(username, getDatabase())).run();
-                } else {
-                    changeCurrentController(new UserController(getContext(), new UserManager(username, getDatabase())));
-                }
-            } else {
-                presenter.errorMessage("Failed to sign in");
-            }
+//            HashMap<String, String> responses = presenter.promptPopup(fields);
+//            String username = responses.get(fields.get(0));
+//            String password = responses.get(fields.get(1));
+//
+//            if (systemManager.canSignIn(username, password)) {
+//                presenter.successMessage("Successfully signed in");
+////                systemManager.addUserLog(username);
+//                if (systemManager.isUserAdmin(username)) {
+////                    new AdminController(new AdminManager(username, getDatabase())).run();
+//                } else {
+//                    changeCurrentController(new ler(getContext(), new UserManager(username, getDatabase())));
+//                }
+//            } else {
+//                presenter.errorMessage("Failed to sign in");
+//            }
             return true;
         }
     }
