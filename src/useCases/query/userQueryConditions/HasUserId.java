@@ -10,7 +10,7 @@ public class HasUserId extends QueryCondition {
     }
 
     public <T> boolean isTrue(T item) {
-        return ((User)item).getUserID().equals(this.id);
+        return ((User)item).getUsername().equals(this.id);
     }
 
 }

@@ -7,8 +7,8 @@ public class Patient extends User {
     private String healthNumber;
     private ArrayList<Integer> reports = new ArrayList<>();
 
-    public Patient(int id, String username, String password, int contactInfo, String healthNumber) {
-        super(id, username, password, "patient", contactInfo);
+    public Patient(String username, String password, int contactInfo, String healthNumber) {
+        super(username, password, contactInfo);
         this.healthNumber = healthNumber;
     }
 

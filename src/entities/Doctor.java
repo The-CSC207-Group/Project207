@@ -7,7 +7,7 @@ public class Doctor extends User {
     private ArrayList<TimeBlock> availability = new ArrayList<>();
 
     public Doctor(int id, String username, String password, int contactInfo) {
-        super(id, username, password, "doctor", contactInfo);
+        super(username, password, contactInfo);
     }
 
     public ArrayList<TimeBlock> getAvailability() {
