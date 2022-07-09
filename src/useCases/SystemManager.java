@@ -1,10 +1,7 @@
 package useCases;
 
 import database.DataMapperGateway;
-import database.UserJsonDatabase;
 import entities.*;
-
-import java.util.HashSet;
 
 public class SystemManager{
 
@@ -31,14 +28,13 @@ public class SystemManager{
      * @param id new userID
      * @param username new username
      * @param password new password
-     * @param type type of user created
      * @param contactInfo contact info of user created
      * @return true if account has been created, false if account failed to create
      */
     //  can we create any* user using this design? that would break the system?
-    public boolean createUser(int id, String username, String password, String type, int contactInfo) {
-        User user = new User(id, username, password, type, contactInfo);
-        database.add(user);
+    public boolean createPatient(int id, String username, String password, int contactInfo, String healthNumber) {
+        Patient patient = new Patient(id, username, password, contactInfo, healthNumber);
+        database.add(patient);
 //        HashSet<Integer> all_ids  = database.getAllIds();
 //        return all_ids.contains(user.getUserID());
         return true;
