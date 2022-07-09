@@ -32,19 +32,19 @@ public class PrescriptionManager {
 //        return res;
 //    }
     public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer userId) {
-        ArrayList<QueryCondition> conditions = new ArrayList<>();
-        conditions.add(new IsActivePrescription(true));
-        conditions.add(new IsUsersNote(userId, true));
+        ArrayList<QueryCondition<Prescription>> conditions = new ArrayList<>();
+        conditions.add(new IsActivePrescription<>(true));
+        conditions.add(new IsUsersNote<>(userId, true));
         return getPrescriptionDataBundles(conditions);
     }
     public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {
-        ArrayList<QueryCondition> conditions = new ArrayList<>();
-        conditions.add(new IsUsersNote(userId, true));
-        conditions.add(new IsActivePrescription(false));
+        ArrayList<QueryCondition<Prescription>> conditions = new ArrayList<>();
+        conditions.add(new IsUsersNote<>(userId, true));
+        conditions.add(new IsActivePrescription<>(false));
         return getPrescriptionDataBundles(conditions);
     }
 
-    private ArrayList<PrescriptionDataBundle> getPrescriptionDataBundles(ArrayList<QueryCondition> conditions) {
+    private ArrayList<PrescriptionDataBundle> getPrescriptionDataBundles(ArrayList<QueryCondition<Prescription>> conditions) {
         ArrayList<Prescription> queryResults = new Query<Prescription>().returnAllMeetingConditions(
                 prescriptionsDatabase, conditions);
         ArrayList<PrescriptionDataBundle> res = new ArrayList<>();

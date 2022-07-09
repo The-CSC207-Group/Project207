@@ -26,8 +26,8 @@ public class LogManager {
 
     public ArrayList<LogDataBundle> getLogsByUserId(String userId){
         Query<Log> query = new Query<>();
-        ArrayList<QueryCondition> queryConditions = new ArrayList<>();
-        queryConditions.add(new LogBelongsToSpecifiedUser(userId, true));
+        ArrayList<QueryCondition<Log>> queryConditions = new ArrayList<>();
+        queryConditions.add(new LogBelongsToSpecifiedUser<>(userId, true));
         ArrayList<Log> logs = query.returnAllMeetingConditions(logDatabase, queryConditions);
         return convertLogToLogDataBundleInArraylist(logs);
     }

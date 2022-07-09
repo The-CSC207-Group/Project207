@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class Query<T> {
 
-    public ArrayList<T> returnAllMeetingConditions(DataMapperGateway<T> database, ArrayList<QueryCondition> conditions){
+    public ArrayList<T> returnAllMeetingConditions(DataMapperGateway<T> database, ArrayList<QueryCondition<T>> conditions){
         HashSet<Integer> Ids = database.getAllIds();
         ArrayList<T> res = new ArrayList<>();
         for (Integer Id : Ids) {
@@ -20,7 +20,7 @@ public class Query<T> {
         }
         return res;
     }
-    public T returnFirstMeetingConditions(DataMapperGateway<T> database, ArrayList<QueryCondition> conditions){
+    public T returnFirstMeetingConditions(DataMapperGateway<T> database, ArrayList<QueryCondition<T>> conditions){
         HashSet<Integer> Ids = database.getAllIds();
         for (Integer Id : Ids) {
             T currItem = database.get(Id);
@@ -29,9 +29,9 @@ public class Query<T> {
         }
         return null;
     }
-    private boolean checkConditions(T item, ArrayList<QueryCondition> conditions){
+    private boolean checkConditions(T item, ArrayList<QueryCondition<T>> conditions){
         Boolean conditionsMet = true;
-        for (QueryCondition condition : conditions){
+        for (QueryCondition<T> condition : conditions){
             conditionsMet = conditionsMet & (condition.isTrue(item) == condition.getDesiredStatus());
         }
         return conditionsMet;
