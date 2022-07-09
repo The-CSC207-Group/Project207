@@ -1,5 +1,6 @@
 package database;
 
+import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Log;
@@ -8,7 +9,7 @@ import java.util.HashSet;
 
 public class LogJsonDatabase implements DataMapperGateway<Log>{
     public LogJsonDatabase() {
-        GsonBuilder builder = new GsonBuilder();
+        GsonBuilder builder = Converters.registerAll(new GsonBuilder());
         Gson gson = builder.create();
         System.out.println(gson.toJson(new Log("Hello, World!")));
     }
