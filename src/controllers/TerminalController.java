@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-abstract class TerminalController {
+abstract public class TerminalController {
 
     ApplicationPresenter presenter = new TerminalPresenter();
     Context context;
