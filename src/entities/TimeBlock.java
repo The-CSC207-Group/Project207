@@ -6,6 +6,10 @@ public class TimeBlock {
 
     private ZonedDateTime startTime;
     private ZonedDateTime endTime;
+    //private Date date; (optional, default = null)
+    //private Time time; (required)
+    //private Day day; (optional, represents Enum of the days the week, default = null)
+
 
     public TimeBlock(ZonedDateTime startTime, ZonedDateTime endTime) {
         this.startTime = startTime;

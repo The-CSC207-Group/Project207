@@ -9,12 +9,15 @@ public class Clinic extends JsonSerializable {
     private String phoneNumber;
     private String address;
     private ZoneId timeZone;
+    //used to store the operating hours of the clinic for availability calculations
+    private TimeBlock clinicHours;
 
-    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone) {
+    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone, TimeBlock clinicHours) {
         this.name = name;
         setPhoneNumber(phoneNumber);
         this.address = address;
         this.timeZone = timeZone;
+        this.clinicHours = clinicHours;
     }
 
     public String getName() {
@@ -63,5 +66,13 @@ public class Clinic extends JsonSerializable {
 
     public void setTimeZone(ZoneId timeZone) {
         this.timeZone = timeZone;
+    }
+
+    public TimeBlock getClinicHours() {
+        return clinicHours;
+    }
+
+    public void setClinicHours(TimeBlock clinicHours) {
+        this.clinicHours = clinicHours;
     }
 }
