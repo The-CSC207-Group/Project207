@@ -3,6 +3,8 @@ package useCases;
 import database.DataMapperGateway;
 import entities.*;
 
+import java.util.HashSet;
+
 public class SystemManager{
 
     private final DataMapperGateway<User> database;
@@ -32,9 +34,8 @@ public class SystemManager{
     public boolean createPatient(String username, String password, int contactInfo, String healthNumber) {
         Patient patient = new Patient(username, password, contactInfo, healthNumber);
         database.add(patient);
-//        HashSet<Integer> all_ids  = database.getAllIds();
-//        return all_ids.contains(user.getUserID());
-        return true;
+        HashSet<Integer> all_ids  = database.getAllIds();
+        return all_ids.contains(patient.getId());
     }
 
     /**
