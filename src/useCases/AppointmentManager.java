@@ -118,11 +118,11 @@ public class AppointmentManager {
                         availabilityData.getDoctorEndTime().minusHours(hours), ZoneId.of("US/Eastern")),
                         ZonedDateTime.of(selectedDay, availabilityData.getDoctorEndTime().minusHours(hours),
                                 ZoneId.of("US/Eastern")));
-
+                availabilityTimeBlock.add(newTimeBlock);
                 hours -= 1;
             }
         }
-
+        return availabilityTimeBlock;
     }
     public boolean changeAvailability(Integer doctorId, TimeBlock oldTimeBlock, ZonedDateTime startTime,
                                       ZonedDateTime endTime){
