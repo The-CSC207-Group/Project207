@@ -71,21 +71,19 @@ public class AppointmentManager {
     }
     //availability should be an arrayList of timeblocks, with only 1 block representing no appointments. each subsequent
     //appointment cuts the block, expanding the list
-    public ArrayList<TimeBlock> getAvailability(Integer doctorId){
-        return doctorDatabase.get(doctorId).getAvailability();
+    public ArrayList<AvailabilityData> getAvailability(Integer doctorId, ZonedDateTime searchStartTime,
+                                                       ZonedDateTime searchEndTime){
+
+//        for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
+//            searchEndTime.getDayOfYear() - numOfDays
+//        }
+        return null;
     }
     public boolean changeAvailability(Integer doctorId, TimeBlock oldTimeBlock, ZonedDateTime startTime,
                                       ZonedDateTime endTime){
         //seems like there should be a sort of Id associated with timeblocks since this function would require a
         // timeblock as a parameter
-        ArrayList<TimeBlock> availability = getAvailability(doctorId);
-        for (TimeBlock block : availability) {
-            if (block == oldTimeBlock) {
-                block.setStartTime(startTime);
-                block.setEndTime(endTime);
-                return true;
-            }
-        }
+
         return false;
     }
     private ArrayList<AppointmentDataBundle> convertAppointmentsToDataBundle(ArrayList<Appointment>
