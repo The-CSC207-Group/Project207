@@ -15,13 +15,12 @@ public class SystemManager{
 
     /**
      *
-     * @param username username of the user to check the type
+     * @param userID username of the user to check the type
      * @return string of the user type
      */
-//    public String userType(int username){
-//        User user = database.get(username);
-//        return user.getType();
-//    }
+    public String userType(int userID){
+        return database.get(userID).getClass().getName();
+    }
 
     /**
      *
@@ -41,25 +40,25 @@ public class SystemManager{
 
     /**
      *
-     * @param username username of the user trying to sign in
+     * @param userID username of the user trying to sign in
      * @param password password of user trying to sign in
      * @return boolean, true if user can sign in, false if not
      */
     // need to have a method that checks if user is banned
-    public boolean canSignIn(String username, String password){
-//        User user = database.get(userID);
-//        return user != null && user.comparePassword(password);
-        return false;
+    public boolean canSignIn(Integer userID, String password){
+        User user = database.get(userID);
+        return user != null && user.comparePassword(password);
     }
+
 
     /**
      *
      * @param userID userID
      * @return boolean, true if user is admin, false if anything else
      */
-//    public boolean isUserAdmin(int userID){
-//        return userType(userID).equals("admin");
-//    }
+    public boolean isUserAdmin(int userID){
+        return userType(userID).equals("Admin");
+    }
 
 
 }
