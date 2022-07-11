@@ -24,8 +24,8 @@ public class NoAppointmentConflict<T extends TimeBlock> extends QueryCondition<T
                     return false;
                 }
                 if (appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime().isAfter(item.getStartTime()) &
-                        appointmentDatabase.get(appointmentId).getTimeBlock().getEndTime().isAfter(item.getEndTime())){
-                    return false; //man double check this logic jesus
+                        appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime().isBefore(item.getEndTime())){
+                    return false;
                 }
             }
 

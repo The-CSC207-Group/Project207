@@ -16,7 +16,7 @@ public class AvailabilityData {
         this.doctorStartTime = doctorStartTime;
         this.doctorEndTime = doctorEndTime;
     }
-    public DayOfWeek getDataDayOfWeek() {
+    public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 

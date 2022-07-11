@@ -18,9 +18,8 @@ public class NoDoctorAvailabilityConflict<T extends TimeBlock> extends QueryCond
 
     @Override
     public boolean isTrue(T item) {
-        item.getStartTime().getDayOfYear();
         for (AvailabilityData availabilityData: doctorDatabase.get(doctorId).getAvailability()){
-            if (item.getStartTime().getDayOfYear() % availabilityData.getDataDayOfWeek().getValue() == 0){
+            if (item.getStartTime().getDayOfYear() % availabilityData.getDayOfWeek().getValue() == 0){
                 return item.getStartTime().getHour() >= availabilityData.getDoctorStartTime().getHour() &
                         item.getEndTime().getHour() <= availabilityData.getDoctorEndTime().getHour();
             }

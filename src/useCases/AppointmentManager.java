@@ -3,10 +3,16 @@ package useCases;
 import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
 import entities.*;
+import useCases.query.AvailabilityQueryConditions.NoAbsenceConflict;
+import useCases.query.AvailabilityQueryConditions.NoAppointmentConflict;
+import useCases.query.AvailabilityQueryConditions.NoDoctorAvailabilityConflict;
 import useCases.query.Query;
 import useCases.query.QueryCondition;
 import useCases.query.AppointmentQueryConditions.IsPatientsAppointment;
 import useCases.query.AppointmentQueryConditions.IsDoctorsAppointment;
+
+import java.sql.Time;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -24,8 +30,16 @@ public class AppointmentManager {
     }
     //bookAppointment will return true if the proposed appointment is within a doctors avaialbility, and false if not
     public boolean bookAppointment(Integer patientId, Integer doctorId, ZonedDateTime startTime, ZonedDateTime endTime){
+        Query<TimeBlock> query = new Query<>();
         TimeBlock newTime = new TimeBlock(startTime, endTime);
-        //Appointment newApp = new Appointment(idforappointment????, newTime, doctorId, patientId);
+        ArrayList<QueryCondition<TimeBlock>> queryConditions = new ArrayList<>();
+
+        queryConditions.add(new NoAbsenceConflict<>(true, doctorDatabase, doctorId));
+        queryConditions.add(new NoAppointmentConflict<>(true, appointmentDatabase));
+        queryConditions.add(new NoDoctorAvailabilityConflict<>(true, doctorDatabase, doctorId));
+
+        query.checkConditions()4 //ask daniel about this
+        Appointment newApp = new Appointment(newTime, doctorId, patientId);
         //this.appointmentDatabase.add(newApp);
         //when an appointment is booked, this function should also call change availability and remove the appointment time
         return true;
@@ -71,13 +85,37 @@ public class AppointmentManager {
     }
     //availability should be an arrayList of timeblocks, with only 1 block representing no appointments. each subsequent
     //appointment cuts the block, expanding the list
-    public ArrayList<AvailabilityData> getAvailability(Integer doctorId, ZonedDateTime searchStartTime,
+    public ArrayList<TimeBlock> searchAvailability(Integer doctorId, ZonedDateTime searchStartTime,
                                                        ZonedDateTime searchEndTime){
+        searchEndTime.getDayOfWeek().
+        for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
+            searchEndTime.getDayOfYear() - numOfDays
 
-//        for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
-//            searchEndTime.getDayOfYear() - numOfDays
-//        }
+        }
         return null;
+        //use query, slice up each availability in 1 hour segments and run it through the conditions
+    }
+    public ArrayList<AvailabilityData> getAvailabilityDataFromDayOfWeek(Integer doctorId, DayOfWeek dayOfWeek){
+        ArrayList<AvailabilityData> availabilityDataList = new ArrayList<>();
+        for (AvailabilityData availabilityData: doctorDatabase.get(doctorId).getAvailability()){
+            if (dayOfWeek.getValue() == availabilityData.getDayOfWeek().getValue()){
+                availabilityDataList.add(availabilityData);
+            }
+        }
+        return availabilityDataList;
+    }
+    public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, DayOfWeek dayOfWeek){
+        ArrayList<AvailabilityData> doctorAvailabilityData = getAvailabilityDataFromDayOfWeek(doctorId, dayOfWeek);
+        ArrayList<TimeBlock> availabilityTimeBlock = new ArrayList<>();
+        Integer hours = 0;
+        for (AvailabilityData availabilityData: doctorAvailabilityData){
+            hours += availabilityData.getDoctorEndTime().getHour() - availabilityData.getDoctorStartTime().getHour();
+            while (hours > 0){
+                TimeBlock newTimeBlock = new TimeBlock(availabilityData.getDoctorEndTime().minusHours(hours),
+                        availabilityData.getDoctorEndTime().minusHours(hours))
+            }
+        }
+
     }
     public boolean changeAvailability(Integer doctorId, TimeBlock oldTimeBlock, ZonedDateTime startTime,
                                       ZonedDateTime endTime){
