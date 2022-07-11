@@ -29,7 +29,6 @@ public class SystemManager{
      * @param contactInfo contact info of user created
      * @return true if account has been created, false if account failed to create
      */
-    //  can we create any* user using this design? that would break the system?
     public boolean createPatient(String username, String password, int contactInfo, String healthNumber) {
         Patient patient = new Patient(username, password, contactInfo, healthNumber);
         database.add(patient);
