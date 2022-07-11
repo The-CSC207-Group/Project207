@@ -13,6 +13,8 @@ import useCases.query.AppointmentQueryConditions.IsDoctorsAppointment;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -87,9 +89,10 @@ public class AppointmentManager {
     //appointment cuts the block, expanding the list
     public ArrayList<TimeBlock> searchAvailability(Integer doctorId, ZonedDateTime searchStartTime,
                                                        ZonedDateTime searchEndTime){
-        searchEndTime.getDayOfWeek().
+        searchEndTime.
         for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
             searchEndTime.getDayOfYear() - numOfDays
+
 
         }
         return null;
@@ -104,15 +107,19 @@ public class AppointmentManager {
         }
         return availabilityDataList;
     }
-    public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, DayOfWeek dayOfWeek){
+    public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, DayOfWeek dayOfWeek, LocalDate selectedDay){
         ArrayList<AvailabilityData> doctorAvailabilityData = getAvailabilityDataFromDayOfWeek(doctorId, dayOfWeek);
         ArrayList<TimeBlock> availabilityTimeBlock = new ArrayList<>();
-        Integer hours = 0;
+        int hours = 0;
         for (AvailabilityData availabilityData: doctorAvailabilityData){
             hours += availabilityData.getDoctorEndTime().getHour() - availabilityData.getDoctorStartTime().getHour();
             while (hours > 0){
-                TimeBlock newTimeBlock = new TimeBlock(availabilityData.getDoctorEndTime().minusHours(hours),
-                        availabilityData.getDoctorEndTime().minusHours(hours))
+                TimeBlock newTimeBlock = new TimeBlock(ZonedDateTime.of(selectedDay,
+                        availabilityData.getDoctorEndTime().minusHours(hours), ZoneId.of("US/Eastern")),
+                        ZonedDateTime.of(selectedDay, availabilityData.getDoctorEndTime().minusHours(hours),
+                                ZoneId.of("US/Eastern")));
+
+                hours -= 1;
             }
         }
 
