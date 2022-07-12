@@ -1,4 +1,4 @@
-package useCases;
+package useCases.managers;
 
 import database.DataMapperGateway;
 import entities.*;

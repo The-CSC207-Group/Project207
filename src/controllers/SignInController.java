@@ -1,6 +1,6 @@
 package controllers;
 
-import useCases.SystemManager;
+import useCases.managers.SystemManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
