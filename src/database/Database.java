@@ -26,7 +26,7 @@ public class Database {
 
     public Database(String dataDirectoryName) {
         File userFolder = new File("./" + dataDirectoryName + "/user");
-        KeyDelegator userKeyDelegator = new KeyDelegator();
+        KeyDelegator userKeyDelegator = new KeyDelegator("getUsername");
         patientDatabase = new JsonDatabase<>(Patient.class, userKeyDelegator, userFolder);
         doctorDatabase = new JsonDatabase<>(Doctor.class, userKeyDelegator, userFolder);
         secretaryDatabase = new JsonDatabase<>(Secretary.class, userKeyDelegator, userFolder);

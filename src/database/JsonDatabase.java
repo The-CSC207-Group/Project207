@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -27,6 +28,14 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     }
 
     public JsonDatabase(Class<T> type, KeyDelegator keyDelegator, File folder) {
+        if (keyDelegator.getUniqueFieldMethodName() != null) {
+            Method method = null;
+            try {
+                method = type.getMethod("getUsername");
+            } catch (Exception ignored) {}
+            keyDelegator.setUniqueFieldMethod(method);
+        }
+
         this.type = type;
         GsonBuilder builder = Converters.registerAll(new GsonBuilder());
         this.gson = builder.setPrettyPrinting().create();
@@ -61,7 +70,12 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
                     keyDelegator.setLastId(last_id);
                 } else {
                     Integer actualKey = Integer.parseInt(key);
-                    database.put(actualKey, gson.fromJson(jsonObject.get(key), type));
+                    T object = gson.fromJson(jsonObject.get(key), type);
+                    if (keyDelegator.canAddItem(object)) {
+                        database.put(actualKey, object);
+                    } else {
+                        throw new RuntimeException("broken database: duplicate unique fields");
+                    }
                 }
             }
         }
@@ -99,10 +113,14 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
     @Override
     public Integer add(T item) {
-        int unique_id = keyDelegator.getNewUniqueId();
-        database.put(unique_id, item);
-        item.setId(unique_id);
-        return item.getId();
+        if (keyDelegator.canAddItem(item)) {
+            int unique_id = keyDelegator.getNewUniqueId();
+            database.put(unique_id, item);
+            item.setId(unique_id);
+            return item.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
