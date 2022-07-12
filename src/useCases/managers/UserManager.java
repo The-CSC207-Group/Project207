@@ -18,23 +18,7 @@ public class UserManager {
 
     ArrayList<DataMapperGateway<? extends User>> databases;
 
-    public boolean createPatient(String username, String password, int contactInfo, String healthNumber){
-        Patient patient = new Patient(username, password, contactInfo, healthNumber);
-        Integer user_id = patientDatabase.add(patient);
-        return user_id != null;
-    }
 
-    public boolean createDoctor(String username, String password, int contactInfo){
-        Doctor doctor = new Doctor(username, password, contactInfo);
-        Integer user_id = doctorDatabase.add(doctor);
-        return user_id != null;
-    }
-
-    public boolean createSecretary(String username, String password, int contactInfo){
-        Secretary secretary = new Secretary(username, password, contactInfo);
-        Integer user_id = secretaryDatabase.add(secretary);
-        return user_id != null;
-    }
 
     public boolean createAdmin(String username, String password, int contactInfo){
         Admin admin = new Admin(username, password, contactInfo);
