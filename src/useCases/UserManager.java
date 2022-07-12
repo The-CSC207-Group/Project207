@@ -4,6 +4,7 @@ import database.DataMapperGateway;
 import entities.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 
@@ -39,6 +40,18 @@ public class UserManager {
         Integer user_id = adminDatabase.add(admin);
         return user_id != null;
     }
+
+    public boolean deleteUser(Integer userID){
+        ArrayList<DataMapperGateway<? extends  User>> userDatabases = new ArrayList<>(Arrays.asList(patientDatabase,
+                doctorDatabase, secretaryDatabase, adminDatabase));
+       for (DataMapperGateway<? extends User> database : userDatabases){
+           if (database.getAllIds().contains(userID)){
+               return database.remove(userID);
+           }
+       }
+       return false;
+    }
+
     public void addLogIdToUserLogs(Integer userId, Integer logId){
         User user = getUserWithId(userId);
         user.addLog(logId);
