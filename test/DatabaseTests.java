@@ -136,6 +136,7 @@ public class DatabaseTests {
         ZoneId torontoID = ZoneId.of("Canada/Eastern");
         ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
         ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+
         Prescription originalPrescription = new
                 Prescription(zonedDateNoted, "medicine", "healthy", 123,
                 456, zonedExpiryDate);
@@ -161,7 +162,7 @@ public class DatabaseTests {
                 originalPrescription.getPatientID(), loadedPrescription.getPatientID());
         assertEquals("Original prescription and loaded prescription should share the same doctor ID",
                 originalPrescription.getDoctorID(), loadedPrescription.getDoctorID());
-        assertEquals("Original prescription and loaded prescription have the same expiry date ",
+        assertEquals("Original prescription and loaded prescription have the same expiry date",
                 originalPrescription.getExpiryDate().compareTo(loadedPrescription.
                 getExpiryDate()), 0);
     }
@@ -174,6 +175,7 @@ public class DatabaseTests {
         LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
         ZoneId torontoID = ZoneId.of("Canada/Eastern");
         ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+
         Report originalReport = new
                 Report(zonedDateNoted, "medicine", "healthy", 123,
                 456);
@@ -199,6 +201,42 @@ public class DatabaseTests {
                 originalReport.getPatientID(), loadedReport.getPatientID());
         assertEquals("Original report and loaded report should share the same doctor ID",
                 originalReport.getDoctorID(), loadedReport.getDoctorID());
+    }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadAppointmentDatabase() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Appointment> originalAppointmentDatabase = originalDatabase.getAppointmentDatabase();
+
+        LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
+        LocalDateTime localEndTime = LocalDateTime.of(2024,7,1,4,3);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedStartTime = ZonedDateTime.of(localStartTime, torontoID);
+        ZonedDateTime zonedEndTime = ZonedDateTime.of(localEndTime, torontoID);
+        TimeBlock timeBlock = new TimeBlock(zonedStartTime, zonedEndTime);
+
+        Appointment originalAppointment = new Appointment(timeBlock,  123, 456);
+
+        Integer appointmentID = originalAppointmentDatabase.add(originalAppointment);
+        originalAppointmentDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Appointment> loadedAppointmentDatabase = loadedDatabase.getAppointmentDatabase();
+
+        Appointment loadedAppointment = loadedAppointmentDatabase.get(appointmentID);
+
+        /* testing if the loaded appointment and the original appointment are equal by testing whether all
+        the fields of both objects are equal */
+        assertEquals("Original appointment and loaded appointment should start at the same time",
+                originalAppointment.getTimeBlock().getStartTime().compareTo(loadedAppointment.getTimeBlock().
+                        getStartTime()), 0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("Original appointment and loaded appointment should end at the same time",
+                originalAppointment.getTimeBlock().getEndTime().compareTo(loadedAppointment.getTimeBlock().
+                        getEndTime()), 0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("Original appointment and loaded appointment should share the same patient ID",
+                originalAppointment.getPatientID(), loadedAppointment.getPatientID());
+        assertEquals("Original appointment and loaded appointment should share the same doctor ID",
+                originalAppointment.getDoctorID(), loadedAppointment.getDoctorID());
     }
 
     @After
