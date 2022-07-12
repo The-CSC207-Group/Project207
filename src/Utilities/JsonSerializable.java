@@ -1,4 +1,4 @@
-package entities;
+package Utilities;
 
 
 public abstract class JsonSerializable {

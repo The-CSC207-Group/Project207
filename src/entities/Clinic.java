@@ -1,5 +1,7 @@
 package entities;
 
+import Utilities.JsonSerializable;
+
 import java.time.ZoneId;
 import java.util.regex.Pattern;
 

@@ -1,5 +1,7 @@
 package entities;
 
+import Utilities.JsonSerializable;
+
 public class Appointment extends JsonSerializable {
 
     private TimeBlock timeBlock;

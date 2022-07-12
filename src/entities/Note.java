@@ -1,5 +1,7 @@
 package entities;
 
+import Utilities.JsonSerializable;
+
 import java.time.ZonedDateTime;
 
 public abstract class Note extends JsonSerializable {

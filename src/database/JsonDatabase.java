@@ -2,7 +2,7 @@ package database;
 
 import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.*;
-import entities.JsonSerializable;
+import Utilities.JsonSerializable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
