@@ -12,6 +12,7 @@ public class NoDoctorAvailabilityConflict<T extends Doctor> extends QueryConditi
     private DataMapperGateway<Doctor> doctorDatabase;
     private Integer doctorId;
     private TimeBlock suggestedTime;
+
     public NoDoctorAvailabilityConflict(Boolean desiredStatus, Integer doctorId, TimeBlock suggestedTime) {
         super(desiredStatus);
         this.doctorId = doctorId;
@@ -21,16 +22,17 @@ public class NoDoctorAvailabilityConflict<T extends Doctor> extends QueryConditi
     @Override
     public boolean isTrue(T item) {
         if (Objects.equals(item.getId(), doctorId)) {
-            for (AvailabilityData availability : item.getAvailability()){
+            for (AvailabilityData availability : item.getAvailability()) {
                 if (availability.getDoctorStartTime().getHour() <= suggestedTime.getStartTime().getHour()
-                        & availability.getDoctorEndTime().getHour() < suggestedTime.getEndTime().getHour()){
+                        & availability.getDoctorEndTime().getHour() < suggestedTime.getEndTime().getHour()) {
                     return false;
-                }
-                else if (availability.getDoctorStartTime().getHour() > suggestedTime.getStartTime().getHour()
-                        & availability.getDoctorEndTime().getHour() >= suggestedTime.getEndTime().getHour()){
+                } else if (availability.getDoctorStartTime().getHour() > suggestedTime.getStartTime().getHour()
+                        & availability.getDoctorEndTime().getHour() >= suggestedTime.getEndTime().getHour()) {
                     return false;
                 }
             }
-            return true;
+
         }
+        return true;
     }
+}
