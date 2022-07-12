@@ -1,3 +1,4 @@
+import entities.Admin;
 import entities.Doctor;
 import entities.Patient;
 import entities.Secretary;
@@ -98,6 +99,33 @@ public class DatabaseTests {
         assertEquals("Original secretary and loaded secretary should share the same password",
                 originalSecretary.comparePassword("123"),
                 loadedSecretary.comparePassword("123"));
+    }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadAdminDatabase() throws IOException {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Admin> originalAdminDatabase = originalDatabase.getAdminDatabase();
+
+        Admin originalAdmin = new
+                Admin("jeff", "123", 123456789);
+
+        Integer AdminID = originalAdminDatabase.add(originalAdmin);
+        originalAdminDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Admin> loadedAdminDatabase = loadedDatabase.getAdminDatabase();
+
+        Admin loadedAdmin = loadedAdminDatabase.get(AdminID);
+
+        /*Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original admin and loaded admin should share the same unique username",
+                originalAdmin.getUsername(), loadedAdmin.getUsername());
+        assertEquals("Original admin and loaded admin should share the same contact information",
+                originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
+        assertEquals("Original admin and loaded admin should share the same password",
+                originalAdmin.comparePassword("123"),
+                loadedAdmin.comparePassword("123"));
     }
 
     @After
