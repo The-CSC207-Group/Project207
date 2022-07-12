@@ -209,7 +209,7 @@ public class DatabaseTests {
         DataMapperGateway<Appointment> originalAppointmentDatabase = originalDatabase.getAppointmentDatabase();
 
         LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
-        LocalDateTime localEndTime = LocalDateTime.of(2024,7,1,4,3);
+        LocalDateTime localEndTime = LocalDateTime.of(2022,7,1,6,3);
         ZoneId torontoID = ZoneId.of("Canada/Eastern");
         ZonedDateTime zonedStartTime = ZonedDateTime.of(localStartTime, torontoID);
         ZonedDateTime zonedEndTime = ZonedDateTime.of(localEndTime, torontoID);
@@ -238,6 +238,30 @@ public class DatabaseTests {
         assertEquals("Original appointment and loaded appointment should share the same doctor ID",
                 originalAppointment.getDoctorID(), loadedAppointment.getDoctorID());
     }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadLogDatabase() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Log> originalLogDatabase = originalDatabase.getLogDatabase();
+
+        Log originalLog = new Log("jeff");
+
+        Integer logID = originalLogDatabase.add(originalLog);
+        originalLogDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Log> loadedLogDatabase = loadedDatabase.getLogDatabase();
+
+        Log loadedLog = loadedLogDatabase.get(logID);
+
+        /*Testing if the loaded log and the original log are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original log and loaded log should share the same timestamp",
+                originalLog.getTime(), loadedLog.getTime());
+        assertEquals("Original log and loaded log should share the same message",
+                originalLog.getMessage(), loadedLog.getMessage());
+    }
+
 
     @After
     public void after() {
