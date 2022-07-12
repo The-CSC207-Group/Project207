@@ -126,6 +126,46 @@ public class DatabaseTests {
                 loadedAdmin.comparePassword("123"));
     }
 
+    @Test(timeout = 1000)
+    public void testSaveLoadPrescriptionDatabase() throws IOException {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Prescription> originalPrescriptionDatabase = originalDatabase.getPrescriptionDatabase();
+
+        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
+        LocalDateTime localExpiryDate = LocalDateTime.of(2024, 7, 1, 0, 0);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+        Prescription originalPrescription = new
+                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                456, zonedExpiryDate);
+
+        Integer PrescriptionID = originalPrescriptionDatabase.add(originalPrescription);
+        originalPrescriptionDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Prescription> loadedPrescriptionDatabase = loadedDatabase.getPrescriptionDatabase();
+
+        Prescription loadedPrescription = loadedPrescriptionDatabase.get(PrescriptionID);
+
+        /* testing if the loaded prescription and the original prescription are equal by testing whether all
+        the fields of both objects are equal */
+        assertEquals("Original prescription and loaded prescription should be have been noted " +
+                        "on the same date", originalPrescription.getDateNoted().compareTo(loadedPrescription.
+                getDateNoted()), 0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("Original prescription and loaded prescription should share the same header",
+                originalPrescription.getHeader(), loadedPrescription.getHeader());
+        assertEquals("Original prescription and loaded prescription should share the same body",
+                originalPrescription.getBody(), loadedPrescription.getBody());
+        assertEquals("Original prescription and loaded prescription should share the same patient ID",
+                originalPrescription.getPatientID(), loadedPrescription.getPatientID());
+        assertEquals("Original prescription and loaded prescription should share the same doctor ID",
+                originalPrescription.getDoctorID(), loadedPrescription.getDoctorID());
+        assertEquals("Original prescription and loaded prescription have the same expiry date ",
+                originalPrescription.getExpiryDate().compareTo(loadedPrescription.
+                getExpiryDate()), 0);
+    }
+
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
