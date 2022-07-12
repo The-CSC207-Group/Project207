@@ -1,5 +1,6 @@
 package database;
 
+import Utilities.ZoneIdConverter;
 import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.*;
 import Utilities.JsonSerializable;
@@ -11,6 +12,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -38,7 +40,8 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
         this.type = type;
         GsonBuilder builder = Converters.registerAll(new GsonBuilder());
-        this.gson = builder.setPrettyPrinting().create();
+        builder.registerTypeAdapter(ZoneId.class, new ZoneIdConverter());
+        this.gson = builder.create();
         this.database = new HashMap<>();
         this.keyDelegator = keyDelegator;
         this.folder = folder;
