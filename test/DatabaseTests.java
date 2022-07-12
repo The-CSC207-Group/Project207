@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DatabaseTests {
 
@@ -261,6 +264,47 @@ public class DatabaseTests {
         assertEquals("Original log and loaded log should share the same message",
                 originalLog.getMessage(), loadedLog.getMessage());
     }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadContactDatabase() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Contact> originalContactDatabase = originalDatabase.getContactDatabase();
+
+        Date birthday = new Date(2022, Calendar.JANUARY, 1);
+        Contact originalContact = new Contact("jeff", "jeff@gmail.com", "12345678",
+                "jeff street", birthday, "jim", "jim@gmail.com",
+                "87654321", "father");
+
+        Integer contactID = originalContactDatabase.add(originalContact);
+        originalContactDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Contact> loadedContactDatabase = loadedDatabase.getContactDatabase();
+
+        Contact loadedContact = loadedContactDatabase.get(contactID);
+
+        /*Testing if the loaded contact and the original contact are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original contact and loaded contact should share the same name",
+                originalContact.getName(), loadedContact.getName());
+        assertEquals("Original contact and loaded contact should share the same email",
+                originalContact.getEmail(), loadedContact.getEmail());
+        assertEquals("Original contact and loaded contact should share the same phone number",
+                originalContact.getPhoneNumber(), loadedContact.getPhoneNumber());
+        assertEquals("Original contact and loaded contact should share the same address",
+                originalContact.getAddress(), loadedContact.getAddress());
+        assertEquals("Original contact and loaded contact should share the same birthday",
+                originalContact.getBirthday(), loadedContact.getBirthday());
+        assertEquals("Original contact and loaded contact should share the same emergency contact name",
+                originalContact.getEmergencyContactName(), loadedContact.getEmergencyContactName());
+        assertEquals("Original contact and loaded contact should share the same emergency contact email",
+                originalContact.getEmergencyContactEmail(), loadedContact.getEmergencyContactEmail());
+        assertEquals("Original contact and loaded contact should share the same emergency contact phone number",
+                originalContact.getEmergencyContactPhoneNumber(), loadedContact.getEmergencyContactPhoneNumber());
+        assertEquals("Original contact and loaded contact should share the same emergency relationship",
+                originalContact.getEmergencyRelationship(), loadedContact.getEmergencyRelationship());
+    }
+
 
 
     @After
