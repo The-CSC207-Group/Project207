@@ -108,13 +108,13 @@ public class DatabaseTests {
         Admin originalAdmin = new
                 Admin("jeff", "123", 123456789);
 
-        Integer AdminID = originalAdminDatabase.add(originalAdmin);
+        Integer adminID = originalAdminDatabase.add(originalAdmin);
         originalAdminDatabase.save();
 
         Database loadedDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> loadedAdminDatabase = loadedDatabase.getAdminDatabase();
 
-        Admin loadedAdmin = loadedAdminDatabase.get(AdminID);
+        Admin loadedAdmin = loadedAdminDatabase.get(adminID);
 
         /*Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
         objects are equal */
@@ -140,13 +140,13 @@ public class DatabaseTests {
                 Prescription(zonedDateNoted, "medicine", "healthy", 123,
                 456, zonedExpiryDate);
 
-        Integer PrescriptionID = originalPrescriptionDatabase.add(originalPrescription);
+        Integer prescriptionID = originalPrescriptionDatabase.add(originalPrescription);
         originalPrescriptionDatabase.save();
 
         Database loadedDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Prescription> loadedPrescriptionDatabase = loadedDatabase.getPrescriptionDatabase();
 
-        Prescription loadedPrescription = loadedPrescriptionDatabase.get(PrescriptionID);
+        Prescription loadedPrescription = loadedPrescriptionDatabase.get(prescriptionID);
 
         /* testing if the loaded prescription and the original prescription are equal by testing whether all
         the fields of both objects are equal */
@@ -164,6 +164,41 @@ public class DatabaseTests {
         assertEquals("Original prescription and loaded prescription have the same expiry date ",
                 originalPrescription.getExpiryDate().compareTo(loadedPrescription.
                 getExpiryDate()), 0);
+    }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadReportDatabase() throws IOException {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Report> originalReportDatabase = originalDatabase.getReportDatabase();
+
+        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+        Report originalReport = new
+                Report(zonedDateNoted, "medicine", "healthy", 123,
+                456);
+
+        Integer reportID = originalReportDatabase.add(originalReport);
+        originalReportDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Report> loadedReportDatabase = loadedDatabase.getReportDatabase();
+
+        Report loadedReport = loadedReportDatabase.get(reportID);
+
+        /* testing if the loaded report and the original report are equal by testing whether all
+        the fields of both objects are equal */
+        assertEquals("Original report and loaded report should be have been noted " +
+                "on the same date", originalReport.getDateNoted().compareTo(loadedReport.
+                getDateNoted()), 0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("Original report and loaded report should share the same header",
+                originalReport.getHeader(), loadedReport.getHeader());
+        assertEquals("Original report and loaded report should share the same body",
+                originalReport.getBody(), loadedReport.getBody());
+        assertEquals("Original report and loaded report should share the same patient ID",
+                originalReport.getPatientID(), loadedReport.getPatientID());
+        assertEquals("Original report and loaded report should share the same doctor ID",
+                originalReport.getDoctorID(), loadedReport.getDoctorID());
     }
 
     @After
