@@ -1,7 +1,6 @@
 import entities.Doctor;
 import entities.Patient;
 import entities.Secretary;
-import jdk.jfr.MemoryAddress;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.rules.TemporaryFolder;
@@ -99,5 +98,10 @@ public class DatabaseTests {
         assertEquals("Original secretary and loaded secretary should share the same password",
                 originalSecretary.comparePassword("123"),
                 loadedSecretary.comparePassword("123"));
+    }
+
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
 }
