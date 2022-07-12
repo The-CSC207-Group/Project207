@@ -1,13 +1,16 @@
 import entities.Doctor;
 import entities.Patient;
 import entities.Secretary;
+import jdk.jfr.MemoryAddress;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.rules.TemporaryFolder;
 
 import database.Database;
 import database.DataMapperGateway;
+import Utilities.DeleteUtils;
 
+import java.io.File;
 import java.io.IOException;
 
 public class DatabaseTests {
