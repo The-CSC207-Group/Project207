@@ -4,6 +4,7 @@ import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
 import entities.*;
 import useCases.query.AvailabilityQueryConditions.NoAppointmentConflict;
+import useCases.query.AvailabilityQueryConditions.NoDoctorAvailabilityConflict;
 import useCases.query.Query;
 import useCases.query.QueryCondition;
 import useCases.query.AppointmentQueryConditions.IsPatientsAppointment;
@@ -26,12 +27,24 @@ public class AppointmentManager {
         this.patientDatabase = PatientDatabase;
         this.doctorDatabase  = doctorDatabase;
     }
-    //bookAppointment will return true if the proposed appointment is within a doctors avaialbility, and false if not
-    public void bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
-        Query<Appointment> query = new Query<>();
-        ArrayList<QueryCondition<Appointment>> queryConditions = new ArrayList<>();
-        queryConditions.add(new NoAppointmentConflict<>(true, proposedTime));
-        appointmentDatabase.add(new Appointment(proposedTime, doctorId, patientId));
+
+    public boolean bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
+        Query<Appointment> queryAppointment = new Query<>();
+        ArrayList<QueryCondition<Appointment>> queryConditionsAppointment = new ArrayList<>();
+        queryConditionsAppointment.add(new NoAppointmentConflict<>(true, proposedTime));
+
+        Query<Doctor> queryDoctor = new Query<>();
+        ArrayList<QueryCondition<Doctor>> queryConditionsDoctor = new ArrayList<>();
+        queryConditionsDoctor.add(new NoDoctorAvailabilityConflict<>(true, doctorId, proposedTime));
+
+        if (!queryAppointment.returnAllMeetingConditions(appointmentDatabase, queryConditionsAppointment).isEmpty() |
+                !queryDoctor.returnAllMeetingConditions(doctorDatabase, queryConditionsDoctor).isEmpty()){
+            return false;
+        }
+        else {
+            appointmentDatabase.add(new Appointment(proposedTime, doctorId, patientId));
+            return true;
+        }
     }
     public void removeAppointment(Integer Id){
         appointmentDatabase.remove(Id);
