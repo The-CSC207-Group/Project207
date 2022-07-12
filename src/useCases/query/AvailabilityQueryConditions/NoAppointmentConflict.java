@@ -7,29 +7,26 @@ import database.DataMapperGateway;
 
 import java.time.ZonedDateTime;
 
-public class NoAppointmentConflict<T extends TimeBlock> extends QueryCondition<T> {
-    private DataMapperGateway<Appointment> appointmentDatabase;
-    public NoAppointmentConflict(Boolean desiredStatus, DataMapperGateway<Appointment> appointmentDatabase) {
+public class NoAppointmentConflict<T extends Appointment> extends QueryCondition<T> {
+    private TimeBlock suggestedTime;
+    public NoAppointmentConflict(Boolean desiredStatus,
+                                 TimeBlock suggestedTime) {
         super(desiredStatus);
-        this.appointmentDatabase = appointmentDatabase;
+        this.suggestedTime = suggestedTime;
     }
 
     @Override
     public boolean isTrue(T item) {
-        for(Integer appointmentId: appointmentDatabase.getAllIds()){
-            if (appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime().getDayOfYear() ==
-                    item.getStartTime().getDayOfYear()){
-                if (appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime().isBefore(item.getStartTime()) &
-                        appointmentDatabase.get(appointmentId).getTimeBlock().getEndTime().isAfter(item.getStartTime())){
-                    return false;
-                }
-                if (appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime().isAfter(item.getStartTime()) &
-                        appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime().isBefore(item.getEndTime())){
-                    return false;
-                }
+        if (suggestedTime.getStartTime().getDayOfYear() == item.getTimeBlock().getStartTime().getDayOfYear()){
+            if (suggestedTime.getStartTime().isBefore(item.getTimeBlock().getStartTime()) &
+                    suggestedTime.getEndTime().isAfter(item.getTimeBlock().getStartTime())){
+                return false;
             }
-
+            return !(suggestedTime.getStartTime().isAfter(item.getTimeBlock().getStartTime()) &
+                    suggestedTime.getStartTime().isBefore(item.getTimeBlock().getEndTime()));
         }
+
+
         return true;
     }
 }

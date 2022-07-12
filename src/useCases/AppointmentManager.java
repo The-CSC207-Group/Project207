@@ -3,15 +3,12 @@ package useCases;
 import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
 import entities.*;
-import useCases.query.AvailabilityQueryConditions.NoAbsenceConflict;
 import useCases.query.AvailabilityQueryConditions.NoAppointmentConflict;
-import useCases.query.AvailabilityQueryConditions.NoDoctorAvailabilityConflict;
 import useCases.query.Query;
 import useCases.query.QueryCondition;
 import useCases.query.AppointmentQueryConditions.IsPatientsAppointment;
 import useCases.query.AppointmentQueryConditions.IsDoctorsAppointment;
 
-import java.sql.Time;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,6 +26,9 @@ public class AppointmentManager {
     }
     //bookAppointment will return true if the proposed appointment is within a doctors avaialbility, and false if not
     public void bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
+        Query<Appointment> query = new Query<>();
+        ArrayList<QueryCondition<Appointment>> queryConditions = new ArrayList<>();
+        queryConditions.add(new NoAppointmentConflict<>(true, proposedTime));
         appointmentDatabase.add(new Appointment(proposedTime, doctorId, patientId));
     }
     public void removeAppointment(Integer Id){
