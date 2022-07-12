@@ -12,6 +12,8 @@ import useCases.query.AppointmentQueryConditions.IsDoctorsAppointment;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AppointmentManager {
     private DataMapperGateway<Appointment> appointmentDatabase;
@@ -83,13 +85,18 @@ public class AppointmentManager {
         return totalAvailableTimes;
     }
     public ArrayList<AvailabilityData> getAvailabilityDataFromDayOfWeek(Integer doctorId, DayOfWeek dayOfWeek){
-        ArrayList<AvailabilityData> availabilityDataList = new ArrayList<>();
-        for (AvailabilityData availabilityData: doctorDatabase.get(doctorId).getAvailability()){
-            if (dayOfWeek.getValue() == availabilityData.getDayOfWeek().getValue()){
-                availabilityDataList.add(availabilityData);
-            }
-        }
-        return availabilityDataList;
+        return doctorDatabase.get(doctorId).getAvailability()
+                .stream()
+                .filter(x -> dayOfWeek.getValue() == x.getDayOfWeek().getValue())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+//        ArrayList<AvailabilityData> availabilityDataList = new ArrayList<>();
+//        for (AvailabilityData availabilityData: doctorDatabase.get(doctorId).getAvailability()){
+//            if (dayOfWeek.getValue() == availabilityData.getDayOfWeek().getValue()){
+//                availabilityDataList.add(availabilityData);
+//            }
+//        }
+//        return availabilityDataList;
     }
     public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
         ArrayList<AvailabilityData> doctorAvailabilityData = getAvailabilityDataFromDayOfWeek(doctorId,
