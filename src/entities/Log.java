@@ -1,5 +1,7 @@
 package entities;
 
+import Utilities.JsonSerializable;
+
 import java.time.LocalDateTime;
 
 public class Log extends JsonSerializable {

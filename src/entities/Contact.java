@@ -1,5 +1,7 @@
 package entities;
 
+import Utilities.JsonSerializable;
+
 import java.util.Date;
 import java.util.regex.Pattern;
 
