@@ -1,7 +1,4 @@
-import entities.Admin;
-import entities.Doctor;
-import entities.Patient;
-import entities.Secretary;
+import entities.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.rules.TemporaryFolder;
@@ -12,6 +9,10 @@ import Utilities.DeleteUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class DatabaseTests {
 
@@ -69,8 +70,7 @@ public class DatabaseTests {
                 originalDoctor.getUsername(), loadedDoctor.getUsername());
         assertEquals("Original doctor and loaded doctor should share the same contact information",
                 originalDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
-        assertEquals("Original doctor and loaded doctor should share the same password",
-                originalDoctor.comparePassword("123"),
+        assertTrue("Original doctor and loaded doctor should share the same password",
                 loadedDoctor.comparePassword("123"));
     }
 
@@ -96,8 +96,7 @@ public class DatabaseTests {
                 originalSecretary.getUsername(), loadedSecretary.getUsername());
         assertEquals("Original secretary and loaded secretary should share the same contact information",
                 originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
-        assertEquals("Original secretary and loaded secretary should share the same password",
-                originalSecretary.comparePassword("123"),
+        assertTrue("Original secretary and loaded secretary should share the same password",
                 loadedSecretary.comparePassword("123"));
     }
 
@@ -123,8 +122,7 @@ public class DatabaseTests {
                 originalAdmin.getUsername(), loadedAdmin.getUsername());
         assertEquals("Original admin and loaded admin should share the same contact information",
                 originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
-        assertEquals("Original admin and loaded admin should share the same password",
-                originalAdmin.comparePassword("123"),
+        assertTrue("Original admin and loaded admin should share the same password",
                 loadedAdmin.comparePassword("123"));
     }
 
