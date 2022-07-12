@@ -39,5 +39,6 @@ public class UserManager {
         adminDatabase.add(admin);
         HashSet<Integer> all_ids = adminDatabase.getAllIds();
         return all_ids.contains(admin.getId());
+
     }
 }
