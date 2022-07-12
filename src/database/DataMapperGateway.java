@@ -20,8 +20,7 @@ public interface DataMapperGateway<T> {
     /**
      * Adds a new object of type T to the database.
      * @param item The item to add to the database.
-     * @return null is returned if cannot add item to database.
-     *         Otherwise, an integer id is returned.
+     * @return an integer id is returned.
      */
     Integer add(T item);
 

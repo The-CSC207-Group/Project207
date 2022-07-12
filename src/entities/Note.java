@@ -2,7 +2,7 @@ package entities;
 
 import java.time.ZonedDateTime;
 
-public class Note extends JsonSerializable {
+public abstract class Note extends JsonSerializable {
 
     private ZonedDateTime dateNoted;
     private String header;
