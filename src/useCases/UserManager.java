@@ -58,6 +58,10 @@ public class UserManager {
             if (user != null){return user;}
         }
         return null;
-
     }
+    public void changeUserPassword(Integer iDUser, String newPassword){
+        User user = getUserWithId(iDUser);
+        user.setPassword(newPassword);
+    }
+
 }
