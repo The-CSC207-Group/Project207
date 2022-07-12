@@ -1,5 +1,6 @@
 import entities.Doctor;
 import entities.Patient;
+import entities.Secretary;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.rules.TemporaryFolder;
@@ -68,5 +69,32 @@ public class DatabaseTests {
         assertEquals("Original doctor and loaded doctor should share the same password",
                 originalDoctor.comparePassword("123"),
                 loadedDoctor.comparePassword("123"));
+    }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadSecretaryDatabase() throws IOException {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Secretary> originalSecretaryDatabase = originalDatabase.getSecretaryDatabase();
+
+        Secretary originalSecretary = new
+                Secretary("jeff", "123", 123456789);
+
+        Integer secretaryID = originalSecretaryDatabase.add(originalSecretary);
+        originalSecretaryDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Secretary> loadedSecretaryDatabase = loadedDatabase.getSecretaryDatabase();
+
+        Secretary loadedSecretary = loadedSecretaryDatabase.get(secretaryID);
+
+        /*Testing if the loaded secretary and the original secretary are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original secretary and loaded secretary should share the same unique username",
+                originalSecretary.getUsername(), loadedSecretary.getUsername());
+        assertEquals("Original secretary and loaded secretary should share the same contact information",
+                originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
+        assertEquals("Original secretary and loaded secretary should share the same password",
+                originalSecretary.comparePassword("123"),
+                loadedSecretary.comparePassword("123"));
     }
 }
