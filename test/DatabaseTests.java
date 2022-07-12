@@ -20,7 +20,7 @@ public class DatabaseTests {
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
     @Test(timeout = 1000)
-    public void testSaveLoadPatientDatabase() throws IOException {
+    public void testSaveLoadPatientDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Patient> originalPatientDatabase = originalDatabase.getPatientDatabase();
 
@@ -49,7 +49,7 @@ public class DatabaseTests {
     }
 
     @Test(timeout = 1000)
-    public void testSaveLoadDoctorDatabase() throws IOException {
+    public void testSaveLoadDoctorDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Doctor> originalDoctorDatabase = originalDatabase.getDoctorDatabase();
 
@@ -75,7 +75,7 @@ public class DatabaseTests {
     }
 
     @Test(timeout = 1000)
-    public void testSaveLoadSecretaryDatabase() throws IOException {
+    public void testSaveLoadSecretaryDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Secretary> originalSecretaryDatabase = originalDatabase.getSecretaryDatabase();
 
@@ -101,7 +101,7 @@ public class DatabaseTests {
     }
 
     @Test(timeout = 1000)
-    public void testSaveLoadAdminDatabase() throws IOException {
+    public void testSaveLoadAdminDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> originalAdminDatabase = originalDatabase.getAdminDatabase();
 
@@ -127,7 +127,7 @@ public class DatabaseTests {
     }
 
     @Test(timeout = 1000)
-    public void testSaveLoadPrescriptionDatabase() throws IOException {
+    public void testSaveLoadPrescriptionDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Prescription> originalPrescriptionDatabase = originalDatabase.getPrescriptionDatabase();
 
@@ -167,7 +167,7 @@ public class DatabaseTests {
     }
 
     @Test(timeout = 1000)
-    public void testSaveLoadReportDatabase() throws IOException {
+    public void testSaveLoadReportDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Report> originalReportDatabase = originalDatabase.getReportDatabase();
 
