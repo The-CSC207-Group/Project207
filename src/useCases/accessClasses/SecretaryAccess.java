@@ -5,6 +5,7 @@ import database.DataMapperGateway;
 import entities.*;
 import useCases.managers.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SecretaryAccess {
@@ -58,8 +59,8 @@ public class SecretaryAccess {
     public void changePatientPassword(Integer iDUser, String newPassword){
         patientManager.changeUserPassword(iDUser, newPassword);
     }
-    public void displaySchedule(){
-        //TO BE IMPLEMENTED
+    public ArrayList<AppointmentDataBundle> displaySchedule(Integer doctorId, LocalDate selectedDay){
+        return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public AppointmentDataBundle bookAppointment(Integer iDPatient, Integer iDDoctor, TimeBlock proposedTime){
 //        return appointmentManager.bookAppointment(iDPatient, iDDoctor, proposedTime);
