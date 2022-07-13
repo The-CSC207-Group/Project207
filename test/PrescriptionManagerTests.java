@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.PrescriptionManager;
+import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -21,7 +22,7 @@ public class PrescriptionManagerTests {
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
-    @Test(timeout = 50)
+    @Test(timeout = 1000)
     public void testGetPatientActivePrescriptionDataByUserIdUsingActivePrescription() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
@@ -70,5 +71,37 @@ public class PrescriptionManagerTests {
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 originalPrescriptionBundle1.getExpiryDate().compareTo(loadedPrescriptionDataBundle1.
                         getExpiryDate()), 0);
+    }
+    @Test(timeout = 1000)
+    public void testGetPatientActivePrescriptionDataByUserIdUsingInactivePrescription() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
+
+        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
+        LocalDateTime localExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+
+        Prescription originalPrescription1 = new
+                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                456, zonedExpiryDate);
+        Prescription originalPrescription2 = new
+                Prescription(zonedDateNoted, "bad", "very unhealthy", 789,
+                1011, zonedExpiryDate);
+
+        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
+        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
+
+        PrescriptionDataBundle originalPrescriptionBundle1 = new PrescriptionDataBundle(prescriptionID1,
+                originalPrescription1);
+
+        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+
+        ArrayList<PrescriptionDataBundle> loadedPrescriptionList =
+                prescriptionManager.getPatientActivePrescriptionDataByUserId(123);
+
+        assertTrue("Since there are no non expired prescriptions, the ArrayList should be empty",
+                loadedPrescriptionList.isEmpty());
     }
 }
