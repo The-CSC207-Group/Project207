@@ -1,15 +1,9 @@
 package useCases.accessClasses;
 
-import dataBundles.ContactDataBundle;
-import dataBundles.DoctorDataBundle;
-import dataBundles.PatientDataBundle;
-import dataBundles.PrescriptionDataBundle;
+import dataBundles.*;
 import database.DataMapperGateway;
 import entities.*;
-import useCases.managers.DoctorManager;
-import useCases.managers.PatientManager;
-import useCases.managers.PrescriptionManager;
-import useCases.managers.SecretaryManager;
+import useCases.managers.*;
 
 import java.util.ArrayList;
 
@@ -23,14 +17,17 @@ public class SecretaryAccess {
 
     DataMapperGateway<Contact> contactDatabase;
 
+    LogManager logManager;
 
     public SecretaryAccess(DataMapperGateway<Prescription> prescriptionDatabase,
                            DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor>
-                           doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase) {
+                           doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase,
+                           DataMapperGateway<Log> logDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
         this.patientManager = new PatientManager(patientDatabase);
         this.doctorManager = new DoctorManager(doctorDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase);
+        this.logManager = new LogManager(logDatabase);
     }
     public void signOut(){
 
@@ -74,5 +71,11 @@ public class SecretaryAccess {
     }
     public void displaySchedule(){
         //TO BE IMPLEMENTED
+    }
+
+    public ArrayList<LogDataBundle> getLogs(Integer userId){
+        if (patientManager.getPatient(userId) != null){return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogs());}
+        if (secretaryManager.getSecretary(userId) != null){return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogs());}
+        return null;
     }
 }
