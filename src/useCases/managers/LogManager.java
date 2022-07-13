@@ -26,9 +26,9 @@ public class LogManager {
     }
 
     public ArrayList<LogDataBundle> getLogDataBundlesFromLogIDs(ArrayList<Integer> logIDs){
-        ArrayList<LogDataBundle> logs = logIDs.stream().map(x -> new LogDataBundle(x, logDatabase.get(x))).
-                collect(Collectors.toCollection(ArrayList::new));
-        return logs;
+            ArrayList<LogDataBundle> logs = logIDs.stream().map(x -> new LogDataBundle(x, logDatabase.get(x))).
+                    collect(Collectors.toCollection(ArrayList::new));
+            return logs;
     }
 
 }

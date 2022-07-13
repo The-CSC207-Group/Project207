@@ -22,7 +22,7 @@ public class PrescriptionManager {
     public PrescriptionManager(DataMapperGateway<Prescription> prescriptionsDatabase){
         this.prescriptionsDatabase = prescriptionsDatabase;
     }
-    public Stream<Prescription> getAllPerscriptions(){
+    private Stream<Prescription> getAllPerscriptions(){
         return prescriptionsDatabase.getAllIds().stream()
                 .map(x -> prescriptionsDatabase.get(x));
     }
@@ -43,10 +43,11 @@ public class PrescriptionManager {
 
 
 
-    public Integer createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
                                    ZonedDateTime expiryDate){
         Prescription prescription = new Prescription(dateNoted, header, body, patientID, doctorID, expiryDate);
-        return prescriptionsDatabase.add(prescription);
+        prescriptionsDatabase.add(prescription);
+        return new PrescriptionDataBundle(prescription.getId(), prescription);
     }
     public void removePrescription(Integer prescriptionId){
         prescriptionsDatabase.remove(prescriptionId);
