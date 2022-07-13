@@ -3,12 +3,7 @@ package useCases;
 import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
 import entities.*;
-import useCases.query.AvailabilityQueryConditions.NoAppointmentConflict;
-import useCases.query.AvailabilityQueryConditions.NoDoctorAvailabilityConflict;
-import useCases.query.Query;
-import useCases.query.QueryCondition;
-import useCases.query.AppointmentQueryConditions.IsPatientsAppointment;
-import useCases.query.AppointmentQueryConditions.IsDoctorsAppointment;
+
 
 import java.time.*;
 import java.util.ArrayList;
@@ -28,65 +23,84 @@ public class AppointmentManager {
         this.doctorDatabase  = doctorDatabase;
     }
 
-    public boolean bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
-        Query<Appointment> queryAppointment = new Query<>();
-        ArrayList<QueryCondition<Appointment>> queryConditionsAppointment = new ArrayList<>();
-        queryConditionsAppointment.add(new NoAppointmentConflict<>(true, proposedTime));
+    public boolean bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
 
-        Query<Doctor> queryDoctor = new Query<>();
-        ArrayList<QueryCondition<Doctor>> queryConditionsDoctor = new ArrayList<>();
-        queryConditionsDoctor.add(new NoDoctorAvailabilityConflict<>(true, doctorId, proposedTime));
-
-        if (!queryAppointment.returnAllMeetingConditions(appointmentDatabase, queryConditionsAppointment).isEmpty() |
-                !queryDoctor.returnAllMeetingConditions(doctorDatabase, queryConditionsDoctor).isEmpty()){
-            return false;
-        }
-        else {
+        if (isNoTimeBlockConflictAppointment(getAppointmentWithPatientAndDoctor(doctorId, patientId), proposedTime)
+                & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorId,
+                proposedTime.getStartTime().toLocalDate()), proposedTime)) {
             appointmentDatabase.add(new Appointment(proposedTime, doctorId, patientId));
             return true;
         }
+        return false;
     }
+
+    public boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
+                                                    TimeBlock proposedTime){
+        return timeBlockList.stream()
+                .filter(x -> x.getStartTime().getDayOfYear()
+                        == proposedTime.getStartTime().getDayOfYear())
+                .filter(x -> x.getStartTime().isBefore(proposedTime.getStartTime()) &
+                        x.getEndTime().isAfter(proposedTime.getStartTime()))
+                .filter(x -> x.getStartTime().isAfter(proposedTime.getStartTime()) &
+                        x.getStartTime().isBefore(proposedTime.getEndTime()))
+                .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
+    }
+
+
     public void removeAppointment(Integer Id){
         appointmentDatabase.remove(Id);
     }
-    public void rescheduleAppointment(Integer Id, ZonedDateTime newStart, ZonedDateTime newEnd){
-        appointmentDatabase.get(Id).setTimeBlock(new TimeBlock(newStart, newEnd));
-    }
-    public ArrayList<AppointmentDataBundle> getPatientAppointments(Integer patientId){
-//        HashSet<Integer> allAppointmentIds = appointmentDatabase.getAllIds();
-//        ArrayList<Appointment> patientAppointments = new ArrayList<>();
-//        for (Integer id : allAppointmentIds){
-//            if (patient.getId() == appointmentDatabase.get(id).getPatientID())
-//                patientAppointments.add(appointmentDatabase.get(id));
-//        }
-//        return patientAppointments;
-        Query<Appointment> query = new Query<>();
-        ArrayList<QueryCondition<Appointment>> queryConditions = new ArrayList<>();
-        queryConditions.add(new IsPatientsAppointment<>(patientId, true));
-        ArrayList<Appointment> patientsAppointments =
-                query.returnAllMeetingConditions(appointmentDatabase, queryConditions);
-        return convertAppointmentsToDataBundle(patientsAppointments);
+    public boolean rescheduleAppointment(Integer appointmentId, ZonedDateTime newStart, ZonedDateTime newEnd){
+        Appointment appointment = appointmentDatabase.get(appointmentId);
+        removeAppointment(appointmentId);
+        TimeBlock proposedTime = new TimeBlock(newStart, newEnd);
+        ArrayList<TimeBlock> consideration = getAppointmentWithPatientAndDoctor(appointment.getDoctorID(),
+                appointment.getPatientID());
+        if (isNoTimeBlockConflictAppointment(consideration, proposedTime)) {
+            bookAppointment(appointment.getPatientID(), appointment.getDoctorID(), proposedTime);
+            return true;
+        }
+        return false;
     }
 
+    public ArrayList<TimeBlock> getAppointmentWithPatientAndDoctor(Integer doctorId, Integer patientId){
+        return appointmentDatabase.getAllIds().stream()
+                .map(x -> appointmentDatabase.get(x))
+                .filter(x -> x.getDoctorID() == doctorId)
+                .filter(x -> x.getPatientID() == patientId)
+                .map(Appointment::getTimeBlock)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+    public ArrayList<AppointmentDataBundle> getPatientAppointments(Integer patientId){
+        return getAllPatientAppointments(patientId).stream()
+                .map(AppointmentDataBundle::new)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public ArrayList<Appointment> getAllPatientAppointments(Integer patientId){
+        return getAppointments().stream()
+                .filter(x -> x.getPatientID() == patientId)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
     public ArrayList<AppointmentDataBundle> getDoctorAppointments(Integer doctorId){
-        Query<Appointment> query = new Query<>();
-        ArrayList<QueryCondition<Appointment>> queryConditions = new ArrayList<>();
-        queryConditions.add(new IsDoctorsAppointment<>(doctorId, true));
-        ArrayList<Appointment> patientsAppointments =
-                query.returnAllMeetingConditions(appointmentDatabase, queryConditions);
-        return convertAppointmentsToDataBundle(patientsAppointments);
+        return getAppointments().stream()
+                .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorId))
+                .map(AppointmentDataBundle::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<AppointmentDataBundle> getAllAppointments(){
-        HashSet<Integer> allAppointmentIds = appointmentDatabase.getAllIds();
-        ArrayList<Appointment> allAppointments = new ArrayList<>();
-        for (Integer id : allAppointmentIds){
-            allAppointments.add(appointmentDatabase.get(id));
-        }
-        return convertAppointmentsToDataBundle(allAppointments);
+
+        return getAppointments().stream()
+                .map(AppointmentDataBundle::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
-    //availability should be an arrayList of timeblocks, with only 1 block representing no appointments. each subsequent
-    //appointment cuts the block, expanding the list
+
+    private ArrayList<Appointment> getAppointments(){
+        return appointmentDatabase.getAllIds().stream()
+                .map(x -> appointmentDatabase.get(x))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
     public ArrayList<TimeBlock> searchAvailability(Integer doctorId, ZonedDateTime searchStartTime,
                                                        ZonedDateTime searchEndTime){
         ArrayList<TimeBlock> totalAvailableTimes = new ArrayList<>();
@@ -102,50 +116,48 @@ public class AppointmentManager {
                 .stream()
                 .filter(x -> dayOfWeek.getValue() == x.getDayOfWeek().getValue())
                 .collect(Collectors.toCollection(ArrayList::new));
-
-//        ArrayList<AvailabilityData> availabilityDataList = new ArrayList<>();
-//        for (AvailabilityData availabilityData: doctorDatabase.get(doctorId).getAvailability()){
-//            if (dayOfWeek.getValue() == availabilityData.getDayOfWeek().getValue()){
-//                availabilityDataList.add(availabilityData);
-//            }
-//        }
-//        return availabilityDataList;
     }
     public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
-        ArrayList<AvailabilityData> doctorAvailabilityData = getAvailabilityDataFromDayOfWeek(doctorId,
-                selectedDay.getDayOfWeek());
-        ArrayList<TimeBlock> availabilityTimeBlock = new ArrayList<>();
-        for (AvailabilityData availabilityData: doctorAvailabilityData){
-                TimeBlock newTimeBlock = new TimeBlock(ZonedDateTime.of(selectedDay,
-                        availabilityData.getDoctorStartTime(), ZoneId.of("US/Eastern")),
-                        ZonedDateTime.of(selectedDay, availabilityData.getDoctorEndTime(),
-                                ZoneId.of("US/Eastern")));
-                availabilityTimeBlock.add(newTimeBlock);
-            }
-        return availabilityTimeBlock;
+        return getAvailabilityDataFromDayOfWeek(doctorId, selectedDay.getDayOfWeek()).stream()
+                .map(x -> new TimeBlock(ZonedDateTime.of(selectedDay,
+                        x.getDoctorStartTime(), ZoneId.of("US/Eastern")),
+                        ZonedDateTime.of(selectedDay, x.getDoctorEndTime(),
+                                ZoneId.of("US/Eastern"))))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<TimeBlock> parseAvailabilityWithAppointmentData(ArrayList<TimeBlock> availability,
                                                                      Integer doctorId){
         ArrayList<TimeBlock> parsedAvailability = new ArrayList<>();
+        ArrayList<ZonedDateTime> startTime = new ArrayList<>();
         for (TimeBlock availabilityTimeBlock: availability) {
-            ZonedDateTime startTime = availabilityTimeBlock.getStartTime();
-            for (Integer appointmentId : appointmentDatabase.getAllIds()) {
-                if (appointmentDatabase.get(appointmentId).getDoctorID() == doctorId & startTime
-                        == appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime()) {
-                    startTime = appointmentDatabase.get(appointmentId).getTimeBlock().getEndTime();
-                }
-                else if (appointmentDatabase.get(appointmentId).getDoctorID() == doctorId){
-                    parsedAvailability.add(new TimeBlock(startTime,
-                            appointmentDatabase.get(appointmentId).getTimeBlock().getStartTime()));
-                    startTime = appointmentDatabase.get(appointmentId).getTimeBlock().getEndTime();
-                }
-            }
-            if (startTime != availabilityTimeBlock.getEndTime()){
-                parsedAvailability.add(new TimeBlock(startTime, availabilityTimeBlock.getEndTime()));
+            startTime.add(availabilityTimeBlock.getStartTime());
+            appointmentDatabase.getAllIds().stream()
+                    .map(x -> appointmentDatabase.get(x))
+                    .filter(x -> x.getTimeBlock().getStartTime().getDayOfYear() ==
+                            availabilityTimeBlock.getStartTime().getDayOfYear())
+                    .filter(x -> x.getDoctorID() == doctorId)
+                    .filter(x -> calculateNoConflictTime(x, startTime, parsedAvailability))
+                    .close();
+            if (startTime.get(0) != availabilityTimeBlock.getEndTime()){
+                parsedAvailability.add(new TimeBlock(startTime.remove(0), availabilityTimeBlock.getEndTime()));
             }
         }
         return parsedAvailability;
+    }
+
+    private boolean calculateNoConflictTime(Appointment selectedAppointment, ArrayList<ZonedDateTime> startTime,
+                                            ArrayList<TimeBlock> collectedTimeBlocks){
+        if (startTime.get(0) == selectedAppointment.getTimeBlock().getEndTime()){
+            startTime.remove(0);
+            startTime.add(selectedAppointment.getTimeBlock().getEndTime());
+        }
+        else {
+            collectedTimeBlocks.add(new TimeBlock(startTime.remove(0),
+                    selectedAppointment.getTimeBlock().getStartTime()));
+            startTime.add(selectedAppointment.getTimeBlock().getEndTime());
+        }
+        return true;
     }
     //pending implementation
 //    public boolean newAvailability(Integer doctorId, DayOfWeek dayOfWeek, LocalTime startTime,
