@@ -45,10 +45,10 @@ public class SystemAccess {
      */
     public boolean canSignIn(Integer userID, String password) {
         ArrayList<DataMapperGateway<? extends User>> userDatabases = new ArrayList<>(Arrays.asList(patientDatabase,
-                doctorDatabase, secretaryDatabase));
+                doctorDatabase, secretaryDatabase, adminDatabase));
         for (DataMapperGateway<? extends User> database : userDatabases) {
             if (database.getAllIds().contains(userID)){
-                User user = patientDatabase.get(userID);
+                User user = database.get(userID);
                 return user != null && user.comparePassword(password);
 
             }
