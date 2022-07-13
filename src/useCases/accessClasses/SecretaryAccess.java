@@ -59,13 +59,11 @@ public class SecretaryAccess {
     public void changePatientPassword(Integer iDUser, String newPassword){
         patientManager.changeUserPassword(iDUser, newPassword);
     }
-    public ArrayList<AppointmentDataBundle> displaySchedule(Integer doctorId, LocalDate selectedDay){
+    public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public AppointmentDataBundle bookAppointment(Integer iDPatient, Integer iDDoctor, TimeBlock proposedTime){
-//        return appointmentManager.bookAppointment(iDPatient, iDDoctor, proposedTime);
-//        WILL RETURN APPOINTMENT DATA BUNDLE
-        return null;
+        return appointmentManager.bookAppointment(iDPatient, iDDoctor, proposedTime);
     }
     public void removeAppointment(Integer iDAppointment){
         appointmentManager.removeAppointment(iDAppointment);
