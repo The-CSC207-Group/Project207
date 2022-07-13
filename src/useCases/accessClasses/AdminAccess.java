@@ -1,7 +1,13 @@
 package useCases.accessClasses;
 
+import dataBundles.ContactDataBundle;
+import dataBundles.PatientDataBundle;
 import database.DataMapperGateway;
 import entities.*;
+import useCases.managers.AdminManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
+import useCases.managers.SecretaryManager;
 import useCases.query.Query;
 import useCases.query.QueryCondition;
 import useCases.query.userQueryConditions.HasUserId;
@@ -15,13 +21,21 @@ public class AdminAccess {
     DataMapperGateway<Doctor> doctorDatabase;
     DataMapperGateway<Secretary> secretaryDatabase;
     DataMapperGateway<Admin> adminDatabase;
+    DataMapperGateway<Contact> contactDatabase;
+    AdminManager adminManager;
+    PatientManager patientManager;
+    DoctorManager doctorManager;
+    SecretaryManager secretaryManager;
+
 
     public AdminAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor> doctorDatabase,
-    DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase){
-        this.adminDatabase = adminDatabase;
-        this.doctorDatabase = doctorDatabase;
-        this.patientDatabase = patientDatabase;
-        this.secretaryDatabase = secretaryDatabase;
+    DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact>
+                       contactDatabase){
+        this.adminManager = new AdminManager(adminDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
+        this.doctorManager = new DoctorManager(doctorDatabase);
+        this.secretaryManager = new SecretaryManager(secretaryDatabase);
+
     }
 
     public void deleteUser(String userId){
@@ -37,7 +51,8 @@ public class AdminAccess {
         Integer id = query.returnFirstMeetingConditions(database, queryConditions).getId();
         database.remove(id);
     }
-    public <T extends User> void createUser(){
+    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle, String healthNumber){
+        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
 
     }
 
