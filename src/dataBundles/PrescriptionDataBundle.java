@@ -10,9 +10,10 @@ import java.util.Date;
 /**
  * Class solely to bundle patient data and send it around to different controllers
  */
-public class PrescriptionDataBundle {
+public class PrescriptionDataBundle extends DataBundle{
     private Prescription prescription;
-    public PrescriptionDataBundle(Prescription prescription){
+    public PrescriptionDataBundle(Integer id, Prescription prescription){
+        super(id);
         this.prescription = prescription;
     }
 

@@ -4,11 +4,12 @@ import entities.Report;
 
 import java.time.ZonedDateTime;
 
-public class ReportDataBundle {
+public class ReportDataBundle extends DataBundle{
 
     Report report;
 
-    public ReportDataBundle(Report report){
+    public ReportDataBundle(Integer id, Report report){
+        super(id);
         this.report = report;
     }
 

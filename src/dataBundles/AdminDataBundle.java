@@ -4,10 +4,11 @@ import entities.Admin;
 
 import java.util.ArrayList;
 
-public class AdminDataBundle {
+public class AdminDataBundle extends DataBundle{
     private final Admin admin;
 
-    public AdminDataBundle(Admin admin) {
+    public AdminDataBundle(Integer id, Admin admin) {
+        super(id);
         this.admin = admin;
     }
 

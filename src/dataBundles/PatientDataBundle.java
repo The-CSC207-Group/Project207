@@ -4,10 +4,11 @@ import entities.Patient;
 
 import java.util.ArrayList;
 
-public class PatientDataBundle {
+public class PatientDataBundle extends DataBundle {
     private final Patient patient;
 
-    public PatientDataBundle(Patient patient) {
+    public PatientDataBundle(Integer id, Patient patient) {
+        super(id);
         this.patient = patient;
     }
 

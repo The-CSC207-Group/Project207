@@ -1,20 +1,17 @@
 package useCases.managers;
 
 import database.DataMapperGateway;
-import entities.Admin;
 import entities.Doctor;
-
-import javax.xml.crypto.Data;
 
 public class DoctorManager {
 
     DataMapperGateway<Doctor> doctorDatabase;
-    GenericUserManagerUtilities<Doctor> doctorUtilities;
+    GenericUserManagerMethods<Doctor> doctorUtilities;
 
 
     public DoctorManager(DataMapperGateway<Doctor> doctorDatabase){
         this.doctorDatabase = doctorDatabase;
-        this.doctorUtilities = new GenericUserManagerUtilities<>(doctorDatabase);
+        this.doctorUtilities = new GenericUserManagerMethods<>(doctorDatabase);
     }
 
     public boolean createDoctor(String username, String password, int contactInfo){
@@ -25,5 +22,8 @@ public class DoctorManager {
 
     public void changeUserPassword(Integer IDUser, String newPassword){
         doctorUtilities.changePassword(IDUser, newPassword);
+    }
+    public void deleteDoctor(Integer idUser){
+        doctorUtilities.deleteUser(idUser);
     }
 }

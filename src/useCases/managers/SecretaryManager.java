@@ -15,11 +15,11 @@ public class SecretaryManager {
     DataMapperGateway<Doctor> doctorDatabase;
     DataMapperGateway<Secretary> secretaryDatabase;
 
-    GenericUserManagerUtilities<Secretary> secretaryUtilities;
+    GenericUserManagerMethods<Secretary> secretaryUtilities;
 
     public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase){
         this.secretaryDatabase = secretaryDatabase;
-        this.secretaryUtilities = new GenericUserManagerUtilities<>(secretaryDatabase);
+        this.secretaryUtilities = new GenericUserManagerMethods<>(secretaryDatabase);
     }
 
     public boolean createSecretary(String username, String password, int contactInfo){
@@ -28,17 +28,11 @@ public class SecretaryManager {
         return user_id != null;
     }
 
-    public boolean deleteUser(Integer userID){
-        ArrayList<DataMapperGateway<? extends User>> userDatabases = new ArrayList<>(Arrays.asList(patientDatabase,
-                doctorDatabase, secretaryDatabase));
-        for (DataMapperGateway<? extends User> database : userDatabases){
-            if (database.getAllIds().contains(userID)){
-                return database.remove(userID);
-            }
-        }
-        return false;
-    }
     public void changeUserPassword(Integer IDUser, String newPassword){
         secretaryUtilities.changePassword(IDUser, newPassword);
+    }
+
+    public void deleteSecretary(Integer idUser){
+        secretaryUtilities.deleteUser(idUser);
     }
 }

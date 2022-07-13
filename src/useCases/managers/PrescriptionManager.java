@@ -8,8 +8,10 @@ import useCases.query.Query;
 import useCases.query.QueryCondition;
 import useCases.query.prescriptionQueryConditions.IsActivePrescription;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PrescriptionManager {
     DataMapperGateway<Prescription> prescriptionsDatabase;
@@ -17,51 +19,33 @@ public class PrescriptionManager {
         this.prescriptionsDatabase = prescriptionsDatabase;
     }
 
-    //    public ArrayList<PrescriptionDataBundle> getPatientDataByUserId(String userId){
-//        HashSet<Integer> prescriptionIds = prescriptionsDatabase.getAllIds();
-//        ArrayList<PrescriptionDataBundle> res = new ArrayList<>();
-//        for (Integer prescriptionId : prescriptionIds) {
-//            Prescription currPrescription = prescriptionsDatabase.get(prescriptionId);
-//            String prescriptionUserID = currPrescription.getPatient().getUsername();
-//
-//            if (!isPatientWithId(userId, prescriptionUserID)) {return null;}
-//            if (!isActivePrescription(currPrescription)) {return null;}
-//
-//            res.add(new PrescriptionDataBundle(currPrescription));
-//        }
-//        return res;
-//    }
     public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer userId) {
-        ArrayList<QueryCondition<Prescription>> conditions = new ArrayList<>();
-        conditions.add(new IsActivePrescription<>(true));
-        conditions.add(new IsUsersNote<>(userId, true));
-        return getPrescriptionDataBundles(conditions);
+        return prescriptionsDatabase.getAllIds().stream().
+                filter(x -> !isExpiredPrescription(prescriptionsDatabase.get(x))).
+                filter(x -> isPatientsPrescription(prescriptionsDatabase.get(x), userId)).
+                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).collect(Collectors.toCollection(ArrayList::new));
     }
     public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {
-        ArrayList<QueryCondition<Prescription>> conditions = new ArrayList<>();
-        conditions.add(new IsUsersNote<>(userId, true));
-        conditions.add(new IsActivePrescription<>(false));
-        return getPrescriptionDataBundles(conditions);
-    }
-
-    private ArrayList<PrescriptionDataBundle> getPrescriptionDataBundles(ArrayList<QueryCondition<Prescription>> conditions) {
-        ArrayList<Prescription> queryResults = new Query<Prescription>().returnAllMeetingConditions(
-                prescriptionsDatabase, conditions);
-        ArrayList<PrescriptionDataBundle> res = new ArrayList<>();
-        for (Prescription prescription: queryResults){
-            res.add(new PrescriptionDataBundle(prescription));
-        }
-        return res;
+        return prescriptionsDatabase.getAllIds().stream().
+                filter(x -> isPatientsPrescription(prescriptionsDatabase.get(x), userId)).
+                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).collect(Collectors.toCollection(ArrayList::new));
     }
 
 
-    public void createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+
+    public Integer createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
                                    ZonedDateTime expiryDate){
         Prescription prescription = new Prescription(dateNoted, header, body, patientID, doctorID, expiryDate);
-        prescriptionsDatabase.add(prescription);
+        return prescriptionsDatabase.add(prescription);
     }
     public void removePrescription(Integer prescriptionId){
         prescriptionsDatabase.remove(prescriptionId);
+    }
+    private boolean isExpiredPrescription(Prescription prescription){
+        return prescription.getExpiryDate().toLocalDateTime().isBefore(LocalDateTime.now());
+    }
+    private boolean isPatientsPrescription(Prescription prescription, Integer userId){
+        return prescription.getPatientID() == userId;
     }
 
 }

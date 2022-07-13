@@ -1,18 +1,15 @@
 package useCases.managers;
 
-import dataBundles.ReportDataBundle;
 import database.DataMapperGateway;
 import entities.Patient;
 
-import java.util.ArrayList;
-
 public class PatientManager {
     DataMapperGateway<Patient> patientDatabase;
-    GenericUserManagerUtilities<Patient> patientUtilities;
+    GenericUserManagerMethods<Patient> patientUtilities;
 
     public PatientManager(DataMapperGateway<Patient> patientDatabase){
         this.patientDatabase = patientDatabase;
-        this.patientUtilities = new GenericUserManagerUtilities<>(patientDatabase);
+        this.patientUtilities = new GenericUserManagerMethods<>(patientDatabase);
     }
 
     public boolean createPatient(String username, String password, int contactInfo, String healthNumber){
@@ -22,6 +19,9 @@ public class PatientManager {
     }
     public void changeUserPassword(Integer IDUser, String newPassword){
         patientUtilities.changePassword(IDUser, newPassword);
+    }
+    public void deletePatient(Integer idUser){
+        patientUtilities.deleteUser(idUser);
     }
 
 }
