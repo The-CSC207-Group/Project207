@@ -26,7 +26,7 @@ public class AppointmentManager {
 
     public boolean bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
 
-        if (isNoTimeBlockConflictAppointment(getAppointmentWithPatientAndDoctor(doctorId, patientId), proposedTime)
+        if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorId, patientId), proposedTime)
                 & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorId,
                 proposedTime.getStartTime().toLocalDate()), proposedTime)) {
             appointmentDatabase.add(new Appointment(proposedTime, doctorId, patientId));
@@ -55,7 +55,7 @@ public class AppointmentManager {
         Appointment appointment = appointmentDatabase.get(appointmentId);
         removeAppointment(appointmentId);
         TimeBlock proposedTime = new TimeBlock(newStart, newEnd);
-        ArrayList<TimeBlock> consideration = getAppointmentWithPatientAndDoctor(appointment.getDoctorID(),
+        ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorID(),
                 appointment.getPatientID());
         if (isNoTimeBlockConflictAppointment(consideration, proposedTime)) {
             bookAppointment(appointment.getPatientID(), appointment.getDoctorID(), proposedTime);
@@ -64,7 +64,7 @@ public class AppointmentManager {
         return false;
     }
 
-    public ArrayList<TimeBlock> getAppointmentWithPatientAndDoctor(Integer doctorId, Integer patientId){
+    public ArrayList<TimeBlock> getTimeBlocksWithPatientAndDoctor(Integer doctorId, Integer patientId){
         return appointmentDatabase.getAllIds().stream()
                 .map(x -> appointmentDatabase.get(x))
                 .filter(x -> x.getDoctorID() == doctorId)

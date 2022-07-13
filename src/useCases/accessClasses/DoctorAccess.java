@@ -3,6 +3,7 @@ package useCases;
 import dataBundles.AppointmentDataBundle;
 import dataBundles.LogDataBundle;
 import dataBundles.PrescriptionDataBundle;
+import dataBundles.ReportDataBundle;
 import database.DataMapperGateway;
 import entities.*;
 import useCases.managers.AppointmentManager;
@@ -44,9 +45,10 @@ public class DoctorAccess {
         this.logManager = new LogManager(logDatabase);
 
     }
-    public ArrayList<Report> getPatientReports(Integer patientId){
+    public ArrayList<ReportDataBundle> getPatientReports(Integer patientId){
         return patientDatabase.get(patientId).getReports().stream()
                 .map(x -> reportDatabase.get(x))
+                .map(x -> new ReportDataBundle(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     public void addPatientReport(Integer patientId, Integer reportId){
@@ -61,13 +63,25 @@ public class DoctorAccess {
     public ArrayList<PrescriptionDataBundle> getPrescriptionHistory(Integer patientId){
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientId);
     }
-    public void createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
                                    ZonedDateTime expiryDate){
-        prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
+         Integer newPrescriptionId =
+                 prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
+         return new PrescriptionDataBundle(newPrescriptionId, prescriptionDatabase.get(newPrescriptionId));
     }
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
     }
+    public ArrayList<AppointmentDataBundle> getAllAppointments(){
+        return appointmentManager.getAllAppointments();
+    }
+    public ArrayList<AppointmentDataBundle> getAllDoctorAppointments(Integer doctorId){
+        return appointmentManager.getDoctorAppointments(doctorId);
+    }
+    public ArrayList<AppointmentDataBundle> getAllPatientAppointments(Integer patientId){
+        return appointmentManager.getPatientAppointments(patientId);
+    }
+
     public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
