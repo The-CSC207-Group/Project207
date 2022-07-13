@@ -74,7 +74,7 @@ public class AppointmentManager {
     }
     public ArrayList<AppointmentDataBundle> getPatientAppointments(Integer patientId){
         return getAllPatientAppointments(patientId).stream()
-                .map(AppointmentDataBundle::new)
+                .map(x -> new AppointmentDataBundle(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -86,14 +86,14 @@ public class AppointmentManager {
     public ArrayList<AppointmentDataBundle> getDoctorAppointments(Integer doctorId){
         return getAppointments().stream()
                 .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorId))
-                .map(AppointmentDataBundle::new)
+                .map(x -> new AppointmentDataBundle(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<AppointmentDataBundle> getAllAppointments(){
 
         return getAppointments().stream()
-                .map(AppointmentDataBundle::new)
+                .map(x -> new AppointmentDataBundle(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -165,7 +165,6 @@ public class AppointmentManager {
                 .filter(x -> x.getDoctorID() == doctorId)
                 .filter(x->x.getTimeBlock().getStartTime().toLocalDate() == selectedDay)
                 .collect(Collectors.toCollection(ArrayList::new));
-
     }
     //pending implementation
 //    public boolean newAvailability(Integer doctorId, DayOfWeek dayOfWeek, LocalTime startTime,
@@ -184,7 +183,7 @@ public class AppointmentManager {
                                                                                      patientsAppointments) {
         ArrayList<AppointmentDataBundle> appointmentDataBundles = new ArrayList<>();
         for (Appointment appointment : patientsAppointments){
-            appointmentDataBundles.add(new AppointmentDataBundle(appointment));
+            appointmentDataBundles.add(new AppointmentDataBundle(appointment.getId(), appointment));
         }
         return appointmentDataBundles;
     }
