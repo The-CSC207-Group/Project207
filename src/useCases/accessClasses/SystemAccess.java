@@ -34,7 +34,7 @@ public class SystemAccess {
      * @param contactInfo contact info of user created
      * @return true if account has been created, false if account failed to create
      */
-    public boolean createPatient(String username, String password, int contactInfo, String healthNumber) {
+    public Integer createPatient(String username, String password, int contactInfo, String healthNumber) {
         return patientManager.createPatient(username, password, contactInfo, healthNumber);
     }
 
