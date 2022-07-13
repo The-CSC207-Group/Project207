@@ -4,6 +4,7 @@ import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
 import entities.Patient;
 import entities.Prescription;
+import entities.Contact;
 import useCases.managers.AppointmentManager;
 import entities.Appointment;
 import useCases.managers.PatientManager;
@@ -16,9 +17,9 @@ public class PatientAccess {
     PrescriptionManager prescriptionManager;
     PatientManager patientManager;
     public PatientAccess(DataMapperGateway<Prescription> prescriptionDatabase,
-                         DataMapperGateway<Patient> patientDatabase) {
+                         DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Contact> contactDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
-        this.patientManager = new PatientManager(patientDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
     }
 
     public void signOut(){

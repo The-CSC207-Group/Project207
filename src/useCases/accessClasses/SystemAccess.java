@@ -16,8 +16,6 @@ public class SystemAccess {
     private final DataMapperGateway<Admin> adminDatabase;
     private final DataMapperGateway<Secretary> secretaryDatabase;
     private final DataMapperGateway<Doctor> doctorDatabase;
-    private final DataMapperGateway<Contact> contactDatabase;
-
     private final PatientManager patientManager;
 
     private final LogManager logManager;
@@ -35,7 +33,6 @@ public class SystemAccess {
         this.adminDatabase = adminDatabase;
         this.secretaryDatabase = secretaryDatabase;
         this.doctorDatabase = doctorDatabase;
-        this.contactDatabase = contactDatabase;
         this.logManager = new LogManager(logDatabase);
     }
 
