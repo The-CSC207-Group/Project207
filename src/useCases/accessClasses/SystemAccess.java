@@ -1,12 +1,10 @@
 package useCases.accessClasses;
 
-import dataBundles.AdminDataBundle;
-import dataBundles.DoctorDataBundle;
-import dataBundles.PatientDataBundle;
-import dataBundles.SecretaryDataBundle;
+import dataBundles.*;
 import database.DataMapperGateway;
 
 import entities.*;
+import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
 
 import java.util.ArrayList;
@@ -18,8 +16,9 @@ public class SystemAccess {
     private final DataMapperGateway<Admin> adminDatabase;
     private final DataMapperGateway<Secretary> secretaryDatabase;
     private final DataMapperGateway<Doctor> doctorDatabase;
-
     private final PatientManager patientManager;
+
+    private final LogManager logManager;
 
     private enum userType {
         patient, admin, secretary, doctor
@@ -27,23 +26,26 @@ public class SystemAccess {
 
 
     public SystemAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Admin> adminDatabase,
-                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase) {
+                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase,
+                        DataMapperGateway<Contact> contactDatabase, DataMapperGateway<Log> logDatabase) {
         this.patientDatabase = patientDatabase;
-        this.patientManager = new PatientManager(patientDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.adminDatabase = adminDatabase;
         this.secretaryDatabase = secretaryDatabase;
         this.doctorDatabase = doctorDatabase;
+        this.logManager = new LogManager(logDatabase);
     }
 
 
     /**
      * @param username    new username
      * @param password    new password
-     * @param contactInfo contact info of user created
+     * @param contactDataBundle contact info of user created
      * @return true if account has been created, false if account failed to create
      */
-    public Integer createPatient(String username, String password, int contactInfo, String healthNumber) {
-        return patientManager.createPatient(username, password, contactInfo, healthNumber);
+    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                 String healthNumber) {
+        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
 
     /**
@@ -74,6 +76,7 @@ public class SystemAccess {
     public DoctorDataBundle doctorSignIn(Integer userID, String password){
         Doctor doctor = doctorDatabase.get(userID);
         if (doctor.comparePassword(password)){
+            attachUserSignInLog(doctorDatabase, userID);
             return new DoctorDataBundle(userID, doctor);
         }
         return null;
@@ -82,6 +85,7 @@ public class SystemAccess {
     public PatientDataBundle patientSignIn(Integer userID, String password){
         Patient patient = patientDatabase.get(userID);
         if (patient.comparePassword((password))){
+            attachUserSignInLog(patientDatabase, userID);
             return new PatientDataBundle(userID, patient);
         }
         return null;
@@ -90,6 +94,7 @@ public class SystemAccess {
     public SecretaryDataBundle secretarySignIn(Integer userID, String password){
         Secretary secretary = secretaryDatabase.get(userID);
         if (secretary.comparePassword(password)){
+            attachUserSignInLog(secretaryDatabase, userID);
             return new SecretaryDataBundle(userID, secretary);
         }
         return null;
@@ -98,10 +103,20 @@ public class SystemAccess {
     public AdminDataBundle adminSignIn(Integer userID, String password){
         Admin admin = adminDatabase.get(userID);
         if (admin.comparePassword(password)){
+            attachUserSignInLog(adminDatabase, userID);
             return new AdminDataBundle(userID, admin);
         }
         return null;
     }
+
+    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer iDUser){
+        T user = database.get(iDUser);
+        Integer iDLog = logManager.addLog( user.getUsername() + " signed in");
+        user.addLog(iDLog);
+    }
+
+
+
 }
 
 

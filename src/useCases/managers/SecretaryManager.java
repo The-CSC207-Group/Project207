@@ -1,40 +1,53 @@
 package useCases.managers;
 
+import dataBundles.ContactDataBundle;
+import dataBundles.SecretaryDataBundle;
 import database.DataMapperGateway;
-import entities.Doctor;
-import entities.Patient;
-import entities.Secretary;
-import entities.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import entities.*;
 
 public class SecretaryManager {
 
     DataMapperGateway<Patient> patientDatabase;
     DataMapperGateway<Doctor> doctorDatabase;
     DataMapperGateway<Secretary> secretaryDatabase;
+    DataMapperGateway<Contact> contactDatabase;
 
-    GenericUserManagerMethods<Secretary> secretaryUtilities;
+    GenericUserManagerMethods<Secretary> secretaryMethods;
 
-    public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase){
+    public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact> contactDatabase){
         this.secretaryDatabase = secretaryDatabase;
-        this.secretaryUtilities = new GenericUserManagerMethods<>(secretaryDatabase);
+        this.secretaryMethods = new GenericUserManagerMethods<>(secretaryDatabase);
+        this.contactDatabase = contactDatabase;
     }
 
-    public Integer createSecretary(String username, String password, int contactInfo){
-        Secretary secretary = new Secretary(username, password, contactInfo);
-        return secretaryDatabase.add(secretary);
+    public SecretaryDataBundle createSecretary(String username, String password, ContactDataBundle contactDataBundle){
+        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
+        Secretary secretary = new Secretary(username, password, contactId);
+        return new SecretaryDataBundle(secretary.getId(), secretary);
     }
 
     public void changeUserPassword(Integer IDUser, String newPassword){
-        secretaryUtilities.changePassword(IDUser, newPassword);
+        secretaryMethods.changePassword(IDUser, newPassword);
     }
 
     public void deleteSecretary(Integer idUser){
-        secretaryUtilities.deleteUser(idUser);
+        secretaryMethods.deleteUser(idUser);
     }
     public Secretary getSecretary(Integer idUser){
-        return secretaryUtilities.getUser(idUser);
+        return secretaryMethods.getUser(idUser);
     }
+
+    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
+        return new Contact(contactDataBundle.getName(),
+                contactDataBundle.getEmail(),
+                contactDataBundle.getPhoneNumber(),
+                contactDataBundle.getAddress(),
+                contactDataBundle.getBirthday(),
+                contactDataBundle.getEmergencyContactName(),
+                contactDataBundle.getEmergencyContactEmail(),
+                contactDataBundle.getEmergencyContactPhoneNumber(),
+                contactDataBundle.getEmergencyRelationship());
+    }
+
+
 }

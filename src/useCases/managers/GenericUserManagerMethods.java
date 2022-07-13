@@ -22,4 +22,5 @@ public class GenericUserManagerMethods<T extends User> {
         return database.get(idUser);
     }
 
+
 }
