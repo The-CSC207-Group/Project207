@@ -7,7 +7,7 @@
  * https://github.com/gkopff/gson-javatime-serialisers/pull/24/commits
  */
 
-package Utilities;
+package utilities;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -71,11 +71,11 @@ public class ZoneIdConverter implements JsonSerializer<ZoneId>, JsonDeserializer
         if (json.isJsonNull()) {
             return null;
         }
-        final String stringValue = json.getAsString();
-        if (stringValue.isBlank()) {
+        final String zoneIdentifier = json.getAsString();
+        if (zoneIdentifier == null || zoneIdentifier.isBlank())
+        {
             return null;
         }
-
-        return ZoneId.of(stringValue);
+        return ZoneId.of(zoneIdentifier);
     }
 }

@@ -1,6 +1,6 @@
 package entities;
 
-import Utilities.JsonSerializable;
+import utilities.JsonSerializable;
 
 public class Appointment extends JsonSerializable {
 

@@ -1,6 +1,6 @@
 package entities;
 
-import Utilities.JsonSerializable;
+import utilities.JsonSerializable;
 
 import java.time.ZoneId;
 import java.util.regex.Pattern;
@@ -53,6 +53,8 @@ public class Clinic extends JsonSerializable {
 //            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
 //        }
     }
+
+
 
     public String getAddress() {
         return address;
