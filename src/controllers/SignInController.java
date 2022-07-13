@@ -14,7 +14,7 @@ public class SignInController extends TerminalController {
 
     public SignInController(Context parent) {
         super(parent);
-        this.systemManager = new SystemAccess(getDatabase());
+//        this.systemManager = new SystemAccess(getDatabase());
     }
 
     @Override
