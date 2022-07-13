@@ -33,10 +33,8 @@ public class SecretaryAccess {
     public void signOut(){
 
     }
-    public void deleteCurrentUser(Integer iDUser){
+    public void deleteUser(Integer iDUser){
         secretaryManager.deleteSecretary(iDUser);
-    }
-    public void deletePatient(Integer iDUser){
         patientManager.deletePatient(iDUser);
     }
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,

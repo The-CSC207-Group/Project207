@@ -7,30 +7,34 @@ import useCases.query.NoteQueryConditions.IsUsersNote;
 import useCases.query.Query;
 import useCases.query.QueryCondition;
 import useCases.query.prescriptionQueryConditions.IsActivePrescription;
+import utilities.DatabaseQueryUtility;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PrescriptionManager {
     DataMapperGateway<Prescription> prescriptionsDatabase;
+
+    DatabaseQueryUtility databaseUtilities = new DatabaseQueryUtility();
     public PrescriptionManager(DataMapperGateway<Prescription> prescriptionsDatabase){
         this.prescriptionsDatabase = prescriptionsDatabase;
     }
 
     public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer userId) {
-        return prescriptionsDatabase.getAllIds().stream().
-                filter(x -> !isExpiredPrescription(prescriptionsDatabase.get(x))).
-                filter(x -> isPatientsPrescription(prescriptionsDatabase.get(x), userId)).
-                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).
-                collect(Collectors.toCollection(ArrayList::new));
+         Stream<PrescriptionDataBundle> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
+                filter(x -> !isExpiredPrescription(x)).
+                filter(x -> isPatientsPrescription(x, userId)).
+                map(x -> new PrescriptionDataBundle(x.getId(), x));
+         return databaseUtilities.toArrayList(dataBundleStream);
     }
     public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {
-        return prescriptionsDatabase.getAllIds().stream().
-                filter(x -> isPatientsPrescription(prescriptionsDatabase.get(x), userId)).
-                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).
-                collect(Collectors.toCollection(ArrayList::new));
+        Stream<PrescriptionDataBundle> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
+                filter(x -> isPatientsPrescription(x, userId)).
+                map(x -> new PrescriptionDataBundle(x.getId(), x));
+        return databaseUtilities.toArrayList(dataBundleStream);
     }
 
 
