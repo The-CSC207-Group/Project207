@@ -3,6 +3,7 @@ package useCases.managers;
 import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
 import entities.*;
+import useCases.AppointmentQueries;
 
 
 import java.time.*;
