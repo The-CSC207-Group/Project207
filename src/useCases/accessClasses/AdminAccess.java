@@ -41,18 +41,11 @@ public class AdminAccess {
         this.logManager = new LogManager(logDatabase);
     }
 
-    public void deleteUser(String userId){
-        deleteUserFromDatabase(adminDatabase, userId);
-        deleteUserFromDatabase(doctorDatabase, userId);
-        deleteUserFromDatabase(patientDatabase, userId);
-        deleteUserFromDatabase(secretaryDatabase, userId);
-    }
-    private <T extends User> void deleteUserFromDatabase(DataMapperGateway<T> database, String userId){
-        Query<T> query = new Query<T>();
-        ArrayList<QueryCondition<T>> queryConditions = new ArrayList<>();
-        queryConditions.add(new HasUserId<>(userId, true));
-        Integer id = query.returnFirstMeetingConditions(database, queryConditions).getId();
-        database.remove(id);
+    public void deleteUser(Integer userId){
+        adminManager.deleteAdminUser(userId);
+        doctorManager.deleteDoctor(userId);
+        patientManager.deletePatient(userId);
+        secretaryManager.deleteSecretary(userId);
     }
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle, String healthNumber){
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);

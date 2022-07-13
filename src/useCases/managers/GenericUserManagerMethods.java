@@ -22,11 +22,5 @@ public class GenericUserManagerMethods<T extends User> {
         return database.get(idUser);
     }
 
-    public void addLogIdToUserLogs(Integer userId, Integer logId){
-        getUser(userId).addLog(logId);
-    }
-    public void removeLogIdFromUserLogs(Integer userId, Integer logId){
-        getUser(userId).getLogs().remove(logId);
-    }
 
 }
