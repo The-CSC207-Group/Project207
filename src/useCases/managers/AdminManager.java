@@ -14,4 +14,7 @@ public class AdminManager {
         Integer user_id = adminDatabase.add(admin);
         return user_id != null;
     }
+    public void changeUserPassword(Integer userId, String newPassword){
+        adminDatabase.get(userId).setPassword(newPassword);
+    }
 }
