@@ -33,7 +33,7 @@ public class AdminAccess {
                        contactDatabase){
         this.adminManager = new AdminManager(adminDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
-        this.doctorManager = new DoctorManager(doctorDatabase);
+        this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase);
 
     }

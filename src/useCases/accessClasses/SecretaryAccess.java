@@ -30,7 +30,7 @@ public class SecretaryAccess {
                            contactDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
-        this.doctorManager = new DoctorManager(doctorDatabase);
+        this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase);
     }
     public void signOut(){
@@ -47,21 +47,9 @@ public class SecretaryAccess {
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
     public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        Integer doctorId = doctorManager.createDoctor(username, password, contactId);
-        return new DoctorDataBundle(doctorId, doctorManager.getDoctor(doctorId));
+        return doctorManager.createDoctor(username, password, contactDataBundle);
     }
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
-        return new Contact(contactDataBundle.getName(),
-                contactDataBundle.getEmail(),
-                contactDataBundle.getPhoneNumber(),
-                contactDataBundle.getAddress(),
-                contactDataBundle.getBirthday(),
-                contactDataBundle.getEmergencyContactName(),
-                contactDataBundle.getEmergencyContactEmail(),
-                contactDataBundle.getEmergencyContactPhoneNumber(),
-                contactDataBundle.getEmergencyRelationship());
-    }
+
     public ArrayList<PrescriptionDataBundle> getActivePatientPrescriptions(Integer iDUser){
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(iDUser);
     }
