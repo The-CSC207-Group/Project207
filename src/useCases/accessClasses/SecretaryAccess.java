@@ -47,8 +47,7 @@ public class SecretaryAccess {
         Integer patientId = patientManager.createPatient(username, password, contactId, healthNumber);
         return new PatientDataBundle(patientId, patientManager.getPatient(patientId));
     }
-    public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle,
-                                          String healthNumber){
+    public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Integer doctorId = doctorManager.createDoctor(username, password, contactId);
         return new DoctorDataBundle(doctorId, doctorManager.getDoctor(doctorId));

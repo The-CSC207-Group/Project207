@@ -4,26 +4,28 @@ import database.DataMapperGateway;
 import entities.Admin;
 import entities.Patient;
 
-public class AdminManager {
+public class AdminManager{
     DataMapperGateway<Admin> adminDatabase;
-    GenericUserManagerMethods<Admin> adminUtilities;
+    GenericUserManagerMethods<Admin> adminMethods;
 
     public AdminManager(DataMapperGateway<Admin> adminDatabase){
         this.adminDatabase = adminDatabase;
-        this.adminUtilities = new GenericUserManagerMethods<>(adminDatabase);
+        this.adminMethods = new GenericUserManagerMethods<>(adminDatabase);
     }
     public Integer createAdmin(String username, String password, int contactInfo){
         Admin admin = new Admin(username, password, contactInfo);
         return adminDatabase.add(admin);
     }
     public void changeUserPassword(Integer userId, String newPassword){
-        adminUtilities.changePassword(userId, newPassword);
+        adminMethods.changePassword(userId, newPassword);
     }
     public void deleteAdminUser(Integer idUser){
-        adminUtilities.deleteUser(idUser);
+        adminMethods.deleteUser(idUser);
     }
 
     public Admin getAdmin(Integer idUser){
-        return adminUtilities.getUser(idUser);
+        return adminMethods.getUser(idUser);
     }
+
+
 }

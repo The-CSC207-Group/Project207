@@ -1,19 +1,17 @@
 package useCases.managers;
 
-import com.sun.javadoc.Doc;
 import database.DataMapperGateway;
 import entities.Doctor;
-import entities.Patient;
 
-public class DoctorManager {
+public class DoctorManager{
 
     DataMapperGateway<Doctor> doctorDatabase;
-    GenericUserManagerMethods<Doctor> doctorUtilities;
+    GenericUserManagerMethods<Doctor> doctorMethods;
 
 
     public DoctorManager(DataMapperGateway<Doctor> doctorDatabase){
         this.doctorDatabase = doctorDatabase;
-        this.doctorUtilities = new GenericUserManagerMethods<>(doctorDatabase);
+        this.doctorMethods = new GenericUserManagerMethods<>(doctorDatabase);
     }
 
     public Integer createDoctor(String username, String password, int contactInfo){
@@ -23,12 +21,13 @@ public class DoctorManager {
     }
 
     public void changeUserPassword(Integer IDUser, String newPassword){
-        doctorUtilities.changePassword(IDUser, newPassword);
+        doctorMethods.changePassword(IDUser, newPassword);
     }
     public void deleteDoctor(Integer idUser){
-        doctorUtilities.deleteUser(idUser);
+        doctorMethods.deleteUser(idUser);
     }
     public Doctor getDoctor(Integer idUser){
-        return doctorUtilities.getUser(idUser);
+        return doctorMethods.getUser(idUser);
     }
+
 }

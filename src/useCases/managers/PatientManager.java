@@ -2,14 +2,15 @@ package useCases.managers;
 
 import database.DataMapperGateway;
 import entities.Patient;
+import entities.User;
 
-public class PatientManager {
+public class PatientManager{
     DataMapperGateway<Patient> patientDatabase;
-    GenericUserManagerMethods<Patient> patientUtilities;
+    GenericUserManagerMethods<Patient> patientMethods;
 
     public PatientManager(DataMapperGateway<Patient> patientDatabase){
         this.patientDatabase = patientDatabase;
-        this.patientUtilities = new GenericUserManagerMethods<>(patientDatabase);
+        this.patientMethods = new GenericUserManagerMethods<>(patientDatabase);
     }
 
     public Integer createPatient(String username, String password, int contactInfo, String healthNumber){
@@ -18,13 +19,14 @@ public class PatientManager {
 
     }
     public void changeUserPassword(Integer IDUser, String newPassword){
-        patientUtilities.changePassword(IDUser, newPassword);
+        patientMethods.changePassword(IDUser, newPassword);
     }
     public void deletePatient(Integer idUser){
-        patientUtilities.deleteUser(idUser);
+        patientMethods.deleteUser(idUser);
     }
 
     public Patient getPatient(Integer idUser){
-        return patientUtilities.getUser(idUser);
+        return patientMethods.getUser(idUser);
     }
+
 }

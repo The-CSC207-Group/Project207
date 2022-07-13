@@ -7,6 +7,7 @@ import dataBundles.SecretaryDataBundle;
 import database.DataMapperGateway;
 
 import entities.*;
+import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
 
 import java.util.ArrayList;
@@ -21,18 +22,22 @@ public class SystemAccess {
 
     private final PatientManager patientManager;
 
+    private final LogManager logManager;
+
     private enum userType {
         patient, admin, secretary, doctor
     }
 
 
     public SystemAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Admin> adminDatabase,
-                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase) {
+                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase,
+                        DataMapperGateway<Log> logDatabase) {
         this.patientDatabase = patientDatabase;
         this.patientManager = new PatientManager(patientDatabase);
         this.adminDatabase = adminDatabase;
         this.secretaryDatabase = secretaryDatabase;
         this.doctorDatabase = doctorDatabase;
+        this.logManager = new LogManager(logDatabase);
     }
 
 
@@ -74,6 +79,7 @@ public class SystemAccess {
     public DoctorDataBundle doctorSignIn(Integer userID, String password){
         Doctor doctor = doctorDatabase.get(userID);
         if (doctor.comparePassword(password)){
+            attachUserSignInLog(doctorDatabase, userID);
             return new DoctorDataBundle(userID, doctor);
         }
         return null;
@@ -82,6 +88,7 @@ public class SystemAccess {
     public PatientDataBundle patientSignIn(Integer userID, String password){
         Patient patient = patientDatabase.get(userID);
         if (patient.comparePassword((password))){
+            attachUserSignInLog(patientDatabase, userID);
             return new PatientDataBundle(userID, patient);
         }
         return null;
@@ -90,6 +97,7 @@ public class SystemAccess {
     public SecretaryDataBundle secretarySignIn(Integer userID, String password){
         Secretary secretary = secretaryDatabase.get(userID);
         if (secretary.comparePassword(password)){
+            attachUserSignInLog(secretaryDatabase, userID);
             return new SecretaryDataBundle(userID, secretary);
         }
         return null;
@@ -98,10 +106,19 @@ public class SystemAccess {
     public AdminDataBundle adminSignIn(Integer userID, String password){
         Admin admin = adminDatabase.get(userID);
         if (admin.comparePassword(password)){
+            attachUserSignInLog(adminDatabase, userID);
             return new AdminDataBundle(userID, admin);
         }
         return null;
     }
+
+    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer iDUser){
+        T user = database.get(iDUser);
+        Integer iDLog = logManager.addLog( user.getUsername() + " signed in");
+        user.addLog(iDLog);
+    }
+
+
 }
 
 
