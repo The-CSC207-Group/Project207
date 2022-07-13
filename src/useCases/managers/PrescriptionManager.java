@@ -12,11 +12,16 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PrescriptionManager {
     DataMapperGateway<Prescription> prescriptionsDatabase;
     public PrescriptionManager(DataMapperGateway<Prescription> prescriptionsDatabase){
         this.prescriptionsDatabase = prescriptionsDatabase;
+    }
+    public Stream<Prescription> getAllPerscriptions(){
+        return prescriptionsDatabase.getAllIds().stream()
+                .map(x -> prescriptionsDatabase.get(x));
     }
 
     public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer userId) {
