@@ -1,7 +1,10 @@
 package useCases.managers;
 
+import dataBundles.ReportDataBundle;
 import database.DataMapperGateway;
 import entities.Patient;
+
+import java.util.ArrayList;
 
 public class PatientManager {
     DataMapperGateway<Patient> patientDatabase;
@@ -20,4 +23,5 @@ public class PatientManager {
     public void changeUserPassword(Integer IDUser, String newPassword){
         patientUtilities.changePassword(IDUser, newPassword);
     }
+
 }

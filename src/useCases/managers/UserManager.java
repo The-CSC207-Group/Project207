@@ -1,5 +1,6 @@
 package useCases.managers;
 
+import dataBundles.ReportDataBundle;
 import database.DataMapperGateway;
 import entities.*;
 
