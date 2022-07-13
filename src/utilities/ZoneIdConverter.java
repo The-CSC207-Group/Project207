@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
 import java.time.ZoneId;
 
 /**
- * GSON serialiser/deserialiser for converting {@link ZoneId} objects.
+ * GSON serializer/deserializer for converting {@link ZoneId} objects.
  */
 public class ZoneIdConverter implements JsonSerializer<ZoneId>, JsonDeserializer<ZoneId> {
 
@@ -36,7 +36,7 @@ public class ZoneIdConverter implements JsonSerializer<ZoneId>, JsonDeserializer
      * call-back method again).
      *
      * @param src the object that needs to be converted to Json.
-     * @param typeOfSrc the actual type (fully genericized version) of the source object.
+     * @param typeOfSrc the actual type (fully generalized version) of the source object.
      * @return a JsonElement corresponding to the specified object.
      */
     @Override
@@ -53,8 +53,7 @@ public class ZoneIdConverter implements JsonSerializer<ZoneId>, JsonDeserializer
      *
      * In the implementation of this call-back method, you should consider invoking
      * {@link JsonDeserializationContext#deserialize(JsonElement, Type)} method to create objects
-     * for any non-trivial field of the returned object. However, you should never invoke it on the
-     * the same type passing {@code json} since that will cause an infinite loop (Gson will call your
+     * for any non-trivial field of the returned object. However, you should never invoke it on the     *  same type passing {@code json} since that will cause an infinite loop (Gson will call your
      * call-back method again).
      *
      * @param json The Json data being deserialized
