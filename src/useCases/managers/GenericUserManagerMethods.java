@@ -18,4 +18,8 @@ public class GenericUserManagerMethods<T extends User> {
         database.remove(idUser);
     }
 
+    public T getUser(Integer idUser){
+        return database.get(idUser);
+    }
+
 }

@@ -1,7 +1,9 @@
 package useCases.managers;
 
+import com.sun.javadoc.Doc;
 import database.DataMapperGateway;
 import entities.Doctor;
+import entities.Patient;
 
 public class DoctorManager {
 
@@ -25,5 +27,8 @@ public class DoctorManager {
     }
     public void deleteDoctor(Integer idUser){
         doctorUtilities.deleteUser(idUser);
+    }
+    public Doctor getDoctor(Integer idUser){
+        return doctorUtilities.getUser(idUser);
     }
 }

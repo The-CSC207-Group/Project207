@@ -44,14 +44,14 @@ public class SecretaryAccess {
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        patientManager.createPatient(username, password, contactId, healthNumber);
-        return null;
+        Integer patientId = patientManager.createPatient(username, password, contactId, healthNumber);
+        return new PatientDataBundle(patientId, patientManager.getPatient(patientId));
     }
     public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle,
                                           String healthNumber){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        doctorManager.createDoctor(username, password, contactId);
-        return null;
+        Integer doctorId = doctorManager.createDoctor(username, password, contactId);
+        return new DoctorDataBundle(doctorId, doctorManager.getDoctor(doctorId));
     }
     private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
         return new Contact(contactDataBundle.getName(),

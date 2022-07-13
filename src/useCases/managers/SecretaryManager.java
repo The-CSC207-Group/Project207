@@ -34,4 +34,7 @@ public class SecretaryManager {
     public void deleteSecretary(Integer idUser){
         secretaryUtilities.deleteUser(idUser);
     }
+    public Secretary getSecretary(Integer idUser){
+        return secretaryUtilities.getUser(idUser);
+    }
 }

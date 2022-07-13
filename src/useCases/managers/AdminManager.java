@@ -2,6 +2,7 @@ package useCases.managers;
 
 import database.DataMapperGateway;
 import entities.Admin;
+import entities.Patient;
 
 public class AdminManager {
     DataMapperGateway<Admin> adminDatabase;
@@ -20,5 +21,9 @@ public class AdminManager {
     }
     public void deleteAdminUser(Integer idUser){
         adminUtilities.deleteUser(idUser);
+    }
+
+    public Admin getAdmin(Integer idUser){
+        return adminUtilities.getUser(idUser);
     }
 }

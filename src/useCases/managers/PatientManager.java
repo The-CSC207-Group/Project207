@@ -24,4 +24,7 @@ public class PatientManager {
         patientUtilities.deleteUser(idUser);
     }
 
+    public Patient getPatient(Integer idUser){
+        return patientUtilities.getUser(idUser);
+    }
 }
