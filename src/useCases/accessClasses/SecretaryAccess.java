@@ -27,7 +27,7 @@ public class SecretaryAccess {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
-        this.secretaryManager = new SecretaryManager(secretaryDatabase);
+        this.secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
         this.logManager = new LogManager(logDatabase);
     }
     public void signOut(){
