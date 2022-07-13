@@ -24,15 +24,16 @@ public class AppointmentManager {
         this.doctorDatabase  = doctorDatabase;
     }
 
-    public boolean bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
+    public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
 
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorId, patientId), proposedTime)
                 & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorId,
                 proposedTime.getStartTime().toLocalDate()), proposedTime)) {
-            appointmentDatabase.add(new Appointment(proposedTime, doctorId, patientId));
-            return true;
+            Appointment newApp = new Appointment(proposedTime, doctorId, patientId);
+                    appointmentDatabase.add(newApp);
+            return new AppointmentDataBundle(newApp.getId(), newApp);
         }
-        return false;
+        return null;
     }
 
     public boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,

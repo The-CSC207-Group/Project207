@@ -65,9 +65,7 @@ public class DoctorAccess {
     }
     public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
                                    ZonedDateTime expiryDate){
-         Integer newPrescriptionId =
-                 prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
-         return new PrescriptionDataBundle(newPrescriptionId, prescriptionDatabase.get(newPrescriptionId));
+         return prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
     }
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
