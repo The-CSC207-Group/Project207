@@ -26,9 +26,10 @@ public class SecretaryAccess {
 
     public SecretaryAccess(DataMapperGateway<Prescription> prescriptionDatabase,
                            DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor>
-                           doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase) {
+                           doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact>
+                           contactDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
-        this.patientManager = new PatientManager(patientDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.doctorManager = new DoctorManager(doctorDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase);
     }
@@ -43,9 +44,7 @@ public class SecretaryAccess {
     }
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber){
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        Integer patientId = patientManager.createPatient(username, password, contactId, healthNumber);
-        return new PatientDataBundle(patientId, patientManager.getPatient(patientId));
+        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
     public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));

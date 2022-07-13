@@ -31,7 +31,7 @@ public class SystemAccess {
                         DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase,
                         DataMapperGateway<Contact> contactDatabase, DataMapperGateway<Log> logDatabase) {
         this.patientDatabase = patientDatabase;
-        this.patientManager = new PatientManager(patientDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.adminDatabase = adminDatabase;
         this.secretaryDatabase = secretaryDatabase;
         this.doctorDatabase = doctorDatabase;
@@ -46,10 +46,9 @@ public class SystemAccess {
      * @param contactDataBundle contact info of user created
      * @return true if account has been created, false if account failed to create
      */
-    public Integer createPatient(String username, String password, ContactDataBundle contactDataBundle,
+    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                  String healthNumber) {
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        return patientManager.createPatient(username, password, contactId, healthNumber);
+        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
 
     /**
@@ -119,17 +118,6 @@ public class SystemAccess {
         user.addLog(iDLog);
     }
 
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
-        return new Contact(contactDataBundle.getName(),
-                contactDataBundle.getEmail(),
-                contactDataBundle.getPhoneNumber(),
-                contactDataBundle.getAddress(),
-                contactDataBundle.getBirthday(),
-                contactDataBundle.getEmergencyContactName(),
-                contactDataBundle.getEmergencyContactEmail(),
-                contactDataBundle.getEmergencyContactPhoneNumber(),
-                contactDataBundle.getEmergencyRelationship());
-    }
 
 
 }
