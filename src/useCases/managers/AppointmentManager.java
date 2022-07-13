@@ -160,6 +160,13 @@ public class AppointmentManager {
         }
         return true;
     }
+    public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
+        return getAllAppointments().stream()
+                .filter(x -> x.getDoctorID() == doctorId)
+                .filter(x->x.getTimeBlock().getStartTime().toLocalDate() == selectedDay)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+    }
     //pending implementation
 //    public boolean newAvailability(Integer doctorId, DayOfWeek dayOfWeek, LocalTime startTime,
 //                                      LocalTime endTime){

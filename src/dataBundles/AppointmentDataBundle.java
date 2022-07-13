@@ -26,6 +26,10 @@ public class AppointmentDataBundle {
         return appointment.getPatientID();
     }
 
+    public Integer getAppointmentId() {
+        return appointment.getId();
+    }
+
 }
 
 
