@@ -5,14 +5,14 @@ import org.junit.rules.TemporaryFolder;
 
 import database.Database;
 import database.DataMapperGateway;
-import Utilities.DeleteUtils;
+import utilities.DeleteUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DatabaseTests {
 
@@ -232,7 +232,7 @@ public class DatabaseTests {
                         getStartTime()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original appointment and loaded appointment should end at the same time",
                 originalAppointment.getTimeBlock().getEndTime().compareTo(loadedAppointment.getTimeBlock().
-                        getEndTime()), 0); // the compareTo function returns 0 when both dates are equal
+                        getEndTime()), 0);
         assertEquals("Original appointment and loaded appointment should share the same patient ID",
                 originalAppointment.getPatientID(), loadedAppointment.getPatientID());
         assertEquals("Original appointment and loaded appointment should share the same doctor ID",
@@ -262,6 +262,86 @@ public class DatabaseTests {
                 originalLog.getMessage(), loadedLog.getMessage());
     }
 
+    @Test(timeout = 1000)
+    public void testSaveLoadContactDatabase() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Contact> originalContactDatabase = originalDatabase.getContactDatabase();
+
+        Date birthday = new Date(2022, Calendar.JANUARY, 1);
+        Contact originalContact = new Contact("jeff", "jeff@gmail.com", "12345678",
+                "jeff street", birthday, "jim", "jim@gmail.com",
+                "87654321", "father");
+
+        Integer contactID = originalContactDatabase.add(originalContact);
+        originalContactDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Contact> loadedContactDatabase = loadedDatabase.getContactDatabase();
+
+        Contact loadedContact = loadedContactDatabase.get(contactID);
+
+        /*Testing if the loaded contact and the original contact are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original contact and loaded contact should share the same name",
+                originalContact.getName(), loadedContact.getName());
+        assertEquals("Original contact and loaded contact should share the same email",
+                originalContact.getEmail(), loadedContact.getEmail());
+        assertEquals("Original contact and loaded contact should share the same phone number",
+                originalContact.getPhoneNumber(), loadedContact.getPhoneNumber());
+        assertEquals("Original contact and loaded contact should share the same address",
+                originalContact.getAddress(), loadedContact.getAddress());
+        assertEquals("Original contact and loaded contact should share the same birthday",
+                originalContact.getBirthday(), loadedContact.getBirthday());
+        assertEquals("Original contact and loaded contact should share the same emergency contact name",
+                originalContact.getEmergencyContactName(), loadedContact.getEmergencyContactName());
+        assertEquals("Original contact and loaded contact should share the same emergency contact email",
+                originalContact.getEmergencyContactEmail(), loadedContact.getEmergencyContactEmail());
+        assertEquals("Original contact and loaded contact should share the same emergency contact phone number",
+                originalContact.getEmergencyContactPhoneNumber(), loadedContact.getEmergencyContactPhoneNumber());
+        assertEquals("Original contact and loaded contact should share the same emergency relationship",
+                originalContact.getEmergencyRelationship(), loadedContact.getEmergencyRelationship());
+    }
+
+    @Test(timeout = 1000)
+    public void testSaveLoadClinicDatabase() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Clinic> originalClinicDatabase = originalDatabase.getClinicDatabase();
+
+        LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
+        LocalDateTime localEndTime = LocalDateTime.of(2022,7,1,6,3);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedStartTime = ZonedDateTime.of(localStartTime, torontoID);
+        ZonedDateTime zonedEndTime = ZonedDateTime.of(localEndTime, torontoID);
+        TimeBlock timeBlock = new TimeBlock(zonedStartTime, zonedEndTime);
+
+        Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "21 jump street",
+                torontoID, timeBlock);
+
+        Integer clinicID = originalClinicDatabase.add(originalClinic);
+        originalClinicDatabase.save();
+
+        Database loadedDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Clinic> loadedClinicDatabase = loadedDatabase.getClinicDatabase();
+
+        Clinic loadedClinic = loadedClinicDatabase.get(clinicID);
+
+        /* testing if the loaded clinic and the original clinic are equal by testing whether all
+        the fields of both objects are equal */
+        assertEquals("Original clinic and loaded clinic should share the same name",
+                originalClinic.getName(), loadedClinic.getName());
+        assertEquals("Original clinic and loaded clinic should share the same phone number",
+                originalClinic.getPhoneNumber(), loadedClinic.getPhoneNumber());
+        assertEquals("Original clinic and loaded clinic should share the same address",
+                originalClinic.getAddress(), loadedClinic.getAddress());
+        assertEquals("Original clinic and loaded clinic should share the same time zone",
+                originalClinic.getTimeZone().toString(), loadedClinic.getTimeZone().toString());
+        assertEquals("Original clinic and loaded clinic should start at the same time",
+                originalClinic.getClinicHours().getStartTime().compareTo(loadedClinic.getClinicHours().
+                        getStartTime()), 0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("Original clinic and loaded clinic should end at the same time",
+                originalClinic.getClinicHours().getEndTime().compareTo(loadedClinic.getClinicHours().
+                        getEndTime()), 0);
+    }
 
     @After
     public void after() {

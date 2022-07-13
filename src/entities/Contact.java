@@ -1,6 +1,6 @@
 package entities;
 
-import Utilities.JsonSerializable;
+import utilities.JsonSerializable;
 
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -52,7 +52,7 @@ public class Contact extends JsonSerializable {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (Pattern.matches("^\\d{10}$", phoneNumber)) {
+        if (Pattern.matches("^([0-9])+$", phoneNumber)) {
             this.phoneNumber = phoneNumber;
         } else {
             throw new RuntimeException("Phone number should contain only digits from 0 to 9.");

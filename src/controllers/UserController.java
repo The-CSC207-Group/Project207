@@ -1,6 +1,6 @@
 //package controllers;
 //
-//import useCases.UserManager;
+//import useCases.managers.UserManager;
 //
 //import java.util.*;
 //

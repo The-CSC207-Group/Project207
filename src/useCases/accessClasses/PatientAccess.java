@@ -1,9 +1,9 @@
-package useCases;
+package useCases.accessClasses;
 
 import database.DataMapperGateway;
 import entities.Patient;
 import entities.Prescription;
-import useCases.AppointmentManager;
+import useCases.managers.AppointmentManager;
 import entities.Appointment;
 
 import java.util.ArrayList;

@@ -1,8 +1,9 @@
 package database;
 
+import utilities.ZoneIdConverter;
 import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.*;
-import Utilities.JsonSerializable;
+import utilities.JsonSerializable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,20 +30,35 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
     public JsonDatabase(Class<T> type, KeyDelegator keyDelegator, File folder) {
         if (keyDelegator.getUniqueFieldMethodName() != null) {
-            Method method = null;
-            try {
-                method = type.getMethod("getUsername");
-            } catch (Exception ignored) {}
-            keyDelegator.setUniqueFieldMethod(method);
+            keyDelegator.setUniqueFieldMethod(getMethodByName(keyDelegator.getUniqueFieldMethodName()));
         }
 
         this.type = type;
         GsonBuilder builder = Converters.registerAll(new GsonBuilder());
-        this.gson = builder.setPrettyPrinting().create();
+
+        builder.registerTypeAdapter(getClassByName("java.time.ZoneId"), new ZoneIdConverter());
+        builder.registerTypeAdapter(getClassByName("java.time.ZoneRegion"), new ZoneIdConverter());
+        this.gson = builder.create();
         this.database = new HashMap<>();
         this.keyDelegator = keyDelegator;
         this.folder = folder;
         load();
+    }
+
+    private Method getMethodByName(String name) {
+        try {
+            return type.getMethod(name);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    private Class<?> getClassByName(String name) {
+        try {
+            return Class.forName(name);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     private File getSaveFile() {
