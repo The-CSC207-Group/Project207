@@ -6,6 +6,7 @@ import database.DataMapperGateway;
 import entities.Log;
 import entities.Patient;
 import entities.Prescription;
+import entities.Contact;
 import useCases.managers.AppointmentManager;
 import entities.Appointment;
 import useCases.managers.LogManager;
@@ -21,9 +22,9 @@ public class PatientAccess {
 
     LogManager logManager;
     public PatientAccess(DataMapperGateway<Prescription> prescriptionDatabase,
-                         DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Log> logDatabase) {
+                         DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Log> logDatabase, DataMapperGateway<Contact> contactDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
-        this.patientManager = new PatientManager(patientDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.logManager = new LogManager(logDatabase);
     }
 

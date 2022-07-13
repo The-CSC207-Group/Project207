@@ -22,10 +22,11 @@ public class SecretaryAccess {
     public SecretaryAccess(DataMapperGateway<Prescription> prescriptionDatabase,
                            DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor>
                            doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase,
-                           DataMapperGateway<Log> logDatabase) {
+                           DataMapperGateway<Log> logDatabase,
+                           DataMapperGateway<Contact> contactDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
-        this.patientManager = new PatientManager(patientDatabase);
-        this.doctorManager = new DoctorManager(doctorDatabase);
+        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
+        this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase);
         this.logManager = new LogManager(logDatabase);
     }
@@ -40,26 +41,12 @@ public class SecretaryAccess {
     }
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber){
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        Integer patientId = patientManager.createPatient(username, password, contactId, healthNumber);
-        return new PatientDataBundle(patientId, patientManager.getPatient(patientId));
+        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
     public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
-        Integer doctorId = doctorManager.createDoctor(username, password, contactId);
-        return new DoctorDataBundle(doctorId, doctorManager.getDoctor(doctorId));
+        return doctorManager.createDoctor(username, password, contactDataBundle);
     }
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
-        return new Contact(contactDataBundle.getName(),
-                contactDataBundle.getEmail(),
-                contactDataBundle.getPhoneNumber(),
-                contactDataBundle.getAddress(),
-                contactDataBundle.getBirthday(),
-                contactDataBundle.getEmergencyContactName(),
-                contactDataBundle.getEmergencyContactEmail(),
-                contactDataBundle.getEmergencyContactPhoneNumber(),
-                contactDataBundle.getEmergencyRelationship());
-    }
+
     public ArrayList<PrescriptionDataBundle> getActivePatientPrescriptions(Integer iDUser){
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(iDUser);
     }
