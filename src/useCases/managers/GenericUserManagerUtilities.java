@@ -3,10 +3,10 @@ package useCases.managers;
 import database.DataMapperGateway;
 import entities.User;
 
-public class genericUserManagerUtilities<T extends User> {
+public class GenericUserManagerUtilities<T extends User> {
     DataMapperGateway<T> database;
 
-    public genericUserManagerUtilities(DataMapperGateway<T> database){
+    public GenericUserManagerUtilities(DataMapperGateway<T> database){
         this.database = database;
     }
 

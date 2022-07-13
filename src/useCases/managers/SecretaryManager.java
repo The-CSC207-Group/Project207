@@ -15,8 +15,11 @@ public class SecretaryManager {
     DataMapperGateway<Doctor> doctorDatabase;
     DataMapperGateway<Secretary> secretaryDatabase;
 
+    GenericUserManagerUtilities<Secretary> secretaryUtilities;
+
     public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase){
         this.secretaryDatabase = secretaryDatabase;
+        this.secretaryUtilities = new GenericUserManagerUtilities<>(secretaryDatabase);
     }
 
     public boolean createSecretary(String username, String password, int contactInfo){
@@ -34,5 +37,8 @@ public class SecretaryManager {
             }
         }
         return false;
+    }
+    public void changeUserPassword(Integer IDUser, String newPassword){
+        secretaryUtilities.changePassword(IDUser, newPassword);
     }
 }
