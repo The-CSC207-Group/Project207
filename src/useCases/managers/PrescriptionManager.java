@@ -23,12 +23,14 @@ public class PrescriptionManager {
         return prescriptionsDatabase.getAllIds().stream().
                 filter(x -> !isExpiredPrescription(prescriptionsDatabase.get(x))).
                 filter(x -> isPatientsPrescription(prescriptionsDatabase.get(x), userId)).
-                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).collect(Collectors.toCollection(ArrayList::new));
+                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).
+                collect(Collectors.toCollection(ArrayList::new));
     }
     public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {
         return prescriptionsDatabase.getAllIds().stream().
                 filter(x -> isPatientsPrescription(prescriptionsDatabase.get(x), userId)).
-                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).collect(Collectors.toCollection(ArrayList::new));
+                map(x -> new PrescriptionDataBundle(x, prescriptionsDatabase.get(x))).
+                collect(Collectors.toCollection(ArrayList::new));
     }
 
 

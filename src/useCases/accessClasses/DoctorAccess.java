@@ -1,11 +1,13 @@
 package useCases;
 
 import dataBundles.AppointmentDataBundle;
+import dataBundles.LogDataBundle;
 import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
 import entities.*;
 import useCases.managers.AppointmentManager;
 import useCases.managers.DoctorManager;
+import useCases.managers.LogManager;
 import useCases.managers.PrescriptionManager;
 import useCases.query.Query;
 import useCases.query.QueryCondition;
@@ -23,19 +25,23 @@ public class DoctorAccess {
     private DataMapperGateway<Report> reportDatabase;
     private DataMapperGateway<Prescription> prescriptionDatabase;
 
+    private LogManager logManager;
+
     AppointmentManager appointmentManager;
     PrescriptionManager prescriptionManager;
     DoctorManager doctorManager;
 
     public DoctorAccess(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Patient> patientDatabase,
                         DataMapperGateway<Prescription> prescriptionDatabase, AppointmentManager appointmentManager,
-                        PrescriptionManager prescriptionManager, DoctorManager doctorManager){
+                        PrescriptionManager prescriptionManager, DoctorManager doctorManager, DataMapperGateway<Log>
+                        logDatabase){
         this.doctorDatabase = doctorDatabase;
         this.patientDatabase = patientDatabase;
         this.prescriptionDatabase = prescriptionDatabase;
         this.appointmentManager = appointmentManager;
         this.prescriptionManager = prescriptionManager;
         this.doctorManager = doctorManager;
+        this.logManager = new LogManager(logDatabase);
 
     }
     public ArrayList<Report> getPatientReports(Integer patientId){
@@ -67,6 +73,10 @@ public class DoctorAccess {
     }
     public void signOut(){
         
+    }
+    public ArrayList<LogDataBundle> getLogs(Integer userId){
+        if (doctorManager.getDoctor(userId) != null){return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogs());}
+        return null;
     }
 
 
