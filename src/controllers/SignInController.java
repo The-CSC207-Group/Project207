@@ -1,6 +1,6 @@
 package controllers;
 
-import useCases.SystemManager;
+import useCases.accessClasses.SystemAccess;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class SignInController extends TerminalController {
 
-    SystemManager systemManager;
+    SystemAccess systemManager;
 
     public SignInController(Context parent) {
         super(parent);
-        this.systemManager = new SystemManager(getDatabase());
+        this.systemManager = new SystemAccess(getDatabase());
     }
 
     @Override

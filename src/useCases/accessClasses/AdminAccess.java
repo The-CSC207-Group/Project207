@@ -1,4 +1,4 @@
-package useCases;
+package useCases.accessClasses;
 
 import database.DataMapperGateway;
 import entities.*;

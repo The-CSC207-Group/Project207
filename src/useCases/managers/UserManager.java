@@ -1,8 +1,9 @@
-package useCases;
+package useCases.managers;
 
 import database.DataMapperGateway;
 import entities.*;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -67,6 +68,6 @@ public class UserManager {
             if (user != null){return user;}
         }
         return null;
-
     }
+
 }

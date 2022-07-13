@@ -2,8 +2,8 @@
 //
 //import database.DataMapperGateway;
 //import entities.User;
-//import useCases.AdminManager;
-//import useCases.UserManager;
+//import useCases.managers.AdminManager;
+//import useCases.managers.UserManager;
 //
 //import java.util.ArrayList;
 //import java.util.Arrays;
