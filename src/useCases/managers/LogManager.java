@@ -30,7 +30,7 @@ public class LogManager {
         return convertLogToLogDataBundleInArraylist(logs);
     }
     private ArrayList<LogDataBundle> convertLogToLogDataBundleInArraylist(ArrayList<Log> logs){
-        return logs.stream().map(LogDataBundle::new).collect(Collectors.toCollection(ArrayList::new));
+        return logs.stream().map(x -> new LogDataBundle(x.getId(), x)).collect(Collectors.toCollection(ArrayList::new));
     }
 
 }
