@@ -14,10 +14,10 @@ public class DoctorManager {
         this.doctorUtilities = new GenericUserManagerMethods<>(doctorDatabase);
     }
 
-    public boolean createDoctor(String username, String password, int contactInfo){
+    public Integer createDoctor(String username, String password, int contactInfo){
         Doctor doctor = new Doctor(username, password, contactInfo);
-        Integer user_id = doctorDatabase.add(doctor);
-        return user_id != null;
+        return doctorDatabase.add(doctor);
+
     }
 
     public void changeUserPassword(Integer IDUser, String newPassword){

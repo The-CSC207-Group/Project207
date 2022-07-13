@@ -12,10 +12,10 @@ public class PatientManager {
         this.patientUtilities = new GenericUserManagerMethods<>(patientDatabase);
     }
 
-    public boolean createPatient(String username, String password, int contactInfo, String healthNumber){
+    public Integer createPatient(String username, String password, int contactInfo, String healthNumber){
         Patient patient = new Patient(username, password, contactInfo, healthNumber);
-        Integer user_id = patientDatabase.add(patient);
-        return user_id != null;
+        return patientDatabase.add(patient);
+
     }
     public void changeUserPassword(Integer IDUser, String newPassword){
         patientUtilities.changePassword(IDUser, newPassword);

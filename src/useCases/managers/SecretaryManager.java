@@ -22,10 +22,9 @@ public class SecretaryManager {
         this.secretaryUtilities = new GenericUserManagerMethods<>(secretaryDatabase);
     }
 
-    public boolean createSecretary(String username, String password, int contactInfo){
+    public Integer createSecretary(String username, String password, int contactInfo){
         Secretary secretary = new Secretary(username, password, contactInfo);
-        Integer user_id = secretaryDatabase.add(secretary);
-        return user_id != null;
+        return secretaryDatabase.add(secretary);
     }
 
     public void changeUserPassword(Integer IDUser, String newPassword){

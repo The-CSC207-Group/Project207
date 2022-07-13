@@ -27,6 +27,10 @@ public class AppointmentDataBundle extends DataBundle {
         return appointment.getPatientID();
     }
 
+    public Integer getAppointmentId() {
+        return appointment.getId();
+    }
+
 }
 
 

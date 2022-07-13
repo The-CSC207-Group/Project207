@@ -5,17 +5,14 @@ import org.junit.rules.TemporaryFolder;
 
 import database.Database;
 import database.DataMapperGateway;
-import Utilities.DeleteUtils;
+import utilities.DeleteUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class DatabaseTests {
 

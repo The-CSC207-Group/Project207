@@ -11,10 +11,9 @@ public class AdminManager {
         this.adminDatabase = adminDatabase;
         this.adminUtilities = new GenericUserManagerMethods<>(adminDatabase);
     }
-    public boolean createAdmin(String username, String password, int contactInfo){
+    public Integer createAdmin(String username, String password, int contactInfo){
         Admin admin = new Admin(username, password, contactInfo);
-        Integer user_id = adminDatabase.add(admin);
-        return user_id != null;
+        return adminDatabase.add(admin);
     }
     public void changeUserPassword(Integer userId, String newPassword){
         adminUtilities.changePassword(userId, newPassword);
