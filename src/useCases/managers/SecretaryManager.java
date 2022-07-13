@@ -15,6 +15,10 @@ public class SecretaryManager {
     DataMapperGateway<Doctor> doctorDatabase;
     DataMapperGateway<Secretary> secretaryDatabase;
 
+    public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase){
+        this.secretaryDatabase = secretaryDatabase;
+    }
+
     public boolean createSecretary(String username, String password, int contactInfo){
         Secretary secretary = new Secretary(username, password, contactInfo);
         Integer user_id = secretaryDatabase.add(secretary);
