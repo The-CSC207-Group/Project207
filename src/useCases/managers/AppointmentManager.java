@@ -33,7 +33,7 @@ public class AppointmentManager {
         return null;
     }
 
-    public boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
+    private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
         return timeBlockList.stream()
                 .filter(x -> x.getStartTime().getDayOfYear()
@@ -62,7 +62,7 @@ public class AppointmentManager {
         return false;
     }
 
-    public ArrayList<TimeBlock> getTimeBlocksWithPatientAndDoctor(Integer doctorId, Integer patientId){
+    private ArrayList<TimeBlock> getTimeBlocksWithPatientAndDoctor(Integer doctorId, Integer patientId){
         return appointmentDatabase.getAllIds().stream()
                 .map(x -> appointmentDatabase.get(x))
                 .filter(x -> x.getDoctorID() == doctorId)
@@ -76,7 +76,7 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<Appointment> getAllPatientAppointments(Integer patientId){
+    private ArrayList<Appointment> getAllPatientAppointments(Integer patientId){
         return getAppointments().stream()
                 .filter(x -> x.getPatientID() == patientId)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -125,7 +125,7 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<TimeBlock> parseAvailabilityWithAppointmentData(ArrayList<TimeBlock> availability,
+    private ArrayList<TimeBlock> parseAvailabilityWithAppointmentData(ArrayList<TimeBlock> availability,
                                                                      Integer doctorId){
         ArrayList<TimeBlock> parsedAvailability = new ArrayList<>();
         ArrayList<ZonedDateTime> startTime = new ArrayList<>();
