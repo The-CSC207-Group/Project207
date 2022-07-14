@@ -46,8 +46,8 @@ public class AppointmentManager {
     }
 
 
-    public void removeAppointment(Integer Id){
-        appointmentDatabase.remove(Id);
+    public void removeAppointment(Integer appointmentId){
+        appointmentDatabase.remove(appointmentId);
     }
     public boolean rescheduleAppointment(Integer appointmentId, ZonedDateTime newStart, ZonedDateTime newEnd){
         Appointment appointment = appointmentDatabase.get(appointmentId);
