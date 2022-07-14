@@ -15,7 +15,7 @@ public class AppointmentManager {
     private DataMapperGateway<Doctor> doctorDatabase;
 
     /**
-     *
+     *Initializes Appointment Manager with the appointment database, and doctor database.
      * @param appointmentDatabase database for appointments.
      * @param doctorDatabase      database for doctors.
      */
@@ -57,7 +57,7 @@ public class AppointmentManager {
     }
 
     /**
-     * 
+     *  removes an Appointment from the database.
      * @param appointmentId: Integer id of the Appointment.
      */
     public void removeAppointment(Integer appointmentId){
@@ -65,7 +65,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *  reschedules an appointment and validates the new appointment time before adding it to the database.
      * @param appointmentId Integer id of the Appointment.
      * @param newStart      ZonedDateTime representing a new start time for an Appointment's TimeBlock
      * @param newEnd        ZonedDateTime representing a new end time for an Appointment's TimeBlock
@@ -94,7 +94,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     * gets all appointments related to a single patient id.
      * @param patientId id of the patient the Appointment was assigned to.
      * @return ArrayList of AppointmentDataBundle which includes information of specific patient Appointments.
      */
@@ -111,7 +111,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *  gets all appointments related to a single doctor id.
      * @param doctorId id of the doctor the Appointment was assigned to.
      * @return ArrayList of AppointmentDataBundle which includes information of specific doctor Appointments.
      */
@@ -123,7 +123,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *  get all appointments in the appointment database.
      * @return ArrayList of AppointmentDataBundle which includes information of many Appointments.
      */
     public ArrayList<AppointmentDataBundle> getAllAppointments(){
@@ -140,7 +140,8 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     * gets all available time for a doctor considering their availability, other appointments, and search time
+     * parameters.
      * @param doctorId          id of the doctor the Appointment was assigned to.
      * @param searchStartTime   ZonedDateTime representing the beginning of the search period
      * @param searchEndTime     ZonedDateTime representing the beginning of the end period
@@ -158,7 +159,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *  gets the availability data from a doctor on a specific enum representing the day of the week.
      * @param doctorId  id of the doctor the Appointment was assigned to.
      * @param dayOfWeek an Enum that represents a day of the week without ties to a specific date.
      * @return an ArrayList of AvailabilityData that holds data on a doctor's available time.
@@ -171,7 +172,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *  get TimeBlocks that represents the doctor's availability in a single day.
      * @param doctorId      id of the doctor the Appointment was assigned to.
      * @param selectedDay   LocalDate that represents a date without a specific time attached.
      * @return an ArrayList of TimeBlocks where each TimeBlock represents available time of a doctor on a specific date.
@@ -220,7 +221,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     * gets all doctor specific appointments in a single day.
      * @param doctorId    id of the doctor the Appointment was assigned to.
      * @param selectedDay LocalDate that represents a date without a specific time attached.
      * @return ArrayList of AppointmentDataBundle which includes information of many Appointments.
