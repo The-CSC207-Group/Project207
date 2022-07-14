@@ -104,4 +104,35 @@ public class PrescriptionManagerTests {
         assertTrue("Since there are no non expired prescriptions, the ArrayList should be empty",
                 loadedPrescriptionList.isEmpty());
     }
+    @Test(timeout = 1000)
+    public void testgetPatientAllPrescriptionDataByUserId() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
+
+        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
+        LocalDateTime inactiveLocalExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
+        LocalDateTime activeLocalExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+        ZonedDateTime inactiveZonedExpiryDate = ZonedDateTime.of(inactiveLocalExpiryDate, torontoID);
+        ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
+
+        Prescription originalPrescription1 = new
+                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                456, inactiveZonedExpiryDate);
+        Prescription originalPrescription2 = new
+                Prescription(zonedDateNoted, "bad", "very unhealthy", 123,
+                1011, activeZonedExpiryDate);
+
+        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
+        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
+
+        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+
+        ArrayList<PrescriptionDataBundle> loadedPrescriptionList =
+                prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
+
+        assertEquals("The array list should have a length of 2 even though one of " +
+                        "the prescriptions is expired", 2, loadedPrescriptionList.size());
+    }
 }
