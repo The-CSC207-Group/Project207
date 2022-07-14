@@ -21,6 +21,7 @@ public class DoctorManager{
     public DoctorDataBundle createDoctor(String username, String password, ContactDataBundle contactDataBundle){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Doctor doctor = new Doctor(username, password, contactId);
+        doctorDatabase.add(doctor);
         return new DoctorDataBundle(doctor.getId(), doctor);
 
     }

@@ -21,6 +21,7 @@ public class AdminManager{
     public AdminDataBundle createAdmin(String username, String password, ContactDataBundle contactDataBundle){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Admin admin = new Admin(username, password, contactId);
+        adminDatabase.add(admin);
         return new AdminDataBundle(admin.getId(), admin);
     }
     public void changeUserPassword(Integer userId, String newPassword){

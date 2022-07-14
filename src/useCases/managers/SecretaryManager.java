@@ -23,6 +23,7 @@ public class SecretaryManager {
     public SecretaryDataBundle createSecretary(String username, String password, ContactDataBundle contactDataBundle){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Secretary secretary = new Secretary(username, password, contactId);
+        secretaryDatabase.add(secretary);
         return new SecretaryDataBundle(secretary.getId(), secretary);
     }
 
