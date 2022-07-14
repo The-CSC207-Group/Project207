@@ -25,13 +25,12 @@ public class SystemAccess {
     }
 
     /**
-     *
-     * @param patientDatabase database for storing patients.
-     * @param adminDatabase database for storing admins.
+     * @param patientDatabase   database for storing patients.
+     * @param adminDatabase     database for storing admins.
      * @param secretaryDatabase database for secretaries.
-     * @param doctorDatabase database for doctors.
-     * @param contactDatabase database for contacts.
-     * @param logDatabase database for logs.
+     * @param doctorDatabase    database for doctors.
+     * @param contactDatabase   database for contacts.
+     * @param logDatabase       database for logs.
      */
     public SystemAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Admin> adminDatabase,
                         DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase,
@@ -60,7 +59,7 @@ public class SystemAccess {
      * @param userId Integer userID of the user.
      * @return Enum of the user type, exception if the user is not in the database.
      */
-    public userType getType(Integer userId) throws Exception {
+    public userType getType(Integer userId) {
         ArrayList<DataMapperGateway<? extends User>> userDatabases = new ArrayList<>(Arrays.asList(patientDatabase,
                 doctorDatabase, secretaryDatabase, adminDatabase));
         for (DataMapperGateway<? extends User> database : userDatabases) {
@@ -78,7 +77,7 @@ public class SystemAccess {
                 }
             }
         }
-        throw new Exception("user not in databases");
+        return null;
     }
 
     /**
@@ -137,12 +136,11 @@ public class SystemAccess {
         return null;
     }
 
-    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer userId){
+    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer userId) {
         T user = database.get(userId);
-        Integer iDLog = logManager.addLog( user.getUsername() + " signed in").getId();
+        Integer iDLog = logManager.addLog(user.getUsername() + " signed in").getId();
         user.addLog(iDLog);
     }
-
 
 
 }
