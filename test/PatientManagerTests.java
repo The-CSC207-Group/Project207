@@ -154,4 +154,9 @@ public class PatientManagerTests {
         assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword("123"));
     }
+
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
+    }
 }
