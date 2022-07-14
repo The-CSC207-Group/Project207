@@ -2,7 +2,7 @@ package entities;
 
 import utilities.JsonSerializable;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class Contact extends JsonSerializable {
@@ -11,13 +11,13 @@ public class Contact extends JsonSerializable {
     private String email;
     private String phoneNumber;
     private String address;
-    private Date birthday;
+    private LocalDate birthday;
     private String emergencyContactName;
     private String emergencyContactEmail;
     private String emergencyContactPhoneNumber;
     private String emergencyRelationship;
 
-    public Contact(String name, String email, String phoneNumber, String address, Date birthday,
+    public Contact(String name, String email, String phoneNumber, String address, LocalDate birthday,
                    String emergencyContactName, String emergencyContactEmail,
                    String emergencyContactPhoneNumber, String emergencyRelationship) {
         this.name = name;
@@ -67,11 +67,11 @@ public class Contact extends JsonSerializable {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

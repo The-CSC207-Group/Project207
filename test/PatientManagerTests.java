@@ -15,6 +15,7 @@ import useCases.managers.PrescriptionManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -37,7 +38,7 @@ public class PatientManagerTests {
         String username = "jeff";
         String password = "123";
         String healthNumber = "5544";
-        Date birthday = new Date(2022, Calendar.JANUARY, 1);
+        LocalDate birthday = LocalDate.of(2022, 1, 1);
         ContactDataBundle contactDataBundle = new ContactDataBundle("jeff", "jeff@gmail.com",
                 "12345678", "jeff street", birthday, "jim",
                 "jim@gmail.com", "87654321",

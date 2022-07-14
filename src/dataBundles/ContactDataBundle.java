@@ -2,6 +2,7 @@ package dataBundles;
 
 import entities.Contact;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -9,7 +10,7 @@ public class ContactDataBundle extends DataBundle{
 
     private Contact contact;
 
-    public ContactDataBundle(String name, String email, String phoneNumber, String address, Date birthday,
+    public ContactDataBundle(String name, String email, String phoneNumber, String address, LocalDate birthday,
                    String emergencyContactName, String emergencyContactEmail,
                    String emergencyContactPhoneNumber, String emergencyRelationship) {
 
@@ -37,7 +38,7 @@ public class ContactDataBundle extends DataBundle{
         return contact.getAddress();
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return contact.getBirthday();
     }
 

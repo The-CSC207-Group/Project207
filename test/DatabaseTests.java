@@ -8,11 +8,10 @@ import database.DataMapperGateway;
 import utilities.DeleteUtils;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.Date;
 
 public class DatabaseTests {
 
@@ -280,7 +279,7 @@ public class DatabaseTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Contact> originalContactDatabase = originalDatabase.getContactDatabase();
 
-        Date birthday = new Date(2022, Calendar.JANUARY, 1);
+        LocalDate birthday = LocalDate.of(2022, 1, 1);
         Contact originalContact = new Contact("jeff", "jeff@gmail.com", "12345678",
                 "jeff street", birthday, "jim", "jim@gmail.com",
                 "87654321", "father");
