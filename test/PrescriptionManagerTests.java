@@ -1,8 +1,6 @@
 import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Doctor;
-import entities.Patient;
 import entities.Prescription;
 import org.junit.After;
 import org.junit.Rule;
@@ -69,9 +67,9 @@ public class PrescriptionManagerTests {
         assertEquals("Original prescription and loaded prescription should share the same body",
                 originalPrescriptionBundle1.getBody(), loadedPrescriptionDataBundle1.getBody());
         assertEquals("Original prescription and loaded prescription should share the same patient ID",
-                originalPrescriptionBundle1.getPatient(), loadedPrescriptionDataBundle1.getPatient());
+                originalPrescriptionBundle1.getPatientId(), loadedPrescriptionDataBundle1.getPatientId());
         assertEquals("Original prescription and loaded prescription should share the same doctor ID",
-                originalPrescriptionBundle1.getDoctor(), loadedPrescriptionDataBundle1.getDoctor());
+                originalPrescriptionBundle1.getDoctorId(), loadedPrescriptionDataBundle1.getDoctorId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 originalPrescriptionBundle1.getExpiryDate().compareTo(loadedPrescriptionDataBundle1.
                         getExpiryDate()), 0);
@@ -170,9 +168,9 @@ public class PrescriptionManagerTests {
         assertEquals("The created prescription data bundle should have the same body as the " +
                         "parameters of createPrescription method", prescriptionDataBundle.getBody(), body);
         assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
-                        "parameters of createPrescription method", prescriptionDataBundle.getPatient(), patientID);
+                        "parameters of createPrescription method", prescriptionDataBundle.getPatientId(), patientID);
         assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionDataBundle.getDoctor(), doctorID);
+                "parameters of createPrescription method", prescriptionDataBundle.getDoctorId(), doctorID);
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate), 0);
     }

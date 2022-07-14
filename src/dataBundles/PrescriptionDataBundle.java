@@ -1,11 +1,8 @@
 package dataBundles;
 
-import entities.Doctor;
-import entities.Patient;
 import entities.Prescription;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 /**
  * Class solely to bundle patient data and send it around to different controllers
