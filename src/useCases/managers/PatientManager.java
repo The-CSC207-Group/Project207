@@ -8,20 +8,20 @@ import entities.Contact;
 import entities.Patient;
 import entities.User;
 
-public class PatientManager{
+public class PatientManager {
     DataMapperGateway<Patient> patientDatabase;
     GenericUserManagerMethods<Patient> patientMethods;
     PatientManager patientManager;
     DataMapperGateway<Contact> contactDatabase;
 
-    public PatientManager(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Contact> contactDatabase){
+    public PatientManager(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Contact> contactDatabase) {
         this.patientDatabase = patientDatabase;
         this.patientMethods = new GenericUserManagerMethods<>(patientDatabase);
         this.contactDatabase = contactDatabase;
     }
 
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                 String healthNumber) {
+                                           String healthNumber) {
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Patient patient = new Patient(username, password, contactId, healthNumber);
         return new PatientDataBundle(patient.getId(), patient);
@@ -37,7 +37,7 @@ public class PatientManager{
         return patientMethods.getUser(userId);
     }
 
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
+    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle) {
         return new Contact(contactDataBundle.getName(),
                 contactDataBundle.getEmail(),
                 contactDataBundle.getPhoneNumber(),
