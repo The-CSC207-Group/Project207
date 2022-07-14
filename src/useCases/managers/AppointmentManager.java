@@ -16,11 +16,23 @@ public class AppointmentManager {
     private DataMapperGateway<Appointment> appointmentDatabase;
     private DataMapperGateway<Doctor> doctorDatabase;
 
+    /**
+     *
+     * @param appointmentDatabase database for appointments.
+     * @param doctorDatabase      database for doctors.
+     */
     public AppointmentManager(DataMapperGateway<Appointment> appointmentDatabase, DataMapperGateway<Doctor> doctorDatabase){
         this.appointmentDatabase = appointmentDatabase;
         this.doctorDatabase  = doctorDatabase;
     }
 
+    /**
+     *
+     * @param patientId     id of the patient the Appointment was assigned to.
+     * @param doctorId      id of the doctor the Appointment was assigned to.
+     * @param proposedTime  the new proposed TimeBlock representing the duration of an Appointment.
+     * @return an AppointmentDataBundle that represents the new Appointment that has been booked
+     */
     public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
 
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorId, patientId), proposedTime)
@@ -45,10 +57,21 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
     }
 
-
+    /**
+     *
+     * @param appointmentId: Integer id of the Appointment.
+     */
     public void removeAppointment(Integer appointmentId){
         appointmentDatabase.remove(appointmentId);
     }
+
+    /**
+     *
+     * @param appointmentId Integer id of the Appointment.
+     * @param newStart      ZonedDateTime representing a new start time for an Appointment's TimeBlock
+     * @param newEnd        ZonedDateTime representing a new end time for an Appointment's TimeBlock
+     * @return boolean that represents whether the rescheduling Appointment Time was valid or not.
+     */
     public boolean rescheduleAppointment(Integer appointmentId, ZonedDateTime newStart, ZonedDateTime newEnd){
         Appointment appointment = appointmentDatabase.get(appointmentId);
         removeAppointment(appointmentId);
@@ -70,6 +93,12 @@ public class AppointmentManager {
                 .map(Appointment::getTimeBlock)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    /**
+     *
+     * @param patientId id of the patient the Appointment was assigned to.
+     * @return ArrayList of AppointmentDataBundle which includes information of specific patient Appointments.
+     */
     public ArrayList<AppointmentDataBundle> getPatientAppointments(Integer patientId){
         return getAllPatientAppointments(patientId).stream()
                 .map(x -> new AppointmentDataBundle(x.getId(), x))
@@ -81,6 +110,12 @@ public class AppointmentManager {
                 .filter(x -> x.getPatientID() == patientId)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    /**
+     *
+     * @param doctorId id of the doctor the Appointment was assigned to.
+     * @return ArrayList of AppointmentDataBundle which includes information of specific doctor Appointments.
+     */
     public ArrayList<AppointmentDataBundle> getDoctorAppointments(Integer doctorId){
         return getAppointments().stream()
                 .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorId))
@@ -88,6 +123,10 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     *
+     * @return ArrayList of AppointmentDataBundle which includes information of many Appointments.
+     */
     public ArrayList<AppointmentDataBundle> getAllAppointments(){
 
         return getAppointments().stream()
@@ -100,6 +139,14 @@ public class AppointmentManager {
                 .map(x -> appointmentDatabase.get(x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    /**
+     *
+     * @param doctorId          id of the doctor the Appointment was assigned to.
+     * @param searchStartTime   ZonedDateTime representing the beginning of the search period
+     * @param searchEndTime     ZonedDateTime representing the beginning of the end period
+     * @return an ArrayList of TimeBlocks representing all available timeslots to schedule an Appointment.
+     */
     public ArrayList<TimeBlock> searchAvailability(Integer doctorId, ZonedDateTime searchStartTime,
                                                        ZonedDateTime searchEndTime){
         ArrayList<TimeBlock> totalAvailableTimes = new ArrayList<>();
@@ -110,12 +157,26 @@ public class AppointmentManager {
         }
         return totalAvailableTimes;
     }
+
+    /**
+     *
+     * @param doctorId  id of the doctor the Appointment was assigned to.
+     * @param dayOfWeek an Enum that represents a day of the week without ties to a specific date.
+     * @return an ArrayList of AvailabilityData that holds data on a doctor's available time.
+     */
     public ArrayList<AvailabilityData> getAvailabilityDataFromDayOfWeek(Integer doctorId, DayOfWeek dayOfWeek){
         return doctorDatabase.get(doctorId).getAvailability()
                 .stream()
                 .filter(x -> dayOfWeek.getValue() == x.getDayOfWeek().getValue())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    /**
+     *
+     * @param doctorId      id of the doctor the Appointment was assigned to.
+     * @param selectedDay   LocalDate that represents a date without a specific time attached.
+     * @return an ArrayList of TimeBlocks where each TimeBlock represents available time of a doctor on a specific date.
+     */
     public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
         return getAvailabilityDataFromDayOfWeek(doctorId, selectedDay.getDayOfWeek()).stream()
                 .map(x -> new TimeBlock(ZonedDateTime.of(selectedDay,
@@ -158,6 +219,13 @@ public class AppointmentManager {
         }
         return true;
     }
+
+    /**
+     *
+     * @param doctorId    id of the doctor the Appointment was assigned to.
+     * @param selectedDay LocalDate that represents a date without a specific time attached.
+     * @return ArrayList of AppointmentDataBundle which includes information of many Appointments.
+     */
     public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return getAllAppointments().stream()
                 .filter(x -> x.getDoctorID().equals(doctorId))
@@ -177,12 +245,4 @@ public class AppointmentManager {
 //    public ArrayList<AvailabilityData> getAvailability(Integer doctorId, DayOfWeek dayOfWeek){
 //
 //    }
-    private ArrayList<AppointmentDataBundle> convertAppointmentsToDataBundle(ArrayList<Appointment>
-                                                                                     patientsAppointments) {
-        ArrayList<AppointmentDataBundle> appointmentDataBundles = new ArrayList<>();
-        for (Appointment appointment : patientsAppointments){
-            appointmentDataBundles.add(new AppointmentDataBundle(appointment.getId(), appointment));
-        }
-        return appointmentDataBundles;
-    }
 }
