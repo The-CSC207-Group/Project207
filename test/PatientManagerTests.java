@@ -90,4 +90,27 @@ public class PatientManagerTests {
         assertNull("A patient object should not be returned after it is deleted ",
                 patientDatabase.get(patientID));
     }
+
+    @Test(timeout = 1000)
+    public void testChangeUserPassword() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Patient patient = new
+                Patient("jeff", "123", 123456789, "5544");
+
+        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+
+        Integer patientID = patientDatabase.add(patient);
+
+        assertTrue("The password should remain the same before the change ",
+                patientDatabase.get(patientID).comparePassword("123"));
+
+        patientManager.changeUserPassword(patientID, "456");
+
+        assertTrue("The patient object should have the same password as we inputted into the parameters " +
+                        "of the changeUserPassword method  ",
+                patientDatabase.get(patientID).comparePassword("456"));
+    }
 }
