@@ -9,8 +9,8 @@ public abstract class Note extends JsonSerializable {
     private ZonedDateTime dateNoted;
     private String header;
     private String body;
-    private int patientID;
-    private int doctorID;
+    private Integer patientID;
+    private Integer doctorID;
 
     public Note(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID) {
         this.dateNoted = dateNoted;
@@ -44,7 +44,7 @@ public abstract class Note extends JsonSerializable {
         this.body = body;
     }
 
-    public int getPatientID() {
+    public Integer getPatientID() {
         return patientID;
     }
 
@@ -52,7 +52,7 @@ public abstract class Note extends JsonSerializable {
         this.patientID = patientID;
     }
 
-    public int getDoctorID() {
+    public Integer getDoctorID() {
         return doctorID;
     }
 

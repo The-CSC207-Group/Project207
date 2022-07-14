@@ -25,7 +25,8 @@ public class PrescriptionManager {
 
     /**
      *
-     * @param userId the id associated with the patient in the database. Should not be null.
+     * @param userId the id associated with the patient in the database. Assumes userId is a valid user id that
+     * exists in the database. If not, an empty list will be returned
      * @return An array list of PrescriptionDataBundles for each prescription in the database belonging to the
      * user that is active.
      */

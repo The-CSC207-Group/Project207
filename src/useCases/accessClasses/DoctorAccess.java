@@ -58,13 +58,17 @@ public class DoctorAccess {
         patientDatabase.get(patientId).removeReport(reportId);
     }
     public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer patientId){
+        if (patientDatabase.get(patientId) == null){return null;}
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientId);
     }
-    public ArrayList<PrescriptionDataBundle> getPrescriptionHistory(Integer patientId){
+    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer patientId){
+        if (patientDatabase.get(patientId) == null){return null;}
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientId);
     }
     public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
                                                      ZonedDateTime expiryDate){
+        if (patientDatabase.get(patientID) == null){return null;}
+        if (doctorDatabase.get(doctorID) == null){return null;}
         return prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
     }
     public void deletePrescription(Integer prescriptionId){

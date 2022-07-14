@@ -86,11 +86,13 @@ public class SecretaryAccess {
         return doctorManager.createDoctor(username, password, contactDataBundle);
     }
 
-    public ArrayList<PrescriptionDataBundle> getActivePatientPrescriptions(Integer userId){
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(userId);
+    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer patientId){
+        if (patientManager.getPatient(patientId) == null){return null;}
+        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientId);
     }
-    public ArrayList<PrescriptionDataBundle> getAllPatientPrescriptions(Integer userId){
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
+    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer patientId){
+        if (patientManager.getPatient(patientId) == null){return null;}
+        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientId);
     }
     public void changePatientPassword(Integer userId, String newPassword){
         patientManager.changeUserPassword(userId, newPassword);

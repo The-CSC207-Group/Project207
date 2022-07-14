@@ -25,11 +25,11 @@ public class PrescriptionDataBundle extends DataBundle{
         return prescription.getExpiryDate();
     }
 
-    public Integer getPatient() {
+    public Integer getPatientId() {
         return prescription.getPatientID();
     }
 
-    public Integer getDoctor() {
+    public Integer getDoctorId() {
         return prescription.getDoctorID();
     }
 

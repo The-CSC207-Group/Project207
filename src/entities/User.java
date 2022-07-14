@@ -9,7 +9,7 @@ public abstract class User extends JsonSerializable {
 
     private final String username;
     private String password;
-    private int contactInfoId;
+    private Integer contactInfoId;
     private ArrayList<Integer> logs = new ArrayList<>();
 
     public User(String username, String password, int contactInfoId) {
