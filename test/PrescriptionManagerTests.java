@@ -135,4 +135,41 @@ public class PrescriptionManagerTests {
         assertEquals("The array list should have a length of 2 even though one of " +
                         "the prescriptions is expired", 2, loadedPrescriptionList.size());
     }
+
+    @Test(timeout = 1000)
+    public void testCreatePrescription() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
+
+        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
+        LocalDateTime localExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+        String header = "medicine";
+        String body = "healthy";
+        Integer patientID = 123;
+        Integer doctorID = 456;
+
+        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+
+        PrescriptionDataBundle prescriptionDataBundle = prescriptionManager.createPrescription(zonedDateNoted,
+                header, body, patientID, doctorID, zonedExpiryDate);
+
+        /* testing if the created prescription data bundle is valid by testing if its fields match with the parameters
+        * of the createPrescription method */
+        assertEquals("The created prescription data bundle should have the same date noted as the parameters of " +
+                "createPrescription method", prescriptionDataBundle.getDateNoted().compareTo(zonedDateNoted),
+                0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("The created prescription data bundle should have the same header as the " +
+                        "parameters of createPrescription method", prescriptionDataBundle.getHeader(), header);
+        assertEquals("The created prescription data bundle should have the same body as the " +
+                        "parameters of createPrescription method", prescriptionDataBundle.getBody(), body);
+        assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
+                        "parameters of createPrescription method", prescriptionDataBundle.getPatient(), patientID);
+        assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
+                "parameters of createPrescription method", prescriptionDataBundle.getDoctor(), doctorID);
+        assertEquals("Original prescription and loaded prescription have the same expiry date",
+                prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate), 0);
+    }
 }
