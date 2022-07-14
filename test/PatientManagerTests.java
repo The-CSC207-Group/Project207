@@ -49,5 +49,18 @@ public class PatientManagerTests {
                         "createPatient method", patientDataBundle.getUsername(), username);
         assertEquals("The created patient data bundle should have the same health number as the parameters " +
                 "of createPatient method", patientDataBundle.getHealthNumber(), healthNumber);
+
+        Patient loadedPatient = patientDatabase.get(patientDataBundle.getId());
+
+        /* Testing if the patient object has been correctly added to the database by testing if the fields of the loaded
+        patient are equal to the parameters of createPatient */
+        assertEquals("Original patient and loaded patient should share the same unique username",
+                loadedPatient.getUsername(), username);
+        assertEquals("Original patient and loaded patient should share the same contact information",
+                loadedPatient.getContactInfoId(), loadedPatient.getContactInfoId());
+        assertEquals("Original patient and loaded patient should share the same health numbers",
+                loadedPatient.getHealthNumber(), loadedPatient.getHealthNumber());
+        assertTrue("Original patient and loaded patient should share the same password",
+                loadedPatient.comparePassword(password));
     }
 }
