@@ -4,12 +4,16 @@ import database.Database;
 import entities.Doctor;
 import entities.Patient;
 import entities.Prescription;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.PrescriptionManager;
+import utilities.DeleteUtils;
+
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -219,5 +223,10 @@ public class PrescriptionManagerTests {
 
         assertTrue("The array list should be empty after all prescriptions are removed",
                 loadedPrescriptionList3.isEmpty());
+    }
+
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
 }
