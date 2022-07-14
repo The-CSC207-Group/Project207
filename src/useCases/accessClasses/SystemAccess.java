@@ -84,7 +84,7 @@ public class SystemAccess {
     }
 
     /**
-     *
+     * Sign In method for doctors.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
@@ -99,6 +99,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for Patients.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
@@ -113,6 +114,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for Secretaries.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
@@ -127,6 +129,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for admins.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
