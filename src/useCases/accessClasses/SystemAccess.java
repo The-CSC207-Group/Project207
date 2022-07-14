@@ -24,7 +24,15 @@ public class SystemAccess {
         patient, admin, secretary, doctor
     }
 
-
+    /**
+     *
+     * @param patientDatabase database for storing patients.
+     * @param adminDatabase database for storing admins.
+     * @param secretaryDatabase database for secretaries.
+     * @param doctorDatabase database for doctors.
+     * @param contactDatabase database for contacts.
+     * @param logDatabase database for logs.
+     */
     public SystemAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Admin> adminDatabase,
                         DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase,
                         DataMapperGateway<Contact> contactDatabase, DataMapperGateway<Log> logDatabase) {
