@@ -14,12 +14,24 @@ public class PatientManager {
     PatientManager patientManager;
     DataMapperGateway<Contact> contactDatabase;
 
+    /**
+     *
+     * @param patientDatabase database storing all the patients.
+     * @param contactDatabase database storing all the contacts.
+     */
     public PatientManager(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Contact> contactDatabase) {
         this.patientDatabase = patientDatabase;
         this.patientMethods = new GenericUserManagerMethods<>(patientDatabase);
         this.contactDatabase = contactDatabase;
     }
 
+    /**
+     * @param username          String new username
+     * @param password          String new password
+     * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
+     * @param healthNumber      Int Health number of the patient being created.
+     * @return PatientDataBundle which includes information of the patient.
+     */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber) {
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
@@ -27,13 +39,29 @@ public class PatientManager {
         patientDatabase.add(patient);
         return new PatientDataBundle(patient.getId(), patient);
     }
+
+    /**
+     *
+     * @param userId Int userId of the user trying to change the password.
+     * @param newPassword String new password for the user.
+     */
     public void changeUserPassword(Integer userId, String newPassword){
         patientMethods.changePassword(userId, newPassword);
     }
+
+    /**
+     *
+     * @param userId Int userId of the user being deleted.
+     */
     public void deletePatient(Integer userId){
         patientMethods.deleteUser(userId);
     }
 
+    /**
+     *
+     * @param userId Int userId of the user requested.
+     * @return Patient object
+     */
     public Patient getPatient(Integer userId){
         return patientMethods.getUser(userId);
     }

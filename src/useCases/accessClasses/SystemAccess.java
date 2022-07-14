@@ -47,7 +47,8 @@ public class SystemAccess {
     /**
      * @param username          String new username
      * @param password          String new password
-     * @param contactDataBundle ContactDataBundle which includes contact info of the user.
+     * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
+     * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
      */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
