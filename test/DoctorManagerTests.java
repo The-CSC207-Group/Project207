@@ -89,5 +89,27 @@ public class DoctorManagerTests {
                 doctorDatabase.get(doctorID));
     }
 
+    @Test(timeout = 1000)
+    public void testChangeUserPassword() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Doctor doctor = new
+                Doctor("jeff", "123", 123456789);
+
+        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+
+        Integer doctorID = doctorDatabase.add(doctor);
+
+        assertTrue("The password should remain the same before the change ",
+                doctorDatabase.get(doctorID).comparePassword("123"));
+
+        doctorManager.changeUserPassword(doctorID, "456");
+
+        assertTrue("The doctor object should have the same password as we inputted into the parameters " +
+                        "of the changeUserPassword method ",
+                doctorDatabase.get(doctorID).comparePassword("456"));
+    }
 
 }
