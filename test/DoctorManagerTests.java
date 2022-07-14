@@ -112,4 +112,41 @@ public class DoctorManagerTests {
                 doctorDatabase.get(doctorID).comparePassword("456"));
     }
 
+    @Test(timeout = 1000)
+    public void testGetDoctor() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Doctor originalDoctor = new
+                Doctor("jeff", "123", 123456789);
+
+        for (int i = 1; i <= 3; i++) {
+            originalDoctor.addLog(i);
+        }
+
+        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+
+        Integer doctorID = doctorDatabase.add(originalDoctor);
+
+        assertEquals("Original doctor should share the same ID from the database",
+                originalDoctor.getId(), doctorID);
+
+        Doctor loadedDoctor = doctorManager.getDoctor(doctorID);
+
+        /* Testing if the loaded doctor and the original doctor are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original doctor and loaded doctor should share the same Id",
+                originalDoctor.getId(), loadedDoctor.getId());
+        assertEquals("Original doctor and loaded doctor should share the same unique username",
+                originalDoctor.getUsername(), loadedDoctor.getUsername());
+        assertEquals("Original doctor and loaded doctor should share the same logs",
+                originalDoctor.getLogs(), loadedDoctor.getLogs());
+        assertEquals("Original doctor and loaded doctor should share the same contact information",
+                originalDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
+        assertTrue("Original doctor and loaded doctor should share the same password",
+                loadedDoctor.comparePassword("123"));
+    }
+
+
 }
