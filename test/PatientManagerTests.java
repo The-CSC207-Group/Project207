@@ -61,10 +61,8 @@ public class PatientManagerTests {
         patient are equal to the parameters of createPatient */
         assertEquals("Original patient and loaded patient should share the same unique username",
                 loadedPatient.getUsername(), username);
-        assertEquals("Original patient and loaded patient should share the same contact information",
-                loadedPatient.getContactInfoId(), loadedPatient.getContactInfoId());
         assertEquals("Original patient and loaded patient should share the same health numbers",
-                loadedPatient.getHealthNumber(), loadedPatient.getHealthNumber());
+                loadedPatient.getHealthNumber(), healthNumber);
         assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword(password));
     }
