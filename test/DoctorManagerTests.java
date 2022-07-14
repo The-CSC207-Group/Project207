@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
@@ -18,8 +19,8 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class DoctorManagerTests {
 
@@ -65,5 +66,28 @@ public class DoctorManagerTests {
         assertTrue("Original doctor and loaded doctor should share the same password",
                 loadedDoctor.comparePassword(password));
     }
+
+    @Test(timeout = 1000)
+    public void testDeleteDoctor() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Doctor doctor = new
+                Doctor("jeff", "123", 123456789);
+
+        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+
+        Integer doctorID = doctorDatabase.add(doctor);
+
+        assertNotNull("A doctor object should be returned before it is deleted ",
+                doctorDatabase.get(doctorID));
+
+        doctorManager.deleteDoctor(doctorID);
+
+        assertNull("A doctor object should not be returned after it is deleted ",
+                doctorDatabase.get(doctorID));
+    }
+
 
 }
