@@ -30,7 +30,14 @@ public class AdminAccess {
     SecretaryManager secretaryManager;
     LogManager logManager;
 
-
+    /**
+     * @param patientDatabase   database for patients.
+     * @param doctorDatabase    database for doctors.
+     * @param secretaryDatabase database for secretaries.
+     * @param adminDatabase     database for admins.
+     * @param contactDatabase   database for contacts.
+     * @param logDatabase       database for logs.
+     */
     public AdminAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor> doctorDatabase,
                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact>
                                contactDatabase, DataMapperGateway<Log> logDatabase) {
@@ -41,21 +48,41 @@ public class AdminAccess {
         this.logManager = new LogManager(logDatabase);
     }
 
-    public void deleteUser(Integer userId){
+    /**
+     * @param userId Integer userID of the user being deleted.
+     */
+    public void deleteUser(Integer userId) {
         adminManager.deleteAdminUser(userId);
         doctorManager.deleteDoctor(userId);
         patientManager.deletePatient(userId);
         secretaryManager.deleteSecretary(userId);
     }
-    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle, String healthNumber){
+
+    /**
+     * @param username          String new username
+     * @param password          String new password
+     * @param contactDataBundle ContactDataBundle which includes contact info of the user.
+     * @return PatientDataBundle which includes information of the patient.
+     */
+    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                           String healthNumber) {
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
 
     }
-    public ArrayList<LogDataBundle> getLogs(Integer userId){
-        if (patientManager.getPatient(userId) != null){return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogs());}
-        if (secretaryManager.getSecretary(userId) != null){return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogs());}
-        if (doctorManager.getDoctor(userId) != null){return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogs());}
-        if (adminManager.getAdmin(userId) != null){return logManager.getLogDataBundlesFromLogIDs(adminManager.getAdmin(userId).getLogs());}
+
+    public ArrayList<LogDataBundle> getLogs(Integer userId) {
+        if (patientManager.getPatient(userId) != null) {
+            return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogs());
+        }
+        if (secretaryManager.getSecretary(userId) != null) {
+            return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogs());
+        }
+        if (doctorManager.getDoctor(userId) != null) {
+            return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogs());
+        }
+        if (adminManager.getAdmin(userId) != null) {
+            return logManager.getLogDataBundlesFromLogIDs(adminManager.getAdmin(userId).getLogs());
+        }
         return null;
     }
 
