@@ -31,18 +31,18 @@ public class PatientAccess {
     public void signOut(){
 
     }
-    public void deleteCurrentUser(Integer iDUser) {
-        patientManager.deletePatient(iDUser);
+    public void deleteCurrentUser(Integer userId) {
+        patientManager.deletePatient(userId);
     }
-    public void changeCurrentUserPassword(Integer iDUser, String newPassword){
-        patientManager.changeUserPassword(iDUser, newPassword);
+    public void changeCurrentUserPassword(Integer userId, String newPassword){
+        patientManager.changeUserPassword(userId, newPassword);
     }
-    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer iDUser){
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(iDUser);
+    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer userId){
+        return prescriptionManager.getPatientActivePrescriptionDataByUserId(userId);
     }
-    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer iDUser){
+    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer userId){
 
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(iDUser);
+        return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
     }
     public ArrayList<Appointment> getAppointments(Patient patient){
         return null;

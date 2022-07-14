@@ -25,26 +25,26 @@ public class PrescriptionManager {
 
     /**
      *
-     * @param idUser the id associated with the patient in the database. Should not be null.
+     * @param userId the id associated with the patient in the database. Should not be null.
      * @return An array list of PrescriptionDataBundles for each prescription in the database belonging to the
      * user that is active.
      */
-    public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer idUser) {
+    public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer userId) {
         Stream<PrescriptionDataBundle> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
                 filter(x -> !isExpiredPrescription(x)).
-                filter(x -> isPatientsPrescription(x, idUser)).
+                filter(x -> isPatientsPrescription(x, userId)).
                 map(x -> new PrescriptionDataBundle(x.getId(), x));
         return databaseUtilities.toArrayList(dataBundleStream);
     }
     /**
      *
-     * @param idUser the id associated with the patient in the database. Should not be null.
+     * @param userId the id associated with the patient in the database. Should not be null.
      * @return An array list of PrescriptionDataBundles for each prescription in the database belonging to the
      * user.
      */
-    public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer idUser) {
+    public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {
         Stream<PrescriptionDataBundle> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
-                filter(x -> isPatientsPrescription(x, idUser)).
+                filter(x -> isPatientsPrescription(x, userId)).
                 map(x -> new PrescriptionDataBundle(x.getId(), x));
         return databaseUtilities.toArrayList(dataBundleStream);
     }
@@ -56,14 +56,14 @@ public class PrescriptionManager {
      * @param dateNoted date the prescription was created
      * @param header header of the prescription, info such as title
      * @param body body of the prescription, all notes relating to the prescription
-     * @param idPatient id of the patient the prescription was assigned to.
-     * @param idDoctor id of the doctor who gave out the prescription.
+     * @param patientId id of the patient the prescription was assigned to.
+     * @param doctorId id of the doctor who gave out the prescription.
      * @param expiryDate date the prescription expires
      * @return PrescriptionDataBundle object corresponding to the prescription.
      */
-    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int idPatient, int idDoctor,
+    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientId, int doctorId,
                                                      ZonedDateTime expiryDate){
-        Prescription prescription = new Prescription(dateNoted, header, body, idPatient, idDoctor, expiryDate);
+        Prescription prescription = new Prescription(dateNoted, header, body, patientId, doctorId, expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionDataBundle(prescription.getId(), prescription);
     }

@@ -10,16 +10,16 @@ public class GenericUserManagerMethods<T extends User> {
         this.database = database;
     }
 
-    public void changePassword(Integer IDUser, String password){
-        database.get(IDUser).setPassword(password);
+    public void changePassword(Integer userId, String password){
+        database.get(userId).setPassword(password);
     }
 
-    public void deleteUser(Integer idUser){
-        database.remove(idUser);
+    public void deleteUser(Integer userId){
+        database.remove(userId);
     }
 
-    public T getUser(Integer idUser){
-        return database.get(idUser);
+    public T getUser(Integer userId){
+        return database.get(userId);
     }
 
 

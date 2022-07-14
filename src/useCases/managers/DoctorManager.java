@@ -25,14 +25,14 @@ public class DoctorManager{
 
     }
 
-    public void changeUserPassword(Integer IDUser, String newPassword){
-        doctorMethods.changePassword(IDUser, newPassword);
+    public void changeUserPassword(Integer userId, String newPassword){
+        doctorMethods.changePassword(userId, newPassword);
     }
-    public void deleteDoctor(Integer idUser){
-        doctorMethods.deleteUser(idUser);
+    public void deleteDoctor(Integer userId){
+        doctorMethods.deleteUser(userId);
     }
-    public Doctor getDoctor(Integer idUser){
-        return doctorMethods.getUser(idUser);
+    public Doctor getDoctor(Integer userId){
+        return doctorMethods.getUser(userId);
     }
 
     private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){

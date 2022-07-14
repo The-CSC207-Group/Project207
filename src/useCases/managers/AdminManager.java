@@ -26,12 +26,12 @@ public class AdminManager{
     public void changeUserPassword(Integer userId, String newPassword){
         adminMethods.changePassword(userId, newPassword);
     }
-    public void deleteAdminUser(Integer idUser){
-        adminMethods.deleteUser(idUser);
+    public void deleteAdminUser(Integer userId){
+        adminMethods.deleteUser(userId);
     }
 
-    public Admin getAdmin(Integer idUser){
-        return adminMethods.getUser(idUser);
+    public Admin getAdmin(Integer userId){
+        return adminMethods.getUser(userId);
     }
 
     private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){

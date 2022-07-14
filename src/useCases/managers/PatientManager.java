@@ -26,15 +26,15 @@ public class PatientManager{
         Patient patient = new Patient(username, password, contactId, healthNumber);
         return new PatientDataBundle(patient.getId(), patient);
     }
-    public void changeUserPassword(Integer IDUser, String newPassword){
-        patientMethods.changePassword(IDUser, newPassword);
+    public void changeUserPassword(Integer userId, String newPassword){
+        patientMethods.changePassword(userId, newPassword);
     }
-    public void deletePatient(Integer idUser){
-        patientMethods.deleteUser(idUser);
+    public void deletePatient(Integer userId){
+        patientMethods.deleteUser(userId);
     }
 
-    public Patient getPatient(Integer idUser){
-        return patientMethods.getUser(idUser);
+    public Patient getPatient(Integer userId){
+        return patientMethods.getUser(userId);
     }
 
     private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){

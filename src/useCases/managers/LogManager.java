@@ -23,12 +23,12 @@ public class LogManager {
     }
 
     /**
-     * Deletes a log from ONLY the log database. If the log idLog isn't associated with a log, nothing happens.
-     * @param idLog Id of the log to be deleted from the log database.
+     * Deletes a log from ONLY the log database. If the log logId isn't associated with a log, nothing happens.
+     * @param logId Id of the log to be deleted from the log database.
      */
-    public void deleteLog(Integer idLog){
-        if (idLog != null) {
-            logDatabase.remove(idLog);
+    public void deleteLog(Integer logId){
+        if (logId != null) {
+            logDatabase.remove(logId);
         }
 
     }
@@ -46,13 +46,13 @@ public class LogManager {
 
     /**
      *
-     * @param logIDs List of logIds.
+     * @param logIds List of logIds.
      * @return LogDataBundle of the logs in the database associated with logIds given.
      * NOTE: Runtime error is thrown if one of the log IDs is not associated with a log in the database or the id
      * is null.
      */
-    public ArrayList<LogDataBundle> getLogDataBundlesFromLogIDs(ArrayList<Integer> logIDs){
-        Stream<LogDataBundle> logStream = databaseUtils.getItemsWithIds(logDatabase, logIDs).
+    public ArrayList<LogDataBundle> getLogDataBundlesFromLogIDs(ArrayList<Integer> logIds){
+        Stream<LogDataBundle> logStream = databaseUtils.getItemsWithIds(logDatabase, logIds).
                 map(x -> new LogDataBundle(x.getId(), x));
         return databaseUtils.toArrayList(logStream);
 

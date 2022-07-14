@@ -49,15 +49,15 @@ public class SystemAccess {
     }
 
     /**
-     * @param userID username of the user trying to sign in
+     * @param userId username of the user trying to sign in
      * @return boolean, true if user can sign in, false if not
      */
-    public userType getType(Integer userID) throws Exception {
+    public userType getType(Integer userId) throws Exception {
         ArrayList<DataMapperGateway<? extends User>> userDatabases = new ArrayList<>(Arrays.asList(patientDatabase,
                 doctorDatabase, secretaryDatabase, adminDatabase));
         for (DataMapperGateway<? extends User> database : userDatabases) {
-            if (database.getAllIds().contains(userID)) {
-                String type = database.get(userID).getClass().getName();
+            if (database.getAllIds().contains(userId)) {
+                String type = database.get(userId).getClass().getName();
                 switch (type) {
                     case "Admin":
                         return userType.admin;
@@ -73,44 +73,44 @@ public class SystemAccess {
         throw new Exception("user not in databases");
     }
 
-    public DoctorDataBundle doctorSignIn(Integer userID, String password){
-        Doctor doctor = doctorDatabase.get(userID);
+    public DoctorDataBundle doctorSignIn(Integer userId, String password){
+        Doctor doctor = doctorDatabase.get(userId);
         if (doctor.comparePassword(password)){
-            attachUserSignInLog(doctorDatabase, userID);
-            return new DoctorDataBundle(userID, doctor);
+            attachUserSignInLog(doctorDatabase, userId);
+            return new DoctorDataBundle(userId, doctor);
         }
         return null;
     }
 
-    public PatientDataBundle patientSignIn(Integer userID, String password){
-        Patient patient = patientDatabase.get(userID);
+    public PatientDataBundle patientSignIn(Integer userId, String password){
+        Patient patient = patientDatabase.get(userId);
         if (patient.comparePassword((password))){
-            attachUserSignInLog(patientDatabase, userID);
-            return new PatientDataBundle(userID, patient);
+            attachUserSignInLog(patientDatabase, userId);
+            return new PatientDataBundle(userId, patient);
         }
         return null;
     }
 
-    public SecretaryDataBundle secretarySignIn(Integer userID, String password){
-        Secretary secretary = secretaryDatabase.get(userID);
+    public SecretaryDataBundle secretarySignIn(Integer userId, String password){
+        Secretary secretary = secretaryDatabase.get(userId);
         if (secretary.comparePassword(password)){
-            attachUserSignInLog(secretaryDatabase, userID);
-            return new SecretaryDataBundle(userID, secretary);
+            attachUserSignInLog(secretaryDatabase, userId);
+            return new SecretaryDataBundle(userId, secretary);
         }
         return null;
     }
 
-    public AdminDataBundle adminSignIn(Integer userID, String password){
-        Admin admin = adminDatabase.get(userID);
+    public AdminDataBundle adminSignIn(Integer userId, String password){
+        Admin admin = adminDatabase.get(userId);
         if (admin.comparePassword(password)){
-            attachUserSignInLog(adminDatabase, userID);
-            return new AdminDataBundle(userID, admin);
+            attachUserSignInLog(adminDatabase, userId);
+            return new AdminDataBundle(userId, admin);
         }
         return null;
     }
 
-    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer iDUser){
-        T user = database.get(iDUser);
+    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer userId){
+        T user = database.get(userId);
         Integer iDLog = logManager.addLog( user.getUsername() + " signed in").getId();
         user.addLog(iDLog);
     }

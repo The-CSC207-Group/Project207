@@ -26,15 +26,15 @@ public class SecretaryManager {
         return new SecretaryDataBundle(secretary.getId(), secretary);
     }
 
-    public void changeUserPassword(Integer IDUser, String newPassword){
-        secretaryMethods.changePassword(IDUser, newPassword);
+    public void changeUserPassword(Integer userId, String newPassword){
+        secretaryMethods.changePassword(userId, newPassword);
     }
 
-    public void deleteSecretary(Integer idUser){
-        secretaryMethods.deleteUser(idUser);
+    public void deleteSecretary(Integer userId){
+        secretaryMethods.deleteUser(userId);
     }
-    public Secretary getSecretary(Integer idUser){
-        return secretaryMethods.getUser(idUser);
+    public Secretary getSecretary(Integer userId){
+        return secretaryMethods.getUser(userId);
     }
 
     private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){

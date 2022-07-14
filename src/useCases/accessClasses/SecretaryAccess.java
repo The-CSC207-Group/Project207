@@ -55,11 +55,11 @@ public class SecretaryAccess {
 
     /**
      * Delete user with given id from their database. This user can delete secretaries and patients.
-     * @param iDUser id associated with the user to be deleted.
+     * @param userId id associated with the user to be deleted.
      */
-    public void deleteUser(Integer iDUser){
-        secretaryManager.deleteSecretary(iDUser);
-        patientManager.deletePatient(iDUser);
+    public void deleteUser(Integer userId){
+        secretaryManager.deleteSecretary(userId);
+        patientManager.deletePatient(userId);
     }
 
     /**
@@ -86,31 +86,31 @@ public class SecretaryAccess {
         return doctorManager.createDoctor(username, password, contactDataBundle);
     }
 
-    public ArrayList<PrescriptionDataBundle> getActivePatientPrescriptions(Integer iDUser){
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(iDUser);
+    public ArrayList<PrescriptionDataBundle> getActivePatientPrescriptions(Integer userId){
+        return prescriptionManager.getPatientActivePrescriptionDataByUserId(userId);
     }
-    public ArrayList<PrescriptionDataBundle> getAllPatientPrescriptions(Integer iDUser){
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(iDUser);
+    public ArrayList<PrescriptionDataBundle> getAllPatientPrescriptions(Integer userId){
+        return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
     }
-    public void changePatientPassword(Integer iDUser, String newPassword){
-        patientManager.changeUserPassword(iDUser, newPassword);
+    public void changePatientPassword(Integer userId, String newPassword){
+        patientManager.changeUserPassword(userId, newPassword);
     }
     public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
-    public AppointmentDataBundle bookAppointment(Integer iDPatient, Integer iDDoctor, TimeBlock proposedTime){
-        return appointmentManager.bookAppointment(iDPatient, iDDoctor, proposedTime);
+    public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
+        return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
     }
-    public void removeAppointment(Integer iDAppointment){
-        appointmentManager.removeAppointment(iDAppointment);
-    }
-
-    public ArrayList<AppointmentDataBundle> getPatientAppointmentDataBundles(Integer idPatient){
-        return  appointmentManager.getPatientAppointments(idPatient);
+    public void removeAppointment(Integer appointmentId){
+        appointmentManager.removeAppointment(appointmentId);
     }
 
-    public ArrayList<AppointmentDataBundle> getDoctorAppointmentDataBundles(Integer idDoctor){
-        return appointmentManager.getDoctorAppointments(idDoctor);
+    public ArrayList<AppointmentDataBundle> getPatientAppointmentDataBundles(Integer patientId){
+        return  appointmentManager.getPatientAppointments(patientId);
+    }
+
+    public ArrayList<AppointmentDataBundle> getDoctorAppointmentDataBundles(Integer doctorId){
+        return appointmentManager.getDoctorAppointments(doctorId);
     }
 
 
