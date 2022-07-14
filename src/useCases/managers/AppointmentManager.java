@@ -27,11 +27,12 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     * Books an appointment and adds it to the Appointment database after validating the proposed time scheduled for
+     * the new appointment.
      * @param patientId     id of the patient the Appointment was assigned to.
      * @param doctorId      id of the doctor the Appointment was assigned to.
      * @param proposedTime  the new proposed TimeBlock representing the duration of an Appointment.
-     * @return an AppointmentDataBundle that represents the new Appointment that has been booked
+     * @return an AppointmentDataBundle that represents the new Appointment that has been booked.
      */
     public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
 
@@ -58,7 +59,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     * 
      * @param appointmentId: Integer id of the Appointment.
      */
     public void removeAppointment(Integer appointmentId){
