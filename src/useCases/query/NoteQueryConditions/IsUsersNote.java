@@ -13,6 +13,6 @@ public class IsUsersNote<T extends Note> extends QueryCondition<T> {
 
     @Override
     public boolean isTrue(T item) {
-        return userId.equals(item.getPatientID());
+        return userId.equals(item.getPatientId());
     }
 }

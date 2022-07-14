@@ -1,11 +1,6 @@
 package useCases;
 
 import entities.Appointment;
-import entities.TimeBlock;
-import database.DataMapperGateway;
-
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class AppointmentQueries {
 
@@ -15,7 +10,7 @@ public class AppointmentQueries {
         this.appointment = appointment;
     }
     public boolean isDoctorsAppointment(Integer doctorId){
-        return appointment.getDoctorID() == doctorId;
+        return appointment.getDoctorId() == doctorId;
     }
 
 }

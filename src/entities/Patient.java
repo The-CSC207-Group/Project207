@@ -7,7 +7,7 @@ public class Patient extends User {
     private String healthNumber;
     private ArrayList<Integer> reports = new ArrayList<>();
 
-    public Patient(String username, String password, int contactInfo, String healthNumber) {
+    public Patient(String username, String password, Integer contactInfo, String healthNumber) {
         super(username, password, contactInfo);
         this.healthNumber = healthNumber;
     }
@@ -24,11 +24,11 @@ public class Patient extends User {
         return reports;
     }
 
-    public void addReport(int reportID) {
-        this.reports.add(reportID);
+    public void addReport(Integer reportId) {
+        this.reports.add(reportId);
     }
 
-    public void removeReport(int reportID) {
-        this.reports.remove(reportID);
+    public void removeReport(Integer reportId) {
+        this.reports.remove(reportId);
     }
 }

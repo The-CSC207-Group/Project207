@@ -16,7 +16,7 @@ public class SecretaryDataBundle extends DataBundle{
         return secretary.getUsername();
     }
 
-    public int getContact(){
+    public Integer getContact(){
         return secretary.getContactInfoId();
     }
 

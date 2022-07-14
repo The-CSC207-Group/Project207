@@ -23,11 +23,11 @@ public class PrescriptionDataBundle extends DataBundle{
     }
 
     public Integer getPatientId() {
-        return prescription.getPatientID();
+        return prescription.getPatientId();
     }
 
     public Integer getDoctorId() {
-        return prescription.getDoctorID();
+        return prescription.getDoctorId();
     }
 
     public String getBody() {

@@ -6,9 +6,9 @@ public class Prescription extends Note {
 
     private ZonedDateTime expiryDate;
 
-    public Prescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+    public Prescription(ZonedDateTime dateNoted, String header, String body, Integer patientId, Integer doctorId,
                         ZonedDateTime expiryDate) {
-        super(dateNoted, header, body, patientID, doctorID);
+        super(dateNoted, header, body, patientId, doctorId);
         this.expiryDate = expiryDate;
     }
 

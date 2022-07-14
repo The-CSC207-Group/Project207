@@ -45,6 +45,7 @@ public class SystemAccess {
 
 
     /**
+     * Creates a new Patient object and stores it in the database, returns PatientDataBundle.
      * @param username          String new username
      * @param password          String new password
      * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
@@ -57,6 +58,7 @@ public class SystemAccess {
     }
 
     /**
+     * Return the type of the given userId.
      * @param userId Integer userID of the user.
      * @return Enum of the user type, exception if the user is not in the database.
      */
@@ -82,6 +84,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for doctors.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
@@ -96,6 +99,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for Patients.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
@@ -110,6 +114,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for Secretaries.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
@@ -124,6 +129,7 @@ public class SystemAccess {
     }
 
     /**
+     * Sign In method for admins.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.

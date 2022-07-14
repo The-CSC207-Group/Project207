@@ -81,7 +81,7 @@ public class PrescriptionManager {
         return prescription.getExpiryDate().toLocalDateTime().isBefore(LocalDateTime.now());
     }
     private boolean isPatientsPrescription(Prescription prescription, Integer idUser){
-        return prescription.getPatientID() == idUser;
+        return prescription.getPatientId() == idUser;
     }
 
 }

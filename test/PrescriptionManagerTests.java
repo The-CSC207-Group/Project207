@@ -173,6 +173,25 @@ public class PrescriptionManagerTests {
                 "parameters of createPrescription method", prescriptionDataBundle.getDoctorId(), doctorID);
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate), 0);
+
+        Prescription loadedPrescription = prescriptionDatabase.get(prescriptionDataBundle.getId());
+
+        /* Testing if the prescription object has been correctly added to the database by testing if the fields of the
+        loaded patient are equal to the parameters of createPatient */
+        assertEquals("The loaded prescription object should have the same date noted as the parameters of " +
+                        "createPrescription method", loadedPrescription.getDateNoted().compareTo(zonedDateNoted),
+                0); // the compareTo function returns 0 when both dates are equal
+        assertEquals("The loaded prescription object should have the same header as the " +
+                "parameters of createPrescription method", loadedPrescription.getHeader(), header);
+        assertEquals("The loaded prescription object should have the same body as the " +
+                "parameters of createPrescription method", loadedPrescription.getBody(), body);
+        assertEquals("The loaded prescription object should have the same patient ID noted as the " +
+                "parameters of createPrescription method", loadedPrescription.getPatientID(), patientID);
+        assertEquals("The loaded prescription object should have the same patient ID noted as the " +
+                "parameters of createPrescription method", prescriptionDataBundle.getDoctorId(), doctorID);
+        assertEquals("The loaded prescription object should have the same expiry as the parameters of " +
+                        "createPrescription method", prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate),
+                0);
     }
 
     @Test(timeout = 1000)

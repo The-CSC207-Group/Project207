@@ -8,8 +8,6 @@ import useCases.AppointmentQueries;
 
 import java.time.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class AppointmentManager {
@@ -77,10 +75,10 @@ public class AppointmentManager {
         Appointment appointment = appointmentDatabase.get(appointmentId);
         removeAppointment(appointmentId);
         TimeBlock proposedTime = new TimeBlock(newStart, newEnd);
-        ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorID(),
-                appointment.getPatientID());
+        ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorId(),
+                appointment.getPatientId());
         if (isNoTimeBlockConflictAppointment(consideration, proposedTime)) {
-            bookAppointment(appointment.getPatientID(), appointment.getDoctorID(), proposedTime);
+            bookAppointment(appointment.getPatientId(), appointment.getDoctorId(), proposedTime);
             return true;
         }
         return false;
@@ -89,8 +87,8 @@ public class AppointmentManager {
     private ArrayList<TimeBlock> getTimeBlocksWithPatientAndDoctor(Integer doctorId, Integer patientId){
         return appointmentDatabase.getAllIds().stream()
                 .map(x -> appointmentDatabase.get(x))
-                .filter(x -> x.getDoctorID() == doctorId)
-                .filter(x -> x.getPatientID() == patientId)
+                .filter(x -> x.getDoctorId() == doctorId)
+                .filter(x -> x.getPatientId() == patientId)
                 .map(Appointment::getTimeBlock)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -108,7 +106,7 @@ public class AppointmentManager {
 
     private ArrayList<Appointment> getAllPatientAppointments(Integer patientId){
         return getAppointments().stream()
-                .filter(x -> x.getPatientID() == patientId)
+                .filter(x -> x.getPatientId() == patientId)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -197,7 +195,7 @@ public class AppointmentManager {
                     .map(x -> appointmentDatabase.get(x))
                     .filter(x -> x.getTimeBlock().getStartTime().getDayOfYear() ==
                             availabilityTimeBlock.getStartTime().getDayOfYear())
-                    .filter(x -> x.getDoctorID() == doctorId)
+                    .filter(x -> x.getDoctorId() == doctorId)
                     .filter(x -> calculateNoConflictTime(x, startTime, parsedAvailability))
                     .close();
             if (startTime.get(0) != availabilityTimeBlock.getEndTime()){

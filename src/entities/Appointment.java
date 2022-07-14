@@ -5,13 +5,13 @@ import utilities.JsonSerializable;
 public class Appointment extends JsonSerializable {
 
     private TimeBlock timeBlock;
-    private Integer doctorID;
-    private Integer patientID;
+    private Integer doctorId;
+    private Integer patientId;
 
-    public Appointment(TimeBlock timeBlock, int doctorID, int patientID) {
+    public Appointment(TimeBlock timeBlock, Integer doctorId, Integer patientId) {
         this.timeBlock = timeBlock;
-        this.doctorID = doctorID;
-        this.patientID = patientID;
+        this.doctorId = doctorId;
+        this.patientId = patientId;
     }
 
     public TimeBlock getTimeBlock() {
@@ -22,19 +22,19 @@ public class Appointment extends JsonSerializable {
         this.timeBlock = timeBlock;
     }
 
-    public Integer getDoctorID() {
-        return doctorID;
+    public Integer getDoctorId() {
+        return doctorId;
     }
 
-    public void setDoctorID(int doctorID) {
-        this.doctorID = doctorID;
+    public void setDoctorId(Integer doctorId) {
+        this.doctorId = doctorId;
     }
 
-    public Integer getPatientID() {
-        return patientID;
+    public Integer getPatientId() {
+        return patientId;
     }
 
-    public void setPatientID(int patientID) {
-        this.patientID = patientID;
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
     }
 }
