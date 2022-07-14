@@ -1,22 +1,27 @@
 import dataBundles.ContactDataBundle;
 import dataBundles.PatientDataBundle;
+import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
 import entities.Patient;
+import entities.Prescription;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.PatientManager;
+import useCases.managers.PrescriptionManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PatientManagerTests {
 
@@ -62,5 +67,27 @@ public class PatientManagerTests {
                 loadedPatient.getHealthNumber(), loadedPatient.getHealthNumber());
         assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword(password));
+    }
+
+    @Test(timeout = 1000)
+    public void testDeletePatient() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Patient patient = new
+                Patient("jeff", "123", 123456789, "5544");
+
+        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+
+        Integer patientID = patientDatabase.add(patient);
+
+        assertNotNull("A patient object should be returned before it is deleted ",
+                patientDatabase.get(patientID));
+
+        patientManager.deletePatient(patientID);
+
+        assertNull("A patient object should not be returned after it is deleted ",
+                patientDatabase.get(patientID));
     }
 }
