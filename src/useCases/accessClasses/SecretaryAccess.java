@@ -22,9 +22,19 @@ public class SecretaryAccess {
 
     LogManager logManager;
 
+    /**
+     *
+     * @param prescriptionDatabase database for storing prescriptions.
+     * @param patientDatabase database for storing patients.
+     * @param doctorDatabase database for storing doctors.
+     * @param secretaryDatabase database for storing secretaries.
+     * @param logDatabase database for storing logs.
+     * @param contactDatabase database for storing contacts.
+     * @param appointmentDatabase database for storing appointments.
+     */
     public SecretaryAccess(DataMapperGateway<Prescription> prescriptionDatabase,
                            DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor>
-                           doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase,
+                                   doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase,
                            DataMapperGateway<Log> logDatabase,
                            DataMapperGateway<Contact> contactDatabase,
                            DataMapperGateway<Appointment> appointmentDatabase) {
@@ -35,17 +45,43 @@ public class SecretaryAccess {
         this.logManager = new LogManager(logDatabase);
         this.appointmentManager = new AppointmentManager(appointmentDatabase, doctorDatabase);
     }
+
+    /**
+     * For future use.
+     */
     public void signOut(){
 
     }
+
+    /**
+     * Delete user with given id from their database. This user can delete secretaries and patients.
+     * @param iDUser id associated with the user to be deleted.
+     */
     public void deleteUser(Integer iDUser){
         secretaryManager.deleteSecretary(iDUser);
         patientManager.deletePatient(iDUser);
     }
+
+    /**
+     * NOTE: Handling of creating a patient that already exists is not present yet.
+     * @param username username of the patient
+     * @param password password of the patient
+     * @param contactDataBundle data bundle of patient contact info
+     * @param healthNumber health number of patient
+     * @return PatientDataBundle with the newly created patient's information
+     */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber){
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @param contactDataBundle
+     * @return
+     */
     public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
         return doctorManager.createDoctor(username, password, contactDataBundle);
     }
@@ -70,7 +106,7 @@ public class SecretaryAccess {
     }
 
     public ArrayList<AppointmentDataBundle> getPatientAppointmentDataBundles(Integer idPatient){
-       return  appointmentManager.getPatientAppointments(idPatient);
+        return  appointmentManager.getPatientAppointments(idPatient);
     }
 
     public ArrayList<AppointmentDataBundle> getDoctorAppointmentDataBundles(Integer idDoctor){

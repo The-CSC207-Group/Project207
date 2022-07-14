@@ -44,7 +44,7 @@ public class SystemAccess {
      * @return true if account has been created, false if account failed to create
      */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                 String healthNumber) {
+                                           String healthNumber) {
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
 
@@ -111,7 +111,7 @@ public class SystemAccess {
 
     private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer iDUser){
         T user = database.get(iDUser);
-        Integer iDLog = logManager.addLog( user.getUsername() + " signed in");
+        Integer iDLog = logManager.addLog( user.getUsername() + " signed in").getId();
         user.addLog(iDLog);
     }
 

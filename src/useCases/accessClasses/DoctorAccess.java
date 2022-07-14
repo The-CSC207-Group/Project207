@@ -35,7 +35,7 @@ public class DoctorAccess {
     public DoctorAccess(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Patient> patientDatabase,
                         DataMapperGateway<Prescription> prescriptionDatabase, AppointmentManager appointmentManager,
                         PrescriptionManager prescriptionManager, DoctorManager doctorManager, DataMapperGateway<Log>
-                        logDatabase){
+                                logDatabase){
         this.doctorDatabase = doctorDatabase;
         this.patientDatabase = patientDatabase;
         this.prescriptionDatabase = prescriptionDatabase;
@@ -58,14 +58,14 @@ public class DoctorAccess {
         patientDatabase.get(patientId).removeReport(reportId);
     }
     public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer patientId){
-       return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientId);
+        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientId);
     }
     public ArrayList<PrescriptionDataBundle> getPrescriptionHistory(Integer patientId){
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientId);
     }
     public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
-                                   ZonedDateTime expiryDate){
-         return prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
+                                                     ZonedDateTime expiryDate){
+        return prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
     }
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
@@ -84,7 +84,7 @@ public class DoctorAccess {
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public void signOut(){
-        
+
     }
     public ArrayList<LogDataBundle> getLogs(Integer userId){
         if (doctorManager.getDoctor(userId) != null){return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogs());}

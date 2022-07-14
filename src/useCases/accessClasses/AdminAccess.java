@@ -32,8 +32,8 @@ public class AdminAccess {
 
 
     public AdminAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor> doctorDatabase,
-    DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact>
-                       contactDatabase, DataMapperGateway<Log> logDatabase) {
+                       DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact>
+                               contactDatabase, DataMapperGateway<Log> logDatabase) {
         this.adminManager = new AdminManager(adminDatabase, contactDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
