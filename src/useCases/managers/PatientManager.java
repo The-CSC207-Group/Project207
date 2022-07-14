@@ -24,6 +24,7 @@ public class PatientManager {
                                            String healthNumber) {
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Patient patient = new Patient(username, password, contactId, healthNumber);
+        patientDatabase.add(patient);
         return new PatientDataBundle(patient.getId(), patient);
     }
     public void changeUserPassword(Integer userId, String newPassword){
