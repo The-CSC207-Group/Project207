@@ -172,4 +172,52 @@ public class PrescriptionManagerTests {
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate), 0);
     }
+
+    @Test(timeout = 1000)
+    public void testRemovePrescription() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
+
+        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
+        LocalDateTime inactiveLocalExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
+        LocalDateTime activeLocalExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
+        ZoneId torontoID = ZoneId.of("Canada/Eastern");
+        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
+        ZonedDateTime inactiveZonedExpiryDate = ZonedDateTime.of(inactiveLocalExpiryDate, torontoID);
+        ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
+
+        Prescription originalPrescription1 = new
+                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                456, inactiveZonedExpiryDate);
+        Prescription originalPrescription2 = new
+                Prescription(zonedDateNoted, "bad", "very unhealthy", 123,
+                1011, activeZonedExpiryDate);
+
+        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
+        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
+
+        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+
+        ArrayList<PrescriptionDataBundle> loadedPrescriptionList1 =
+                prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
+
+        assertEquals("The array list should have a length of 2 before a prescription is removed ",
+                2, loadedPrescriptionList1.size());
+
+        prescriptionManager.removePrescription(prescriptionID2);
+
+        ArrayList<PrescriptionDataBundle> loadedPrescriptionList2 =
+                prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
+
+        assertEquals("The array list should have a length of 1 after a prescription is removed ",
+                1, loadedPrescriptionList2.size());
+
+        prescriptionManager.removePrescription(prescriptionID1);
+
+        ArrayList<PrescriptionDataBundle> loadedPrescriptionList3 =
+                prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
+
+        assertTrue("The array list should be empty after all prescriptions are removed",
+                loadedPrescriptionList3.isEmpty());
+    }
 }
