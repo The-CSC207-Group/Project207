@@ -14,13 +14,10 @@ import java.util.stream.Collectors;
 
 public class AppointmentManager {
     private DataMapperGateway<Appointment> appointmentDatabase;
-    private DataMapperGateway<Patient> patientDatabase;
     private DataMapperGateway<Doctor> doctorDatabase;
 
-    public AppointmentManager(DataMapperGateway<Appointment> AppointmentDatabase,
-                              DataMapperGateway<Patient> PatientDatabase, DataMapperGateway<Doctor> doctorDatabase){
-        this.appointmentDatabase = AppointmentDatabase;
-        this.patientDatabase = PatientDatabase;
+    public AppointmentManager(DataMapperGateway<Appointment> appointmentDatabase, DataMapperGateway<Doctor> doctorDatabase){
+        this.appointmentDatabase = appointmentDatabase;
         this.doctorDatabase  = doctorDatabase;
     }
 
@@ -163,7 +160,7 @@ public class AppointmentManager {
     }
     public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return getAllAppointments().stream()
-                .filter(x -> x.getDoctorID() == doctorId)
+                .filter(x -> x.getDoctorID().equals(doctorId))
                 .filter(x->x.getTimeBlock().getStartTime().toLocalDate() == selectedDay)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

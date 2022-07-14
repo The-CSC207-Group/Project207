@@ -33,7 +33,7 @@ public class SecretaryAccess {
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
         this.logManager = new LogManager(logDatabase);
-        this.appointmentManager = new AppointmentManager(appointmentDatabase, patientDatabase, doctorDatabase);
+        this.appointmentManager = new AppointmentManager(appointmentDatabase, doctorDatabase);
     }
     public void signOut(){
 
