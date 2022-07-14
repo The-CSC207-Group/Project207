@@ -12,6 +12,6 @@ public class IsPatientsAppointment<T extends Appointment> extends QueryCondition
     }
     @Override
     public boolean isTrue(T item) {
-        return patientId.equals((item).getPatientID());
+        return patientId.equals((item).getPatientId());
     }
 }

@@ -12,7 +12,7 @@ public abstract class User extends JsonSerializable {
     private Integer contactInfoId;
     private ArrayList<Integer> logs = new ArrayList<>();
 
-    public User(String username, String password, int contactInfoId) {
+    public User(String username, String password, Integer contactInfoId) {
         this.username = username;
         this.password = password;
         this.contactInfoId = contactInfoId;
@@ -30,11 +30,11 @@ public abstract class User extends JsonSerializable {
         this.password = password;
     }
 
-    public int getContactInfoId() {
+    public Integer getContactInfoId() {
         return contactInfoId;
     }
 
-    public void updateContactInfo(int contactInfo) {
+    public void updateContactInfo(Integer contactInfo) {
         this.contactInfoId = contactInfo;
     }
 

@@ -22,11 +22,11 @@ public class ReportDataBundle extends DataBundle{
     public String getBody() {
         return report.getBody();
     }
-    public int getPatientID() {
-        return report.getPatientID();
+    public int getPatientId() {
+        return report.getPatientId();
     }
-    public int getDoctorID() {
-        return report.getDoctorID();
+    public int getDoctorId() {
+        return report.getDoctorId();
     }
 
 }

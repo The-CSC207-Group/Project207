@@ -172,9 +172,9 @@ public class DatabaseTests {
         assertEquals("Original prescription and loaded prescription should share the same body",
                 originalPrescription.getBody(), loadedPrescription.getBody());
         assertEquals("Original prescription and loaded prescription should share the same patient ID",
-                originalPrescription.getPatientID(), loadedPrescription.getPatientID());
+                originalPrescription.getPatientId(), loadedPrescription.getPatientId());
         assertEquals("Original prescription and loaded prescription should share the same doctor ID",
-                originalPrescription.getDoctorID(), loadedPrescription.getDoctorID());
+                originalPrescription.getDoctorId(), loadedPrescription.getDoctorId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 originalPrescription.getExpiryDate().compareTo(loadedPrescription.
                 getExpiryDate()), 0);
@@ -211,9 +211,9 @@ public class DatabaseTests {
         assertEquals("Original report and loaded report should share the same body",
                 originalReport.getBody(), loadedReport.getBody());
         assertEquals("Original report and loaded report should share the same patient ID",
-                originalReport.getPatientID(), loadedReport.getPatientID());
+                originalReport.getPatientId(), loadedReport.getPatientId());
         assertEquals("Original report and loaded report should share the same doctor ID",
-                originalReport.getDoctorID(), loadedReport.getDoctorID());
+                originalReport.getDoctorId(), loadedReport.getDoctorId());
     }
 
     @Test(timeout = 1000)
@@ -247,9 +247,9 @@ public class DatabaseTests {
                 originalAppointment.getTimeBlock().getEndTime().compareTo(loadedAppointment.getTimeBlock().
                         getEndTime()), 0);
         assertEquals("Original appointment and loaded appointment should share the same patient ID",
-                originalAppointment.getPatientID(), loadedAppointment.getPatientID());
+                originalAppointment.getPatientId(), loadedAppointment.getPatientId());
         assertEquals("Original appointment and loaded appointment should share the same doctor ID",
-                originalAppointment.getDoctorID(), loadedAppointment.getDoctorID());
+                originalAppointment.getDoctorId(), loadedAppointment.getDoctorId());
     }
 
     @Test(timeout = 1000)
