@@ -186,7 +186,7 @@ public class PrescriptionManagerTests {
         assertEquals("The loaded prescription object should have the same body as the " +
                 "parameters of createPrescription method", loadedPrescription.getBody(), body);
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
-                "parameters of createPrescription method", loadedPrescription.getPatientID(), patientID);
+                "parameters of createPrescription method", loadedPrescription.getPatientId(), patientID);
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
                 "parameters of createPrescription method", prescriptionDataBundle.getDoctorId(), doctorID);
         assertEquals("The loaded prescription object should have the same expiry as the parameters of " +
