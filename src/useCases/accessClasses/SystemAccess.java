@@ -82,57 +82,57 @@ public class SystemAccess {
     }
 
     /**
-     * @param userID   Integer userID of the user
+     * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public DoctorDataBundle doctorSignIn(Integer userID, String password) {
-        Doctor doctor = doctorDatabase.get(userID);
+    public DoctorDataBundle doctorSignIn(Integer userId, String password) {
+        Doctor doctor = doctorDatabase.get(userId);
         if (doctor.comparePassword(password)) {
-            attachUserSignInLog(doctorDatabase, userID);
-            return new DoctorDataBundle(userID, doctor);
+            attachUserSignInLog(doctorDatabase, userId);
+            return new DoctorDataBundle(userId, doctor);
         }
         return null;
     }
 
     /**
-     * @param userID   Integer userID of the user
+     * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public PatientDataBundle patientSignIn(Integer userID, String password) {
-        Patient patient = patientDatabase.get(userID);
+    public PatientDataBundle patientSignIn(Integer userId, String password) {
+        Patient patient = patientDatabase.get(userId);
         if (patient.comparePassword((password))) {
-            attachUserSignInLog(patientDatabase, userID);
-            return new PatientDataBundle(userID, patient);
+            attachUserSignInLog(patientDatabase, userId);
+            return new PatientDataBundle(userId, patient);
         }
         return null;
     }
 
     /**
-     * @param userID   Integer userID of the user
+     * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public SecretaryDataBundle secretarySignIn(Integer userID, String password) {
-        Secretary secretary = secretaryDatabase.get(userID);
+    public SecretaryDataBundle secretarySignIn(Integer userId, String password) {
+        Secretary secretary = secretaryDatabase.get(userId);
         if (secretary.comparePassword(password)) {
-            attachUserSignInLog(secretaryDatabase, userID);
-            return new SecretaryDataBundle(userID, secretary);
+            attachUserSignInLog(secretaryDatabase, userId);
+            return new SecretaryDataBundle(userId, secretary);
         }
         return null;
     }
 
     /**
-     * @param userID   Integer userID of the user
+     * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public AdminDataBundle adminSignIn(Integer userID, String password) {
-        Admin admin = adminDatabase.get(userID);
+    public AdminDataBundle adminSignIn(Integer userId, String password) {
+        Admin admin = adminDatabase.get(userId);
         if (admin.comparePassword(password)) {
-            attachUserSignInLog(adminDatabase, userID);
-            return new AdminDataBundle(userID, admin);
+            attachUserSignInLog(adminDatabase, userId);
+            return new AdminDataBundle(userId, admin);
         }
         return null;
     }
