@@ -15,7 +15,6 @@ public class PatientManager {
     DataMapperGateway<Contact> contactDatabase;
 
     /**
-     *
      * @param patientDatabase database storing all the patients.
      * @param contactDatabase database storing all the contacts.
      */
@@ -41,28 +40,25 @@ public class PatientManager {
     }
 
     /**
-     *
-     * @param userId Int userId of the user trying to change the password.
+     * @param userId      Int userId of the user trying to change the password.
      * @param newPassword String new password for the user.
      */
-    public void changeUserPassword(Integer userId, String newPassword){
+    public void changeUserPassword(Integer userId, String newPassword) {
         patientMethods.changePassword(userId, newPassword);
     }
 
     /**
-     *
      * @param userId Int userId of the user being deleted.
      */
-    public void deletePatient(Integer userId){
+    public void deletePatient(Integer userId) {
         patientMethods.deleteUser(userId);
     }
 
     /**
-     *
      * @param userId Int userId of the user requested.
      * @return Patient object
      */
-    public Patient getPatient(Integer userId){
+    public Patient getPatient(Integer userId) {
         return patientMethods.getUser(userId);
     }
 
