@@ -16,6 +16,7 @@ public class DoctorManager {
     public DoctorManager(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Contact> contactDatabase) {
         this.doctorDatabase = doctorDatabase;
         this.doctorMethods = new GenericUserManagerMethods<>(doctorDatabase);
+        this.contactDatabase = contactDatabase;
     }
 
     public DoctorDataBundle createDoctor(String username, String password, ContactDataBundle contactDataBundle) {
