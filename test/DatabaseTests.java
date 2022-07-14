@@ -26,8 +26,16 @@ public class DatabaseTests {
 
         Patient originalPatient = new
                 Patient("jeff", "123", 123456789, "5544");
+        for (int i = 1; i <= 3; i++) {
+            originalPatient.addLog(i);
+            originalPatient.addReport(i + 10);
+        }
 
         Integer patientID = originalPatientDatabase.add(originalPatient);
+
+        assertEquals("Original patient should share the same ID from the database",
+                originalPatient.getId(), patientID);
+
         originalPatientDatabase.save();
 
         Database loadedDatabase = new Database(databaseFolder.toString());
@@ -35,16 +43,21 @@ public class DatabaseTests {
 
         Patient loadedPatient = loadedPatientDatabase.get(patientID);
 
-        /*Testing if the loaded patient and the original patient are equal by testing whether all the fields of both
+        /* Testing if the loaded patient and the original patient are equal by testing whether all the fields of both
         objects are equal */
+        assertEquals("Original patient and loaded patient should share the same Id",
+                originalPatient.getId(), loadedPatient.getId());
         assertEquals("Original patient and loaded patient should share the same unique username",
                 originalPatient.getUsername(), loadedPatient.getUsername());
+        assertEquals("Original patient and loaded patient should share the same reports",
+                originalPatient.getReports(), loadedPatient.getReports());
+        assertEquals("Original patient and loaded patient should share the same logs",
+                originalPatient.getLogs(), loadedPatient.getLogs());
         assertEquals("Original patient and loaded patient should share the same contact information",
                 originalPatient.getContactInfoId(), loadedPatient.getContactInfoId());
         assertEquals("Original patient and loaded patient should share the same health numbers",
                 originalPatient.getHealthNumber(), loadedPatient.getHealthNumber());
-        assertEquals("Original patient and loaded patient should share the same password",
-                originalPatient.comparePassword("123"),
+        assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword("123"));
     }
 
@@ -64,7 +77,7 @@ public class DatabaseTests {
 
         Doctor loadedDoctor = loadedDoctorDatabase.get(doctorID);
 
-        /*Testing if the loaded doctor and the original doctor are equal by testing whether all the fields of both
+        /* Testing if the loaded doctor and the original doctor are equal by testing whether all the fields of both
         objects are equal */
         assertEquals("Original doctor and loaded doctor should share the same unique username",
                 originalDoctor.getUsername(), loadedDoctor.getUsername());
@@ -90,8 +103,8 @@ public class DatabaseTests {
 
         Secretary loadedSecretary = loadedSecretaryDatabase.get(secretaryID);
 
-        /*Testing if the loaded secretary and the original secretary are equal by testing whether all the fields of both
-        objects are equal */
+        /* Testing if the loaded secretary and the original secretary are equal by testing whether all the fields of
+        both objects are equal */
         assertEquals("Original secretary and loaded secretary should share the same unique username",
                 originalSecretary.getUsername(), loadedSecretary.getUsername());
         assertEquals("Original secretary and loaded secretary should share the same contact information",
@@ -116,7 +129,7 @@ public class DatabaseTests {
 
         Admin loadedAdmin = loadedAdminDatabase.get(adminID);
 
-        /*Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
+        /* Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
         objects are equal */
         assertEquals("Original admin and loaded admin should share the same unique username",
                 originalAdmin.getUsername(), loadedAdmin.getUsername());
@@ -149,7 +162,7 @@ public class DatabaseTests {
 
         Prescription loadedPrescription = loadedPrescriptionDatabase.get(prescriptionID);
 
-        /* testing if the loaded prescription and the original prescription are equal by testing whether all
+        /* Testing if the loaded prescription and the original prescription are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original prescription and loaded prescription should be have been noted " +
                         "on the same date", originalPrescription.getDateNoted().compareTo(loadedPrescription.
@@ -188,7 +201,7 @@ public class DatabaseTests {
 
         Report loadedReport = loadedReportDatabase.get(reportID);
 
-        /* testing if the loaded report and the original report are equal by testing whether all
+        /* Testing if the loaded report and the original report are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original report and loaded report should be have been noted " +
                 "on the same date", originalReport.getDateNoted().compareTo(loadedReport.
@@ -225,7 +238,7 @@ public class DatabaseTests {
 
         Appointment loadedAppointment = loadedAppointmentDatabase.get(appointmentID);
 
-        /* testing if the loaded appointment and the original appointment are equal by testing whether all
+        /* Testing if the loaded appointment and the original appointment are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original appointment and loaded appointment should start at the same time",
                 originalAppointment.getTimeBlock().getStartTime().compareTo(loadedAppointment.getTimeBlock().
@@ -254,7 +267,7 @@ public class DatabaseTests {
 
         Log loadedLog = loadedLogDatabase.get(logID);
 
-        /*Testing if the loaded log and the original log are equal by testing whether all the fields of both
+        /* Testing if the loaded log and the original log are equal by testing whether all the fields of both
         objects are equal */
         assertEquals("Original log and loaded log should share the same timestamp",
                 originalLog.getTime(), loadedLog.getTime());
@@ -280,7 +293,7 @@ public class DatabaseTests {
 
         Contact loadedContact = loadedContactDatabase.get(contactID);
 
-        /*Testing if the loaded contact and the original contact are equal by testing whether all the fields of both
+        /* Testing if the loaded contact and the original contact are equal by testing whether all the fields of both
         objects are equal */
         assertEquals("Original contact and loaded contact should share the same name",
                 originalContact.getName(), loadedContact.getName());
@@ -325,7 +338,7 @@ public class DatabaseTests {
 
         Clinic loadedClinic = loadedClinicDatabase.get(clinicID);
 
-        /* testing if the loaded clinic and the original clinic are equal by testing whether all
+        /* Testing if the loaded clinic and the original clinic are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original clinic and loaded clinic should share the same name",
                 originalClinic.getName(), loadedClinic.getName());
