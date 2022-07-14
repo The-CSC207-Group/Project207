@@ -62,10 +62,8 @@ public class PatientManagerTests {
         patient are equal to the parameters of createPatient */
         assertEquals("Original patient and loaded patient should share the same unique username",
                 loadedPatient.getUsername(), username);
-        assertEquals("Original patient and loaded patient should share the same contact information",
-                loadedPatient.getContactInfoId(), loadedPatient.getContactInfoId());
         assertEquals("Original patient and loaded patient should share the same health numbers",
-                loadedPatient.getHealthNumber(), loadedPatient.getHealthNumber());
+                loadedPatient.getHealthNumber(), healthNumber);
         assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword(password));
     }
@@ -90,5 +88,74 @@ public class PatientManagerTests {
 
         assertNull("A patient object should not be returned after it is deleted ",
                 patientDatabase.get(patientID));
+    }
+
+    @Test(timeout = 1000)
+    public void testChangeUserPassword() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Patient patient = new
+                Patient("jeff", "123", 123456789, "5544");
+
+        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+
+        Integer patientID = patientDatabase.add(patient);
+
+        assertTrue("The password should remain the same before the change ",
+                patientDatabase.get(patientID).comparePassword("123"));
+
+        patientManager.changeUserPassword(patientID, "456");
+
+        assertTrue("The patient object should have the same password as we inputted into the parameters " +
+                        "of the changeUserPassword method  ",
+                patientDatabase.get(patientID).comparePassword("456"));
+    }
+
+    @Test(timeout = 1000)
+    public void testGetPatient() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Patient originalPatient = new
+                Patient("jeff", "123", 123456789, "5544");
+
+        for (int i = 1; i <= 3; i++) {
+            originalPatient.addLog(i);
+            originalPatient.addReport(i + 10);
+        }
+
+        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+
+        Integer patientID = patientDatabase.add(originalPatient);
+
+        assertEquals("Original patient should share the same ID from the database",
+                originalPatient.getId(), patientID);
+
+        Patient loadedPatient = patientManager.getPatient(patientID);
+
+        /* Testing if the loaded patient and the original patient are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original patient and loaded patient should share the same Id",
+                originalPatient.getId(), loadedPatient.getId());
+        assertEquals("Original patient and loaded patient should share the same unique username",
+                originalPatient.getUsername(), loadedPatient.getUsername());
+        assertEquals("Original patient and loaded patient should share the same reports",
+                originalPatient.getReports(), loadedPatient.getReports());
+        assertEquals("Original patient and loaded patient should share the same logs",
+                originalPatient.getLogs(), loadedPatient.getLogs());
+        assertEquals("Original patient and loaded patient should share the same contact information",
+                originalPatient.getContactInfoId(), loadedPatient.getContactInfoId());
+        assertEquals("Original patient and loaded patient should share the same health numbers",
+                originalPatient.getHealthNumber(), loadedPatient.getHealthNumber());
+        assertTrue("Original patient and loaded patient should share the same password",
+                loadedPatient.comparePassword("123"));
+    }
+
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
 }
