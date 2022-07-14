@@ -25,6 +25,7 @@ public class PatientManager {
     }
 
     /**
+     * Creates a new Patient object and stores it in the database, returns PatientDataBundle.
      * @param username          String new username
      * @param password          String new password
      * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
@@ -40,6 +41,7 @@ public class PatientManager {
     }
 
     /**
+     * Changes the user password.
      * @param userId      Int userId of the user trying to change the password.
      * @param newPassword String new password for the user.
      */
@@ -48,6 +50,7 @@ public class PatientManager {
     }
 
     /**
+     * Deletes the patient from the database.
      * @param userId Int userId of the user being deleted.
      */
     public void deletePatient(Integer userId) {
@@ -55,6 +58,7 @@ public class PatientManager {
     }
 
     /**
+     * Returns Patient Object with the given Id.
      * @param userId Int userId of the user requested.
      * @return Patient object
      */
