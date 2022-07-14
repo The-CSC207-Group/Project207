@@ -38,10 +38,10 @@ public class SystemAccess {
 
 
     /**
-     * @param username    new username
-     * @param password    new password
-     * @param contactDataBundle contact info of user created
-     * @return true if account has been created, false if account failed to create
+     * @param username          String new username
+     * @param password          String new password
+     * @param contactDataBundle ContactDataBundle which includes contact info of the user.
+     * @return PatientDataBundle which includes information of the patient.
      */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber) {
@@ -49,8 +49,8 @@ public class SystemAccess {
     }
 
     /**
-     * @param userID username of the user trying to sign in
-     * @return boolean, true if user can sign in, false if not
+     * @param userID Integer userID of the user.
+     * @return Enum of the user type, exception if the user is not in the database.
      */
     public userType getType(Integer userID) throws Exception {
         ArrayList<DataMapperGateway<? extends User>> userDatabases = new ArrayList<>(Arrays.asList(patientDatabase,
@@ -73,48 +73,67 @@ public class SystemAccess {
         throw new Exception("user not in databases");
     }
 
-    public DoctorDataBundle doctorSignIn(Integer userID, String password){
+    /**
+     * @param userID   Integer userID of the user
+     * @param password String password of the user trying to sign in
+     * @return DoctorDataBundle if sign in is successful, or else return null.
+     */
+    public DoctorDataBundle doctorSignIn(Integer userID, String password) {
         Doctor doctor = doctorDatabase.get(userID);
-        if (doctor.comparePassword(password)){
+        if (doctor.comparePassword(password)) {
             attachUserSignInLog(doctorDatabase, userID);
             return new DoctorDataBundle(userID, doctor);
         }
         return null;
     }
 
-    public PatientDataBundle patientSignIn(Integer userID, String password){
+    /**
+     * @param userID   Integer userID of the user
+     * @param password String password of the user trying to sign in
+     * @return DoctorDataBundle if sign in is successful, or else return null.
+     */
+    public PatientDataBundle patientSignIn(Integer userID, String password) {
         Patient patient = patientDatabase.get(userID);
-        if (patient.comparePassword((password))){
+        if (patient.comparePassword((password))) {
             attachUserSignInLog(patientDatabase, userID);
             return new PatientDataBundle(userID, patient);
         }
         return null;
     }
 
-    public SecretaryDataBundle secretarySignIn(Integer userID, String password){
+    /**
+     * @param userID   Integer userID of the user
+     * @param password String password of the user trying to sign in
+     * @return DoctorDataBundle if sign in is successful, or else return null.
+     */
+    public SecretaryDataBundle secretarySignIn(Integer userID, String password) {
         Secretary secretary = secretaryDatabase.get(userID);
-        if (secretary.comparePassword(password)){
+        if (secretary.comparePassword(password)) {
             attachUserSignInLog(secretaryDatabase, userID);
             return new SecretaryDataBundle(userID, secretary);
         }
         return null;
     }
 
-    public AdminDataBundle adminSignIn(Integer userID, String password){
+    /**
+     * @param userID   Integer userID of the user
+     * @param password String password of the user trying to sign in
+     * @return DoctorDataBundle if sign in is successful, or else return null.
+     */
+    public AdminDataBundle adminSignIn(Integer userID, String password) {
         Admin admin = adminDatabase.get(userID);
-        if (admin.comparePassword(password)){
+        if (admin.comparePassword(password)) {
             attachUserSignInLog(adminDatabase, userID);
             return new AdminDataBundle(userID, admin);
         }
         return null;
     }
 
-    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer iDUser){
+    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer iDUser) {
         T user = database.get(iDUser);
-        Integer iDLog = logManager.addLog( user.getUsername() + " signed in").getId();
+        Integer iDLog = logManager.addLog(user.getUsername() + " signed in").getId();
         user.addLog(iDLog);
     }
-
 
 
 }
