@@ -14,8 +14,8 @@ import utilities.DeleteUtils;
 import java.io.File;
 import java.time.LocalDate;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class SecretaryManagerTests {
 
@@ -55,6 +55,29 @@ public class SecretaryManagerTests {
         assertTrue("Original secretary and loaded secretary should share the same password",
                 loadedSecretary.comparePassword(password));
     }
+
+    @Test(timeout = 1000)
+    public void testDeleteSecretary() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Secretary> secretaryDatabase = originalDatabase.getSecretaryDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Secretary secretary = new
+                Secretary("jeff", "123", 123456789);
+
+        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+
+        Integer secretaryID = secretaryDatabase.add(secretary);
+
+        assertNotNull("A secretary object should be returned before it is deleted ",
+                secretaryDatabase.get(secretaryID));
+
+        secretaryManager.deleteSecretary(secretaryID);
+
+        assertNull("A secretary object should not be returned after it is deleted ",
+                secretaryDatabase.get(secretaryID));
+    }
+
 
     @After
     public void after() {
