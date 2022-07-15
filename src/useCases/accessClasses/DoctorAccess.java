@@ -45,6 +45,13 @@ public class DoctorAccess {
                         PrescriptionManager prescriptionManager, DoctorManager doctorManager, DataMapperGateway<Log>
                                 logDatabase){
     }
+//    boolean CreateAppointment(PatientDataBundle patientData, DoctorDataBundle doctorData, ){
+//        return appointmentManager.bookAppointment(patientData.getId(), doctorData.getId(),
+//                new TimeBlock(
+//            ZonedDateTime.
+//        ) );
+//    }
+
 
     public boolean doesPatientExist(String patient_name){
         return patientManager.doesPatientExist(patient_name);

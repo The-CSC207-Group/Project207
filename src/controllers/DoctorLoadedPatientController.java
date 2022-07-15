@@ -2,6 +2,7 @@ package controllers;
 
 import dataBundles.DoctorDataBundle;
 import dataBundles.PatientDataBundle;
+import presenter.screenViews.DoctorView;
 import useCases.accessClasses.DoctorAccess;
 
 import java.util.HashMap;
@@ -11,6 +12,8 @@ public class DoctorLoadedPatientController extends TerminalController{
     DoctorDataBundle doctorData;
     DoctorAccess doctorAccess;
 
+    DoctorView doctorView = new DoctorView();
+
     DoctorController prev;
 
     @Override
@@ -18,6 +21,10 @@ public class DoctorLoadedPatientController extends TerminalController{
         HashMap<String, Command> c  = super.AllCommands();
         c.put("back", back(prev));
         c.put("pescription", persciption());
+        c.put("appointments", appointments());
+
+
+
         return c;
     }
 
@@ -28,11 +35,24 @@ public class DoctorLoadedPatientController extends TerminalController{
         doctorAccess = new DoctorAccess(getDatabase());
         this.prev = prev;
     }
-    Command persciption(){
+    private Command persciption(){
         return (x) -> {
            return false;
         };
     }
+    private Command appointments(){
+        return (x) -> {
+//            doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData.getId()));
+            return false;
+        };
+    }
+
+    private Command createAppointent(){
+        return (x) -> {
+            return false;
+        };
+    }
+
 
     @Override
     void WelcomeMessage() {
