@@ -52,7 +52,7 @@ public class DoctorAccess {
                 .map(x -> new ReportDataBundle(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-    public void addPatientReport(Integer patientId, Report report){
+    public void addPatientReport(Report report){
         reportDatabase.add(report);
     }
     public void removePatientReport(Integer patientId, Integer reportId){
