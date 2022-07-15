@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SecretaryAccess {
+    DataMapperGateway<Patient> patientDatabase;
+    DataMapperGateway<Secretary> secretaryDatabase;
     PrescriptionManager prescriptionManager;
     PatientManager patientManager;
 
@@ -38,6 +40,8 @@ public class SecretaryAccess {
                            DataMapperGateway<Log> logDatabase,
                            DataMapperGateway<Contact> contactDatabase,
                            DataMapperGateway<Appointment> appointmentDatabase) {
+        this.patientDatabase = patientDatabase;
+        this.secretaryDatabase = secretaryDatabase;
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
@@ -116,9 +120,17 @@ public class SecretaryAccess {
     }
 
 
-    public ArrayList<LogDataBundle> getLogs(Integer userId){
-        if (patientManager.getPatient(userId) != null){return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogIds());}
-        if (secretaryManager.getSecretary(userId) != null){return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogIds());}
+    /**
+     * Gets an arraylist of log data bundles associated with a username. Can get logs from secretaries or patients.
+     * @param username - username of the user whose logs we want to get.
+     * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
+     */
+    public ArrayList<LogDataBundle> getLogs(String username){
+        ArrayList<LogDataBundle> dataBundlesPatient =  logManager.getLogDataBundlesFromUsername(username, patientDatabase);
+        if (dataBundlesPatient != null){return dataBundlesPatient;}
+
+        ArrayList<LogDataBundle> dataBundlesSecretary = logManager.getLogDataBundlesFromUsername(username, secretaryDatabase);
+        if (dataBundlesSecretary != null){return dataBundlesSecretary;}
         return null;
     }
 }

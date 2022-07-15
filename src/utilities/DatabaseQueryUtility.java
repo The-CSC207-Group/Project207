@@ -1,6 +1,7 @@
 package utilities;
 
 import database.DataMapperGateway;
+import entities.User;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -48,6 +49,12 @@ public class DatabaseQueryUtility {
      */
     public <T> ArrayList<T> toArrayList(Stream<T> stream){
         return stream.collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public  <T extends User> T getUserByUsername(DataMapperGateway<T> database, String username){
+        ArrayList<T> list = toArrayList(getAllItems(database).filter(x -> x.getUsername().equals(username)));
+        if (list.isEmpty()){return null;}
+        return list.get(0);
     }
 }
 

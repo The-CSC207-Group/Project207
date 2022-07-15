@@ -10,6 +10,7 @@ import useCases.managers.AppointmentManager;
 import useCases.managers.DoctorManager;
 import useCases.managers.LogManager;
 import useCases.managers.PrescriptionManager;
+import utilities.DatabaseQueryUtility;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -18,10 +19,13 @@ import java.util.stream.Collectors;
 
 public class DoctorAccess {
 
+
     private DataMapperGateway<Doctor> doctorDatabase;
     private DataMapperGateway<Patient> patientDatabase;
     private DataMapperGateway<Report> reportDatabase;
     private DataMapperGateway<Prescription> prescriptionDatabase;
+
+    private DatabaseQueryUtility databaseQueryUtility = new DatabaseQueryUtility();
 
     private LogManager logManager;
 
@@ -54,19 +58,32 @@ public class DoctorAccess {
     public void removePatientReport(Integer patientId, Integer reportId){
         patientDatabase.get(patientId).removeReportId(reportId);
     }
-    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer patientId){
-        if (patientDatabase.get(patientId) == null){return null;}
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientId);
+    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(String patientUsername){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        if (patient == null){return null;}
+        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patient.getId());
     }
-    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer patientId){
-        if (patientDatabase.get(patientId) == null){return null;}
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientId);
+    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(String patientUsername){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        if (patient == null){return null;}
+        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
     }
-    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientID, int doctorID,
+    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, String doctorUsername,
                                                      ZonedDateTime expiryDate){
-        if (patientDatabase.get(patientID) == null){return null;}
-        if (doctorDatabase.get(doctorID) == null){return null;}
-        return prescriptionManager.createPrescription(dateNoted, header, body, patientID, doctorID, expiryDate);
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        Doctor doctor = databaseQueryUtility.getUserByUsername(doctorDatabase, doctorUsername);
+
+        if (patient == null){return null;}
+        if (doctor == null){return null;}
+        return prescriptionManager.createPrescription(dateNoted, header, body, patient.getId(), doctor.getId(), expiryDate);
+    }
+    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, Integer doctorId,
+                                                     ZonedDateTime expiryDate){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+
+        if (patient == null){return null;}
+        if (doctorDatabase.get(doctorId) == null){return null;}
+        return prescriptionManager.createPrescription(dateNoted, header, body, patient.getId(), doctorId, expiryDate);
     }
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
@@ -87,8 +104,16 @@ public class DoctorAccess {
     public void signOut(){
 
     }
-    public ArrayList<LogDataBundle> getLogs(Integer userId){
-        if (doctorManager.getDoctor(userId) != null){return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogIds());}
+
+    /**
+     * Gets an arraylist of log data bundles associated with a username. Should only get logs from the logged in doctors.
+     * @param username - username of the user whose logs we want to get.
+     * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
+     */
+    public ArrayList<LogDataBundle> getLogs(String username){
+        ArrayList<LogDataBundle> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
+        if (dataBundlesDoctor != null){return dataBundlesDoctor;}
+
         return null;
     }
 

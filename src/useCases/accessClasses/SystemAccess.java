@@ -20,6 +20,8 @@ public class SystemAccess {
 
     private final LogManager logManager;
 
+    private AccessCommonMethods commonMethods = new AccessCommonMethods();
+
     private enum userType {
         patient, admin, secretary, doctor
     }
@@ -92,7 +94,7 @@ public class SystemAccess {
     public DoctorDataBundle doctorSignIn(Integer userId, String password) {
         Doctor doctor = doctorDatabase.get(userId);
         if (doctor.comparePassword(password)) {
-            attachUserSignInLog(doctorDatabase, userId);
+            commonMethods.attachUserSignInLog(doctorDatabase, userId, logManager);
             return new DoctorDataBundle(userId, doctor);
         }
         return null;
@@ -107,7 +109,7 @@ public class SystemAccess {
     public PatientDataBundle patientSignIn(Integer userId, String password) {
         Patient patient = patientDatabase.get(userId);
         if (patient.comparePassword((password))) {
-            attachUserSignInLog(patientDatabase, userId);
+            commonMethods.attachUserSignInLog(patientDatabase, userId, logManager);
             return new PatientDataBundle(userId, patient);
         }
         return null;
@@ -122,7 +124,7 @@ public class SystemAccess {
     public SecretaryDataBundle secretarySignIn(Integer userId, String password) {
         Secretary secretary = secretaryDatabase.get(userId);
         if (secretary.comparePassword(password)) {
-            attachUserSignInLog(secretaryDatabase, userId);
+            commonMethods.attachUserSignInLog(secretaryDatabase, userId, logManager);
             return new SecretaryDataBundle(userId, secretary);
         }
         return null;
@@ -137,16 +139,10 @@ public class SystemAccess {
     public AdminDataBundle adminSignIn(Integer userId, String password) {
         Admin admin = adminDatabase.get(userId);
         if (admin.comparePassword(password)) {
-            attachUserSignInLog(adminDatabase, userId);
+            commonMethods.attachUserSignInLog(adminDatabase, userId, logManager);
             return new AdminDataBundle(userId, admin);
         }
         return null;
-    }
-
-    private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer userId) {
-        T user = database.get(userId);
-        Integer iDLog = logManager.addLog(user.getUsername() + " signed in").getId();
-        user.addLogId(iDLog);
     }
 
 

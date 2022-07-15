@@ -37,6 +37,10 @@ public class AdminAccess {
     public AdminAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor> doctorDatabase,
                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact>
                                contactDatabase, DataMapperGateway<Log> logDatabase) {
+        this.patientDatabase = patientDatabase;
+        this.doctorDatabase = doctorDatabase;
+        this.secretaryDatabase = secretaryDatabase;
+        this.adminDatabase = adminDatabase;
         this.adminManager = new AdminManager(adminDatabase, contactDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
@@ -45,7 +49,8 @@ public class AdminAccess {
     }
 
     /**
-     * @param userId Integer userID of the user being deleted.
+     * @param userId Integer userID of the user being deleted. Can delete from admin, doctor, patient and secretary
+     * databases.
      */
     public void deleteUser(Integer userId) {
         adminManager.deleteAdminUser(userId);
@@ -66,19 +71,24 @@ public class AdminAccess {
 
     }
 
-    public ArrayList<LogDataBundle> getLogs(Integer userId) {
-        if (patientManager.getPatient(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogIds());
-        }
-        if (secretaryManager.getSecretary(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogIds());
-        }
-        if (doctorManager.getDoctor(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogIds());
-        }
-        if (adminManager.getAdmin(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(adminManager.getAdmin(userId).getLogIds());
-        }
+    /**
+     * Gets an arraylist of log data bundles associated with a username. Can get logs from admins, patients, secretaries and doctors.
+     * @param username - username of the user whose logs we want to get.
+     * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
+     */
+    public ArrayList<LogDataBundle> getLogs(String username) {
+
+        ArrayList<LogDataBundle> dataBundlesPatient =  logManager.getLogDataBundlesFromUsername(username, patientDatabase);
+        if (dataBundlesPatient != null){return dataBundlesPatient;}
+
+        ArrayList<LogDataBundle> dataBundlesSecretary = logManager.getLogDataBundlesFromUsername(username, secretaryDatabase);
+        if (dataBundlesSecretary != null){return dataBundlesSecretary;}
+
+        ArrayList<LogDataBundle> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
+        if (dataBundlesDoctor != null){return dataBundlesDoctor;}
+
+        ArrayList<LogDataBundle> dataBundlesAdmin = logManager.getLogDataBundlesFromUsername(username, adminDatabase);
+        if (dataBundlesAdmin != null){return dataBundlesAdmin;}
         return null;
     }
 

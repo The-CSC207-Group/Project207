@@ -14,6 +14,7 @@ public class PatientManager {
     PatientManager patientManager;
     DataMapperGateway<Contact> contactDatabase;
 
+
     /**
      * @param patientDatabase database storing all the patients.
      * @param contactDatabase database storing all the contacts.
@@ -41,7 +42,7 @@ public class PatientManager {
     }
 
     /**
-     * Changes the user password.
+     * Changes the patient's password. If the patient does not exist in the database, do nothing.
      * @param userId      Int userId of the user trying to change the password.
      * @param newPassword String new password for the user.
      */
@@ -50,7 +51,7 @@ public class PatientManager {
     }
 
     /**
-     * Deletes the patient from the database.
+     * Deletes the patient from the database. If the patient does not exist in the database, do nothing.
      * @param userId Int userId of the user being deleted.
      */
     public void deletePatient(Integer userId) {
@@ -58,9 +59,9 @@ public class PatientManager {
     }
 
     /**
-     * Returns Patient Object with the given Id.
+     * Returns Patient Object with the given Id. If the patient does not exist in the database, return null.
      * @param userId Int userId of the user requested.
-     * @return Patient object
+     * @return Patient object or null if patient doesn't exist in patient database.
      */
     public Patient getPatient(Integer userId) {
         return patientMethods.getUser(userId);

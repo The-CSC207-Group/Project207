@@ -12,7 +12,11 @@ public class DoctorManager {
     GenericUserManagerMethods<Doctor> doctorMethods;
     DataMapperGateway<Contact> contactDatabase;
 
-
+    /**
+     * Initialize the doctor and contact databases.
+     * @param doctorDatabase DataMapperGateway<Doctor>
+     * @param contactDatabase DataMapperGateway<Contact>
+     */
     public DoctorManager(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Contact> contactDatabase) {
         this.doctorDatabase = doctorDatabase;
         this.doctorMethods = new GenericUserManagerMethods<>(doctorDatabase);
@@ -27,14 +31,28 @@ public class DoctorManager {
 
     }
 
+    /**
+     * Changes the doctor's password. If the doctor does not exist in the database, do nothing.
+     * @param userId      Int userId of the user trying to change the password.
+     * @param newPassword String new password for the user.
+     */
     public void changeUserPassword(Integer userId, String newPassword) {
         doctorMethods.changePassword(userId, newPassword);
     }
 
+    /**
+     * Deletes the doctor from the database. If the doctor does not exist in the database, do nothing.
+     * @param userId Int userId of the user being deleted.
+     */
     public void deleteDoctor(Integer userId) {
         doctorMethods.deleteUser(userId);
     }
 
+    /**
+     * Returns doctor object with the given id. If the doctor does not exist in the database, return null.
+     * @param userId Int userId of the user requested.
+     * @return Doctor object or null if doctor doesn't exist in doctor database.
+     */
     public Doctor getDoctor(Integer userId) {
         return doctorMethods.getUser(userId);
     }
