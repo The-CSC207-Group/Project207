@@ -17,8 +17,8 @@ import utilities.DeleteUtils;
 import java.io.File;
 import java.time.LocalDate;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class AdminManagerTests {
 
@@ -56,6 +56,28 @@ public class AdminManagerTests {
                 loadedAdmin.getUsername(), username);
         assertTrue("Original admin and loaded admin should share the same password",
                 loadedAdmin.comparePassword(password));
+    }
+
+    @Test(timeout = 1000)
+    public void testDeleteAdmin() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Admin admin = new
+                Admin("jeff", "123", 123456789);
+
+        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+
+        Integer adminID = adminDatabase.add(admin);
+
+        assertNotNull("An admin object should be returned before it is deleted ",
+                adminDatabase.get(adminID));
+
+        adminManager.deleteAdminUser(adminID);
+
+        assertNull("An admin object should not be returned after it is deleted ",
+                adminDatabase.get(adminID));
     }
 
     @After
