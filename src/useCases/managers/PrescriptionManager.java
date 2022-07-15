@@ -41,7 +41,7 @@ public class PrescriptionManager {
      *
      * @param userId the id associated with the patient in the database. Should not be null. An empty arraylist is
      * returned if the user does not exist or does not have any prescriptions.
-     * @return An array list of PrescriptionDataBundles for each prescription in the database belonging to the
+     * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * user.
      */
     public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {

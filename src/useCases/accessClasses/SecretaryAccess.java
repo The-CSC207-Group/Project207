@@ -4,6 +4,7 @@ import dataBundles.*;
 import database.DataMapperGateway;
 import entities.*;
 import useCases.managers.*;
+import utilities.DatabaseQueryUtility;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class SecretaryAccess {
     AppointmentManager appointmentManager;
 
     LogManager logManager;
+
+    DatabaseQueryUtility databaseQueryUtility = new DatabaseQueryUtility();
 
     /**
      *
@@ -90,17 +93,55 @@ public class SecretaryAccess {
         return doctorManager.createDoctor(username, password, contactDataBundle);
     }
 
-    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer patientId){
-        if (patientManager.getPatient(patientId) == null){return null;}
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientId);
+    /**
+     * Get an array list of PrescriptionDataBundles containing each prescription in the database belonging to the patient
+     * @param patientUsername the username associated with the patient in the database. Should not be null. An empty arraylist is
+     * returned if the patient does not exist or does not have any prescriptions.
+     * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
+     * patient that is active or null if the patient does not exist in the patient database.
+     */
+    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(String patientUsername){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        if (patient == null){return null;}
+        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patient.getId());
     }
-    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer patientId){
-        if (patientManager.getPatient(patientId) == null){return null;}
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientId);
+    /**
+     * Get an array list of PrescriptionDataBundles containing each prescription in the database belonging to the patient
+     * @param patientUsername the username associated with the patient in the database. Should not be null. An empty arraylist is
+     * returned if the patient does not exist or does not have any prescriptions.
+     * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
+     * patient or null if the patient does not exist in the patient database.
+     */
+    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(String patientUsername){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        if (patient == null){return null;}
+        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
     }
-    public void changePatientPassword(Integer userId, String newPassword){
+    /**
+     * Change the password of the signed in secretary or a patient. If the userId is not associated with a secretary/patient
+     * in the database, nothing happens.
+     * @param userId id of secretary/patient.
+     * @param newPassword new password of the secretary/patient;
+     */
+    public void changePassword(Integer userId, String newPassword){
+        secretaryManager.changeUserPassword(userId, newPassword);
         patientManager.changeUserPassword(userId, newPassword);
     }
+
+    /**
+     * Change the password of a patient by their username. If the userId is not associated with a patient
+     * in the database, nothing happens.
+     * @param patientUsername username of patient.
+     * @param newPassword new password of the secretary/patient;
+     */
+    public void changePassword(String patientUsername, String newPassword){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        if (patient != null) {
+            secretaryManager.changeUserPassword(patient.getId(), newPassword);
+            patientManager.changeUserPassword(patient.getId(), newPassword);
+        }
+    }
+
     public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }

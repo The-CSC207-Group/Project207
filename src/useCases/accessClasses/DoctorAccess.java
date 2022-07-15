@@ -58,16 +58,52 @@ public class DoctorAccess {
     public void removePatientReport(Integer patientId, Integer reportId){
         patientDatabase.get(patientId).removeReportId(reportId);
     }
+    /**
+     * Get an array list of PrescriptionDataBundles containing each prescription in the database belonging to the patient
+     * @param patientUsername the username associated with the patient in the database. Should not be null. An empty arraylist is
+     * returned if the patient does not exist or does not have any prescriptions.
+     * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
+     * patient that is active or null if the patient does not exist in the patient database.
+     */
     public ArrayList<PrescriptionDataBundle> getActivePrescriptions(String patientUsername){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient == null){return null;}
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(patient.getId());
     }
+    /**
+     * Change the password of this doctor. If the userId is not associated with a doctor in the database,
+     * nothing happens.
+     * @param userId id of doctor.
+     * @param newPassword new password of the doctor;
+     */
+    public void changePassword(Integer userId, String newPassword){
+        doctorManager.changeUserPassword(userId, newPassword);
+    }
+
+    /**
+     * Get an array list of PrescriptionDataBundles containing each prescription in the database belonging to the patient
+     * @param patientUsername the username associated with the patient in the database. Should not be null. An empty arraylist is
+     * returned if the patient does not exist or does not have any prescriptions.
+     * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
+     * patient or null if the patient does not exist in the patient database.
+     */
     public ArrayList<PrescriptionDataBundle> getAllPrescriptions(String patientUsername){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient == null){return null;}
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
     }
+
+    /**
+     *
+     * @param dateNoted date the prescription was created.
+     * @param header Prescription name.
+     * @param body Additional info about the prescription.
+     * @param patientUsername Username of the patient to whom the prescription is assigned.
+     * @param doctorUsername Username of the doctor who created the prescription.
+     * @param expiryDate Expiry data of the prescription.
+     * @return The prescriptionDataBundle representing the prescription if both the doctor and patient exist in their
+     * respective databases, otherwise return null.
+     */
     public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, String doctorUsername,
                                                      ZonedDateTime expiryDate){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
@@ -77,6 +113,18 @@ public class DoctorAccess {
         if (doctor == null){return null;}
         return prescriptionManager.createPrescription(dateNoted, header, body, patient.getId(), doctor.getId(), expiryDate);
     }
+
+    /**
+     *
+     * @param dateNoted date the prescription was created.
+     * @param header Prescription name.
+     * @param body Additional info about the prescription.
+     * @param patientUsername Username of the patient to whom the prescription is assigned.
+     * @param doctorId Id of the doctor who created the prescription.
+     * @param expiryDate Expiry data of the prescription.
+     * @return The prescriptionDataBundle representing the prescription if both the doctor and patient exist in their
+     * respective databases, otherwise return null.
+     */
     public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, Integer doctorId,
                                                      ZonedDateTime expiryDate){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
@@ -85,6 +133,11 @@ public class DoctorAccess {
         if (doctorDatabase.get(doctorId) == null){return null;}
         return prescriptionManager.createPrescription(dateNoted, header, body, patient.getId(), doctorId, expiryDate);
     }
+
+    /**
+     * Remove a prescription from the prescription database if it exists, otherwise do nothing.
+     * @param prescriptionId id of the prescription to be removed.
+     */
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
     }

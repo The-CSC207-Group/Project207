@@ -10,6 +10,7 @@ import useCases.managers.AdminManager;
 import useCases.managers.DoctorManager;
 import useCases.managers.PatientManager;
 import useCases.managers.SecretaryManager;
+import utilities.DatabaseQueryUtility;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,9 @@ public class AdminAccess {
     DoctorManager doctorManager;
     SecretaryManager secretaryManager;
     LogManager logManager;
+
+    private DatabaseQueryUtility databaseQueryUtility = new DatabaseQueryUtility();
+
 
     /**
      * @param patientDatabase   database for patients.
@@ -72,6 +76,19 @@ public class AdminAccess {
     }
 
     /**
+     * Change the password of any user given their username. If the userId is not associated with a user any user database,
+     * nothing happens.
+     * @param username username of user.
+     * @param newPassword new password of the doctor;
+     */
+    public void changePassword(String username, String newPassword){
+        changePassUsingUsername(patientDatabase, username, newPassword);
+        changePassUsingUsername(secretaryDatabase, username, newPassword);
+        changePassUsingUsername(doctorDatabase, username, newPassword);
+        changePassUsingUsername(adminDatabase, username, newPassword);
+    }
+
+    /**
      * Gets an arraylist of log data bundles associated with a username. Can get logs from admins, patients, secretaries and doctors.
      * @param username - username of the user whose logs we want to get.
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
@@ -90,6 +107,11 @@ public class AdminAccess {
         ArrayList<LogDataBundle> dataBundlesAdmin = logManager.getLogDataBundlesFromUsername(username, adminDatabase);
         if (dataBundlesAdmin != null){return dataBundlesAdmin;}
         return null;
+    }
+
+    private <T extends User> void changePassUsingUsername(DataMapperGateway<T> database, String username, String newPassword){
+        User user = databaseQueryUtility.getUserByUsername(database, username);
+        if (user != null){ user.setPassword(newPassword);}
     }
 
 
