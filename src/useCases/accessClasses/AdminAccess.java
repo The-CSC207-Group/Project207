@@ -1,15 +1,12 @@
 package useCases.accessClasses;
 
-import dataBundles.LogDataBundle;
 import dataBundles.ContactDataBundle;
+import dataBundles.LogDataBundle;
 import dataBundles.PatientDataBundle;
 import database.DataMapperGateway;
+import database.Database;
 import entities.*;
 import useCases.managers.*;
-import useCases.managers.AdminManager;
-import useCases.managers.DoctorManager;
-import useCases.managers.PatientManager;
-import useCases.managers.SecretaryManager;
 import utilities.DatabaseQueryUtility;
 
 import java.util.ArrayList;
@@ -30,27 +27,18 @@ public class AdminAccess {
     private DatabaseQueryUtility databaseQueryUtility = new DatabaseQueryUtility();
 
 
-    /**
-     * @param patientDatabase   database for patients.
-     * @param doctorDatabase    database for doctors.
-     * @param secretaryDatabase database for secretaries.
-     * @param adminDatabase     database for admins.
-     * @param contactDatabase   database for contacts.
-     * @param logDatabase       database for logs.
-     */
-    public AdminAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor> doctorDatabase,
-                       DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact>
-                               contactDatabase, DataMapperGateway<Log> logDatabase) {
-        this.patientDatabase = patientDatabase;
-        this.doctorDatabase = doctorDatabase;
-        this.secretaryDatabase = secretaryDatabase;
-        this.adminDatabase = adminDatabase;
+    public AdminAccess(Database database) {
+        this.patientDatabase = database.getPatientDatabase();
+        this.doctorDatabase = database.getDoctorDatabase();
+        this.secretaryDatabase = database.getSecretaryDatabase();
+        this.adminDatabase = database.getAdminDatabase();
         this.adminManager = new AdminManager(adminDatabase, contactDatabase);
-        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
+        this.patientManager = new PatientManager(database);
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
-        this.logManager = new LogManager(logDatabase);
+        this.logManager = new LogManager(database.getLogDatabase());
     }
+
 
     /**
      * @param userId Integer userID of the user being deleted. Can delete from admin, doctor, patient and secretary
