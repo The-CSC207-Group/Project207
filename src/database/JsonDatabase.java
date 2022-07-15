@@ -128,6 +128,16 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     }
 
     @Override
+    public T copy(Integer id) {
+        T object = get(id);
+        if (object != null) {
+            return gson.fromJson(gson.toJson(object), type);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public Integer add(T item) {
         if (keyDelegator.canAddItem(item)) {
             int unique_id = keyDelegator.getNewUniqueId();
