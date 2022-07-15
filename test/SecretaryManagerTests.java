@@ -3,11 +3,13 @@ import dataBundles.SecretaryDataBundle;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
+import entities.Doctor;
 import entities.Secretary;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import useCases.managers.DoctorManager;
 import useCases.managers.SecretaryManager;
 import utilities.DeleteUtils;
 
@@ -78,6 +80,28 @@ public class SecretaryManagerTests {
                 secretaryDatabase.get(secretaryID));
     }
 
+    @Test(timeout = 1000)
+    public void testChangeUserPassword() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Secretary> secretaryDatabase = originalDatabase.getSecretaryDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Secretary secretary = new
+                Secretary("jeff", "123", 123456789);
+
+        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+
+        Integer secretaryID = secretaryDatabase.add(secretary);
+
+        assertTrue("The password should remain the same before the change ",
+                secretaryDatabase.get(secretaryID).comparePassword("123"));
+
+        secretaryManager.changeUserPassword(secretaryID, "456");
+
+        assertTrue("The secretary object should have the same password as we inputted into the parameters " +
+                        "of the changeUserPassword method ",
+                secretaryDatabase.get(secretaryID).comparePassword("456"));
+    }
 
     @After
     public void after() {
