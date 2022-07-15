@@ -3,13 +3,11 @@ import dataBundles.SecretaryDataBundle;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
-import entities.Doctor;
 import entities.Secretary;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.managers.DoctorManager;
 import useCases.managers.SecretaryManager;
 import utilities.DeleteUtils;
 
@@ -101,6 +99,42 @@ public class SecretaryManagerTests {
         assertTrue("The secretary object should have the same password as we inputted into the parameters " +
                         "of the changeUserPassword method ",
                 secretaryDatabase.get(secretaryID).comparePassword("456"));
+    }
+
+    @Test(timeout = 1000)
+    public void testGetSecretary() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Secretary> secretaryDatabase = originalDatabase.getSecretaryDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Secretary originalSecretary = new
+                Secretary("jeff", "123", 123456789);
+
+        for (int i = 1; i <= 3; i++) {
+            originalSecretary.addLogId(i);
+        }
+
+        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+
+        Integer secretaryID = secretaryDatabase.add(originalSecretary);
+
+        assertEquals("Original secretary should share the same ID from the database",
+                originalSecretary.getId(), secretaryID);
+
+        Secretary loadedSecretary = secretaryManager.getSecretary(secretaryID);
+
+        /* Testing if the loaded secretary and the original secretary are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original secretary and loaded secretary should share the same Id",
+                originalSecretary.getId(), loadedSecretary.getId());
+        assertEquals("Original secretary and loaded secretary should share the same unique username",
+                originalSecretary.getUsername(), loadedSecretary.getUsername());
+        assertEquals("Original secretary and loaded secretary should share the same logs",
+                originalSecretary.getLogIds(), loadedSecretary.getLogIds());
+        assertEquals("Original secretary and loaded secretary should share the same contact information",
+                originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
+        assertTrue("Original secretary and loaded secretary should share the same password",
+                loadedSecretary.comparePassword("123"));
     }
 
     @After
