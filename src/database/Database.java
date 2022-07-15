@@ -3,6 +3,8 @@ package database;
 import entities.*;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Database {
@@ -19,6 +21,8 @@ public class Database {
     private final DataMapperGateway<Log> logDatabase;
     private final DataMapperGateway<Contact> contactDatabase;
     private final DataMapperGateway<Clinic> clinicDatabase;
+
+    private final List<DataMapperGateway<?>> databaseList;
 
     public Database() {
         this("database");
@@ -42,6 +46,9 @@ public class Database {
         logDatabase = new JsonDatabase<>(Log.class, rootFolder);
         contactDatabase = new JsonDatabase<>(Contact.class, rootFolder);
         clinicDatabase = new JsonDatabase<>(Clinic.class, rootFolder);
+
+        databaseList = Arrays.asList(patientDatabase, doctorDatabase, secretaryDatabase, adminDatabase,
+            prescriptionDatabase, reportDatabase, appointmentDatabase, logDatabase, contactDatabase, clinicDatabase);
     }
 
     public DataMapperGateway<Patient> getPatientDatabase() {
@@ -83,4 +90,11 @@ public class Database {
     public DataMapperGateway<Clinic> getClinicDatabase() {
         return clinicDatabase;
     }
+
+    public void save() {
+        for (DataMapperGateway<?> database : databaseList) {
+            database.save();
+        }
+    }
+
 }
