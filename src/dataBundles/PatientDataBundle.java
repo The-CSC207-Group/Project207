@@ -21,7 +21,7 @@ public class PatientDataBundle extends DataBundle {
     }
 
     public ArrayList<Integer> getLogs(){
-        return patient.getLogs();
+        return patient.getLogIds();
     }
 
 

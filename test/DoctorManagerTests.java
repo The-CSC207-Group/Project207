@@ -1,23 +1,18 @@
 import dataBundles.ContactDataBundle;
 import dataBundles.DoctorDataBundle;
-import dataBundles.PatientDataBundle;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
 import entities.Doctor;
-import entities.Patient;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.DoctorManager;
-import useCases.managers.PatientManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;

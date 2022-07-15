@@ -10,9 +10,6 @@ import useCases.managers.AppointmentManager;
 import useCases.managers.DoctorManager;
 import useCases.managers.LogManager;
 import useCases.managers.PrescriptionManager;
-import useCases.query.Query;
-import useCases.query.QueryCondition;
-import useCases.query.userQueryConditions.HasUserId;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;

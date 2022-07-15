@@ -1,27 +1,19 @@
 import dataBundles.ContactDataBundle;
 import dataBundles.PatientDataBundle;
-import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
 import entities.Patient;
-import entities.Prescription;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.PatientManager;
-import useCases.managers.PrescriptionManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class PatientManagerTests {
