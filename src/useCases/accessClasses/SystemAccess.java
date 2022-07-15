@@ -146,7 +146,7 @@ public class SystemAccess {
     private <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer userId) {
         T user = database.get(userId);
         Integer iDLog = logManager.addLog(user.getUsername() + " signed in").getId();
-        user.addLog(iDLog);
+        user.addLogId(iDLog);
     }
 
 

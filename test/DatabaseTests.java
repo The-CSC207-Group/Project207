@@ -27,8 +27,8 @@ public class DatabaseTests {
                 Patient("jeff", "123", 123456789, "5544");
 
         for (int i = 1; i <= 3; i++) {
-            originalPatient.addLog(i);
-            originalPatient.addReport(i + 10);
+            originalPatient.addLogId(i);
+            originalPatient.addReportId(i + 10);
         }
 
         Integer patientID = originalPatientDatabase.add(originalPatient);
@@ -50,9 +50,9 @@ public class DatabaseTests {
         assertEquals("Original patient and loaded patient should share the same unique username",
                 originalPatient.getUsername(), loadedPatient.getUsername());
         assertEquals("Original patient and loaded patient should share the same reports",
-                originalPatient.getReports(), loadedPatient.getReports());
+                originalPatient.getReportIds(), loadedPatient.getReportIds());
         assertEquals("Original patient and loaded patient should share the same logs",
-                originalPatient.getLogs(), loadedPatient.getLogs());
+                originalPatient.getLogIds(), loadedPatient.getLogIds());
         assertEquals("Original patient and loaded patient should share the same contact information",
                 originalPatient.getContactInfoId(), loadedPatient.getContactInfoId());
         assertEquals("Original patient and loaded patient should share the same health numbers",
@@ -70,7 +70,7 @@ public class DatabaseTests {
                 Doctor("jeff", "123", 123456789);
 
         for (int i = 1; i <= 3; i++) {
-            originalDoctor.addLog(i);
+            originalDoctor.addLogId(i);
         }
 
         Integer doctorID = originalDoctorDatabase.add(originalDoctor);
@@ -88,7 +88,7 @@ public class DatabaseTests {
         assertEquals("Original doctor and loaded doctor should share the same contact information",
                 originalDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
         assertEquals("Original doctor and loaded doctor should share the same logs",
-                originalDoctor.getLogs(), originalDoctor.getLogs());
+                originalDoctor.getLogIds(), originalDoctor.getLogIds());
         assertTrue("Original doctor and loaded doctor should share the same password",
                 loadedDoctor.comparePassword("123"));
     }
@@ -102,7 +102,7 @@ public class DatabaseTests {
                 Secretary("jeff", "123", 123456789);
 
         for (int i = 1; i <= 3; i++) {
-            originalSecretary.addLog(i);
+            originalSecretary.addLogId(i);
         }
 
         Integer secretaryID = originalSecretaryDatabase.add(originalSecretary);
@@ -120,7 +120,7 @@ public class DatabaseTests {
         assertEquals("Original secretary and loaded secretary should share the same contact information",
                 originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
         assertEquals("Original secretary and loaded secretary should share the same logs",
-                originalSecretary.getLogs(), originalSecretary.getLogs());
+                originalSecretary.getLogIds(), originalSecretary.getLogIds());
         assertTrue("Original secretary and loaded secretary should share the same password",
                 loadedSecretary.comparePassword("123"));
     }
@@ -134,7 +134,7 @@ public class DatabaseTests {
                 Admin("jeff", "123", 123456789);
 
         for (int i = 1; i <= 3; i++) {
-            originalAdmin.addLog(i);
+            originalAdmin.addLogId(i);
         }
 
         Integer adminID = originalAdminDatabase.add(originalAdmin);
@@ -152,7 +152,7 @@ public class DatabaseTests {
         assertEquals("Original admin and loaded admin should share the same contact information",
                 originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
         assertEquals("Original admin and loaded admin should share the same logs",
-                originalAdmin.getLogs(), originalAdmin.getLogs());
+                originalAdmin.getLogIds(), originalAdmin.getLogIds());
         assertTrue("Original admin and loaded admin should share the same password",
                 loadedAdmin.comparePassword("123"));
     }

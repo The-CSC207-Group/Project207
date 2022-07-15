@@ -10,8 +10,8 @@ public class Doctor extends User {
     //absence represents time off booked by the doctor
     private ArrayList<TimeBlock> absence = new ArrayList<>();
 
-    public Doctor(String username, String password, Integer contactInfo) {
-        super(username, password, contactInfo);
+    public Doctor(String username, String password, Integer contactInfoId) {
+        super(username, password, contactInfoId);
     }
 
     public ArrayList<AvailabilityData> getAvailability() {

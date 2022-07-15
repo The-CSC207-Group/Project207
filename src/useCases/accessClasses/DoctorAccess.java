@@ -1,4 +1,4 @@
-package useCases;
+package useCases.accessClasses;
 
 import dataBundles.AppointmentDataBundle;
 import dataBundles.LogDataBundle;
@@ -46,16 +46,16 @@ public class DoctorAccess {
 
     }
     public ArrayList<ReportDataBundle> getPatientReports(Integer patientId){
-        return patientDatabase.get(patientId).getReports().stream()
+        return patientDatabase.get(patientId).getReportIds().stream()
                 .map(x -> reportDatabase.get(x))
                 .map(x -> new ReportDataBundle(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     public void addPatientReport(Integer patientId, Integer reportId){
-        patientDatabase.get(patientId).addReport(reportId);
+        patientDatabase.get(patientId).addReportId(reportId);
     }
     public void removePatientReport(Integer patientId, Integer reportId){
-        patientDatabase.get(patientId).removeReport(reportId);
+        patientDatabase.get(patientId).removeReportId(reportId);
     }
     public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer patientId){
         if (patientDatabase.get(patientId) == null){return null;}
@@ -91,7 +91,7 @@ public class DoctorAccess {
 
     }
     public ArrayList<LogDataBundle> getLogs(Integer userId){
-        if (doctorManager.getDoctor(userId) != null){return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogs());}
+        if (doctorManager.getDoctor(userId) != null){return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogIds());}
         return null;
     }
 
