@@ -5,13 +5,11 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
 import entities.Contact;
-import entities.Doctor;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.AdminManager;
-import useCases.managers.DoctorManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
@@ -78,6 +76,29 @@ public class AdminManagerTests {
 
         assertNull("An admin object should not be returned after it is deleted ",
                 adminDatabase.get(adminID));
+    }
+
+    @Test(timeout = 1000)
+    public void testChangeUserPassword() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Admin admin = new
+                Admin("jeff", "123", 123456789);
+
+        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+
+        Integer adminID = adminDatabase.add(admin);
+
+        assertTrue("The password should remain the same before the change ",
+                adminDatabase.get(adminID).comparePassword("123"));
+
+        adminManager.changeUserPassword(adminID, "456");
+
+        assertTrue("The admin object should have the same password as we inputted into the parameters " +
+                        "of the changeUserPassword method ",
+                adminDatabase.get(adminID).comparePassword("456"));
     }
 
     @After
