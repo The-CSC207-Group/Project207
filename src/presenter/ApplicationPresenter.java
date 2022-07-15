@@ -1,3 +1,7 @@
+/*
+ * DEPRECATED: THIS FILE WILL BE REMOVED AFTER ALL USAGES ARE GONE.
+ */
+
 package presenter;
 
 import java.util.HashMap;

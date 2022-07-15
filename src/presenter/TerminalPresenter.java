@@ -1,7 +1,10 @@
+/*
+ * DEPRECATED: THIS FILE WILL BE REMOVED AFTER ALL USAGES ARE GONE.
+ */
+
 package presenter;
 
 import controllers.Command;
-import controllers.Context;
 import controllers.TerminalController;
 
 import java.util.HashMap;
