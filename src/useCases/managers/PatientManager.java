@@ -3,10 +3,11 @@ package useCases.managers;
 import dataBundles.ContactDataBundle;
 import dataBundles.PatientDataBundle;
 import database.DataMapperGateway;
-import database.*;
+import database.Database;
 import entities.Contact;
 import entities.Patient;
-import entities.User;
+
+import java.util.Optional;
 
 public class PatientManager {
     DataMapperGateway<Patient> patientDatabase;
@@ -19,10 +20,10 @@ public class PatientManager {
      * @param patientDatabase database storing all the patients.
      * @param contactDatabase database storing all the contacts.
      */
-    public PatientManager(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Contact> contactDatabase) {
-        this.patientDatabase = patientDatabase;
+    public PatientManager(Database database) {
+        this.patientDatabase = database.getPatientDatabase();
         this.patientMethods = new GenericUserManagerMethods<>(patientDatabase);
-        this.contactDatabase = contactDatabase;
+        this.contactDatabase = database.getContactDatabase();
     }
 
     /**
@@ -77,6 +78,19 @@ public class PatientManager {
                 contactDataBundle.getEmergencyContactEmail(),
                 contactDataBundle.getEmergencyContactPhoneNumber(),
                 contactDataBundle.getEmergencyRelationship());
+    }
+    public boolean doesPatientExist(String name){
+        return patientDatabase.getAllIds().stream()
+                .map(x -> patientDatabase.get(x))
+                .anyMatch(x -> x.getUsername() == name);
+    }
+
+    public Optional<Integer> getPatientId(String name){
+        return patientDatabase.getAllIds().stream()
+                .map(x -> patientDatabase.get(x))
+                .filter(x -> x.getUsername() == name)
+                .findFirst()
+                .map(x -> x.getId());
     }
 
 

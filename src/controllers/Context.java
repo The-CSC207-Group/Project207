@@ -1,15 +1,14 @@
 package controllers;
 
-import database.DataMapperGateway;
-import entities.User;
+import database.Database;
 
 public class Context {
     TerminalController currentController = new SignInController(this);
     boolean exit = false;
 
-    DataMapperGateway<User> database;
+    Database database;
 
-    public Context(DataMapperGateway<User> database){
+    public Context(Database database){
         this.database = database;
     }
     public void run(){

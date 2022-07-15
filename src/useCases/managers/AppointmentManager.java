@@ -2,6 +2,7 @@ package useCases.managers;
 
 import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
+import database.Database;
 import entities.*;
 import useCases.AppointmentQueries;
 
@@ -19,9 +20,9 @@ public class AppointmentManager {
      * @param appointmentDatabase database for appointments.
      * @param doctorDatabase      database for doctors.
      */
-    public AppointmentManager(DataMapperGateway<Appointment> appointmentDatabase, DataMapperGateway<Doctor> doctorDatabase){
-        this.appointmentDatabase = appointmentDatabase;
-        this.doctorDatabase  = doctorDatabase;
+    public AppointmentManager(Database database){
+        this.appointmentDatabase = database.getAppointmentDatabase();
+        this.doctorDatabase  = database.getDoctorDatabase();
     }
 
     /**

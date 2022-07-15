@@ -1,20 +1,16 @@
 package useCases.accessClasses;
 
-import dataBundles.AppointmentDataBundle;
-import dataBundles.LogDataBundle;
-import dataBundles.PrescriptionDataBundle;
-import dataBundles.ReportDataBundle;
+import dataBundles.*;
 import database.DataMapperGateway;
+import database.Database;
 import entities.*;
-import useCases.managers.AppointmentManager;
-import useCases.managers.DoctorManager;
-import useCases.managers.LogManager;
-import useCases.managers.PrescriptionManager;
+import useCases.managers.*;
 import utilities.DatabaseQueryUtility;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DoctorAccess {
@@ -32,19 +28,26 @@ public class DoctorAccess {
     AppointmentManager appointmentManager;
     PrescriptionManager prescriptionManager;
     DoctorManager doctorManager;
+    PatientManager patientManager;
 
+    public DoctorAccess(Database database){
+        this.doctorDatabase = database.getDoctorDatabase();
+        this.patientDatabase = database.getPatientDatabase();
+        this.prescriptionDatabase = database.getPrescriptionDatabase();
+        this.appointmentManager = new AppointmentManager(database);
+        this.prescriptionManager = prescriptionManager;
+        this.doctorManager = doctorManager;
+        this.logManager = new LogManager(database.getLogDatabase());
+        this.patientManager = new PatientManager(database);
+    }
     public DoctorAccess(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Patient> patientDatabase,
                         DataMapperGateway<Prescription> prescriptionDatabase, AppointmentManager appointmentManager,
                         PrescriptionManager prescriptionManager, DoctorManager doctorManager, DataMapperGateway<Log>
                                 logDatabase){
-        this.doctorDatabase = doctorDatabase;
-        this.patientDatabase = patientDatabase;
-        this.prescriptionDatabase = prescriptionDatabase;
-        this.appointmentManager = appointmentManager;
-        this.prescriptionManager = prescriptionManager;
-        this.doctorManager = doctorManager;
-        this.logManager = new LogManager(logDatabase);
+    }
 
+    public boolean doesPatientExist(String patient_name){
+        return patientManager.doesPatientExist(patient_name);
     }
     public ArrayList<ReportDataBundle> getPatientReports(Integer patientId){
         return patientDatabase.get(patientId).getReportIds().stream()
@@ -168,6 +171,16 @@ public class DoctorAccess {
         if (dataBundlesDoctor != null){return dataBundlesDoctor;}
 
         return null;
+    }
+    public Optional<Integer> getPatientId(String name){
+        return patientManager.getPatientId(name);
+    }
+    public Optional<PatientDataBundle> getPatient(Integer patientId){
+        return Optional.ofNullable(patientManager.getPatient(patientId))
+                .map(x -> new PatientDataBundle(patientId, x));
+    }
+    public Optional<DoctorDataBundle> getDoctorData(Integer doctorId){
+        return Optional.ofNullable(doctorDatabase.get(doctorId)).map(x -> new DoctorDataBundle(doctorId, x));
     }
 
 

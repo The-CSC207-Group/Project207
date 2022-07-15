@@ -1,7 +1,6 @@
 package controllers;
 
-import database.DataMapperGateway;
-import entities.User;
+import database.Database;
 import presenter.ApplicationPresenter;
 import presenter.TerminalPresenter;
 
@@ -26,7 +25,7 @@ abstract public class TerminalController {
         context.changeController(newController);
     }
 
-    DataMapperGateway<User> getDatabase() {
+    Database getDatabase() {
         return context.database;
     }
 
@@ -42,14 +41,14 @@ abstract public class TerminalController {
     }
 
     void ProcessCommands() {
-        getDatabase().save();
+//        getDatabase().save();
 
         String command = presenter.promptPopup(">>> ");
         if (!AllCommands().containsKey(command)) {
             presenter.errorMessage("Invalid command: " + command);
         } else {
             AllCommands().get(command).execute(new ArrayList<>());
-            getDatabase().save();
+//            getDatabase().save();
         }
     }
 
