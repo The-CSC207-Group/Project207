@@ -11,17 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DoctorController extends TerminalController{
-    private Integer doctorId;
     private DoctorAccess doctorAccess;
     private DoctorView view = new DoctorView();
 
     private DoctorDataBundle doctorData;
+    private DoctorController self = this;
 
-    public DoctorController(Context context, Integer doctorId){
+    public DoctorController(Context context, DoctorDataBundle doctorData){
         super(context);
-        this.doctorId = doctorId;
         this.doctorAccess = new DoctorAccess(getDatabase());
-        this.doctorData = doctorAccess.getDoctorData(doctorId).get();
+        this.doctorData = doctorData;
     }
 
     @Override
@@ -43,9 +42,12 @@ public class DoctorController extends TerminalController{
         @Override
         public boolean execute(ArrayList<String> args) {
             String name = presenter.promptPopup("name");
-            doctorAccess.getPatientId(name).map((x) -> {
-                    changeCurrentController(new DoctorLoadedPatientController(getContext(), doctorId, x));
-                    return x;});
+            doctorAccess.getPatient(name).map(
+                    (x) -> {
+                        changeCurrentController(new DoctorLoadedPatientController(getContext(), self, doctorData, x));
+                        return null;
+                    }
+            );
             return false;
         }
     }
@@ -56,7 +58,7 @@ public class DoctorController extends TerminalController{
             String password = presenter.promptPopup("chooseNewPassword");
             String password2 = presenter.promptPopup("validatePassword");
             if (password2 == password){
-                doctorAccess.changePassword(doctorId, password );
+                doctorAccess.changePassword(doctorData.getId(), password );
             } else {
                 presenter.errorMessage("these do not match");
             }
@@ -68,7 +70,7 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            List<AppointmentDataBundle> appointments = doctorAccess.getAllDoctorAppointments(doctorId);
+            List<AppointmentDataBundle> appointments = doctorAccess.getAllDoctorAppointments(doctorData.getId());
             return false;
         }
     }
@@ -78,8 +80,6 @@ public class DoctorController extends TerminalController{
         public boolean execute(ArrayList<String> args) {
             ArrayList<LogDataBundle> logs = doctorAccess.getLogs(doctorData.getUsername());
             return false;
-
-
         }
     }
 }

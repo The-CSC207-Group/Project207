@@ -58,6 +58,12 @@ abstract public class TerminalController {
         WelcomeMessage();
         ProcessCommands();
     }
+    protected Command back(TerminalController prev){
+        return (x) -> {
+            changeCurrentController(prev);
+            return false;
+        };
+    }
 
     class Help implements Command {
 
