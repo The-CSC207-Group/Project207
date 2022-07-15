@@ -1,6 +1,5 @@
 import dataBundles.AdminDataBundle;
 import dataBundles.ContactDataBundle;
-import dataBundles.DoctorDataBundle;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
@@ -100,6 +99,43 @@ public class AdminManagerTests {
                         "of the changeUserPassword method ",
                 adminDatabase.get(adminID).comparePassword("456"));
     }
+
+    @Test(timeout = 1000)
+    public void testGetAdmin() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
+        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
+
+        Admin originalAdmin = new
+                Admin("jeff", "123", 123456789);
+
+        for (int i = 1; i <= 3; i++) {
+            originalAdmin.addLogId(i);
+        }
+
+        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+
+        Integer adminID = adminDatabase.add(originalAdmin);
+
+        assertEquals("Original admin should share the same ID from the database",
+                originalAdmin.getId(), adminID);
+
+        Admin loadedAdmin = adminManager.getAdmin(adminID);
+
+        /* Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
+        objects are equal */
+        assertEquals("Original admin and loaded admin should share the same Id",
+                originalAdmin.getId(), loadedAdmin.getId());
+        assertEquals("Original admin and loaded admin should share the same unique username",
+                originalAdmin.getUsername(), loadedAdmin.getUsername());
+        assertEquals("Original admin and loaded admin should share the same logs",
+                originalAdmin.getLogIds(), loadedAdmin.getLogIds());
+        assertEquals("Original admin and loaded admin should share the same contact information",
+                originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
+        assertTrue("Original admin and loaded admin should share the same password",
+                loadedAdmin.comparePassword("123"));
+    }
+
 
     @After
     public void after() {
