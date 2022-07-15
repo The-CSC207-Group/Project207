@@ -21,6 +21,6 @@ public class SecretaryDataBundle extends DataBundle{
     }
 
     public ArrayList<Integer> getLogs(){
-        return secretary.getLogs();
+        return secretary.getLogIds();
     }
 }

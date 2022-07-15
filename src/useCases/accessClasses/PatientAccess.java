@@ -7,7 +7,6 @@ import entities.Log;
 import entities.Patient;
 import entities.Prescription;
 import entities.Contact;
-import useCases.managers.AppointmentManager;
 import entities.Appointment;
 import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
@@ -48,7 +47,7 @@ public class PatientAccess {
         return null;
     }
     public ArrayList<LogDataBundle> getLogs(Integer userId){
-        if (patientManager.getPatient(userId) != null){return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogs());}
+        if (patientManager.getPatient(userId) != null){return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogIds());}
         return null;
     }
 }

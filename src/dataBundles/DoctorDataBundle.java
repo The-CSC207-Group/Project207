@@ -22,7 +22,7 @@ public class DoctorDataBundle extends DataBundle {
     }
 
     public ArrayList<Integer> getLogs(){
-        return doctor.getLogs();
+        return doctor.getLogIds();
     }
 
     public ArrayList<AvailabilityData> getAvailability(){

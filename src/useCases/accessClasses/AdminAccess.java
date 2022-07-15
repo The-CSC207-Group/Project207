@@ -10,11 +10,7 @@ import useCases.managers.AdminManager;
 import useCases.managers.DoctorManager;
 import useCases.managers.PatientManager;
 import useCases.managers.SecretaryManager;
-import useCases.query.Query;
-import useCases.query.QueryCondition;
-import useCases.query.userQueryConditions.HasUserId;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdminAccess {
@@ -72,16 +68,16 @@ public class AdminAccess {
 
     public ArrayList<LogDataBundle> getLogs(Integer userId) {
         if (patientManager.getPatient(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogs());
+            return logManager.getLogDataBundlesFromLogIDs(patientManager.getPatient(userId).getLogIds());
         }
         if (secretaryManager.getSecretary(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogs());
+            return logManager.getLogDataBundlesFromLogIDs(secretaryManager.getSecretary(userId).getLogIds());
         }
         if (doctorManager.getDoctor(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogs());
+            return logManager.getLogDataBundlesFromLogIDs(doctorManager.getDoctor(userId).getLogIds());
         }
         if (adminManager.getAdmin(userId) != null) {
-            return logManager.getLogDataBundlesFromLogIDs(adminManager.getAdmin(userId).getLogs());
+            return logManager.getLogDataBundlesFromLogIDs(adminManager.getAdmin(userId).getLogIds());
         }
         return null;
     }

@@ -21,7 +21,7 @@ public class AdminDataBundle extends DataBundle{
     }
 
     public ArrayList<Integer> getLogs(){
-        return admin.getLogs();
+        return admin.getLogIds();
     }
 
 
