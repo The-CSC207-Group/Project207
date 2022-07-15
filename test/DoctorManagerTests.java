@@ -27,11 +27,6 @@ public class DoctorManagerTests {
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
-    @After
-    public void after() {
-        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
-    }
-
     @Test(timeout = 1000)
     public void testCreateDoctor() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -61,8 +56,6 @@ public class DoctorManagerTests {
         doctor are equal to the parameters of createDoctor */
         assertEquals("Original doctor and loaded doctor should share the same unique username",
                 loadedDoctor.getUsername(), username);
-        assertEquals("Original doctor and loaded doctor should share the same contact information",
-                loadedDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
         assertTrue("Original doctor and loaded doctor should share the same password",
                 loadedDoctor.comparePassword(password));
     }
@@ -148,5 +141,9 @@ public class DoctorManagerTests {
                 loadedDoctor.comparePassword("123"));
     }
 
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
+    }
 
 }
