@@ -12,8 +12,10 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 
 public class JsonDatabase<T extends JsonSerializable> implements DataMapperGateway<T> {
@@ -125,6 +127,11 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     @Override
     public T get(Integer id) {
         return database.get(id);
+    }
+
+    @Override
+    public Stream<T> stream() {
+        return getAllIds().stream().map(this::get);
     }
 
     @Override

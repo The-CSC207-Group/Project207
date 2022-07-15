@@ -1,6 +1,9 @@
 package database;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 public interface DataMapperGateway<T> {
     /**
@@ -23,6 +26,12 @@ public interface DataMapperGateway<T> {
      * @return Object of type T.
      */
     T copy(Integer id);
+
+    /**
+     * Access items in database as a stream.
+     * @return Object of type T.
+     */
+    Stream<T> stream();
 
     /**
      * Adds a new object of type T to the database.
