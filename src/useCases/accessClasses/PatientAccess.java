@@ -1,9 +1,11 @@
 package useCases.accessClasses;
 
+import dataBundles.AppointmentDataBundle;
 import dataBundles.LogDataBundle;
 import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
 import entities.*;
+import useCases.managers.AppointmentManager;
 import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
 import useCases.managers.PrescriptionManager;
@@ -17,6 +19,7 @@ public class PatientAccess {
     PatientManager patientManager;
 
     LogManager logManager;
+    AppointmentManager appointmentManager;
 
     /**
      *
@@ -25,12 +28,15 @@ public class PatientAccess {
      * @param logDatabase DataMapperGateway<Log>
      * @param contactDatabase DataMapperGateway<Contact>
      */
-    public PatientAccess(DataMapperGateway<Prescription> prescriptionDatabase,
-                         DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Log> logDatabase, DataMapperGateway<Contact> contactDatabase) {
+    public PatientAccess(DataMapperGateway<Prescription> prescriptionDatabase, DataMapperGateway<Doctor> doctorDatabase,
+                         DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Log> logDatabase,
+                         DataMapperGateway<Contact> contactDatabase, DataMapperGateway<Appointment> appointmentDatabase) {
         this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
         this.patientManager = new PatientManager(patientDatabase, contactDatabase);
         this.logManager = new LogManager(logDatabase);
+        this.appointmentManager = new AppointmentManager(appointmentDatabase, doctorDatabase);
         this.patientDatabase = patientDatabase;
+
     }
 
     public void signOut(){
@@ -73,8 +79,8 @@ public class PatientAccess {
     public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer userId){
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
     }
-    public ArrayList<Appointment> getAppointments(Patient patient){
-        return null;
+    public ArrayList<AppointmentDataBundle> getAppointments(Integer patientId){
+        return appointmentManager.getPatientAppointments(patientId);
     }
 
     /**
@@ -83,8 +89,6 @@ public class PatientAccess {
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
     public ArrayList<LogDataBundle> getLogs(String username){
-        ArrayList<LogDataBundle> dataBundlesPatient =  logManager.getLogDataBundlesFromUsername(username, patientDatabase);
-        if (dataBundlesPatient != null){return dataBundlesPatient;}
-        return null;
+        return logManager.getLogDataBundlesFromUsername(username, patientDatabase);
     }
 }
