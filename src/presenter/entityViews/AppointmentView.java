@@ -6,16 +6,18 @@ import entities.TimeBlock;
 import java.util.List;
 
 public class AppointmentView implements EntityListView<Appointment> {
-    private void view(Appointment item) {
+    private String view(Appointment item) {
         TimeBlock timeBlock = item.getTimeBlock();
-        System.out.println("Appointment starting at " + timeBlock.getStartTime() + " and ending at " +
-                timeBlock.getEndTime() + ".");
+        return "Appointment starting at " + timeBlock.getStartTime() + " and ending at " + timeBlock.getEndTime()
+                + ".";
     }
 
     @Override
-    public void viewFromList(List<Appointment> items) {
+    public String viewFromList(List<Appointment> items) {
+        StringBuilder appendedOutput = new StringBuilder("");
         for (Appointment item : items) {
-            view(item);
+            appendedOutput.append(view(item) + "\n");
         }
+        return appendedOutput.toString();
     }
 }

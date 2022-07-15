@@ -1,5 +1,5 @@
 package presenter.entityViews;
 
 public interface EntityView<T> {
-    void view(T item);
+    String view(T item);
 }
