@@ -1,4 +1,4 @@
-package presenter.terminal;
+package presenter.screenViews;
 
 import presenter.response.UserCredentials;
 
