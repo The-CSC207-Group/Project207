@@ -47,6 +47,7 @@ public class SystemAccess {
      * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
      * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
+     * Condition: username does not exist in the current database.
      */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber) {
