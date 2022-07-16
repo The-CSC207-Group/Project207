@@ -1,6 +1,6 @@
 Here stored are responses from the `ScreenViews`.
 
-We create a new response class when we want to return more than one item/variables. Unless it makes 100% sense to do so,
+We create a new response class when we want to return more than one item/variable. Unless it makes 100% sense to do so,
 using a response class instead of a List creates a much better interface for controller code to use.
 
 # Why response classes
