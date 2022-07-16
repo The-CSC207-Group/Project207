@@ -49,11 +49,8 @@ public class AdminAccess {
     /**
      * @param username          String new username
      * @param password          String new password
-     * @param contactData ContactDataBundle which includes contact info of the user.
-     * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientData createPatient(String username, String password, ContactData contactData,
-                                     String healthNumber) {
+    public PatientData createPatient(String username, String password) {
         return patientManager.createPatient(username, password);
 
     }
@@ -62,6 +59,16 @@ public class AdminAccess {
     }
     public SecretaryData createSecretary (String username, String password){
         return secretaryManager.createSecretary(username, password);
+    }
+    public boolean doesPatientExist(String patient_username){
+        return patientManager.doesPatientExist(patient_username);
+    }
+    public boolean doesDoctorExist (String doctor_username){
+
+        return doctorManager.doesUserExist(doctor_username);
+    }
+    public boolean doesSecretaryExist (String secretary_username){
+        return secretaryManager.doesUserExist(secretary_username);
     }
 
     /**
