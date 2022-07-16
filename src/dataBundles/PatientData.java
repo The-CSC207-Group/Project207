@@ -36,5 +36,9 @@ public class PatientData {
         return patient.getId();
     }
 
+    public String getPatientUsername(){
+        return patient.getUsername();
+    }
+
 
 }
