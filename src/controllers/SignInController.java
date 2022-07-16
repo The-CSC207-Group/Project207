@@ -1,5 +1,8 @@
 package controllers;
 
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
+import dataBundles.SecretaryData;
 import useCases.accessClasses.SystemAccess;
 
 import java.util.ArrayList;
@@ -10,18 +13,18 @@ import java.util.List;
 
 public class SignInController extends TerminalController {
 
-    SystemAccess systemManager;
+    SystemAccess systemAccess;
 
     public SignInController(Context parent) {
         super(parent);
-//        this.systemManager = new SystemAccess(getDatabase());
+        this.systemAccess = new SystemAccess(getDatabase());
     }
 
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("sign in", new SignInCommand());
-//        commands.put("register", new RegisterCommand());
+        commands.put("register", new RegisterCommand());
         return commands;
     }
 
@@ -36,21 +39,29 @@ public class SignInController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             List<String> fields = Arrays.asList("username", "password");
-//            HashMap<String, String> responses = presenter.promptPopup(fields);
-//            String username = responses.get(fields.get(0));
-//            String password = responses.get(fields.get(1));
-//
-//            if (systemManager.canSignIn(username, password)) {
-//                presenter.successMessage("Successfully signed in");
-////                systemManager.addUserLog(username);
-//                if (systemManager.isUserAdmin(username)) {
-////                    new AdminController(new AdminManager(username, getDatabase())).run();
-//                } else {
-//                    changeCurrentController(new ler(getContext(), new UserManager(username, getDatabase())));
-//                }
-//            } else {
-//                presenter.errorMessage("Failed to sign in");
-//            }
+            HashMap<String, String> responses = presenter.promptPopup(fields);
+            String username = responses.get(fields.get(0));
+            String password = responses.get(fields.get(1));
+            
+            if (systemAccess.adminSignIn(username, password) != null) {
+                return false;
+                
+            } else if (systemAccess.patientSignIn(username, password) != null) {
+                PatientData patientData = systemAccess.patientSignIn(username, password);
+                new PatientController(getContext(), patientData);
+                
+            } else if (systemAccess.doctorSignIn(username, password) != null) {
+                DoctorData doctorData = systemAccess.doctorSignIn(username, password);
+                new DoctorController(getContext(), doctorData);
+                
+            } else if (systemAccess.secretarySignIn(username, password) != null) {
+                SecretaryData secretaryData = systemAccess.secretarySignIn(username, password);
+                new SecretaryController(getContext(), secretaryData);
+
+            } else {
+                presenter.errorMessage("failed to sign in");
+                return false;
+            }
             return true;
         }
     }

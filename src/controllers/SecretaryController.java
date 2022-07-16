@@ -27,6 +27,7 @@ public class SecretaryController extends TerminalController {
         commands.put("createPatientAccount", new CreatePatientAccount());
         commands.put("createDoctorAccount", new CreateDoctorAccount());
         commands.put("getLogs", new Logs());
+        commands.put("Load Patient", new LoadPatient());
         return commands;
     }
 
@@ -71,7 +72,7 @@ public class SecretaryController extends TerminalController {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             ContactData contact;
-            if (secretaryAccess.doseDoctorExist(username)){
+            if (secretaryAccess.doesDoctorExist(username)){
 //                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
                 presenter.successMessage("Successfully created new doctor");}
             else {
@@ -86,7 +87,7 @@ public class SecretaryController extends TerminalController {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changePassword(secretaryData.getUsername(), p1 );
+                secretaryAccess.changeSecretaryPassword(secretaryData.getSecretaryId(), p1 );
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");

@@ -115,7 +115,7 @@ public class SecretaryAccess {
      * @param userId id of secretary/patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePassword(Integer userId, String newPassword){
+    public void changeSecretaryPassword(Integer userId, String newPassword){
         secretaryManager.changeUserPassword(userId, newPassword);
         patientManager.changeUserPassword(userId, newPassword);
     }
@@ -126,7 +126,7 @@ public class SecretaryAccess {
      * @param patientUsername username of patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePassword(String patientUsername, String newPassword){
+    public void changePatientPassword(String patientUsername, String newPassword){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient != null) {
             secretaryManager.changeUserPassword(patient.getId(), newPassword);
@@ -146,11 +146,11 @@ public class SecretaryAccess {
         appointmentManager.removeAppointment(appointmentData);
     }
 
-    public ArrayList<AppointmentData> getPatientAppointmentDatas(Integer patientId){
+    public ArrayList<AppointmentData> getPatientAppointmentDataBundles(Integer patientId){
         return  appointmentManager.getPatientAppointments(patientId);
     }
 
-    public ArrayList<AppointmentData> getDoctorAppointmentDatas(Integer doctorId){
+    public ArrayList<AppointmentData> getDoctorAppointmentDataBundles(Integer doctorId){
         return appointmentManager.getDoctorAppointments(doctorId);
     }
 
@@ -171,11 +171,11 @@ public class SecretaryAccess {
     public boolean doesPatientExist(String patient_username){
         return patientManager.doesPatientExist(patient_username);
     }
-    public boolean doseDoctorExist (String doctor_username){
+    public boolean doesDoctorExist (String doctor_username){
         return doctorManager.doesDoctorExist(doctor_username);
     }
     public Optional<PatientData> getPatient(String name){
-        return patientDatabase.stream().filter(x -> x.getUsername().equals(name))
+        return patientDatabase.stream().filter(x -> x.getUsername() == name)
                 .findFirst()
                 .map(x -> new PatientData(x));
     }

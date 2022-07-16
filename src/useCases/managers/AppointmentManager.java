@@ -1,6 +1,7 @@
 package useCases.managers;
 
 import dataBundles.AppointmentData;
+import dataBundles.AppointmentData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
