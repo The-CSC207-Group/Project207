@@ -12,6 +12,10 @@ public class Patient extends User {
         this.healthNumber = healthNumber;
     }
 
+    public Patient(String username, String password){
+        super(username, password, new Contact().getId());
+    }
+
     public String getHealthNumber() {
         return healthNumber;
     }

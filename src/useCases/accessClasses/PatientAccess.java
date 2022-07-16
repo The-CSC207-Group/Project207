@@ -43,19 +43,19 @@ public class PatientAccess {
      * Delete the current patient from the patient database. If the patient doesn't exist in the database, nothing happens.
      * @param userId id of the user.
      */
-    public void deleteCurrentUser(Integer userId) {
-        patientManager.deletePatient(userId);
+    public void deleteCurrentUser(String username) {
+        patientManager.deleteUser(username);
     }
 
-    /**
-     * Change the password of the current patient. If the userId is not associated with a patient in the database,
-     * nothing happens.
-     * @param userId id of patient.
-     * @param newPassword new password of the patient;
-     */
-    public void changeCurrentUserPassword(Integer userId, String newPassword){
-        patientManager.changeUserPassword(userId, newPassword);
-    }
+//    /**
+//     * Change the password of the current patient. If the userId is not associated with a patient in the database,
+//     * nothing happens.
+//     * @param userId id of patient.
+//     * @param newPassword new password of the patient;
+//     */
+//    public void changeCurrentUserPassword(Integer userId, String newPassword){
+//        patientManager.changeUserPassword(userId, newPassword);
+//    }
 
     /**
      * Get prescriptionDataBundles representing the active prescriptions associated with a patient.
