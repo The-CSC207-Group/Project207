@@ -31,15 +31,4 @@ public class SecretaryManager extends UserManager<Secretary>{
         return new SecretaryData(secretary);
     }
 
-//    /**
-//     * Change the secretary/patient's password if they exist in their respective databases.
-//     * @param userId id of the user whose password we want to change within the database.
-//     * @param newPassword the password we want to change.
-//     */
-//
-//    public void changeUserPassword(Integer userId, String newPassword){
-//        secretaryMethods.changePassword(userId, newPassword);
-//    }
-
-
 }
