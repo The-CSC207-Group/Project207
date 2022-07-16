@@ -29,6 +29,10 @@ public class SecretaryLoadedPatientController extends TerminalController{
         command.put("View Active Prescription", new ViewActivePrescription());
         command.put("View All Prescriptions", new ViewPrescriptionHistory());
         command.put("View Patient Appointments", new ViewAppointments());
+        command.put("Change Patient Password", new ChangePatientPassword());
+        command.put("Book Appointment", new BookAppointment());
+        command.put("Reschedule Appointment", new RescheduleAppointment());
+        command.put("Cancel Appointment", new CancelAppointment());
         return command;
     }
     @Override
@@ -54,7 +58,8 @@ public class SecretaryLoadedPatientController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDatas(patientData.getId());
+            ArrayList<AppointmentData> appointments = secretaryAccess.
+                    getDoctorAppointmentDataBundles(patientData.getId());
             return false;
         }
     }
@@ -73,4 +78,25 @@ public class SecretaryLoadedPatientController extends TerminalController{
             return false;
         }
     }
+    class BookAppointment implements Command{
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
+    class RescheduleAppointment implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
+    class CancelAppointment implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
+
 }
