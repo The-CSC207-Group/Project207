@@ -143,7 +143,7 @@ public class  DoctorAccess {
         if (doctorDatabase.get(doctorId) == null){return null;}
         return prescriptionManager.createPrescription(dateNoted, header, body, patient.getId(), doctorId, expiryDate);
     }
-    public PrescriptionDataBundle createPrescription(String header, String body, PatientDataBundle patientData, DoctorDataBundle doctorData, Integer monthsTillExpiry){
+    public PrescriptionDataBundle createPrescription(String header, String body, PatientData patientData, DoctorDataBundle doctorData, Integer monthsTillExpiry){
         return createPrescription(ZonedDateTime.now(), header, body, patientData.getUsername(), doctorData.getId(), ZonedDateTime.now().plusMonths(monthsTillExpiry));
     }
 
@@ -185,17 +185,17 @@ public class  DoctorAccess {
     public Optional<Integer> getPatientId(String name){
         return patientManager.getPatientId(name);
     }
-    public Optional<PatientDataBundle> getPatient(Integer patientId){
+    public Optional<PatientData> getPatient(Integer patientId){
         return Optional.ofNullable(patientManager.getPatient(patientId))
-                .map(x -> new PatientDataBundle(patientId, x));
+                .map(x -> new PatientData(x));
     }
     public Optional<DoctorDataBundle> getDoctorData(Integer doctorId){
         return Optional.ofNullable(doctorDatabase.get(doctorId)).map(x -> new DoctorDataBundle(doctorId, x));
     }
-    public Optional<PatientDataBundle> getPatient(String name){
+    public Optional<PatientData> getPatient(String name){
         return patientDatabase.stream().filter(x -> x.getUsername() == name)
                 .findFirst()
-                .map(x -> new PatientDataBundle(x.getId(), x));
+                .map(x -> new PatientData(x));
     }
 
 

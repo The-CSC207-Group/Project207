@@ -1,4 +1,4 @@
-import dataBundles.AdminDataBundle;
+import dataBundles.AdminData;
 import dataBundles.ContactDataBundle;
 import database.DataMapperGateway;
 import database.Database;
@@ -38,7 +38,7 @@ public class AdminManagerTests {
 
         AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
 
-        AdminDataBundle adminDataBundle = adminManager.createAdmin(username, password, contactDataBundle);
+        AdminData adminDataBundle = adminManager.createAdmin(username, password, contactDataBundle);
 
         /* Testing if the return admin data bundle is valid by testing if the fields of are equal to the parameters of
         createAdmin */

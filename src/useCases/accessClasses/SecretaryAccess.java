@@ -68,8 +68,8 @@ public class SecretaryAccess {
      * @param healthNumber health number of patient
      * @return PatientDataBundle with the newly created patient's information
      */
-    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                           String healthNumber){
+    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                     String healthNumber){
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
 

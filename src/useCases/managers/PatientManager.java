@@ -1,7 +1,7 @@
 package useCases.managers;
 
 import dataBundles.ContactDataBundle;
-import dataBundles.PatientDataBundle;
+import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
@@ -32,12 +32,12 @@ public class PatientManager {
      * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                           String healthNumber) {
+    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                     String healthNumber) {
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Patient patient = new Patient(username, password, contactId, healthNumber);
         patientDatabase.add(patient);
-        return new PatientDataBundle(patient.getId(), patient);
+        return new PatientData(patient);
     }
 
     /**

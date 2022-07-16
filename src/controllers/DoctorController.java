@@ -3,7 +3,7 @@ package controllers;
 import dataBundles.AppointmentDataBundle;
 import dataBundles.DoctorDataBundle;
 import dataBundles.LogDataBundle;
-import presenter.screenViews.DoctorView;
+import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DoctorController extends TerminalController{
     private DoctorAccess doctorAccess;
-    private DoctorView view = new DoctorView();
+    private DoctorScreenView view = new DoctorScreenView();
 
     private DoctorDataBundle doctorData;
     private DoctorController self = this;

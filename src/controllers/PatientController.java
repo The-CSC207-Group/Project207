@@ -2,7 +2,7 @@ package controllers;
 
 import dataBundles.AppointmentDataBundle;
 import dataBundles.LogDataBundle;
-import dataBundles.PatientDataBundle;
+import dataBundles.PatientData;
 import dataBundles.PrescriptionDataBundle;
 import presenter.screenViews.PatientView;
 import useCases.accessClasses.PatientAccess;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
     private PatientView patientView;
-    private PatientDataBundle patientData;
+    private PatientData patientData;
 
-    public PatientController(Context context, PatientDataBundle patientData) {
+    public PatientController(Context context, PatientData patientData) {
         super(context);
         this.patientAccess = new PatientAccess(getDatabase());
         this.patientData = patientData;
