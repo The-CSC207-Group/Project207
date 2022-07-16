@@ -4,7 +4,7 @@ import entities.Patient;
 
 import java.util.ArrayList;
 
-public class PatientData extends UserDataBundle<Patient>{
+public class PatientData extends UserData<Patient> {
     private final Patient patient;
 
     public PatientData(Patient patient) {

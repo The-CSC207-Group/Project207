@@ -3,13 +3,14 @@ package controllers;
 import database.Database;
 
 public class Context {
-    TerminalController currentController = new SignInController(this);
+    TerminalController currentController;
     boolean exit = false;
 
     Database database;
 
     public Context(Database database){
         this.database = database;
+        this.currentController = new SignInController(this);
     }
     public void run(){
         while (!exit){
@@ -18,7 +19,6 @@ public class Context {
     }
     void changeController(TerminalController new_controller){
         currentController = new_controller;
-        currentController.WelcomeMessage();
     }
     void exit(){
         exit = true;

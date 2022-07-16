@@ -1,7 +1,7 @@
 package controllers;
 
 import dataBundles.ContactData;
-import dataBundles.LogDataBundle;
+import dataBundles.LogData;
 import dataBundles.SecretaryData;
 import useCases.accessClasses.SecretaryAccess;
 
@@ -32,10 +32,6 @@ public class SecretaryController extends TerminalController {
         return commands;
     }
 
-    @Override
-    void WelcomeMessage() {
-
-    }
     class LoadPatient implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
@@ -70,11 +66,12 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
+
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             ContactData contact;
             if (secretaryAccess.doesDoctorExist(username)){
-//                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
+                secretaryAccess.createDoctor(username, password);
                 presenter.successMessage("Successfully created new doctor");}
             else {
                 presenter.warningMessage("This username already exists. No new doctor account created");}
@@ -100,7 +97,7 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogDataBundle> logs = secretaryAccess.getLogs(secretaryData.getUsername());
+            ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData.getUsername());
             return false;
         }
     }
