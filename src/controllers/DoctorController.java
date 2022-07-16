@@ -25,11 +25,12 @@ public class DoctorController extends TerminalController{
 
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap h = super.AllCommands();
-        h.put("loadpatient", new LoadPatient());
-        h.put("changePassword", new ChangePassword());
+        HashMap<String, Command> h = super.AllCommands();
+        h.put("load patient", new LoadPatient());
+        h.put("change password", new ChangePassword());
         h.put("show schedule", new CheckSchedule());
         h.put("show logs", new GetLogs());
+        h.put("sign out", signOut());
         return h;
     }
 

@@ -8,6 +8,7 @@ import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
@@ -18,6 +19,18 @@ public class PatientController extends TerminalController {
         super(context);
         this.patientAccess = new PatientAccess(getDatabase());
         this.patientData = patientData;
+    }
+
+    @Override
+    public HashMap<String, Command> AllCommands() {
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("change password", new ChangePassword());
+        commands.put("get logs", new GetLogs());
+        commands.put("view appointments", new ViewAppointments());
+        commands.put("view active prescription", new ViewActivePrescriptions());
+        commands.put("view all prescription", new ViewAllPrescriptions());
+        commands.put("sign out", signOut());
+        return commands;
     }
 
     class ChangePassword implements Command {

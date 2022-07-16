@@ -57,6 +57,12 @@ public class AdminAccess {
         return patientManager.createPatient(username, password);
 
     }
+    public DoctorData createDoctor (String username, String password){
+        return doctorManager.createDoctor(username, password);
+    }
+    public SecretaryData createSecretary (String username, String password){
+        return secretaryManager.createSecretary(username, password);
+    }
 
     /**
      * Change the password of any user given their username. If the userId is not associated with a user any user database,

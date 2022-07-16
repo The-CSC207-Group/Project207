@@ -5,7 +5,7 @@ import presenter.entityViews.PrescriptionView;
 
 import java.util.List;
 
-public class PatientScreenView extends ScreenView {
+public class PatientScreenView extends UserScreenView {
 
 //    public  bookAppointmentPrompt {}
 

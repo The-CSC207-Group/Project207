@@ -5,6 +5,7 @@ import presenter.response.UserCredentials;
 import java.util.Scanner;
 
 public abstract class ScreenView {
+
     protected String input(String prompt) {
         Scanner input = new Scanner(System.in);
         infoMessage(prompt);
