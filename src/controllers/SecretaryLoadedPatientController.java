@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class SecretaryLoadedPatientController extends TerminalController{
     PatientData patientData;
-    SecretaryDataBundle secretaryDataBundle;
+    SecretaryDataBundle secretaryData;
     SecretaryAccess secretaryAccess;
     SecretaryController secretaryController;
 
@@ -18,6 +18,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
         this.secretaryController = secretaryController;
         this.patientData = patientData;
         this.secretaryAccess = new SecretaryAccess(getDatabase());
+        this.secretaryController = secretaryController;
     }
 
 
