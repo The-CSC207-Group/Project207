@@ -1,6 +1,8 @@
 package database;
 
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public interface DataMapperGateway<T> {
@@ -51,4 +53,8 @@ public interface DataMapperGateway<T> {
      * Called at the end of the program.
      */
     void save();
+
+    default Optional<T> getByCondition(Predicate<T> condition){
+        return stream().filter(condition).findFirst();
+    }
 }

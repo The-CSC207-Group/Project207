@@ -3,26 +3,31 @@ package useCases.managers;
 import dataBundles.AppointmentDataBundle;
 import database.DataMapperGateway;
 import database.Database;
-import entities.*;
+import entities.Appointment;
+import entities.AvailabilityData;
+import entities.Doctor;
+import entities.TimeBlock;
 import useCases.AppointmentQueries;
 
-
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class AppointmentManager {
     private DataMapperGateway<Appointment> appointmentDatabase;
     private DataMapperGateway<Doctor> doctorDatabase;
+    private Database database;
 
     /**
      *Initializes Appointment Manager with the appointment database, and doctor database.
-     * @param appointmentDatabase database for appointments.
-     * @param doctorDatabase      database for doctors.
      */
     public AppointmentManager(Database database){
         this.appointmentDatabase = database.getAppointmentDatabase();
         this.doctorDatabase  = database.getDoctorDatabase();
+        this.database = database;
     }
 
     /**
@@ -44,6 +49,10 @@ public class AppointmentManager {
         }
         return null;
     }
+//    public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
+//        ZonedDateTime startTime = new ZonedDateTimeCreator().createZonedDataTime(year, month, day, )
+//        bookAppointment(patientId, doctorId, database.getClinicDatabase(). )
+//    }
 
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
