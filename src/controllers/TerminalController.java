@@ -62,6 +62,13 @@ abstract public class TerminalController {
         };
     }
 
+    protected Command signOut(){
+        return (x) -> {
+            changeCurrentController(new SignInController(context));
+            return false;
+        };
+    }
+
     class Help implements Command {
 
         @Override
