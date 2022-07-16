@@ -53,7 +53,7 @@ public class SecretaryAccess {
 
     /**
      * Delete user with given id from their database. This user can delete secretaries and patients.
-     * @param userId id associated with the user to be deleted.
+     * @param username associated with the user to be deleted.
      */
     public void deleteUser(String username){
         secretaryManager.deleteUser(username);
@@ -110,7 +110,6 @@ public class SecretaryAccess {
     /**
      * Change the password of the signed in secretary or a patient. If the userId is not associated with a secretary/patient
      * in the database, nothing happens.
-     * @param userId id of secretary/patient.
      * @param newPassword new password of the secretary/patient;
      */
     public void changeSecretaryPassword(SecretaryData secretaryData, String newPassword){
@@ -120,7 +119,7 @@ public class SecretaryAccess {
     /**
      * Change the password of a patient by their username. If the userId is not associated with a patient
      * in the database, nothing happens.
-     * @param patientUsername username of patient.
+     * @param patientData data of patient.
      * @param newPassword new password of the secretary/patient;
      */
     public void changePatientPassword(PatientData patientData, String newPassword){

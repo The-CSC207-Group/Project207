@@ -28,7 +28,15 @@ public class AdminController extends TerminalController{
         return commands;
     }
 
-
+//    class CreateAccount implements Command{
+//
+//        @Override
+//        public boolean execute(ArrayList<String> args) {
+//            String username = presenter.promptPopup("Enter Username");
+//            String password = presenter.promptPopup("Enter Password");
+//            return false;
+//        }
+//    }
     class CreateSecretaryAccount implements Command{
 
         @Override
@@ -49,12 +57,12 @@ public class AdminController extends TerminalController{
         public boolean execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
-            ContactData contact;
+
 //            if (adminAccess.doesDoctorExist(username)){
-//////                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
-////                presenter.successMessage("Successfully created new doctor");}
-////            else {
-////                presenter.warningMessage("This username already exists. No new doctor account created");}
+//               secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
+//                presenter.successMessage("Successfully created new doctor");}
+//            else {
+//                presenter.warningMessage("This username already exists. No new doctor account created");}
             return false;
         }
     }
