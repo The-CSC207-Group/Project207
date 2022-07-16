@@ -12,7 +12,7 @@ public class DoctorScreenView extends ScreenView {
         infoMessage(new AppointmentView().viewFromList(appointments));
     }
 
-    public PrescriptionDetails askForPrescriptionDetails() {
+    public PrescriptionDetails prescriptionDetailsPrompt() {
         String header = input("Enter your prescription header: ");
         String body = input("Enter your prescription body: ");
         return new PrescriptionDetails(header, body);
