@@ -4,14 +4,14 @@ import dataBundles.AppointmentDataBundle;
 import dataBundles.LogDataBundle;
 import dataBundles.PatientDataBundle;
 import dataBundles.PrescriptionDataBundle;
-import presenter.screenViews.PatientView;
+import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 
 import java.util.ArrayList;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
-    private PatientView patientView;
+    private PatientScreenView patientView;
     private PatientDataBundle patientData;
 
     public PatientController(Context context, PatientDataBundle patientData) {
