@@ -14,6 +14,7 @@ public class SecretaryController extends TerminalController {
 
     private SecretaryAccess secretaryAccess;
     private SecretaryDataBundle secretaryDataBundle;
+    private SecretaryController self = this;
 
     public SecretaryController(Context context, SecretaryDataBundle secretaryData) {
         super(context);
@@ -34,6 +35,19 @@ public class SecretaryController extends TerminalController {
     @Override
     void WelcomeMessage() {
 
+    }
+    class LoadPatient implements Command {
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            String name = presenter.promptPopup("username of patient");
+            secretaryAccess.getPatient(name).ifPresent(
+                    (patientData) -> {
+                        changeCurrentController(new SecretaryLoadedPatientController(getContext(), self,  patientData));
+
+                    }
+            );
+            return false;
+        }
     }
 
     class CreatePatientAccount implements Command{
@@ -74,7 +88,7 @@ public class SecretaryController extends TerminalController {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changePassword(secretaryDataBundle.getId(), p1 );
+                secretaryAccess.changePassword(secretaryDataBundle.getUsername(), p1 );
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
