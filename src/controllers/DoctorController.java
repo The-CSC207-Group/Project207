@@ -69,7 +69,7 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            List<AppointmentData> appointments = doctorAccess.getAllDoctorAppointments(doctorData.getId());
+            List<AppointmentData> appointments = doctorAccess.getAllDoctorAppointments(doctorData);
             return false;
         }
     }

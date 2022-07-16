@@ -6,7 +6,6 @@ public class AdminView extends EntityView<AdminData> {
 
     @Override
     public String view(AdminData item) {
-        String username = item.getUsername();
-        return "Admin username is " + username;
+        return "Admin username is " + item.getUsername() + ".";
     }
 }

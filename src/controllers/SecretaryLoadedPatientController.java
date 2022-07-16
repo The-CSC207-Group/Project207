@@ -59,7 +59,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<AppointmentData> appointments = secretaryAccess.
-                    getDoctorAppointmentDataBundles(patientData.getId());
+                    getPatientAppointmentDataBundles(patientData);
             return false;
         }
     }
