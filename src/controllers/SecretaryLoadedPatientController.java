@@ -33,6 +33,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
         command.put("book appointment", new BookAppointment());
         command.put("reschedule appointment", new RescheduleAppointment());
         command.put("cancel appointment", new CancelAppointment());
+        command.put("unload patient", back(secretaryController));
         return command;
     }
 

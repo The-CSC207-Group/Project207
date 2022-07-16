@@ -20,7 +20,7 @@ public class DoctorLoadedPatientController extends TerminalController{
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> c  = super.AllCommands();
-        c.put("back", back(prev));
+        c.put("unload patient", back(prev));
         c.put("prescription", persciption());
         c.put("appointments", appointments());
         return c;
