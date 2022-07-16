@@ -58,11 +58,11 @@ public class SecretaryController extends TerminalController {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             ContactDataBundle contact;
-//            if (){
+            if (secretaryAccess.doseDoctorExist(username)){
 //                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
-//                presenter.successMessage("Successfully created new doctor");}
-//            else {
-//                presenter.warningMessage("This username already exists. No new doctor account created");}
+                presenter.successMessage("Successfully created new doctor");}
+            else {
+                presenter.warningMessage("This username already exists. No new doctor account created");}
             return false;
         }
     }
