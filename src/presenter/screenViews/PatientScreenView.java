@@ -1,7 +1,6 @@
 package presenter.screenViews;
 
 import dataBundles.PrescriptionData;
-import presenter.entityViews.EntityView;
 import presenter.entityViews.PrescriptionView;
 
 import java.util.List;
