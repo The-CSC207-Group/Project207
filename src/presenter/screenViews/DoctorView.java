@@ -6,7 +6,7 @@ import presenter.response.PrescriptionDetails;
 
 import java.util.List;
 
-public class DoctorView extends View {
+public class DoctorView extends ScreenView {
 
     public void viewAppointments(List<Appointment> appointments) {
         infoMessage(new AppointmentView().viewFromList(appointments));

@@ -2,7 +2,7 @@ package presenter.screenViews;
 
 import presenter.response.UserCredentials;
 
-public class SignInView extends View {
+public class SignInView extends ScreenView {
     public UserCredentials askForLoginDetails() {
         String username = input("Enter your username: ");
         String password = input("Enter your password: ");

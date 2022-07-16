@@ -2,7 +2,7 @@ package presenter.screenViews;
 
 import java.util.Scanner;
 
-public abstract class View {
+public abstract class ScreenView {
     protected String input(String prompt) {
         Scanner input = new Scanner(System.in);
         infoMessage(prompt);
