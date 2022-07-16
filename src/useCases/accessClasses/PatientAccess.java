@@ -4,6 +4,7 @@ import dataBundles.AppointmentDataBundle;
 import dataBundles.LogDataBundle;
 import dataBundles.PrescriptionDataBundle;
 import database.DataMapperGateway;
+import database.Database;
 import entities.*;
 import useCases.managers.AppointmentManager;
 import useCases.managers.LogManager;
@@ -23,20 +24,13 @@ public class PatientAccess {
 
     /**
      *
-     * @param prescriptionDatabase DataMapperGateway<Prescription>
-     * @param patientDatabase DataMapperGateway<Patient>
-     * @param logDatabase DataMapperGateway<Log>
-     * @param contactDatabase DataMapperGateway<Contact>
-     */
-    public PatientAccess(DataMapperGateway<Prescription> prescriptionDatabase, DataMapperGateway<Doctor> doctorDatabase,
-                         DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Log> logDatabase,
-                         DataMapperGateway<Contact> contactDatabase, DataMapperGateway<Appointment> appointmentDatabase) {
-        this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
-        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
-        this.logManager = new LogManager(logDatabase);
-        this.appointmentManager = new AppointmentManager(appointmentDatabase, doctorDatabase);
-        this.patientDatabase = patientDatabase;
 
+     */
+    public PatientAccess(Database database) {
+        this.prescriptionManager = new PrescriptionManager(database.getPrescriptionDatabase());
+        this.patientManager = new PatientManager(database);
+        this.logManager = new LogManager(database.getLogDatabase());
+        this.appointmentManager = new AppointmentManager(database);
     }
 
     public void signOut(){

@@ -3,6 +3,7 @@ package useCases.accessClasses;
 import dataBundles.*;
 import database.DataMapperGateway;
 
+import database.Database;
 import entities.*;
 import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
@@ -27,22 +28,15 @@ public class SystemAccess {
     }
 
     /**
-     * @param patientDatabase   database for storing patients.
-     * @param adminDatabase     database for storing admins.
-     * @param secretaryDatabase database for secretaries.
-     * @param doctorDatabase    database for doctors.
-     * @param contactDatabase   database for contacts.
-     * @param logDatabase       database for logs.
+
      */
-    public SystemAccess(DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Admin> adminDatabase,
-                        DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Doctor> doctorDatabase,
-                        DataMapperGateway<Contact> contactDatabase, DataMapperGateway<Log> logDatabase) {
-        this.patientDatabase = patientDatabase;
-        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
-        this.adminDatabase = adminDatabase;
-        this.secretaryDatabase = secretaryDatabase;
-        this.doctorDatabase = doctorDatabase;
-        this.logManager = new LogManager(logDatabase);
+    public SystemAccess(Database database) {
+        this.patientDatabase = database.getPatientDatabase();
+        this.patientManager = new PatientManager(database);
+        this.adminDatabase = database.getAdminDatabase();
+        this.secretaryDatabase = database.getSecretaryDatabase();
+        this.doctorDatabase = database.getDoctorDatabase();
+        this.logManager = new LogManager(database.getLogDatabase());
     }
 
 
@@ -53,6 +47,7 @@ public class SystemAccess {
      * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
      * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
+     * Condition: username does not exist in the current database.
      */
     public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
                                            String healthNumber) {
