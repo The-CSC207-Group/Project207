@@ -115,7 +115,7 @@ public class SecretaryAccess {
      * @param userId id of secretary/patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePassword(Integer userId, String newPassword){
+    public void changeSecretaryPassword(Integer userId, String newPassword){
         secretaryManager.changeUserPassword(userId, newPassword);
         patientManager.changeUserPassword(userId, newPassword);
     }
@@ -126,7 +126,7 @@ public class SecretaryAccess {
      * @param patientUsername username of patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePassword(String patientUsername, String newPassword){
+    public void changePatientPassword(String patientUsername, String newPassword){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient != null) {
             secretaryManager.changeUserPassword(patient.getId(), newPassword);
@@ -134,22 +134,24 @@ public class SecretaryAccess {
         }
     }
 
-    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
-        return appointmentManager.getScheduleData(doctorId, selectedDay);
+    public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
+        return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
     }
-    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
-        return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
+    public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
+                                           Integer year, Integer month, Integer day, Integer hour, Integer minute,
+                                           Integer lenOfAppointment){
+        return appointmentManager.bookAppointment(patientData, doctorData, year, month, day, hour, minute, lenOfAppointment);
     }
-    public void removeAppointment(Integer appointmentId){
-        appointmentManager.removeAppointment(appointmentId);
-    }
-
-    public ArrayList<AppointmentData> getPatientAppointmentDatas(Integer patientId){
-        return  appointmentManager.getPatientAppointments(patientId);
+    public void removeAppointment(AppointmentData appointmentData){
+        appointmentManager.removeAppointment(appointmentData);
     }
 
-    public ArrayList<AppointmentData> getDoctorAppointmentDatas(Integer doctorId){
-        return appointmentManager.getDoctorAppointments(doctorId);
+    public ArrayList<AppointmentData> getPatientAppointmentDataBundles(PatientData patientData){
+        return  appointmentManager.getPatientAppointments(patientData);
+    }
+
+    public ArrayList<AppointmentData> getDoctorAppointmentDataBundles(DoctorData doctorData){
+        return appointmentManager.getDoctorAppointments(doctorData);
     }
 
 
@@ -169,11 +171,11 @@ public class SecretaryAccess {
     public boolean doesPatientExist(String patient_username){
         return patientManager.doesPatientExist(patient_username);
     }
-    public boolean doseDoctorExist (String doctor_username){
+    public boolean doesDoctorExist (String doctor_username){
         return doctorManager.doesDoctorExist(doctor_username);
     }
     public Optional<PatientData> getPatient(String name){
-        return patientDatabase.stream().filter(x -> x.getUsername().equals(name))
+        return patientDatabase.stream().filter(x -> x.getUsername() == name)
                 .findFirst()
                 .map(x -> new PatientData(x));
     }

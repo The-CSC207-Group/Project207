@@ -9,7 +9,7 @@ import entities.Patient;
 
 import java.util.Optional;
 
-public class PatientManager {
+public class PatientManager extends UserManager<Patient>{
     DataMapperGateway<Patient> patientDatabase;
     GenericUserManagerMethods<Patient> patientMethods;
     PatientManager patientManager;
@@ -19,6 +19,7 @@ public class PatientManager {
     /**
      */
     public PatientManager(Database database) {
+        super(database.getPatientDatabase());
         this.patientDatabase = database.getPatientDatabase();
         this.patientMethods = new GenericUserManagerMethods<>(patientDatabase);
         this.contactDatabase = database.getContactDatabase();
@@ -90,6 +91,7 @@ public class PatientManager {
                 .findFirst()
                 .map(x -> x.getId());
     }
+
 
 
 }

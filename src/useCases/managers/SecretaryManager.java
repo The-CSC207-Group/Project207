@@ -5,7 +5,7 @@ import dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import entities.*;
 
-public class SecretaryManager {
+public class SecretaryManager extends UserManager<Secretary>{
 
     DataMapperGateway<Secretary> secretaryDatabase;
     DataMapperGateway<Contact> contactDatabase;
@@ -19,6 +19,7 @@ public class SecretaryManager {
      */
 
     public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact> contactDatabase){
+        super(secretaryDatabase);
         this.secretaryDatabase = secretaryDatabase;
         this.secretaryMethods = new GenericUserManagerMethods<>(secretaryDatabase);
         this.contactDatabase = contactDatabase;

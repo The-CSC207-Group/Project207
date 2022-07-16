@@ -27,6 +27,7 @@ public class SecretaryController extends TerminalController {
         commands.put("createPatientAccount", new CreatePatientAccount());
         commands.put("createDoctorAccount", new CreateDoctorAccount());
         commands.put("getLogs", new Logs());
+        commands.put("Load Patient", new LoadPatient());
         return commands;
     }
 
@@ -71,7 +72,7 @@ public class SecretaryController extends TerminalController {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             ContactData contact;
-            if (secretaryAccess.doseDoctorExist(username)){
+            if (secretaryAccess.doesDoctorExist(username)){
 //                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
                 presenter.successMessage("Successfully created new doctor");}
             else {

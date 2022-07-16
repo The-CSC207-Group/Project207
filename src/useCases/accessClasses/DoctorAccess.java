@@ -157,15 +157,15 @@ public class  DoctorAccess {
     public ArrayList<AppointmentData> getAllAppointments(){
         return appointmentManager.getAllAppointments();
     }
-    public ArrayList<AppointmentData> getAllDoctorAppointments(Integer doctorId){
-        return appointmentManager.getDoctorAppointments(doctorId);
+    public ArrayList<AppointmentData> getAllDoctorAppointments(DoctorData doctorData){
+        return appointmentManager.getDoctorAppointments(doctorData);
     }
-    public ArrayList<AppointmentData> getAllPatientAppointments(Integer patientId){
-        return appointmentManager.getPatientAppointments(patientId);
+    public ArrayList<AppointmentData> getAllPatientAppointments(PatientData patientData){
+        return appointmentManager.getPatientAppointments(patientData);
     }
 
-    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
-        return appointmentManager.getScheduleData(doctorId, selectedDay);
+    public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
+        return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
     }
     public void signOut(){
 

@@ -6,7 +6,7 @@ import database.DataMapperGateway;
 import entities.Admin;
 import entities.Contact;
 
-public class AdminManager{
+public class AdminManager extends UserManager<Admin>{
     DataMapperGateway<Admin> adminDatabase;
     GenericUserManagerMethods<Admin> adminMethods;
     DataMapperGateway<Contact> contactDatabase;
@@ -17,6 +17,7 @@ public class AdminManager{
      * @param contactDatabase DataMapperGateway<Contact>
      */
     public AdminManager(DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact> contactDatabase){
+        super(adminDatabase);
         this.adminDatabase = adminDatabase;
         this.adminMethods = new GenericUserManagerMethods<>(adminDatabase);
         this.contactDatabase = contactDatabase;
