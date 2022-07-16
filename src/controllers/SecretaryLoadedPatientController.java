@@ -1,5 +1,6 @@
 package controllers;
 
+import dataBundles.AppointmentData;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import dataBundles.SecretaryData;
@@ -27,6 +28,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
         HashMap<String, Command> command  = super.AllCommands();
         command.put("View Active Prescription", new ViewActivePrescription());
         command.put("View All Prescriptions", new ViewPrescriptionHistory());
+        command.put("View Patient Appointments", new ViewAppointments());
         return command;
     }
     @Override
@@ -45,6 +47,14 @@ public class SecretaryLoadedPatientController extends TerminalController{
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
+            return false;
+        }
+    }
+    class ViewAppointments implements Command {
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDatas(patientData.getId());
             return false;
         }
     }

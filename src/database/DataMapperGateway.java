@@ -54,7 +54,8 @@ public interface DataMapperGateway<T> {
      */
     void save();
 
-    default Optional<T> getByCondition(Predicate<T> condition){
-        return stream().filter(condition).findFirst();
+    default T getByCondition(Predicate<T> condition) {
+        Optional<T> item = stream().filter(condition).findFirst();
+        return item.orElse(null);
     }
 }
