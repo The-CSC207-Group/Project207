@@ -1,6 +1,6 @@
 package controllers;
 
-import dataBundles.AppointmentDataBundle;
+import dataBundles.AppointmentData;
 import dataBundles.LogDataBundle;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionDataBundle;
@@ -39,7 +39,7 @@ public class PatientController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<AppointmentDataBundle> appointments = patientAccess.getAppointments(patientData.getId());
+            ArrayList<AppointmentData> appointments = patientAccess.getAppointments(patientData.getId());
             return false;
         }
     }

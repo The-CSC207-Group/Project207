@@ -154,17 +154,17 @@ public class  DoctorAccess {
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
     }
-    public ArrayList<AppointmentDataBundle> getAllAppointments(){
+    public ArrayList<AppointmentData> getAllAppointments(){
         return appointmentManager.getAllAppointments();
     }
-    public ArrayList<AppointmentDataBundle> getAllDoctorAppointments(Integer doctorId){
+    public ArrayList<AppointmentData> getAllDoctorAppointments(Integer doctorId){
         return appointmentManager.getDoctorAppointments(doctorId);
     }
-    public ArrayList<AppointmentDataBundle> getAllPatientAppointments(Integer patientId){
+    public ArrayList<AppointmentData> getAllPatientAppointments(Integer patientId){
         return appointmentManager.getPatientAppointments(patientId);
     }
 
-    public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
+    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public void signOut(){

@@ -1,6 +1,6 @@
 package controllers;
 
-import dataBundles.AppointmentDataBundle;
+import dataBundles.AppointmentData;
 import dataBundles.DoctorData;
 import dataBundles.LogDataBundle;
 import presenter.screenViews.DoctorScreenView;
@@ -69,7 +69,7 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            List<AppointmentDataBundle> appointments = doctorAccess.getAllDoctorAppointments(doctorData.getId());
+            List<AppointmentData> appointments = doctorAccess.getAllDoctorAppointments(doctorData.getId());
             return false;
         }
     }

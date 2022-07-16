@@ -23,7 +23,7 @@ public class AdminData {
         return admin.getLogIds();
     }
 
-    public int getId(){
+    public Integer getId(){
         return admin.getId();
     }
 

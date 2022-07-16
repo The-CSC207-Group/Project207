@@ -134,21 +134,21 @@ public class SecretaryAccess {
         }
     }
 
-    public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
+    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
-    public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
+    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
         return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
     }
     public void removeAppointment(Integer appointmentId){
         appointmentManager.removeAppointment(appointmentId);
     }
 
-    public ArrayList<AppointmentDataBundle> getPatientAppointmentDataBundles(Integer patientId){
+    public ArrayList<AppointmentData> getPatientAppointmentDataBundles(Integer patientId){
         return  appointmentManager.getPatientAppointments(patientId);
     }
 
-    public ArrayList<AppointmentDataBundle> getDoctorAppointmentDataBundles(Integer doctorId){
+    public ArrayList<AppointmentData> getDoctorAppointmentDataBundles(Integer doctorId){
         return appointmentManager.getDoctorAppointments(doctorId);
     }
 

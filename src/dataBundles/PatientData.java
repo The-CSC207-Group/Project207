@@ -33,7 +33,7 @@ public class PatientData {
         return patient.getReportIds();
     }
 
-    public int getId(){
+    public Integer getId(){
         return patient.getId();
     }
 
