@@ -2,6 +2,7 @@ package controllers;
 
 import dataBundles.*;
 import entities.Clinic;
+import entities.Patient;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
 import useCases.accessClasses.SystemAccess;
@@ -38,19 +39,23 @@ public class SignInController extends TerminalController {
             
             if (systemAccess.adminSignIn(username, password) != null) {
                 AdminData adminData = systemAccess.adminSignIn(username, password);
-                new AdminController(getContext(), adminData);
+                AdminController adminController = new AdminController(getContext(), adminData);
+                changeCurrentController(adminController);
                 
             } else if (systemAccess.patientSignIn(username, password) != null) {
                 PatientData patientData = systemAccess.patientSignIn(username, password);
-                new PatientController(getContext(), patientData);
+                PatientController patientController = new PatientController(getContext(), patientData);
+                changeCurrentController(patientController);
                 
             } else if (systemAccess.doctorSignIn(username, password) != null) {
                 DoctorData doctorData = systemAccess.doctorSignIn(username, password);
-                new DoctorController(getContext(), doctorData);
+                DoctorController doctorController = new DoctorController(getContext(), doctorData);
+                changeCurrentController(doctorController);
                 
             } else if (systemAccess.secretarySignIn(username, password) != null) {
                 SecretaryData secretaryData = systemAccess.secretarySignIn(username, password);
-                new SecretaryController(getContext(), secretaryData);
+                SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
+                changeCurrentController(secretaryController);
 
             } else {
                 view.showLoginError();
