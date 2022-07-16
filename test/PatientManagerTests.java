@@ -38,8 +38,7 @@ public class PatientManagerTests {
 
         PatientManager patientManager = new PatientManager(originalDatabase);
 
-        PatientData patientDataBundle = patientManager.createPatient(username, password, contactData,
-                healthNumber);
+        PatientData patientDataBundle = patientManager.createPatient(username, password);
 
         /* Testing if the return patient data bundle is valid by testing if the fields of are equal to the parameters of
         createPatient */
@@ -76,7 +75,7 @@ public class PatientManagerTests {
         assertNotNull("A patient object should be returned before it is deleted ",
                 patientDatabase.get(patientID));
 
-        patientManager.deletePatient(patientID);
+        patientManager.deleteUser(patient.getUsername());
 
         assertNull("A patient object should not be returned after it is deleted ",
                 patientDatabase.get(patientID));
@@ -91,6 +90,8 @@ public class PatientManagerTests {
         Patient patient = new
                 Patient("jeff", "123", 123456789, "5544");
 
+        PatientData patientData = new PatientData(patient);
+
         PatientManager patientManager = new PatientManager(originalDatabase);
 
         Integer patientID = patientDatabase.add(patient);
@@ -98,7 +99,7 @@ public class PatientManagerTests {
         assertTrue("The password should remain the same before the change ",
                 patientDatabase.get(patientID).comparePassword("123"));
 
-        patientManager.changeUserPassword(patientID, "456");
+        patientManager.changeUserPassword(patientData, "456");
 
         assertTrue("The patient object should have the same password as we inputted into the parameters " +
                         "of the changeUserPassword method  ",
@@ -126,7 +127,7 @@ public class PatientManagerTests {
         assertEquals("Original patient should share the same ID from the database",
                 originalPatient.getId(), patientID);
 
-        Patient loadedPatient = patientManager.getPatient(patientID);
+        Patient loadedPatient = patientManager.getUser(originalPatient.getUsername());
 
         /* Testing if the loaded patient and the original patient are equal by testing whether all the fields of both
         objects are equal */

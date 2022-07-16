@@ -38,8 +38,7 @@ public class SecretaryManagerTests {
 
         SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
 
-        SecretaryData secretaryData = secretaryManager.createSecretary(username, password,
-                contactData);
+        SecretaryData secretaryData = secretaryManager.createSecretary(username, password);
 
         /* Testing if the return secretary data bundle is valid by testing if the fields of are equal to the parameters of
         createSecretary */
@@ -72,7 +71,7 @@ public class SecretaryManagerTests {
         assertNotNull("A secretary object should be returned before it is deleted ",
                 secretaryDatabase.get(secretaryID));
 
-        secretaryManager.deleteSecretary(secretaryID);
+        secretaryManager.deleteUser(secretary.getUsername());
 
         assertNull("A secretary object should not be returned after it is deleted ",
                 secretaryDatabase.get(secretaryID));
@@ -89,12 +88,14 @@ public class SecretaryManagerTests {
 
         SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
 
+        SecretaryData secretaryData = new SecretaryData(secretary);
+
         Integer secretaryID = secretaryDatabase.add(secretary);
 
         assertTrue("The password should remain the same before the change ",
                 secretaryDatabase.get(secretaryID).comparePassword("123"));
 
-        secretaryManager.changeUserPassword(secretaryID, "456");
+        secretaryManager.changeUserPassword(secretaryData, "456");
 
         assertTrue("The secretary object should have the same password as we inputted into the parameters " +
                         "of the changeUserPassword method ",
@@ -121,7 +122,7 @@ public class SecretaryManagerTests {
         assertEquals("Original secretary should share the same ID from the database",
                 originalSecretary.getId(), secretaryID);
 
-        Secretary loadedSecretary = secretaryManager.getSecretary(secretaryID);
+        Secretary loadedSecretary = secretaryManager.getUser(originalSecretary.getUsername());
 
         /* Testing if the loaded secretary and the original secretary are equal by testing whether all the fields of both
         objects are equal */

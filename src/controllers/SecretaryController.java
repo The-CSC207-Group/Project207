@@ -32,10 +32,6 @@ public class SecretaryController extends TerminalController {
         return commands;
     }
 
-    @Override
-    void WelcomeMessage() {
-
-    }
     class LoadPatient implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
@@ -88,7 +84,7 @@ public class SecretaryController extends TerminalController {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changeSecretaryPassword(secretaryData.getSecretaryId(), p1 );
+                secretaryAccess.changeSecretaryPassword(secretaryData, p1 );
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");

@@ -1,21 +1,24 @@
 package controllers;
 
 import dataBundles.*;
+import entities.Clinic;
+import presenter.response.UserCredentials;
+import presenter.screenViews.SignInScreenView;
 import useCases.accessClasses.SystemAccess;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class SignInController extends TerminalController {
 
     SystemAccess systemAccess;
+    SignInScreenView view = new SignInScreenView();
 
     public SignInController(Context parent) {
         super(parent);
         this.systemAccess = new SystemAccess(getDatabase());
+        view.welcomeMessage();
     }
 
     @Override
@@ -25,20 +28,13 @@ public class SignInController extends TerminalController {
         return commands;
     }
 
-    @Override
-    public void WelcomeMessage() {
-        presenter.infoMessage("\nWelcome to the program! Please sign in or create an account." +
-                              "\nType 'help' to see a list of all possible commands.");
-    }
-
     class SignInCommand implements Command {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            List<String> fields = Arrays.asList("username", "password");
-            HashMap<String, String> responses = presenter.promptPopup(fields);
-            String username = responses.get(fields.get(0));
-            String password = responses.get(fields.get(1));
+            UserCredentials userCredentials = view.userLoginPrompt();
+            String username = userCredentials.username();
+            String password = userCredentials.password();
             
             if (systemAccess.adminSignIn(username, password) != null) {
                 AdminData adminData = systemAccess.adminSignIn(username, password);
@@ -57,7 +53,7 @@ public class SignInController extends TerminalController {
                 new SecretaryController(getContext(), secretaryData);
 
             } else {
-                presenter.errorMessage("failed to sign in");
+                view.showLoginError();
                 return false;
             }
             return true;

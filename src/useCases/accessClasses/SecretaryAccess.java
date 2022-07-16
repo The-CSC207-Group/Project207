@@ -56,9 +56,9 @@ public class SecretaryAccess {
      * Delete user with given id from their database. This user can delete secretaries and patients.
      * @param userId id associated with the user to be deleted.
      */
-    public void deleteUser(Integer userId){
-        secretaryManager.deleteSecretary(userId);
-        patientManager.deletePatient(userId);
+    public void deleteUser(String username){
+        secretaryManager.deleteUser(username);
+        patientManager.deleteUser(username);
     }
 
     /**
@@ -71,7 +71,7 @@ public class SecretaryAccess {
      */
     public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber){
-        return patientManager.createPatient(username, password, contactData, healthNumber);
+        return patientManager.createPatient(username, password);
     }
 
     /**
@@ -114,9 +114,8 @@ public class SecretaryAccess {
      * @param userId id of secretary/patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changeSecretaryPassword(Integer userId, String newPassword){
-        secretaryManager.changeUserPassword(userId, newPassword);
-        patientManager.changeUserPassword(userId, newPassword);
+    public void changeSecretaryPassword(SecretaryData secretaryData, String newPassword){
+        secretaryManager.changeUserPassword(secretaryData, newPassword);
     }
 
     /**
@@ -125,11 +124,10 @@ public class SecretaryAccess {
      * @param patientUsername username of patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePatientPassword(String patientUsername, String newPassword){
-        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+    public void changePatientPassword(PatientData patientData, String newPassword){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientData.getUsername());
         if (patient != null) {
-            secretaryManager.changeUserPassword(patient.getId(), newPassword);
-            patientManager.changeUserPassword(patient.getId(), newPassword);
+            patientManager.changeUserPassword(patientData, newPassword);
         }
     }
 

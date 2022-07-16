@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
-    private PatientScreenView patientView;
+    private PatientScreenView view = new PatientScreenView();
     private PatientData patientData;
 
     public PatientController(Context context, PatientData patientData) {
@@ -27,7 +27,7 @@ public class PatientController extends TerminalController {
             String newPassword1 = presenter.promptPopup("Enter a new password");
             String newPassword2 = presenter.promptPopup("Re-enter the new password");
             if (newPassword1.equals(newPassword2)){
-                patientAccess.changeCurrentUserPassword(patientData.getId(), newPassword1);
+                patientAccess.changeCurrentUserPassword(patientData, newPassword1);
             } else {
                 presenter.errorMessage("These do not match");
             }
@@ -68,9 +68,5 @@ public class PatientController extends TerminalController {
             ArrayList<LogDataBundle> logs = patientAccess.getLogs(patientData.getUsername());
             return false;
         }
-    }
-
-    @Override
-    void WelcomeMessage() {
     }
 }
