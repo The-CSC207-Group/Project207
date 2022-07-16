@@ -172,9 +172,9 @@ public class SecretaryAccess {
     public boolean doseDoctorExist (String doctor_username){
         return doctorManager.doesDoctorExist(doctor_username);
     }
-    public Optional<PatientDataBundle> getPatient(String name){
+    public Optional<PatientData> getPatient(String name){
         return patientDatabase.stream().filter(x -> x.getUsername() == name)
                 .findFirst()
-                .map(x -> new PatientDataBundle(x.getId(), x));
+                .map(x -> new PatientData(x));
     }
 }
