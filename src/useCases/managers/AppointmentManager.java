@@ -1,9 +1,7 @@
 package useCases.managers;
 
+import dataBundles.*;
 import dataBundles.AppointmentData;
-import dataBundles.AppointmentData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Appointment;
@@ -51,10 +49,10 @@ public class AppointmentManager {
                                            Integer lenOfAppointment) {
         TimeBlock proposedTime = new TimeManager().createTimeBlock(year, month, day, hour, minute,
                 lenOfAppointment);
-        //add validation
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
-                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData,
-                proposedTime.getStartTime().toLocalDate()), proposedTime)) {
+                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
+                proposedTime.getStartTime().toLocalDate()), proposedTime) &
+                isNoTimeBlockConflictAbsence(doctorData.getId(), proposedTime)) {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
             return new AppointmentData(newApp);
@@ -65,6 +63,18 @@ public class AppointmentManager {
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
         return timeBlockList.stream()
+                .filter(x -> x.getStartTime().getDayOfYear()
+                        == proposedTime.getStartTime().getDayOfYear())
+                .filter(x -> x.getStartTime().isBefore(proposedTime.getStartTime()) &
+                        x.getEndTime().isAfter(proposedTime.getStartTime()))
+                .filter(x -> x.getStartTime().isAfter(proposedTime.getStartTime()) &
+                        x.getStartTime().isBefore(proposedTime.getEndTime()))
+                .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
+    }
+
+    private boolean isNoTimeBlockConflictAbsence(Integer doctorId,
+                                                     TimeBlock proposedTime){
+        return doctorDatabase.get(doctorId).getAbsence().stream()
                 .filter(x -> x.getStartTime().getDayOfYear()
                         == proposedTime.getStartTime().getDayOfYear())
                 .filter(x -> x.getStartTime().isBefore(proposedTime.getStartTime()) &
@@ -100,7 +110,10 @@ public class AppointmentManager {
         TimeBlock proposedTime = new TimeManager().createTimeBlock(year, month, day, hour, minute, lenOfAppointment);
         ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorId(),
                 appointment.getPatientId());
-        if (isNoTimeBlockConflictAppointment(consideration, proposedTime)) {
+        if (isNoTimeBlockConflictAppointment(consideration, proposedTime) &
+                isNoTimeBlockConflictAppointment(getSingleDayAvailability(appointmentData.getDoctorId(),
+                proposedTime.getStartTime().toLocalDate()), proposedTime) &
+                isNoTimeBlockConflictAbsence(appointmentData.getDoctorId(), proposedTime)){
             appointmentDatabase.add(appointment);
             return true;
         }
@@ -163,6 +176,21 @@ public class AppointmentManager {
     }
 
     /**
+     *
+     * @param doctorData    data representing a doctor entity.
+     * @param year          an integer value that represents a year.
+     * @param month         an integer value that represents a month of a year.
+     * @param startDay      day of a month that represents the search start day.
+     * @param endDay        day of a month that represents the search end day.
+     * @return returns an arrayList of TimeBlockData that represents
+     */
+    public ArrayList<TimeBlockData> getAvailability(DoctorData doctorData, Integer year, Integer month,
+                                                    Integer startDay, Integer endDay){
+        TimeManager timeManager = new TimeManager();
+        return searchAvailability(doctorData, timeManager.createZonedDataTime(year, month, startDay, 0, 0),
+                timeManager.createZonedDataTime(year, month, endDay, 23, 59));
+    }
+    /**
      * gets all available time for a doctor considering their availability, other appointments, and search time
      * parameters.
      * @param doctorData        data representing a doctor entity.
@@ -170,15 +198,17 @@ public class AppointmentManager {
      * @param searchEndTime     ZonedDateTime representing the beginning of the end period
      * @return an ArrayList of TimeBlocks representing all available timeslots to schedule an Appointment.
      */
-    public ArrayList<TimeBlock> searchAvailability(DoctorData doctorData, ZonedDateTime searchStartTime,
+    public ArrayList<TimeBlockData> searchAvailability(DoctorData doctorData, ZonedDateTime searchStartTime,
                                                        ZonedDateTime searchEndTime){
         ArrayList<TimeBlock> totalAvailableTimes = new ArrayList<>();
         for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
             LocalDate daySearched = searchEndTime.toLocalDate();
-            totalAvailableTimes.addAll(parseAvailabilityWithAppointmentData(getSingleDayAvailability(doctorData,
+            totalAvailableTimes.addAll(parseAvailabilityWithAppointmentData(getSingleDayAvailability(doctorData.getId(),
                     daySearched.minusDays(numOfDays)), doctorData.getId()));
         }
-        return totalAvailableTimes;
+        return totalAvailableTimes.stream()
+                .map(TimeBlockData::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -193,15 +223,8 @@ public class AppointmentManager {
                 .filter(x -> dayOfWeek.equals(x.getDayOfWeek()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-
-    /**
-     *  get TimeBlocks that represents the doctor's availability in a single day.
-     * @param doctorData    Data that represents a doctor entity.
-     * @param selectedDay   LocalDate that represents a date without a specific time attached.
-     * @return an ArrayList of TimeBlocks where each TimeBlock represents available time of a doctor on a specific date.
-     */
-    public ArrayList<TimeBlock> getSingleDayAvailability(DoctorData doctorData, LocalDate selectedDay){
-        return getAvailabilityDataFromDayOfWeek(doctorData.getId(), selectedDay.getDayOfWeek()).stream()
+    private ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
+        return getAvailabilityDataFromDayOfWeek(doctorId, selectedDay.getDayOfWeek()).stream()
                 .map(x -> new TimeBlock(ZonedDateTime.of(selectedDay,
                         x.getDoctorStartTime(), ZoneId.of("US/Eastern")),
                         ZonedDateTime.of(selectedDay, x.getDoctorEndTime(),
@@ -264,8 +287,5 @@ public class AppointmentManager {
 //        query.returnFirstMeetingConditions(new TimeBlock(startTime, endTime), queryConditions)
 //
 //    }
-//
-//    public ArrayList<AvailabilityData> getAvailability(Integer doctorId, DayOfWeek dayOfWeek){
-//
-//    }
+
 }
