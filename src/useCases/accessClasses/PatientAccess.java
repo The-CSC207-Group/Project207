@@ -31,7 +31,6 @@ public class PatientAccess {
         this.patientManager = new PatientManager(database);
         this.logManager = new LogManager(database.getLogDatabase());
         this.appointmentManager = new AppointmentManager(database);
-        this.patientDatabase = patientDatabase;
 
     }
 

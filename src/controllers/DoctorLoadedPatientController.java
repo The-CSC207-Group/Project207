@@ -50,10 +50,4 @@ public class DoctorLoadedPatientController extends TerminalController{
             return false;
         };
     }
-
-
-    @Override
-    void WelcomeMessage() {
-
-    }
 }
