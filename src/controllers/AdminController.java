@@ -20,6 +20,7 @@ public class AdminController extends TerminalController{
     public HashMap<String, Command> AllCommands() {
         HashMap commands = super.AllCommands();
         commands.put("Create Secretary Account", new CreateSecretaryAccount());
+        commands.put("Create Doctor account", new CreateDoctorAccount());
         return commands;
     }
 
@@ -28,6 +29,13 @@ public class AdminController extends TerminalController{
 
     }
     class CreateSecretaryAccount implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
+    class CreateDoctorAccount implements Command{
 
         @Override
         public boolean execute(ArrayList<String> args) {
