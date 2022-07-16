@@ -1,11 +1,10 @@
 package useCases.managers;
 
-import dataBundles.AdminDataBundle;
+import dataBundles.AdminData;
 import dataBundles.ContactDataBundle;
 import database.DataMapperGateway;
 import entities.Admin;
 import entities.Contact;
-import entities.Patient;
 
 public class AdminManager{
     DataMapperGateway<Admin> adminDatabase;
@@ -22,11 +21,11 @@ public class AdminManager{
         this.adminMethods = new GenericUserManagerMethods<>(adminDatabase);
         this.contactDatabase = contactDatabase;
     }
-    public AdminDataBundle createAdmin(String username, String password, ContactDataBundle contactDataBundle){
+    public AdminData createAdmin(String username, String password, ContactDataBundle contactDataBundle){
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Admin admin = new Admin(username, password, contactId);
         adminDatabase.add(admin);
-        return new AdminDataBundle(admin.getId(), admin);
+        return new AdminData(admin);
     }
 
     /**

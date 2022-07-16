@@ -129,11 +129,11 @@ public class SystemAccess {
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public AdminDataBundle adminSignIn(Integer userId, String password) {
+    public AdminData adminSignIn(Integer userId, String password) {
         Admin admin = adminDatabase.get(userId);
         if (admin.comparePassword(password)) {
             commonMethods.attachUserSignInLog(adminDatabase, userId, logManager);
-            return new AdminDataBundle(userId, admin);
+            return new AdminData(admin);
         }
         return null;
     }
