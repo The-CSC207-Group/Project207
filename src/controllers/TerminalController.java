@@ -52,12 +52,10 @@ abstract public class TerminalController {
         }
     }
 
-    abstract void WelcomeMessage();
-
     public void run() {
-        WelcomeMessage();
         ProcessCommands();
     }
+
     protected Command back(TerminalController prev){
         return (x) -> {
             changeCurrentController(prev);

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DoctorController extends TerminalController{
     private DoctorAccess doctorAccess;
-    private DoctorScreenView view = new DoctorScreenView();
+    private DoctorScreenView doctorView = new DoctorScreenView();
 
     private DoctorData doctorData;
     private DoctorController self = this;
@@ -33,10 +33,6 @@ public class DoctorController extends TerminalController{
         return h;
     }
 
-    @Override
-    void WelcomeMessage() {
-
-    }
     class LoadPatient implements Command {
 
         @Override

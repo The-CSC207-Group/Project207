@@ -18,7 +18,6 @@ public class Context {
     }
     void changeController(TerminalController new_controller){
         currentController = new_controller;
-        currentController.WelcomeMessage();
     }
     void exit(){
         exit = true;

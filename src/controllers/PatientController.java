@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
-    private PatientScreenView patientView;
+    private PatientScreenView view = new PatientScreenView();
     private PatientData patientData;
 
     public PatientController(Context context, PatientData patientData) {
@@ -68,9 +68,5 @@ public class PatientController extends TerminalController {
             ArrayList<LogDataBundle> logs = patientAccess.getLogs(patientData.getUsername());
             return false;
         }
-    }
-
-    @Override
-    void WelcomeMessage() {
     }
 }

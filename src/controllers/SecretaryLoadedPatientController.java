@@ -35,9 +35,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
         command.put("Cancel Appointment", new CancelAppointment());
         return command;
     }
-    @Override
-    void WelcomeMessage() {
-    }
+
     class ViewActivePrescription implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {

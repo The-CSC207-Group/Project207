@@ -32,10 +32,6 @@ public class SecretaryController extends TerminalController {
         return commands;
     }
 
-    @Override
-    void WelcomeMessage() {
-
-    }
     class LoadPatient implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
