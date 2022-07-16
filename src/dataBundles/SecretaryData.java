@@ -4,10 +4,11 @@ import entities.Secretary;
 
 import java.util.ArrayList;
 
-public class SecretaryData {
+public class SecretaryData extends UserDataBundle<Secretary> {
     private final Secretary secretary;
 
     public SecretaryData(Secretary secretary) {
+        super(secretary);
         this.secretary = secretary;
     }
 
