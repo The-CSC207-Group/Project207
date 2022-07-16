@@ -17,8 +17,6 @@ public class PatientManager {
 
 
     /**
-     * @param patientDatabase database storing all the patients.
-     * @param contactDatabase database storing all the contacts.
      */
     public PatientManager(Database database) {
         this.patientDatabase = database.getPatientDatabase();
