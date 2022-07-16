@@ -1,6 +1,6 @@
 package useCases.managers;
 
-import dataBundles.ContactDataBundle;
+import dataBundles.ContactData;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
@@ -28,13 +28,13 @@ public class PatientManager {
      * Creates a new Patient object and stores it in the database, returns PatientDataBundle.
      * @param username          String new username
      * @param password          String new password
-     * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
+     * @param contactData ContactDataBundle which includes contact info of the user. Cannot be null.
      * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+    public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber) {
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
+        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactData));
         Patient patient = new Patient(username, password, contactId, healthNumber);
         patientDatabase.add(patient);
         return new PatientData(patient);
@@ -66,16 +66,16 @@ public class PatientManager {
         return patientMethods.getUser(userId);
     }
 
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle) {
-        return new Contact(contactDataBundle.getName(),
-                contactDataBundle.getEmail(),
-                contactDataBundle.getPhoneNumber(),
-                contactDataBundle.getAddress(),
-                contactDataBundle.getBirthday(),
-                contactDataBundle.getEmergencyContactName(),
-                contactDataBundle.getEmergencyContactEmail(),
-                contactDataBundle.getEmergencyContactPhoneNumber(),
-                contactDataBundle.getEmergencyRelationship());
+    private Contact contactDataBundleToContactEntity(ContactData contactData) {
+        return new Contact(contactData.getName(),
+                contactData.getEmail(),
+                contactData.getPhoneNumber(),
+                contactData.getAddress(),
+                contactData.getBirthday(),
+                contactData.getEmergencyContactName(),
+                contactData.getEmergencyContactEmail(),
+                contactData.getEmergencyContactPhoneNumber(),
+                contactData.getEmergencyRelationship());
     }
     public boolean doesPatientExist(String name){
         return patientDatabase.getAllIds().stream()

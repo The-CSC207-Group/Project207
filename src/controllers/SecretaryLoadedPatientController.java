@@ -1,14 +1,14 @@
 package controllers;
 
 import dataBundles.PatientData;
-import dataBundles.SecretaryDataBundle;
+import dataBundles.SecretaryData;
 import useCases.accessClasses.SecretaryAccess;
 
 import java.util.HashMap;
 
 public class SecretaryLoadedPatientController extends TerminalController{
     PatientData patientData;
-    SecretaryDataBundle secretaryData;
+    SecretaryData secretaryData;
     SecretaryAccess secretaryAccess;
     SecretaryController secretaryController;
 
@@ -18,7 +18,6 @@ public class SecretaryLoadedPatientController extends TerminalController{
         this.secretaryController = secretaryController;
         this.patientData = patientData;
         this.secretaryAccess = new SecretaryAccess(getDatabase());
-        this.secretaryController = secretaryController;
     }
 
 

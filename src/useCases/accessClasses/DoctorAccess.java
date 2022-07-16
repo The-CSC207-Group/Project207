@@ -56,10 +56,10 @@ public class  DoctorAccess {
     public boolean doesPatientExist(String patient_name){
         return patientManager.doesPatientExist(patient_name);
     }
-    public ArrayList<ReportDataBundle> getPatientReports(Integer patientId){
+    public ArrayList<ReportData> getPatientReports(Integer patientId){
         return patientDatabase.get(patientId).getReportIds().stream()
                 .map(x -> reportDatabase.get(x))
-                .map(x -> new ReportDataBundle(x.getId(), x))
+                .map(ReportData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     public void addPatientReport(Report report){
@@ -75,7 +75,7 @@ public class  DoctorAccess {
      * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * patient that is active or null if the patient does not exist in the patient database.
      */
-    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(String patientUsername){
+    public ArrayList<PrescriptionData> getActivePrescriptions(String patientUsername){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient == null){return null;}
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(patient.getId());
@@ -97,7 +97,7 @@ public class  DoctorAccess {
      * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * patient or null if the patient does not exist in the patient database.
      */
-    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(String patientUsername){
+    public ArrayList<PrescriptionData> getAllPrescriptions(String patientUsername){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient == null){return null;}
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
@@ -114,8 +114,8 @@ public class  DoctorAccess {
      * @return The prescriptionDataBundle representing the prescription if both the doctor and patient exist in their
      * respective databases, otherwise return null.
      */
-    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, String doctorUsername,
-                                                     ZonedDateTime expiryDate){
+    public PrescriptionData createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, String doctorUsername,
+                                               ZonedDateTime expiryDate){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         Doctor doctor = databaseQueryUtility.getUserByUsername(doctorDatabase, doctorUsername);
 
@@ -135,15 +135,15 @@ public class  DoctorAccess {
      * @return The prescriptionDataBundle representing the prescription if both the doctor and patient exist in their
      * respective databases, otherwise return null.
      */
-    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, Integer doctorId,
-                                                     ZonedDateTime expiryDate){
+    public PrescriptionData createPrescription(ZonedDateTime dateNoted, String header, String body, String patientUsername, Integer doctorId,
+                                               ZonedDateTime expiryDate){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
 
         if (patient == null){return null;}
         if (doctorDatabase.get(doctorId) == null){return null;}
         return prescriptionManager.createPrescription(dateNoted, header, body, patient.getId(), doctorId, expiryDate);
     }
-    public PrescriptionDataBundle createPrescription(String header, String body, PatientData patientData, DoctorData doctorData, Integer monthsTillExpiry){
+    public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData, Integer monthsTillExpiry){
         return createPrescription(ZonedDateTime.now(), header, body, patientData.getUsername(), doctorData.getId(), ZonedDateTime.now().plusMonths(monthsTillExpiry));
     }
 
@@ -154,17 +154,17 @@ public class  DoctorAccess {
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
     }
-    public ArrayList<AppointmentDataBundle> getAllAppointments(){
+    public ArrayList<AppointmentData> getAllAppointments(){
         return appointmentManager.getAllAppointments();
     }
-    public ArrayList<AppointmentDataBundle> getAllDoctorAppointments(Integer doctorId){
+    public ArrayList<AppointmentData> getAllDoctorAppointments(Integer doctorId){
         return appointmentManager.getDoctorAppointments(doctorId);
     }
-    public ArrayList<AppointmentDataBundle> getAllPatientAppointments(Integer patientId){
+    public ArrayList<AppointmentData> getAllPatientAppointments(Integer patientId){
         return appointmentManager.getPatientAppointments(patientId);
     }
 
-    public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
+    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public void signOut(){

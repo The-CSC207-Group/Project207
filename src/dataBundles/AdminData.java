@@ -11,19 +11,19 @@ public class AdminData {
         this.admin = admin;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return admin.getUsername();
     }
 
-    public int getContact(){
+    public Integer getContact() {
         return admin.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs(){
+    public ArrayList<Integer> getLogs() {
         return admin.getLogIds();
     }
 
-    public int getId(){
+    public Integer getId() {
         return admin.getId();
     }
 

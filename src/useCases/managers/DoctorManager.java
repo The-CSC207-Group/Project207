@@ -1,6 +1,6 @@
 package useCases.managers;
 
-import dataBundles.ContactDataBundle;
+import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import entities.Contact;
@@ -23,8 +23,8 @@ public class DoctorManager {
         this.contactDatabase = contactDatabase;
     }
 
-    public DoctorData createDoctor(String username, String password, ContactDataBundle contactDataBundle) {
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
+    public DoctorData createDoctor(String username, String password, ContactData contactData) {
+        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactData));
         Doctor doctor = new Doctor(username, password, contactId);
         doctorDatabase.add(doctor);
         return new DoctorData(doctor);
@@ -57,16 +57,16 @@ public class DoctorManager {
         return doctorMethods.getUser(userId);
     }
 
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle) {
-        return new Contact(contactDataBundle.getName(),
-                contactDataBundle.getEmail(),
-                contactDataBundle.getPhoneNumber(),
-                contactDataBundle.getAddress(),
-                contactDataBundle.getBirthday(),
-                contactDataBundle.getEmergencyContactName(),
-                contactDataBundle.getEmergencyContactEmail(),
-                contactDataBundle.getEmergencyContactPhoneNumber(),
-                contactDataBundle.getEmergencyRelationship());
+    private Contact contactDataBundleToContactEntity(ContactData contactData) {
+        return new Contact(contactData.getName(),
+                contactData.getEmail(),
+                contactData.getPhoneNumber(),
+                contactData.getAddress(),
+                contactData.getBirthday(),
+                contactData.getEmergencyContactName(),
+                contactData.getEmergencyContactEmail(),
+                contactData.getEmergencyContactPhoneNumber(),
+                contactData.getEmergencyRelationship());
     }
     public boolean doesDoctorExist(String username){
         return doctorDatabase.getAllIds().stream().map(x -> doctorDatabase.get(x))

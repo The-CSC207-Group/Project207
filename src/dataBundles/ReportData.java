@@ -4,29 +4,36 @@ import entities.Report;
 
 import java.time.ZonedDateTime;
 
-public class ReportDataBundle extends DataBundle{
+public class ReportData {
 
     Report report;
 
-    public ReportDataBundle(Integer id, Report report){
-        super(id);
+    public ReportData(Report report) {
         this.report = report;
     }
 
     public ZonedDateTime getDateNoted() {
         return report.getDateNoted();
     }
+
     public String getHeader() {
         return report.getHeader();
     }
+
     public String getBody() {
         return report.getBody();
     }
-    public int getPatientId() {
+
+    public Integer getPatientId() {
         return report.getPatientId();
     }
-    public int getDoctorId() {
+
+    public Integer getDoctorId() {
         return report.getDoctorId();
+    }
+
+    public Integer getReportId() {
+        return report.getId();
     }
 
 }

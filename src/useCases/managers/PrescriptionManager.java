@@ -1,6 +1,6 @@
 package useCases.managers;
 
-import dataBundles.PrescriptionDataBundle;
+import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import entities.Prescription;
 import utilities.DatabaseQueryUtility;
@@ -30,11 +30,11 @@ public class PrescriptionManager {
      * @return An array list of PrescriptionDataBundles for each prescription in the database belonging to the
      * user that is active.
      */
-    public ArrayList<PrescriptionDataBundle> getPatientActivePrescriptionDataByUserId(Integer userId) {
-        Stream<PrescriptionDataBundle> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
+    public ArrayList<PrescriptionData> getPatientActivePrescriptionDataByUserId(Integer userId) {
+        Stream<PrescriptionData> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
                 filter(x -> !isExpiredPrescription(x)).
                 filter(x -> isPatientsPrescription(x, userId)).
-                map(x -> new PrescriptionDataBundle(x.getId(), x));
+                map(PrescriptionData::new);
         return databaseUtilities.toArrayList(dataBundleStream);
     }
     /**
@@ -44,10 +44,10 @@ public class PrescriptionManager {
      * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * user.
      */
-    public ArrayList<PrescriptionDataBundle> getPatientAllPrescriptionDataByUserId(Integer userId) {
-        Stream<PrescriptionDataBundle> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
+    public ArrayList<PrescriptionData> getPatientAllPrescriptionDataByUserId(Integer userId) {
+        Stream<PrescriptionData> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
                 filter(x -> isPatientsPrescription(x, userId)).
-                map(x -> new PrescriptionDataBundle(x.getId(), x));
+                map(PrescriptionData::new);
         return databaseUtilities.toArrayList(dataBundleStream);
     }
 
@@ -63,11 +63,11 @@ public class PrescriptionManager {
      * @param expiryDate date the prescription expires
      * @return PrescriptionDataBundle object corresponding to the prescription.
      */
-    public PrescriptionDataBundle createPrescription(ZonedDateTime dateNoted, String header, String body, int patientId, int doctorId,
-                                                     ZonedDateTime expiryDate){
+    public PrescriptionData createPrescription(ZonedDateTime dateNoted, String header, String body, int patientId, int doctorId,
+                                               ZonedDateTime expiryDate){
         Prescription prescription = new Prescription(dateNoted, header, body, patientId, doctorId, expiryDate);
         prescriptionsDatabase.add(prescription);
-        return new PrescriptionDataBundle(prescription.getId(), prescription);
+        return new PrescriptionData(prescription);
     }
 
     /**
