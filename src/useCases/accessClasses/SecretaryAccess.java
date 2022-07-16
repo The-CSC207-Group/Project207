@@ -146,12 +146,12 @@ public class SecretaryAccess {
         appointmentManager.removeAppointment(appointmentData);
     }
 
-    public ArrayList<AppointmentData> getPatientAppointmentDataBundles(Integer patientId){
-        return  appointmentManager.getPatientAppointments(patientId);
+    public ArrayList<AppointmentData> getPatientAppointmentDataBundles(PatientData patientData){
+        return  appointmentManager.getPatientAppointments(patientData);
     }
 
-    public ArrayList<AppointmentData> getDoctorAppointmentDataBundles(Integer doctorId){
-        return appointmentManager.getDoctorAppointments(doctorId);
+    public ArrayList<AppointmentData> getDoctorAppointmentDataBundles(DoctorData doctorData){
+        return appointmentManager.getDoctorAppointments(doctorData);
     }
 
 
