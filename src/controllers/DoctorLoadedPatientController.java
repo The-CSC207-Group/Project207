@@ -21,7 +21,7 @@ public class DoctorLoadedPatientController extends TerminalController{
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> c  = super.AllCommands();
         c.put("back", back(prev));
-        c.put("pescription", persciption());
+        c.put("prescription", persciption());
         c.put("appointments", appointments());
         return c;
     }

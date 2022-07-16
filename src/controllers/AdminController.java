@@ -18,12 +18,13 @@ public class AdminController extends TerminalController{
     }
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap commands = super.AllCommands();
-        commands.put("Create Secretary Account", new CreateSecretaryAccount());
-        commands.put("Create Doctor account", new CreateDoctorAccount());
-        commands.put("Create Patient account", new CreatePatientAccount());
-        commands.put("Change Admin Password", new ChangeAdminPassword());
-        commands.put("getLogs", new getLogs());
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("create secretary", new CreateSecretaryAccount());
+        commands.put("create doctor", new CreateDoctorAccount());
+        commands.put("create patient", new CreatePatientAccount());
+        commands.put("change password", new ChangeAdminPassword());
+        commands.put("get logs", new getLogs());
+        commands.put("sign out", signOut());
         return commands;
     }
 

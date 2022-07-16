@@ -26,13 +26,13 @@ public class SecretaryLoadedPatientController extends TerminalController{
 
     public HashMap<String, Command> AllCommands(){
         HashMap<String, Command> command  = super.AllCommands();
-        command.put("View Active Prescription", new ViewActivePrescription());
-        command.put("View All Prescriptions", new ViewPrescriptionHistory());
-        command.put("View Patient Appointments", new ViewAppointments());
-        command.put("Change Patient Password", new ChangePatientPassword());
-        command.put("Book Appointment", new BookAppointment());
-        command.put("Reschedule Appointment", new RescheduleAppointment());
-        command.put("Cancel Appointment", new CancelAppointment());
+        command.put("view active prescription", new ViewActivePrescription());
+        command.put("view all prescriptions", new ViewPrescriptionHistory());
+        command.put("view appointments", new ViewAppointments());
+        command.put("change patient password", new ChangePatientPassword());
+        command.put("book appointment", new BookAppointment());
+        command.put("reschedule appointment", new RescheduleAppointment());
+        command.put("cancel appointment", new CancelAppointment());
         return command;
     }
 
