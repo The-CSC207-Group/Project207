@@ -1,6 +1,6 @@
 package presenter.screenViews;
 
-import entities.Appointment;
+import dataBundles.AppointmentData;
 import presenter.entityViews.AppointmentView;
 import presenter.response.PrescriptionDetails;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DoctorScreenView extends ScreenView {
 
-    public void viewAppointments(List<Appointment> appointments) {
+    public void viewAppointments(List<AppointmentData> appointments) {
         infoMessage(new AppointmentView().viewFromList(appointments));
     }
 
