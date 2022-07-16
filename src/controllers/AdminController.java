@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.AdminData;
+import dataBundles.LogDataBundle;
 import dataBundles.SecretaryData;
 import useCases.accessClasses.AdminAccess;
 import useCases.accessClasses.SecretaryAccess;
@@ -22,6 +23,7 @@ public class AdminController extends TerminalController{
         commands.put("Create Secretary Account", new CreateSecretaryAccount());
         commands.put("Create Doctor account", new CreateDoctorAccount());
         commands.put("Change Admin Password", new ChangeAdminPassword());
+        commands.put("getLogs", new getLogs());
         return commands;
     }
 
@@ -56,6 +58,14 @@ public class AdminController extends TerminalController{
             else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }
+            return false;
+        }
+    }
+    class getLogs implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<LogDataBundle> logs = adminAccess.getLogs(adminData.getUsername());
             return false;
         }
     }
