@@ -10,11 +10,13 @@ public class PatientScreenView extends UserScreenView {
 //    public  bookAppointmentPrompt {}
 
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
+        String output;
         if (details) {
-            new PrescriptionView().viewFullFromList(items);
+            output = new PrescriptionView().viewFullFromList(items);
         } else {
-            new PrescriptionView().viewHeaderFromList(items);
+            output = new PrescriptionView().viewHeaderFromList(items);
         }
+        infoMessage(output);
     }
 
     public void viewActivePrescriptions(List<PrescriptionData> items, boolean details) {
