@@ -56,10 +56,6 @@ public class AppointmentManager {
         }
         return null;
     }
-//    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
-//        ZonedDateTime startTime = new ZonedDateTimeCreator().createZonedDataTime(year, month, day, )
-//        bookAppointment(patientId, doctorId, database.getClinicDatabase(). )
-//    }
 
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
