@@ -164,8 +164,8 @@ public class  DoctorAccess {
         return appointmentManager.getPatientAppointments(patientId);
     }
 
-    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
-        return appointmentManager.getScheduleData(doctorId, selectedDay);
+    public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
+        return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
     }
     public void signOut(){
 
