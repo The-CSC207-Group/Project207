@@ -23,12 +23,12 @@ public class SecretaryController extends TerminalController {
 
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap commands = super.AllCommands();
-        commands.put("changePassword", new ChangePassword());
-        commands.put("createPatientAccount", new CreatePatientAccount());
-        commands.put("createDoctorAccount", new CreateDoctorAccount());
-        commands.put("getLogs", new Logs());
-        commands.put("Load Patient", new LoadPatient());
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("change password", new ChangePassword());
+        commands.put("create patient", new CreatePatientAccount());
+        commands.put("create doctor", new CreateDoctorAccount());
+        commands.put("get logs", new GetLogs());
+        commands.put("load patient", new LoadPatient());
         return commands;
     }
 
@@ -93,7 +93,7 @@ public class SecretaryController extends TerminalController {
             return false;
         }
     }
-    class Logs implements Command{
+    class GetLogs implements Command{
 
         @Override
         public boolean execute(ArrayList<String> args) {
