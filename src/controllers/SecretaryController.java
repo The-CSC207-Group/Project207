@@ -27,6 +27,7 @@ public class SecretaryController extends TerminalController {
         commands.put("changePassword", new ChangePassword());
         commands.put("createPatientAccount", new CreatePatientAccount());
         commands.put("createDoctorAccount", new CreateDoctorAccount());
+        commands.put("getLogs", new Logs());
         return commands;
     }
 
@@ -78,6 +79,13 @@ public class SecretaryController extends TerminalController {
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }
+            return false;
+        }
+    }
+    class Logs implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) { // need to implement
             return false;
         }
     }
