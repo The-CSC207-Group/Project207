@@ -80,7 +80,7 @@ public class SecretaryAccess {
      * @param contactDataBundle
      * @return
      */
-    public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
+    public DoctorData createDoctor (String username, String password, ContactDataBundle contactDataBundle){
         return doctorManager.createDoctor(username, password, contactDataBundle);
     }
 
