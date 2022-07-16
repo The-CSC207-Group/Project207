@@ -30,7 +30,7 @@ public class Clinic extends JsonSerializable {
         this.name = name;
     }
 
-    public CharSequence getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -40,21 +40,7 @@ public class Clinic extends JsonSerializable {
         } else {
             throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
         }
-
-//        int n = phoneNumber.length();
-//        ArrayList<Boolean> allDigits = new ArrayList<>();
-//        for (int i = 0; i < n; i++) {
-//            allDigits.add(Character.isDigit(phoneNumber.charAt(i)));
-//        }
-//        if (!allDigits.contains(false)) {
-//            this.phoneNumber = phoneNumber;
-//        }
-//        else {
-//            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
-//        }
     }
-
-
 
     public String getAddress() {
         return address;
