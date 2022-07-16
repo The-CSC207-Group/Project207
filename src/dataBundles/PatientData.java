@@ -24,7 +24,6 @@ public class PatientData extends UserData<Patient> {
         return patient.getLogIds();
     }
 
-
     public String getHealthNumber() {
         return patient.getHealthNumber();
     }
@@ -40,6 +39,5 @@ public class PatientData extends UserData<Patient> {
     public String getPatientUsername(){
         return patient.getUsername();
     }
-
 
 }

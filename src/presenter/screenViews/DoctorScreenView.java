@@ -9,7 +9,7 @@ import java.util.List;
 public class DoctorScreenView extends UserScreenView {
 
     public void viewAppointments(List<AppointmentData> appointments) {
-        infoMessage(new AppointmentView().viewFromList(appointments));
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
     public PrescriptionDetails prescriptionDetailsPrompt() {

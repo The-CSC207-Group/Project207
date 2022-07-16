@@ -176,13 +176,14 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *Get the available time slots between a defined search start and end time in terms of TimeBlockData
      * @param doctorData    data representing a doctor entity.
      * @param year          an integer value that represents a year.
      * @param month         an integer value that represents a month of a year.
      * @param startDay      day of a month that represents the search start day.
      * @param endDay        day of a month that represents the search end day.
-     * @return returns an arrayList of TimeBlockData that represents
+     * @return returns an arrayList of TimeBlockData that represents available appointment times between the search
+     * start and end date.
      */
     public ArrayList<TimeBlockData> getAvailability(DoctorData doctorData, Integer year, Integer month,
                                                     Integer startDay, Integer endDay){
