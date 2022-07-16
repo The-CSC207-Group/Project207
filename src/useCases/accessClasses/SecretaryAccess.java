@@ -171,4 +171,7 @@ public class SecretaryAccess {
         if (dataBundlesSecretary != null){return dataBundlesSecretary;}
         return null;
     }
+    public boolean doesPatientExist(String patient_name){
+        return patientManager.doesPatientExist(patient_name);
+    }
 }

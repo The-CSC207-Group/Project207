@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class DoctorAccess {
+public class  DoctorAccess {
 
 
     private DataMapperGateway<Doctor> doctorDatabase;
