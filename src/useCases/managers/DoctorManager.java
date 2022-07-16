@@ -25,56 +25,11 @@ public class DoctorManager extends UserManager<Doctor> {
         this.contactDatabase = contactDatabase;
     }
 
-    public DoctorData createDoctor(String username, String password, ContactData contactData) {
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactData));
-        Doctor doctor = new Doctor(username, password, contactId);
+    public DoctorData createDoctor(String username, String password) {
+        Doctor doctor = new Doctor(username, password);
         doctorDatabase.add(doctor);
         return new DoctorData(doctor);
 
     }
-
-    /**
-     * Changes the doctor's password. If the doctor does not exist in the database, do nothing.
-     * @param userId      Int userId of the user trying to change the password.
-     * @param newPassword String new password for the user.
-     */
-    public void changeUserPassword(Integer userId, String newPassword) {
-        doctorMethods.changePassword(userId, newPassword);
-    }
-
-    /**
-     * Deletes the doctor from the database. If the doctor does not exist in the database, do nothing.
-     * @param userId Int userId of the user being deleted.
-     */
-    public void deleteDoctor(Integer userId) {
-        doctorMethods.deleteUser(userId);
-    }
-
-    /**
-     * Returns doctor object with the given id. If the doctor does not exist in the database, return null.
-     * @param userId Int userId of the user requested.
-     * @return Doctor object or null if doctor doesn't exist in doctor database.
-     */
-    public Doctor getDoctor(Integer userId) {
-        return doctorMethods.getUser(userId);
-    }
-
-    private Contact contactDataBundleToContactEntity(ContactData contactData) {
-        return new Contact(contactData.getName(),
-                contactData.getEmail(),
-                contactData.getPhoneNumber(),
-                contactData.getAddress(),
-                contactData.getBirthday(),
-                contactData.getEmergencyContactName(),
-                contactData.getEmergencyContactEmail(),
-                contactData.getEmergencyContactPhoneNumber(),
-                contactData.getEmergencyRelationship());
-    }
-    public boolean doesDoctorExist(String username){
-        return doctorDatabase.getAllIds().stream().map(x -> doctorDatabase.get(x))
-                .anyMatch(x -> x.getUsername().equals(username));
-    }
-
-
 }
 

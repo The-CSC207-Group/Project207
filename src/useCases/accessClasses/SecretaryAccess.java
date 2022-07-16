@@ -78,11 +78,10 @@ public class SecretaryAccess {
      *
      * @param username
      * @param password
-     * @param contactData
      * @return
      */
-    public DoctorData createDoctor (String username, String password, ContactData contactData){
-        return doctorManager.createDoctor(username, password, contactData);
+    public DoctorData createDoctor (String username, String password){
+        return doctorManager.createDoctor(username, password);
     }
 
     /**
@@ -172,7 +171,7 @@ public class SecretaryAccess {
         return patientManager.doesPatientExist(patient_username);
     }
     public boolean doesDoctorExist (String doctor_username){
-        return doctorManager.doesDoctorExist(doctor_username);
+        return doctorManager.doesUserExist(doctor_username);
     }
     public Optional<PatientData> getPatient(String name){
         return patientDatabase.stream().filter(x -> x.getUsername() == name)

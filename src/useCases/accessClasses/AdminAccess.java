@@ -1,8 +1,6 @@
 package useCases.accessClasses;
 
-import dataBundles.ContactData;
-import dataBundles.LogDataBundle;
-import dataBundles.PatientData;
+import dataBundles.*;
 import database.DataMapperGateway;
 import database.Database;
 import entities.*;
@@ -41,14 +39,11 @@ public class AdminAccess {
 
 
     /**
-     * @param userId Integer userID of the user being deleted. Can delete from admin, doctor, patient and secretary
+     * @param username Integer userID of the user being deleted. Can delete from admin, doctor, patient and secretary
      * databases.
      */
-    public void deleteUser(Integer userId) {
-        adminManager.deleteAdminUser(userId);
-        doctorManager.deleteDoctor(userId);
-        patientManager.deletePatient(userId);
-        secretaryManager.deleteSecretary(userId);
+    public boolean deleteAdminUser(String username) {
+        return adminManager.deleteUser(username);
     }
 
     /**
