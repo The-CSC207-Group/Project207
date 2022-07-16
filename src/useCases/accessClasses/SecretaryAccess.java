@@ -27,17 +27,11 @@ public class SecretaryAccess {
     LogManager logManager;
 
     DatabaseQueryUtility databaseQueryUtility = new DatabaseQueryUtility();
-//
-//    /**
-//     *
-//     * @param prescriptionDatabase database for storing prescriptions.
-//     * @param patientDatabase database for storing patients.
-//     * @param doctorDatabase database for storing doctors.
-//     * @param secretaryDatabase database for storing secretaries.
-//     * @param logDatabase database for storing logs.
-//     * @param contactDatabase database for storing contacts.
-//     * @param appointmentDatabase database for storing appointments.
-//     */
+
+    /**
+     *
+     * @param database database
+     */
 
     public SecretaryAccess(Database database){
         this.patientDatabase = database.getPatientDatabase();
