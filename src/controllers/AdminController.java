@@ -47,6 +47,15 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
+            String p1 = presenter.promptPopup("Enter New Password");
+            String p2 = presenter.promptPopup("Re-enter new password");
+            if (p1.equals(p2)){
+                adminAccess.changePassword(adminData.getUsername(), p1);
+                presenter.successMessage("Successfully changed password");
+            }
+            else {
+                presenter.errorMessage("Invalid! Please ensure both passwords match");
+            }
             return false;
         }
     }
