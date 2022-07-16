@@ -138,7 +138,7 @@ public class SecretaryAccess {
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public AppointmentData bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
-        //return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
+        return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
     }
     public void removeAppointment(Integer appointmentId){
         appointmentManager.removeAppointment(appointmentId);

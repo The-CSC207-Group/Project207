@@ -27,6 +27,7 @@ public class SecretaryController extends TerminalController {
         commands.put("createPatientAccount", new CreatePatientAccount());
         commands.put("createDoctorAccount", new CreateDoctorAccount());
         commands.put("getLogs", new Logs());
+        commands.put("Load Patient", new LoadPatient());
         return commands;
     }
 
