@@ -1,10 +1,10 @@
 package presenter.entityViews;
 
-import dataBundles.AdminDataBundle;
+import dataBundles.AdminData;
 
 public class AdminView {
 
-    public String view(AdminDataBundle item) {
+    public String view(AdminData item) {
         String username = item.getUsername();
         return "Admin username is " + username;
     }
