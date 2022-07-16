@@ -34,20 +34,26 @@ public class AppointmentManager {
     }
 
     /**
-     * Books an appointment and adds it to the Appointment database after validating the proposed time scheduled for
-     * the new appointment.
-     * @param patientId     id of the patient the Appointment was assigned to.
-     * @param doctorId      id of the doctor the Appointment was assigned to.
-     * @param proposedTime  the new proposed TimeBlock representing the duration of an Appointment.
-     * @return an AppointmentData that represents the new Appointment that has been booked.
+     *
+     * @param patientData       data representing a patient entity.
+     * @param doctorData        data representing a doctor entity.
+     * @param year              an integer value that represents a year.
+     * @param month             an integer value that represents a month of a year.
+     * @param day               an integer value that represents a day of a month.
+     * @param hour              an integer value that represents an hour of a day.
+     * @param minute            an integer value that represents a minute of an hour.
+     * @param lenOfAppointment  an integer value in minutes that represents the length of an appointment.
+     * @return  returns the newly booked appointment in an AppointmentData form. itherwise returns null if invalid time
+     * was submitted.
      */
     public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
                                            Integer year, Integer month, Integer day, Integer hour, Integer minute,
-                                           Integer LenOfAppointment) {
-        TimeBlock proposedTime = new TimeBlockManager().createTimeBlock(year, month, day, hour, minute,
-                LenOfAppointment);
+                                           Integer lenOfAppointment) {
+        TimeBlock proposedTime = new TimeManager().createTimeBlock(year, month, day, hour, minute,
+                lenOfAppointment);
+        //add validation
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
-                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
+                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData,
                 proposedTime.getStartTime().toLocalDate()), proposedTime)) {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
@@ -55,10 +61,6 @@ public class AppointmentManager {
         }
         return null;
     }
-//    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
-//        ZonedDateTime startTime = new ZonedDateTimeCreator().createZonedDataTime(year, month, day, )
-//        bookAppointment(patientId, doctorId, database.getClinicDatabase(). )
-//    }
 
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
@@ -74,27 +76,32 @@ public class AppointmentManager {
 
     /**
      *  removes an Appointment from the database.
-     * @param appointmentId: Integer id of the Appointment.
+     * @param appointmentData   data representing an appointment entity.
      */
-    public void removeAppointment(Integer appointmentId){
-        appointmentDatabase.remove(appointmentId);
+    public void removeAppointment(AppointmentData appointmentData){
+        appointmentDatabase.remove(appointmentData.getAppointmentId());
     }
 
     /**
-     *  reschedules an appointment and validates the new appointment time before adding it to the database.
-     * @param appointmentId Integer id of the Appointment.
-     * @param newStart      ZonedDateTime representing a new start time for an Appointment's TimeBlock
-     * @param newEnd        ZonedDateTime representing a new end time for an Appointment's TimeBlock
-     * @return boolean that represents whether the rescheduling Appointment Time was valid or not.
+     *
+     * @param appointmentData data that represents an appointment entity.
+     * @param year              an integer value that represents a year.
+     * @param month             an integer value that represents a month of a year.
+     * @param day               an integer value that represents a day of a month.
+     * @param hour              an integer value that represents an hour of a day.
+     * @param minute            an integer value that represents a minute of an hour.
+     * @param lenOfAppointment  an integer value in minutes that represents the length of an appointment.
+     * @return a boolean representing if the appointment successfully rescheduled.
      */
-    public boolean rescheduleAppointment(Integer appointmentId, ZonedDateTime newStart, ZonedDateTime newEnd){
-        Appointment appointment = appointmentDatabase.get(appointmentId);
-        removeAppointment(appointmentId);
-        TimeBlock proposedTime = new TimeBlock(newStart, newEnd);
+    public boolean rescheduleAppointment(AppointmentData appointmentData, Integer year, Integer month, Integer day, Integer hour, Integer minute,
+                                         Integer lenOfAppointment){
+        Appointment appointment = appointmentDatabase.get(appointmentData.getAppointmentId());
+        appointmentDatabase.get(appointmentData.getAppointmentId()).setTimeBlock(null);
+        TimeBlock proposedTime = new TimeManager().createTimeBlock(year, month, day, hour, minute, lenOfAppointment);
         ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorId(),
                 appointment.getPatientId());
         if (isNoTimeBlockConflictAppointment(consideration, proposedTime)) {
-            bookAppointment(appointment.getPatientId(), appointment.getDoctorId(), proposedTime);
+            appointmentDatabase.add(appointment);
             return true;
         }
         return false;
@@ -111,12 +118,12 @@ public class AppointmentManager {
 
     /**
      * gets all appointments related to a single patient id.
-     * @param patientId id of the patient the Appointment was assigned to.
+     * @param patientData Data that represents the patient entity
      * @return ArrayList of AppointmentData which includes information of specific patient Appointments.
      */
-    public ArrayList<AppointmentData> getPatientAppointments(Integer patientId){
-        return getAllPatientAppointments(patientId).stream()
-                .map(x -> new AppointmentData(x.getId(), x))
+    public ArrayList<AppointmentData> getPatientAppointments(PatientData patientData){
+        return getAllPatientAppointments(patientData.getId()).stream()
+                .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -128,13 +135,13 @@ public class AppointmentManager {
 
     /**
      *  gets all appointments related to a single doctor id.
-     * @param doctorId id of the doctor the Appointment was assigned to.
+     * @param doctorData Data that represents the doctor entity.
      * @return ArrayList of AppointmentData which includes information of specific doctor Appointments.
      */
-    public ArrayList<AppointmentData> getDoctorAppointments(Integer doctorId){
+    public ArrayList<AppointmentData> getDoctorAppointments(DoctorData doctorData){
         return getAppointments().stream()
-                .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorId))
-                .map(x -> new AppointmentData(x.getId(), x))
+                .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorData.getId()))
+                .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -145,7 +152,7 @@ public class AppointmentManager {
     public ArrayList<AppointmentData> getAllAppointments(){
 
         return getAppointments().stream()
-                .map(x -> new AppointmentData(x.getId(), x))
+                .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -158,18 +165,18 @@ public class AppointmentManager {
     /**
      * gets all available time for a doctor considering their availability, other appointments, and search time
      * parameters.
-     * @param doctorId          id of the doctor the Appointment was assigned to.
+     * @param doctorData        data representing a doctor entity.
      * @param searchStartTime   ZonedDateTime representing the beginning of the search period
      * @param searchEndTime     ZonedDateTime representing the beginning of the end period
      * @return an ArrayList of TimeBlocks representing all available timeslots to schedule an Appointment.
      */
-    public ArrayList<TimeBlock> searchAvailability(Integer doctorId, ZonedDateTime searchStartTime,
+    public ArrayList<TimeBlock> searchAvailability(DoctorData doctorData, ZonedDateTime searchStartTime,
                                                        ZonedDateTime searchEndTime){
         ArrayList<TimeBlock> totalAvailableTimes = new ArrayList<>();
         for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
             LocalDate daySearched = searchEndTime.toLocalDate();
-            totalAvailableTimes.addAll(parseAvailabilityWithAppointmentData(getSingleDayAvailability(doctorId,
-                    daySearched.minusDays(numOfDays)), doctorId));
+            totalAvailableTimes.addAll(parseAvailabilityWithAppointmentData(getSingleDayAvailability(doctorData,
+                    daySearched.minusDays(numOfDays)), doctorData.getId()));
         }
         return totalAvailableTimes;
     }
@@ -189,12 +196,12 @@ public class AppointmentManager {
 
     /**
      *  get TimeBlocks that represents the doctor's availability in a single day.
-     * @param doctorId      id of the doctor the Appointment was assigned to.
+     * @param doctorData    Data that represents a doctor entity.
      * @param selectedDay   LocalDate that represents a date without a specific time attached.
      * @return an ArrayList of TimeBlocks where each TimeBlock represents available time of a doctor on a specific date.
      */
-    public ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
-        return getAvailabilityDataFromDayOfWeek(doctorId, selectedDay.getDayOfWeek()).stream()
+    public ArrayList<TimeBlock> getSingleDayAvailability(DoctorData doctorData, LocalDate selectedDay){
+        return getAvailabilityDataFromDayOfWeek(doctorData.getId(), selectedDay.getDayOfWeek()).stream()
                 .map(x -> new TimeBlock(ZonedDateTime.of(selectedDay,
                         x.getDoctorStartTime(), ZoneId.of("US/Eastern")),
                         ZonedDateTime.of(selectedDay, x.getDoctorEndTime(),
@@ -238,13 +245,13 @@ public class AppointmentManager {
 
     /**
      * gets all doctor specific appointments in a single day.
-     * @param doctorId    id of the doctor the Appointment was assigned to.
+     * @param doctorData  the data representing a specfic doctor in the database
      * @param selectedDay LocalDate that represents a date without a specific time attached.
      * @return ArrayList of AppointmentData which includes information of many Appointments.
      */
-    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
+    public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, LocalDate selectedDay){
         return getAllAppointments().stream()
-                .filter(x -> x.getDoctorID().equals(doctorId))
+                .filter(x -> x.getDoctorId().equals(doctorData.getId()))
                 .filter(x->x.getTimeBlock().getStartTime().toLocalDate().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
     }

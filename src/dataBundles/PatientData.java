@@ -37,5 +37,9 @@ public class PatientData extends UserDataBundle<Patient>{
         return patient.getId();
     }
 
+    public String getPatientUsername(){
+        return patient.getUsername();
+    }
+
 
 }
