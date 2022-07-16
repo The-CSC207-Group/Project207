@@ -1,9 +1,7 @@
 package useCases.managers;
 
-import dataBundles.LogDataBundle;
 import dataBundles.PatientData;
 import dataBundles.ReportData;
-import dataBundles.UserDataBundle;
 import database.DataMapperGateway;
 import entities.Log;
 import entities.Report;

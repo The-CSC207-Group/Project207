@@ -81,7 +81,7 @@ public class PatientAccess {
      * @param userData - username of the user whose logs we want to get.
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
-    public <T extends User> ArrayList<LogDataBundle> getLogs(UserDataBundle<T> userData){
+    public <T extends User> ArrayList<LogData> getLogs(UserData<T> userData){
         return logManager.getLogDataBundlesFromUserDataBundle(userData);
     }
 }

@@ -1,7 +1,7 @@
 package useCases.managers;
 
-import dataBundles.LogDataBundle;
-import dataBundles.UserDataBundle;
+import dataBundles.LogData;
+import dataBundles.UserData;
 import database.DataMapperGateway;
 import entities.Log;
 import entities.User;
@@ -56,10 +56,10 @@ public class LogManager {
 //        user.addLogId(logId);
 //        return new LogDataBundle(log);
 //    }
-    public LogDataBundle addLog(String message, Integer userId){
+    public LogData addLog(String message, Integer userId){
         Log log = new Log(userId, message);
         logDatabase.add(log);
-        return new LogDataBundle(log);
+        return new LogData(log);
     }
 
 //    /**
@@ -78,9 +78,9 @@ public class LogManager {
 //        if (logStream == null){return null;}
 //        return databaseUtils.toArrayList(logStream.map(x -> new LogDataBundle(x)));
 //    }
-    public <T extends User> ArrayList<LogDataBundle> getLogDataBundlesFromUserDataBundle(UserDataBundle<T> userDataBundle){
+    public <T extends User> ArrayList<LogData> getLogDataBundlesFromUserDataBundle(UserData<T> userDataBundle){
         return databaseUtils.toArrayList(logDatabase.stream().
-                filter(log -> log.getId().equals(userDataBundle.getId())).map(LogDataBundle::new));
+                filter(log -> log.getId().equals(userDataBundle.getId())).map(LogData::new));
 
     }
 //    private  <T extends User> T getUserByUsername(DataMapperGateway<T> database, String username){
