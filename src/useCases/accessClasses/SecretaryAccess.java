@@ -9,6 +9,7 @@ import utilities.DatabaseQueryUtility;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class SecretaryAccess {
     DataMapperGateway<Patient> patientDatabase;
@@ -68,8 +69,8 @@ public class SecretaryAccess {
      * @param healthNumber health number of patient
      * @return PatientDataBundle with the newly created patient's information
      */
-    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                           String healthNumber){
+    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                     String healthNumber){
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
 
@@ -80,7 +81,7 @@ public class SecretaryAccess {
      * @param contactDataBundle
      * @return
      */
-    public DoctorDataBundle createDoctor (String username, String password, ContactDataBundle contactDataBundle){
+    public DoctorData createDoctor (String username, String password, ContactDataBundle contactDataBundle){
         return doctorManager.createDoctor(username, password, contactDataBundle);
     }
 
@@ -170,5 +171,10 @@ public class SecretaryAccess {
     }
     public boolean doseDoctorExist (String doctor_username){
         return doctorManager.doesDoctorExist(doctor_username);
+    }
+    public Optional<PatientData> getPatient(String name){
+        return patientDatabase.stream().filter(x -> x.getUsername() == name)
+                .findFirst()
+                .map(x -> new PatientData(x));
     }
 }

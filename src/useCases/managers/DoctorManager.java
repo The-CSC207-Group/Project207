@@ -1,7 +1,7 @@
 package useCases.managers;
 
 import dataBundles.ContactDataBundle;
-import dataBundles.DoctorDataBundle;
+import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import entities.Contact;
 import entities.Doctor;
@@ -23,11 +23,11 @@ public class DoctorManager {
         this.contactDatabase = contactDatabase;
     }
 
-    public DoctorDataBundle createDoctor(String username, String password, ContactDataBundle contactDataBundle) {
+    public DoctorData createDoctor(String username, String password, ContactDataBundle contactDataBundle) {
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
         Doctor doctor = new Doctor(username, password, contactId);
         doctorDatabase.add(doctor);
-        return new DoctorDataBundle(doctor.getId(), doctor);
+        return new DoctorData(doctor);
 
     }
 
