@@ -36,7 +36,7 @@ public class PatientManagerTests {
                 "jim@gmail.com", "87654321",
                 "father");
 
-        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+        PatientManager patientManager = new PatientManager(originalDatabase);
 
         PatientDataBundle patientDataBundle = patientManager.createPatient(username, password, contactDataBundle,
                 healthNumber);
@@ -69,7 +69,7 @@ public class PatientManagerTests {
         Patient patient = new
                 Patient("jeff", "123", 123456789, "5544");
 
-        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+        PatientManager patientManager = new PatientManager(originalDatabase);
 
         Integer patientID = patientDatabase.add(patient);
 
@@ -91,7 +91,7 @@ public class PatientManagerTests {
         Patient patient = new
                 Patient("jeff", "123", 123456789, "5544");
 
-        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+        PatientManager patientManager = new PatientManager(originalDatabase);
 
         Integer patientID = patientDatabase.add(patient);
 
@@ -119,7 +119,7 @@ public class PatientManagerTests {
             originalPatient.addReportId(i + 10);
         }
 
-        PatientManager patientManager = new PatientManager(patientDatabase, contactDatabase);
+        PatientManager patientManager = new PatientManager(originalDatabase);
 
         Integer patientID = patientDatabase.add(originalPatient);
 
