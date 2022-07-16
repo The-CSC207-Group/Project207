@@ -38,7 +38,7 @@ public class AdminManagerTests {
 
         AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
 
-        AdminData adminDataBundle = adminManager.createAdmin(username, password, contactData);
+        AdminData adminDataBundle = adminManager.createAdmin(username, password);
 
         /* Testing if the return admin data bundle is valid by testing if the fields of are equal to the parameters of
         createAdmin */
@@ -71,7 +71,7 @@ public class AdminManagerTests {
         assertNotNull("An admin object should be returned before it is deleted ",
                 adminDatabase.get(adminID));
 
-        adminManager.deleteAdminUser(adminID);
+        adminManager.deleteUser(admin.getUsername());
 
         assertNull("An admin object should not be returned after it is deleted ",
                 adminDatabase.get(adminID));
@@ -89,11 +89,12 @@ public class AdminManagerTests {
         AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
 
         Integer adminID = adminDatabase.add(admin);
+        AdminData adminData = new AdminData(admin);
 
         assertTrue("The password should remain the same before the change ",
                 adminDatabase.get(adminID).comparePassword("123"));
 
-        adminManager.changeUserPassword(adminID, "456");
+        adminManager.changeUserPassword(adminData, "456");
 
         assertTrue("The admin object should have the same password as we inputted into the parameters " +
                         "of the changeUserPassword method ",
@@ -120,7 +121,7 @@ public class AdminManagerTests {
         assertEquals("Original admin should share the same ID from the database",
                 originalAdmin.getId(), adminID);
 
-        Admin loadedAdmin = adminManager.getAdmin(adminID);
+        Admin loadedAdmin = adminManager.getUser(originalAdmin.getUsername());
 
         /* Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
         objects are equal */
