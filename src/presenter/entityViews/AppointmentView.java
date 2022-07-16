@@ -20,8 +20,8 @@ public class AppointmentView {
         // TODO if the need arises, abstract this to a helper or common super class
         StringBuilder appendedOutput = new StringBuilder("");
         for (int i = 0; i < items.size(); i++) {
+            appendedOutput.append(view(items.get(i)));
             if (i != items.size() - 1) {
-                appendedOutput.append(view(items.get(i)));
                 appendedOutput.append("\n");
             }
         }
