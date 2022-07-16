@@ -1,6 +1,6 @@
 package useCases.managers;
 
-import dataBundles.UserDataBundle;
+import dataBundles.UserData;
 import database.DataMapperGateway;
 import entities.User;
 
@@ -11,7 +11,7 @@ public abstract class UserManager<T extends User> {
         this.database = database;
     }
 
-    public boolean changeUserPassword(UserDataBundle<T> dataBundle, String password){
+    public boolean changeUserPassword(UserData<T> dataBundle, String password){
         T user = database.get(dataBundle.getId());
         if (user != null) {
             user.setPassword(password);

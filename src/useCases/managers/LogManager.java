@@ -1,6 +1,6 @@
 package useCases.managers;
 
-import dataBundles.LogDataBundle;
+import dataBundles.LogData;
 import database.DataMapperGateway;
 import entities.Log;
 import entities.User;
@@ -44,13 +44,13 @@ public class LogManager {
      * @param message Message that the log should store and that will be displayed to anyone who looks at past logs.
      * @return LogDataBundle associated with the log
      */
-    public <T extends User>LogDataBundle addLog(String message, Integer userId, DataMapperGateway<T> userDatabase){
+    public <T extends User> LogData addLog(String message, Integer userId, DataMapperGateway<T> userDatabase){
         Log log = new Log(message);
         Integer logId = logDatabase.add(log);
         User user = userDatabase.get(userId);
         if (user == null) {return null;}
         user.addLogId(logId);
-        return new LogDataBundle(log);
+        return new LogData(log);
     }
 
     /**
@@ -62,12 +62,12 @@ public class LogManager {
      * exist in the log database. Return the logdatabundles representing the user's logs otherwise
      * @param <T> the type of the database.
      */
-    public <T extends User> ArrayList<LogDataBundle> getLogDataBundlesFromUsername(String username, DataMapperGateway<T> userDatabase){
+    public <T extends User> ArrayList<LogData> getLogDataBundlesFromUsername(String username, DataMapperGateway<T> userDatabase){
         User user = getUserByUsername(userDatabase, username);
         if (user == null){return null;}
         Stream<Log> logStream = databaseUtils.getItemsWithIds(logDatabase, user.getLogIds());
         if (logStream == null){return null;}
-        return databaseUtils.toArrayList(logStream.map(x -> new LogDataBundle(x)));
+        return databaseUtils.toArrayList(logStream.map(x -> new LogData(x)));
     }
     private  <T extends User> T getUserByUsername(DataMapperGateway<T> database, String username){
         return databaseUtils.getUserByUsername(database, username);

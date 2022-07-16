@@ -76,18 +76,18 @@ public class AdminAccess {
      * @param username - username of the user whose logs we want to get.
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
-    public ArrayList<LogDataBundle> getLogs(String username) {
+    public ArrayList<LogData> getLogs(String username) {
 
-        ArrayList<LogDataBundle> dataBundlesPatient =  logManager.getLogDataBundlesFromUsername(username, patientDatabase);
+        ArrayList<LogData> dataBundlesPatient =  logManager.getLogDataBundlesFromUsername(username, patientDatabase);
         if (dataBundlesPatient != null){return dataBundlesPatient;}
 
-        ArrayList<LogDataBundle> dataBundlesSecretary = logManager.getLogDataBundlesFromUsername(username, secretaryDatabase);
+        ArrayList<LogData> dataBundlesSecretary = logManager.getLogDataBundlesFromUsername(username, secretaryDatabase);
         if (dataBundlesSecretary != null){return dataBundlesSecretary;}
 
-        ArrayList<LogDataBundle> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
+        ArrayList<LogData> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
         if (dataBundlesDoctor != null){return dataBundlesDoctor;}
 
-        ArrayList<LogDataBundle> dataBundlesAdmin = logManager.getLogDataBundlesFromUsername(username, adminDatabase);
+        ArrayList<LogData> dataBundlesAdmin = logManager.getLogDataBundlesFromUsername(username, adminDatabase);
         if (dataBundlesAdmin != null){return dataBundlesAdmin;}
         return null;
     }

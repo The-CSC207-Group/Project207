@@ -1,7 +1,7 @@
 package controllers;
 
 import dataBundles.AppointmentData;
-import dataBundles.LogDataBundle;
+import dataBundles.LogData;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import presenter.screenViews.PatientScreenView;
@@ -65,7 +65,7 @@ public class PatientController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogDataBundle> logs = patientAccess.getLogs(patientData.getUsername());
+            ArrayList<LogData> logs = patientAccess.getLogs(patientData.getUsername());
             return false;
         }
     }

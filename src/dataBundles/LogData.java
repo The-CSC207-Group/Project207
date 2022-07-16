@@ -4,10 +4,10 @@ import entities.Log;
 
 import java.time.LocalDateTime;
 
-public class LogDataBundle {
+public class LogData {
     private final Log log;
 
-    public LogDataBundle(Log log) {
+    public LogData(Log log) {
         this.log = log;
     }
 

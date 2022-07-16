@@ -2,10 +2,8 @@ package controllers;
 
 import dataBundles.AdminData;
 import dataBundles.ContactData;
-import dataBundles.LogDataBundle;
-import dataBundles.SecretaryData;
+import dataBundles.LogData;
 import useCases.accessClasses.AdminAccess;
-import useCases.accessClasses.SecretaryAccess;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,7 +80,7 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogDataBundle> logs = adminAccess.getLogs(adminData.getUsername());
+            ArrayList<LogData> logs = adminAccess.getLogs(adminData.getUsername());
             return false;
         }
     }

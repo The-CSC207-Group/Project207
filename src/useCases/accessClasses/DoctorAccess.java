@@ -7,7 +7,6 @@ import entities.*;
 import useCases.managers.*;
 import utilities.DatabaseQueryUtility;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -175,8 +174,8 @@ public class  DoctorAccess {
      * @param username - username of the user whose logs we want to get.
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
-    public ArrayList<LogDataBundle> getLogs(String username){
-        ArrayList<LogDataBundle> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
+    public ArrayList<LogData> getLogs(String username){
+        ArrayList<LogData> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
         if (dataBundlesDoctor != null){return dataBundlesDoctor;}
 
         return null;
