@@ -94,7 +94,8 @@ public class Database {
     }
 
     public void setClinic(Clinic clinic) {
-        clinicDatabase.stream().forEach(c -> clinicDatabase.remove(c.getId()));
+//        clinicDatabase.stream().forEach(c -> clinicDatabase.remove(c.getId()));
+        clinicDatabase.getAllIds().forEach(clinicDatabase::remove);
         clinicDatabase.add(clinic);
     }
 
