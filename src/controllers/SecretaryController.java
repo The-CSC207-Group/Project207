@@ -96,7 +96,7 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData.getUsername());
+            ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData);
             return false;
         }
     }

@@ -99,7 +99,7 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogData> logs = adminAccess.getLogs(adminData.getUsername());
+            ArrayList<LogData> logs = adminAccess.getLogs(adminData);
             return false;
         }
     }

@@ -74,7 +74,7 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogData> logs = doctorAccess.getLogs(doctorData.getUsername());
+            ArrayList<LogData> logs = doctorAccess.getLogs(doctorData);
             return false;
         }
     }
