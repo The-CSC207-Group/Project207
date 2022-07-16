@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.ContactData;
+import dataBundles.LogDataBundle;
 import dataBundles.SecretaryData;
 import useCases.accessClasses.SecretaryAccess;
 
@@ -98,7 +99,8 @@ public class SecretaryController extends TerminalController {
     class Logs implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) { // need to implement
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<LogDataBundle> logs = secretaryAccess.getLogs(secretaryData.getUsername());
             return false;
         }
     }
