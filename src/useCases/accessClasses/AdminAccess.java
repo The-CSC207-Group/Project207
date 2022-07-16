@@ -49,8 +49,6 @@ public class AdminAccess {
     /**
      * @param username          String new username
      * @param password          String new password
-     * @param contactData ContactDataBundle which includes contact info of the user.
-     * @return PatientDataBundle which includes information of the patient.
      */
     public PatientData createPatient(String username, String password) {
         return patientManager.createPatient(username, password);
