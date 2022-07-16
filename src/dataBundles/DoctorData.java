@@ -16,7 +16,7 @@ public class DoctorData {
         return doctor.getUsername();
     }
 
-    public int getContact(){
+    public Integer getContact(){
         return doctor.getContactInfoId();
     }
 

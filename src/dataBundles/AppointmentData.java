@@ -10,7 +10,7 @@ import entities.TimeBlock;
 public class AppointmentData {
     private final Appointment appointment;
 
-    public AppointmentData(Appointment appointment){
+    public AppointmentData(Appointment appointment) {
         this.appointment = appointment;
     }
 

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class ContactData {
 
-    private Contact contact;
+    private final Contact contact;
 
     public ContactData(String name, String email, String phoneNumber, String address, LocalDate birthday,
                        String emergencyContactName, String emergencyContactEmail,
@@ -16,7 +16,8 @@ public class ContactData {
                 emergencyContactName, emergencyContactEmail,
                 emergencyContactPhoneNumber, emergencyRelationship);
     }
-    public ContactData(Contact contact){
+
+    public ContactData(Contact contact) {
         this.contact = contact;
     }
 
@@ -56,6 +57,8 @@ public class ContactData {
         return contact.getEmergencyRelationship();
     }
 
-    public Integer getContactId(){return contact.getId();}
+    public Integer getContactId() {
+        return contact.getId();
+    }
 
 }

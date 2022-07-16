@@ -9,7 +9,8 @@ import java.time.ZonedDateTime;
  */
 public class PrescriptionData {
     private Prescription prescription;
-    public PrescriptionData(Prescription prescription){
+
+    public PrescriptionData(Prescription prescription) {
         this.prescription = prescription;
     }
 

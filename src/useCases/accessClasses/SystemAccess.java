@@ -118,7 +118,7 @@ public class SystemAccess {
         Secretary secretary = secretaryDatabase.get(userId);
         if (secretary.comparePassword(password)) {
             commonMethods.attachUserSignInLog(secretaryDatabase, userId, logManager);
-            return new SecretaryData(userId, secretary);
+            return new SecretaryData(secretary);
         }
         return null;
     }

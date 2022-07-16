@@ -28,7 +28,7 @@ public class SecretaryManager {
         Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactData));
         Secretary secretary = new Secretary(username, password, contactId);
         secretaryDatabase.add(secretary);
-        return new SecretaryData(secretary.getId(), secretary);
+        return new SecretaryData(secretary);
     }
 
     /**

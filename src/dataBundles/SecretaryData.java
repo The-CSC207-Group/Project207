@@ -4,11 +4,10 @@ import entities.Secretary;
 
 import java.util.ArrayList;
 
-public class SecretaryData extends DataBundle{
+public class SecretaryData {
     private final Secretary secretary;
 
-    public SecretaryData(Integer id, Secretary secretary) {
-        super(id);
+    public SecretaryData(Secretary secretary) {
         this.secretary = secretary;
     }
 
@@ -22,5 +21,9 @@ public class SecretaryData extends DataBundle{
 
     public ArrayList<Integer> getLogs(){
         return secretary.getLogIds();
+    }
+
+    public Integer getSecretaryId() {
+        return secretary.getId();
     }
 }

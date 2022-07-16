@@ -7,16 +7,19 @@ import java.time.LocalDateTime;
 public class LogDataBundle {
     private final Log log;
 
-    public LogDataBundle(Log log){
+    public LogDataBundle(Log log) {
         this.log = log;
     }
-    public Integer getId(){
+
+    public Integer getId() {
         return log.getId();
     }
-    public String getMessage(){
+
+    public String getMessage() {
         return log.getMessage();
     }
-    public LocalDateTime getTime(){
+
+    public LocalDateTime getTime() {
         return log.getTime();
     }
 }
