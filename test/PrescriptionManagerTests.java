@@ -57,7 +57,7 @@ public class PrescriptionManagerTests {
         /* testing if the loaded prescription and the original prescription are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original prescription and loaded prescription should share the same ID",
-                originalPrescriptionBundle1.getId(), loadedPrescriptionData1.getId());
+                originalPrescriptionBundle1.getPrescriptionId(), loadedPrescriptionData1.getPrescriptionId());
         assertEquals("Original prescription and loaded prescription should be have been noted " +
                 "on the same date", originalPrescriptionBundle1.getDateNoted().compareTo(loadedPrescriptionData1.
                 getDateNoted()), 0); // the compareTo function returns 0 when both dates are equal
@@ -93,8 +93,6 @@ public class PrescriptionManagerTests {
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
-
-        PrescriptionData originalPrescriptionBundle1 = new PrescriptionData(originalPrescription1);
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
 
@@ -172,7 +170,7 @@ public class PrescriptionManagerTests {
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 prescriptionData.getExpiryDate().compareTo(zonedExpiryDate), 0);
 
-        Prescription loadedPrescription = prescriptionDatabase.get(prescriptionData.getId());
+        Prescription loadedPrescription = prescriptionDatabase.get(prescriptionData.getPrescriptionId());
 
         /* Testing if the prescription object has been correctly added to the database by testing if the fields of the
         loaded patient are equal to the parameters of createPatient */

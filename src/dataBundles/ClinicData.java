@@ -12,10 +12,6 @@ public class ClinicData {
         this.clinic = clinic;
     }
 
-    public String getClinicName() {
-        return clinic.getName();
-    }
-
     public String getAddress(){
         return clinic.getAddress();
     }
@@ -28,12 +24,20 @@ public class ClinicData {
         return clinic.getClinicHours();
     }
 
-    public String getPhoneNumber() {
+    public CharSequence getPhoneNumber() {
         return clinic.getPhoneNumber();
+    }
+
+    public String getClinicName() {
+        return clinic.getName();
     }
 
     public Integer getClinicId() {
         return clinic.getId();
     }
+
+
+
+
 
 }

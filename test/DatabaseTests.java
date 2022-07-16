@@ -334,9 +334,8 @@ public class DatabaseTests {
     }
 
     @Test(timeout = 1000)
-    public void testSaveLoadClinicDatabase() {
+    public void testSetGetClinic() {
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Clinic> originalClinicDatabase = originalDatabase.getClinicDatabase();
 
         LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
         LocalDateTime localEndTime = LocalDateTime.of(2022,7,1,6,3);
@@ -348,13 +347,12 @@ public class DatabaseTests {
         Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "21 jump street",
                 torontoID, timeBlock);
 
-        Integer clinicID = originalClinicDatabase.add(originalClinic);
-        originalClinicDatabase.save();
+        originalDatabase.setClinic(originalClinic);
+
+        originalDatabase.save();
 
         Database loadedDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Clinic> loadedClinicDatabase = loadedDatabase.getClinicDatabase();
-
-        Clinic loadedClinic = loadedClinicDatabase.get(clinicID);
+        Clinic loadedClinic = loadedDatabase.getClinic();
 
         /* Testing if the loaded clinic and the original clinic are equal by testing whether all
         the fields of both objects are equal */
