@@ -2,7 +2,7 @@ package useCases.accessClasses;
 
 import dataBundles.AppointmentData;
 import dataBundles.LogDataBundle;
-import dataBundles.PrescriptionDataBundle;
+import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.*;
@@ -62,7 +62,7 @@ public class PatientAccess {
      * @return Arraylist of PrescriptionDataBundles representing the patient's prescriptions. If the patient
      * does not exist, empty arraylist is returned.
      */
-    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(Integer userId){
+    public ArrayList<PrescriptionData> getActivePrescriptions(Integer userId){
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(userId);
     }
     /**
@@ -71,7 +71,7 @@ public class PatientAccess {
      * @return Arraylist of PrescriptionDataBundles representing the patient's prescriptions. If the patient
      * does not exist, empty arraylist is returned.
      */
-    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(Integer userId){
+    public ArrayList<PrescriptionData> getAllPrescriptions(Integer userId){
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
     }
     public ArrayList<AppointmentData> getAppointments(Integer patientId){

@@ -1,7 +1,7 @@
 package useCases.managers;
 
-import dataBundles.ContactDataBundle;
-import dataBundles.SecretaryDataBundle;
+import dataBundles.ContactData;
+import dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import entities.*;
 
@@ -24,11 +24,11 @@ public class SecretaryManager {
         this.contactDatabase = contactDatabase;
     }
 
-    public SecretaryDataBundle createSecretary(String username, String password, ContactDataBundle contactDataBundle){
-        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactDataBundle));
+    public SecretaryData createSecretary(String username, String password, ContactData contactData){
+        Integer contactId = contactDatabase.add(contactDataBundleToContactEntity(contactData));
         Secretary secretary = new Secretary(username, password, contactId);
         secretaryDatabase.add(secretary);
-        return new SecretaryDataBundle(secretary.getId(), secretary);
+        return new SecretaryData(secretary.getId(), secretary);
     }
 
     /**
@@ -58,16 +58,16 @@ public class SecretaryManager {
         return secretaryMethods.getUser(userId);
     }
 
-    private Contact contactDataBundleToContactEntity(ContactDataBundle contactDataBundle){
-        return new Contact(contactDataBundle.getName(),
-                contactDataBundle.getEmail(),
-                contactDataBundle.getPhoneNumber(),
-                contactDataBundle.getAddress(),
-                contactDataBundle.getBirthday(),
-                contactDataBundle.getEmergencyContactName(),
-                contactDataBundle.getEmergencyContactEmail(),
-                contactDataBundle.getEmergencyContactPhoneNumber(),
-                contactDataBundle.getEmergencyRelationship());
+    private Contact contactDataBundleToContactEntity(ContactData contactData){
+        return new Contact(contactData.getName(),
+                contactData.getEmail(),
+                contactData.getPhoneNumber(),
+                contactData.getAddress(),
+                contactData.getBirthday(),
+                contactData.getEmergencyContactName(),
+                contactData.getEmergencyContactEmail(),
+                contactData.getEmergencyContactPhoneNumber(),
+                contactData.getEmergencyRelationship());
     }
 
 

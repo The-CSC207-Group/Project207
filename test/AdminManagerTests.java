@@ -1,5 +1,5 @@
 import dataBundles.AdminData;
-import dataBundles.ContactDataBundle;
+import dataBundles.ContactData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
@@ -31,14 +31,14 @@ public class AdminManagerTests {
         String username = "jeff";
         String password = "123";
         LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactDataBundle contactDataBundle = new ContactDataBundle("jeff", "jeff@gmail.com",
+        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
                 "12345678", "jeff street", birthday, "jim",
                 "jim@gmail.com", "87654321",
                 "father");
 
         AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
 
-        AdminData adminDataBundle = adminManager.createAdmin(username, password, contactDataBundle);
+        AdminData adminDataBundle = adminManager.createAdmin(username, password, contactData);
 
         /* Testing if the return admin data bundle is valid by testing if the fields of are equal to the parameters of
         createAdmin */

@@ -7,10 +7,9 @@ import java.time.ZonedDateTime;
 /**
  * Class solely to bundle patient data and send it around to different controllers
  */
-public class PrescriptionDataBundle extends DataBundle{
+public class PrescriptionData {
     private Prescription prescription;
-    public PrescriptionDataBundle(Integer id, Prescription prescription){
-        super(id);
+    public PrescriptionData(Prescription prescription){
         this.prescription = prescription;
     }
 
@@ -36,5 +35,9 @@ public class PrescriptionDataBundle extends DataBundle{
 
     public String getHeader() {
         return prescription.getHeader();
+    }
+
+    public Integer getPrescriptionId() {
+        return prescription.getId();
     }
 }

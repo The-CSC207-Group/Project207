@@ -3,7 +3,7 @@ package controllers;
 import dataBundles.AppointmentData;
 import dataBundles.LogDataBundle;
 import dataBundles.PatientData;
-import dataBundles.PrescriptionDataBundle;
+import dataBundles.PrescriptionData;
 import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 
@@ -48,7 +48,7 @@ public class PatientController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<PrescriptionDataBundle> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
+            ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
             return false;
         }
     }
@@ -56,7 +56,7 @@ public class PatientController extends TerminalController {
     class ViewActivePrescriptions implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<PrescriptionDataBundle> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
+            ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
             return false;
         }
     }

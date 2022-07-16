@@ -4,10 +4,10 @@ import entities.Secretary;
 
 import java.util.ArrayList;
 
-public class SecretaryDataBundle extends DataBundle{
+public class SecretaryData extends DataBundle{
     private final Secretary secretary;
 
-    public SecretaryDataBundle(Integer id, Secretary secretary) {
+    public SecretaryData(Integer id, Secretary secretary) {
         super(id);
         this.secretary = secretary;
     }

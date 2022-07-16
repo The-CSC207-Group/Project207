@@ -1,4 +1,4 @@
-import dataBundles.ContactDataBundle;
+import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import database.Database;
@@ -31,14 +31,14 @@ public class DoctorManagerTests {
         String username = "jeff";
         String password = "123";
         LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactDataBundle contactDataBundle = new ContactDataBundle("jeff", "jeff@gmail.com",
+        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
                 "12345678", "jeff street", birthday, "jim",
                 "jim@gmail.com", "87654321",
                 "father");
 
         DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
 
-        DoctorData doctorDataBundle = doctorManager.createDoctor(username, password, contactDataBundle);
+        DoctorData doctorDataBundle = doctorManager.createDoctor(username, password, contactData);
 
         /* Testing if the return doctor data bundle is valid by testing if the fields of are equal to the parameters of
         createDoctor */

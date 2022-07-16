@@ -1,5 +1,5 @@
-import dataBundles.ContactDataBundle;
-import dataBundles.SecretaryDataBundle;
+import dataBundles.ContactData;
+import dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
@@ -31,22 +31,22 @@ public class SecretaryManagerTests {
         String username = "jeff";
         String password = "123";
         LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactDataBundle contactDataBundle = new ContactDataBundle("jeff", "jeff@gmail.com",
+        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
                 "12345678", "jeff street", birthday, "jim",
                 "jim@gmail.com", "87654321",
                 "father");
 
         SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
 
-        SecretaryDataBundle secretaryDataBundle = secretaryManager.createSecretary(username, password,
-                contactDataBundle);
+        SecretaryData secretaryData = secretaryManager.createSecretary(username, password,
+                contactData);
 
         /* Testing if the return secretary data bundle is valid by testing if the fields of are equal to the parameters of
         createSecretary */
         assertEquals("The created secretary data bundle should have the same name as the parameters of " +
-                "createSecretary method", secretaryDataBundle.getUsername(), username);
+                "createSecretary method", secretaryData.getUsername(), username);
 
-        Secretary loadedSecretary = secretaryDatabase.get(secretaryDataBundle.getId());
+        Secretary loadedSecretary = secretaryDatabase.get(secretaryData.getId());
 
         /* Testing if the secretary object has been correctly added to the database by testing if the fields of the loaded
         secretary are equal to the parameters of createSecretary */

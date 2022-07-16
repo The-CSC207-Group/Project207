@@ -65,24 +65,24 @@ public class SecretaryAccess {
      * NOTE: Handling of creating a patient that already exists is not present yet.
      * @param username username of the patient
      * @param password password of the patient
-     * @param contactDataBundle data bundle of patient contact info
+     * @param contactData data bundle of patient contact info
      * @param healthNumber health number of patient
      * @return PatientDataBundle with the newly created patient's information
      */
-    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+    public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber){
-        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
+        return patientManager.createPatient(username, password, contactData, healthNumber);
     }
 
     /**
      *
      * @param username
      * @param password
-     * @param contactDataBundle
+     * @param contactData
      * @return
      */
-    public DoctorData createDoctor (String username, String password, ContactDataBundle contactDataBundle){
-        return doctorManager.createDoctor(username, password, contactDataBundle);
+    public DoctorData createDoctor (String username, String password, ContactData contactData){
+        return doctorManager.createDoctor(username, password, contactData);
     }
 
     /**
@@ -92,7 +92,7 @@ public class SecretaryAccess {
      * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * patient that is active or null if the patient does not exist in the patient database.
      */
-    public ArrayList<PrescriptionDataBundle> getActivePrescriptions(String patientUsername){
+    public ArrayList<PrescriptionData> getActivePrescriptions(String patientUsername){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient == null){return null;}
         return prescriptionManager.getPatientActivePrescriptionDataByUserId(patient.getId());
@@ -104,7 +104,7 @@ public class SecretaryAccess {
      * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * patient or null if the patient does not exist in the patient database.
      */
-    public ArrayList<PrescriptionDataBundle> getAllPrescriptions(String patientUsername){
+    public ArrayList<PrescriptionData> getAllPrescriptions(String patientUsername){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient == null){return null;}
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
