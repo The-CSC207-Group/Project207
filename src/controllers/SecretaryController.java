@@ -1,9 +1,7 @@
 package controllers;
 
-import dataBundles.ContactDataBundle;
-import dataBundles.SecretaryDataBundle;
-import entities.Secretary;
-import useCases.accessClasses.DoctorAccess;
+import dataBundles.ContactData;
+import dataBundles.SecretaryData;
 import useCases.accessClasses.SecretaryAccess;
 
 import java.util.ArrayList;
@@ -13,13 +11,13 @@ public class SecretaryController extends TerminalController {
 
 
     private SecretaryAccess secretaryAccess;
-    private SecretaryDataBundle secretaryDataBundle;
+    private SecretaryData secretaryData;
     private SecretaryController self = this;
 
-    public SecretaryController(Context context, SecretaryDataBundle secretaryData) {
+    public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
         this.secretaryAccess = new SecretaryAccess(getDatabase());
-        this.secretaryDataBundle = secretaryData;
+        this.secretaryData = secretaryData;
     }
 
     @Override
@@ -56,7 +54,7 @@ public class SecretaryController extends TerminalController {
         public boolean execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
-            ContactDataBundle contact;
+            ContactData contact;
             String healthNumber = presenter.promptPopup("Enter Health Number"); // need to confirm if health no is input by user or no
             if (secretaryAccess.doesPatientExist(username)){
                 // secretaryAccess.createPatient(username, password, contact, healthNumber);// need to implement error or success message
@@ -72,7 +70,7 @@ public class SecretaryController extends TerminalController {
         public boolean execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
-            ContactDataBundle contact;
+            ContactData contact;
             if (secretaryAccess.doseDoctorExist(username)){
 //                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
                 presenter.successMessage("Successfully created new doctor");}
@@ -88,7 +86,7 @@ public class SecretaryController extends TerminalController {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changePassword(secretaryDataBundle.getUsername(), p1 );
+                secretaryAccess.changePassword(secretaryData.getUsername(), p1 );
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");

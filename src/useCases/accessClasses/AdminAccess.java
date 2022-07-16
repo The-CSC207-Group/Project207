@@ -1,6 +1,6 @@
 package useCases.accessClasses;
 
-import dataBundles.ContactDataBundle;
+import dataBundles.ContactData;
 import dataBundles.LogDataBundle;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
@@ -54,12 +54,12 @@ public class AdminAccess {
     /**
      * @param username          String new username
      * @param password          String new password
-     * @param contactDataBundle ContactDataBundle which includes contact info of the user.
+     * @param contactData ContactDataBundle which includes contact info of the user.
      * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+    public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber) {
-        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
+        return patientManager.createPatient(username, password, contactData, healthNumber);
 
     }
 

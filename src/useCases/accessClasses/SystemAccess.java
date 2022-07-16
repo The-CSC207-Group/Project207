@@ -43,13 +43,13 @@ public class SystemAccess {
      * Creates a new Patient object and stores it in the database, returns PatientDataBundle.
      * @param username          String new username
      * @param password          String new password
-     * @param contactDataBundle ContactDataBundle which includes contact info of the user. Cannot be null.
+     * @param contactData ContactDataBundle which includes contact info of the user. Cannot be null.
      * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+    public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber) {
-        return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
+        return patientManager.createPatient(username, password, contactData, healthNumber);
     }
 
     /**
@@ -82,7 +82,7 @@ public class SystemAccess {
      * Sign In method for doctors.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public DoctorData doctorSignIn(Integer userId, String password) {
         Doctor doctor = doctorDatabase.get(userId);
@@ -97,7 +97,7 @@ public class SystemAccess {
      * Sign In method for Patients.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public PatientData patientSignIn(Integer userId, String password) {
         Patient patient = patientDatabase.get(userId);
@@ -112,13 +112,13 @@ public class SystemAccess {
      * Sign In method for Secretaries.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
-    public SecretaryDataBundle secretarySignIn(Integer userId, String password) {
+    public SecretaryData secretarySignIn(Integer userId, String password) {
         Secretary secretary = secretaryDatabase.get(userId);
         if (secretary.comparePassword(password)) {
             commonMethods.attachUserSignInLog(secretaryDatabase, userId, logManager);
-            return new SecretaryDataBundle(userId, secretary);
+            return new SecretaryData(secretary);
         }
         return null;
     }
@@ -127,7 +127,7 @@ public class SystemAccess {
      * Sign In method for admins.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public AdminData adminSignIn(Integer userId, String password) {
         Admin admin = adminDatabase.get(userId);

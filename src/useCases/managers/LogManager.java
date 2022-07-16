@@ -50,7 +50,7 @@ public class LogManager {
         User user = userDatabase.get(userId);
         if (user == null) {return null;}
         user.addLogId(logId);
-        return new LogDataBundle(logId, log);
+        return new LogDataBundle(log);
     }
 
     /**
@@ -67,7 +67,7 @@ public class LogManager {
         if (user == null){return null;}
         Stream<Log> logStream = databaseUtils.getItemsWithIds(logDatabase, user.getLogIds());
         if (logStream == null){return null;}
-        return databaseUtils.toArrayList(logStream.map(x -> new LogDataBundle(x.getId(), x)));
+        return databaseUtils.toArrayList(logStream.map(x -> new LogDataBundle(x)));
     }
     private  <T extends User> T getUserByUsername(DataMapperGateway<T> database, String username){
         return databaseUtils.getUserByUsername(database, username);

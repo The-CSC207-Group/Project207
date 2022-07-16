@@ -1,30 +1,51 @@
 package controllers;
 
-import dataBundles.PatientDataBundle;
-import dataBundles.SecretaryDataBundle;
+import dataBundles.PatientData;
+import dataBundles.PrescriptionData;
+import dataBundles.SecretaryData;
 import useCases.accessClasses.SecretaryAccess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SecretaryLoadedPatientController extends TerminalController{
-    PatientDataBundle patientData;
-    SecretaryDataBundle secretaryDataBundle;
+    PatientData patientData;
+    SecretaryData secretaryData;
     SecretaryAccess secretaryAccess;
-    DoctorController doctorController;
+    SecretaryController secretaryController;
 
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
-                                            PatientDataBundle patientDataBundle) {
-
+                                            PatientData patientData) {
         super(context);
+        this.secretaryController = secretaryController;
+        this.patientData = patientData;
+        this.secretaryAccess = new SecretaryAccess(getDatabase());
     }
 
 
     public HashMap<String, Command> AllCommands(){
         HashMap<String, Command> command  = super.AllCommands();
+        command.put("View Active Prescription", new ViewActivePrescription());
+        command.put("View All Prescriptions", new ViewPrescriptionHistory());
         return command;
     }
     @Override
     void WelcomeMessage() {
+    }
+    class ViewActivePrescription implements Command {
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<PrescriptionData> prescriptions = secretaryAccess.
+                    getActivePrescriptions(patientData.getUsername());
+            return false;
+        }
+    }
+    class ViewPrescriptionHistory implements Command{
 
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
+            return false;
+        }
     }
 }

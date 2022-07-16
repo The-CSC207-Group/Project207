@@ -7,11 +7,10 @@ import entities.TimeBlock;
 /**
  * Class solely to bundle appointment data and send it around to different controllers
  */
-public class AppointmentDataBundle extends DataBundle {
+public class AppointmentData {
     private final Appointment appointment;
 
-    public AppointmentDataBundle(Integer id, Appointment appointment){
-        super(id);
+    public AppointmentData(Appointment appointment) {
         this.appointment = appointment;
     }
 
@@ -30,6 +29,7 @@ public class AppointmentDataBundle extends DataBundle {
     public Integer getAppointmentId() {
         return appointment.getId();
     }
+
 
 }
 

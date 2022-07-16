@@ -11,18 +11,17 @@ public class PatientData {
         this.patient = patient;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return patient.getUsername();
     }
 
-    public int getContact(){
+    public Integer getContact() {
         return patient.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs(){
+    public ArrayList<Integer> getLogs() {
         return patient.getLogIds();
     }
-
 
 
     public String getHealthNumber() {
@@ -33,7 +32,7 @@ public class PatientData {
         return patient.getReportIds();
     }
 
-    public int getId(){
+    public Integer getId() {
         return patient.getId();
     }
 

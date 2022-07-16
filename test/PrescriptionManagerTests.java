@@ -1,4 +1,4 @@
-import dataBundles.PrescriptionDataBundle;
+import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Prescription;
@@ -45,33 +45,32 @@ public class PrescriptionManagerTests {
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
 
-        PrescriptionDataBundle originalPrescriptionBundle1 = new PrescriptionDataBundle(prescriptionID1,
-                originalPrescription1);
+        PrescriptionData originalPrescriptionBundle1 = new PrescriptionData(originalPrescription1);
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
 
-        ArrayList<PrescriptionDataBundle> loadedPrescriptionList =
+        ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getPatientActivePrescriptionDataByUserId(123);
 
-        PrescriptionDataBundle loadedPrescriptionDataBundle1 = loadedPrescriptionList.get(0);
+        PrescriptionData loadedPrescriptionData1 = loadedPrescriptionList.get(0);
 
         /* testing if the loaded prescription and the original prescription are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original prescription and loaded prescription should share the same ID",
-                originalPrescriptionBundle1.getId(), loadedPrescriptionDataBundle1.getId());
+                originalPrescriptionBundle1.getId(), loadedPrescriptionData1.getId());
         assertEquals("Original prescription and loaded prescription should be have been noted " +
-                "on the same date", originalPrescriptionBundle1.getDateNoted().compareTo(loadedPrescriptionDataBundle1.
+                "on the same date", originalPrescriptionBundle1.getDateNoted().compareTo(loadedPrescriptionData1.
                 getDateNoted()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original prescription and loaded prescription should share the same header",
-                originalPrescriptionBundle1.getHeader(), loadedPrescriptionDataBundle1.getHeader());
+                originalPrescriptionBundle1.getHeader(), loadedPrescriptionData1.getHeader());
         assertEquals("Original prescription and loaded prescription should share the same body",
-                originalPrescriptionBundle1.getBody(), loadedPrescriptionDataBundle1.getBody());
+                originalPrescriptionBundle1.getBody(), loadedPrescriptionData1.getBody());
         assertEquals("Original prescription and loaded prescription should share the same patient ID",
-                originalPrescriptionBundle1.getPatientId(), loadedPrescriptionDataBundle1.getPatientId());
+                originalPrescriptionBundle1.getPatientId(), loadedPrescriptionData1.getPatientId());
         assertEquals("Original prescription and loaded prescription should share the same doctor ID",
-                originalPrescriptionBundle1.getDoctorId(), loadedPrescriptionDataBundle1.getDoctorId());
+                originalPrescriptionBundle1.getDoctorId(), loadedPrescriptionData1.getDoctorId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
-                originalPrescriptionBundle1.getExpiryDate().compareTo(loadedPrescriptionDataBundle1.
+                originalPrescriptionBundle1.getExpiryDate().compareTo(loadedPrescriptionData1.
                         getExpiryDate()), 0);
     }
     @Test(timeout = 1000)
@@ -95,12 +94,11 @@ public class PrescriptionManagerTests {
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
 
-        PrescriptionDataBundle originalPrescriptionBundle1 = new PrescriptionDataBundle(prescriptionID1,
-                originalPrescription1);
+        PrescriptionData originalPrescriptionBundle1 = new PrescriptionData(originalPrescription1);
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
 
-        ArrayList<PrescriptionDataBundle> loadedPrescriptionList =
+        ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getPatientActivePrescriptionDataByUserId(123);
 
         assertTrue("Since there are no non expired prescriptions, the ArrayList should be empty",
@@ -131,7 +129,7 @@ public class PrescriptionManagerTests {
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
 
-        ArrayList<PrescriptionDataBundle> loadedPrescriptionList =
+        ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
 
         assertEquals("The array list should have a length of 2 even though one of " +
@@ -155,26 +153,26 @@ public class PrescriptionManagerTests {
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
 
-        PrescriptionDataBundle prescriptionDataBundle = prescriptionManager.createPrescription(zonedDateNoted,
+        PrescriptionData prescriptionData = prescriptionManager.createPrescription(zonedDateNoted,
                 header, body, patientID, doctorID, zonedExpiryDate);
 
         /* testing if the created prescription data bundle is valid by testing if its fields match with the parameters
         * of the createPrescription method */
         assertEquals("The created prescription data bundle should have the same date noted as the parameters of " +
-                "createPrescription method", prescriptionDataBundle.getDateNoted().compareTo(zonedDateNoted),
+                "createPrescription method", prescriptionData.getDateNoted().compareTo(zonedDateNoted),
                 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("The created prescription data bundle should have the same header as the " +
-                        "parameters of createPrescription method", prescriptionDataBundle.getHeader(), header);
+                        "parameters of createPrescription method", prescriptionData.getHeader(), header);
         assertEquals("The created prescription data bundle should have the same body as the " +
-                        "parameters of createPrescription method", prescriptionDataBundle.getBody(), body);
+                        "parameters of createPrescription method", prescriptionData.getBody(), body);
         assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
-                        "parameters of createPrescription method", prescriptionDataBundle.getPatientId(), patientID);
+                        "parameters of createPrescription method", prescriptionData.getPatientId(), patientID);
         assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionDataBundle.getDoctorId(), doctorID);
+                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctorID);
         assertEquals("Original prescription and loaded prescription have the same expiry date",
-                prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate), 0);
+                prescriptionData.getExpiryDate().compareTo(zonedExpiryDate), 0);
 
-        Prescription loadedPrescription = prescriptionDatabase.get(prescriptionDataBundle.getId());
+        Prescription loadedPrescription = prescriptionDatabase.get(prescriptionData.getId());
 
         /* Testing if the prescription object has been correctly added to the database by testing if the fields of the
         loaded patient are equal to the parameters of createPatient */
@@ -188,9 +186,9 @@ public class PrescriptionManagerTests {
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
                 "parameters of createPrescription method", loadedPrescription.getPatientId(), patientID);
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionDataBundle.getDoctorId(), doctorID);
+                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctorID);
         assertEquals("The loaded prescription object should have the same expiry as the parameters of " +
-                        "createPrescription method", prescriptionDataBundle.getExpiryDate().compareTo(zonedExpiryDate),
+                        "createPrescription method", prescriptionData.getExpiryDate().compareTo(zonedExpiryDate),
                 0);
     }
 
@@ -219,7 +217,7 @@ public class PrescriptionManagerTests {
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
 
-        ArrayList<PrescriptionDataBundle> loadedPrescriptionList1 =
+        ArrayList<PrescriptionData> loadedPrescriptionList1 =
                 prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
 
         assertEquals("The array list should have a length of 2 before a prescription is removed ",
@@ -227,7 +225,7 @@ public class PrescriptionManagerTests {
 
         prescriptionManager.removePrescription(prescriptionID2);
 
-        ArrayList<PrescriptionDataBundle> loadedPrescriptionList2 =
+        ArrayList<PrescriptionData> loadedPrescriptionList2 =
                 prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
 
         assertEquals("The array list should have a length of 1 after a prescription is removed ",
@@ -235,7 +233,7 @@ public class PrescriptionManagerTests {
 
         prescriptionManager.removePrescription(prescriptionID1);
 
-        ArrayList<PrescriptionDataBundle> loadedPrescriptionList3 =
+        ArrayList<PrescriptionData> loadedPrescriptionList3 =
                 prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
 
         assertTrue("The array list should be empty after all prescriptions are removed",

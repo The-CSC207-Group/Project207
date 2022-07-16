@@ -16,7 +16,7 @@ public class DoctorData {
         return doctor.getUsername();
     }
 
-    public int getContact(){
+    public Integer getContact(){
         return doctor.getContactInfoId();
     }
 
@@ -32,7 +32,7 @@ public class DoctorData {
         return doctor.getAbsence();
     }
 
-    public int getId(){
+    public Integer getId(){
         return doctor.getId();
     }
 }

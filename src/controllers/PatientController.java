@@ -1,17 +1,17 @@
 package controllers;
 
-import dataBundles.AppointmentDataBundle;
+import dataBundles.AppointmentData;
 import dataBundles.LogDataBundle;
 import dataBundles.PatientData;
-import dataBundles.PrescriptionDataBundle;
-import presenter.screenViews.PatientView;
+import dataBundles.PrescriptionData;
+import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 
 import java.util.ArrayList;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
-    private PatientView patientView;
+    private PatientScreenView patientView;
     private PatientData patientData;
 
     public PatientController(Context context, PatientData patientData) {
@@ -39,7 +39,7 @@ public class PatientController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<AppointmentDataBundle> appointments = patientAccess.getAppointments(patientData.getId());
+            ArrayList<AppointmentData> appointments = patientAccess.getAppointments(patientData.getId());
             return false;
         }
     }
@@ -48,7 +48,7 @@ public class PatientController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<PrescriptionDataBundle> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
+            ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
             return false;
         }
     }
@@ -56,7 +56,7 @@ public class PatientController extends TerminalController {
     class ViewActivePrescriptions implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<PrescriptionDataBundle> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
+            ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
             return false;
         }
     }
