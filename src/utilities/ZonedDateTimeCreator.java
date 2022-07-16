@@ -1,7 +1,8 @@
 package utilities;
 
-import java.time.ZonedDateTime;
 import entities.Clinic;
+
+import java.time.ZonedDateTime;
 
 public class ZonedDateTimeCreator {
 

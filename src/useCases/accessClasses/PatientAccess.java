@@ -24,13 +24,14 @@ public class PatientAccess {
 
     /**
      *
-
      */
     public PatientAccess(Database database) {
         this.prescriptionManager = new PrescriptionManager(database.getPrescriptionDatabase());
         this.patientManager = new PatientManager(database);
         this.logManager = new LogManager(database.getLogDatabase());
         this.appointmentManager = new AppointmentManager(database);
+        this.patientDatabase = patientDatabase;
+
     }
 
     public void signOut(){

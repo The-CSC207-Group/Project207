@@ -27,19 +27,18 @@ public class SecretaryAccess {
     LogManager logManager;
 
     DatabaseQueryUtility databaseQueryUtility = new DatabaseQueryUtility();
-//
-//    /**
-//     *
-//     * @param prescriptionDatabase database for storing prescriptions.
-//     * @param patientDatabase database for storing patients.
-//     * @param doctorDatabase database for storing doctors.
-//     * @param secretaryDatabase database for storing secretaries.
-//     * @param logDatabase database for storing logs.
-//     * @param contactDatabase database for storing contacts.
-//     * @param appointmentDatabase database for storing appointments.
-//     */
 
-    public SecretaryAccess(Database database){
+    /**
+     *
+     * @param prescriptionDatabase database for storing prescriptions.
+     * @param patientDatabase database for storing patients.
+     * @param doctorDatabase database for storing doctors.
+     * @param secretaryDatabase database for storing secretaries.
+     * @param logDatabase database for storing logs.
+     * @param contactDatabase database for storing contacts.
+     * @param appointmentDatabase database for storing appointments.
+     */
+    public SecretaryAccess(Database database) {
         this.patientDatabase = database.getPatientDatabase();
         this.secretaryDatabase = database.getSecretaryDatabase();
         this.prescriptionManager = new PrescriptionManager(database.getPrescriptionDatabase());
@@ -170,11 +169,5 @@ public class SecretaryAccess {
         ArrayList<LogDataBundle> dataBundlesSecretary = logManager.getLogDataBundlesFromUsername(username, secretaryDatabase);
         if (dataBundlesSecretary != null){return dataBundlesSecretary;}
         return null;
-    }
-    public boolean doesPatientExist(String patient_username){
-        return patientManager.doesPatientExist(patient_username);
-    }
-    public boolean doseDoctorExist (String doctor_username){
-        return doctorManager.doesDoctorExist(doctor_username);
     }
 }
