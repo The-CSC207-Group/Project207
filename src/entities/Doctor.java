@@ -14,6 +14,10 @@ public class Doctor extends User {
         super(username, password, contactInfoId);
     }
 
+    public Doctor(String username, String password){
+        super(username, password, new Contact().getId());
+    }
+
     public ArrayList<AvailabilityData> getAvailability() {
         return availability;
     }

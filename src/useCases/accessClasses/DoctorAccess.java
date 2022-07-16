@@ -83,11 +83,10 @@ public class  DoctorAccess {
     /**
      * Change the password of this doctor. If the userId is not associated with a doctor in the database,
      * nothing happens.
-     * @param userId id of doctor.
      * @param newPassword new password of the doctor;
      */
-    public void changePassword(Integer userId, String newPassword){
-        doctorManager.changeUserPassword(userId, newPassword);
+    public void changePassword(DoctorData doctorData, String newPassword){
+        doctorManager.changeUserPassword(doctorData, newPassword);
     }
 
     /**
