@@ -47,8 +47,8 @@ public class SystemAccess {
      * @param healthNumber      Int Health number of the patient being created.
      * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                           String healthNumber) {
+    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                     String healthNumber) {
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
     }
 
@@ -99,11 +99,11 @@ public class SystemAccess {
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public PatientDataBundle patientSignIn(Integer userId, String password) {
+    public PatientData patientSignIn(Integer userId, String password) {
         Patient patient = patientDatabase.get(userId);
         if (patient.comparePassword((password))) {
             commonMethods.attachUserSignInLog(patientDatabase, userId, logManager);
-            return new PatientDataBundle(userId, patient);
+            return new PatientData(patient);
         }
         return null;
     }
