@@ -2,7 +2,7 @@ package controllers;
 
 import dataBundles.AppointmentData;
 import dataBundles.DoctorData;
-import dataBundles.LogDataBundle;
+import dataBundles.LogData;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DoctorController extends TerminalController{
     private DoctorAccess doctorAccess;
-    private DoctorScreenView view = new DoctorScreenView();
+    private DoctorScreenView doctorView = new DoctorScreenView();
 
     private DoctorData doctorData;
     private DoctorController self = this;
@@ -25,18 +25,15 @@ public class DoctorController extends TerminalController{
 
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap h = super.AllCommands();
-        h.put("loadpatient", new LoadPatient());
-        h.put("changePassword", new ChangePassword());
+        HashMap<String, Command> h = super.AllCommands();
+        h.put("load patient", new LoadPatient());
+        h.put("change password", new ChangePassword());
         h.put("show schedule", new CheckSchedule());
         h.put("show logs", new GetLogs());
+        h.put("sign out", signOut());
         return h;
     }
 
-    @Override
-    void WelcomeMessage() {
-
-    }
     class LoadPatient implements Command {
 
         @Override
@@ -77,7 +74,7 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogDataBundle> logs = doctorAccess.getLogs(doctorData.getUsername());
+            ArrayList<LogData> logs = doctorAccess.getLogs(doctorData.getUsername());
             return false;
         }
     }

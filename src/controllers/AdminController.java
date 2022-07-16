@@ -1,10 +1,9 @@
 package controllers;
 
 import dataBundles.AdminData;
-import dataBundles.LogDataBundle;
-import dataBundles.SecretaryData;
+import dataBundles.ContactData;
+import dataBundles.LogData;
 import useCases.accessClasses.AdminAccess;
-import useCases.accessClasses.SecretaryAccess;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,19 +18,25 @@ public class AdminController extends TerminalController{
     }
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap commands = super.AllCommands();
-        commands.put("Create Secretary Account", new CreateSecretaryAccount());
-        commands.put("Create Doctor account", new CreateDoctorAccount());
-        commands.put("Change Admin Password", new ChangeAdminPassword());
-        commands.put("getLogs", new getLogs());
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("create secretary", new CreateSecretaryAccount());
+        commands.put("create doctor", new CreateDoctorAccount());
+        commands.put("create patient", new CreatePatientAccount());
+        commands.put("change password", new ChangeAdminPassword());
+        commands.put("get logs", new getLogs());
+        commands.put("sign out", signOut());
         return commands;
     }
 
-    @Override
-    void WelcomeMessage() {
 
-    }
     class CreateSecretaryAccount implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
+    class CreatePatientAccount implements Command{
 
         @Override
         public boolean execute(ArrayList<String> args) {
@@ -42,6 +47,14 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
+            String username = presenter.promptPopup("Enter Username");
+            String password = presenter.promptPopup("Enter Password");
+            ContactData contact;
+//            if (adminAccess.doesDoctorExist(username)){
+//////                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
+////                presenter.successMessage("Successfully created new doctor");}
+////            else {
+////                presenter.warningMessage("This username already exists. No new doctor account created");}
             return false;
         }
     }
@@ -65,7 +78,7 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogDataBundle> logs = adminAccess.getLogs(adminData.getUsername());
+            ArrayList<LogData> logs = adminAccess.getLogs(adminData.getUsername());
             return false;
         }
     }

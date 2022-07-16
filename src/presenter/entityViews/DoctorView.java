@@ -1,21 +1,21 @@
 package presenter.entityViews;
 
-import dataBundles.AdminData;
+import dataBundles.DoctorData;
 
 import java.util.List;
 
-public class AdminView extends EntityView<AdminData> {
+public class DoctorView extends EntityView<DoctorData> {
 
     @Override
-    public String viewFull(AdminData item) {
+    public String viewFull(DoctorData item) {
         return viewUsername(item);
     }
 
-    public String viewUsername(AdminData item) {
-        return "Admin username is " + item.getUsername() + ".";
+    public String viewUsername(DoctorData item) {
+        return "Doctor username is " + item.getUsername() + ".";
     }
 
-    public String viewUsernameFromList(List<AdminData> items) {
+    public String viewUsernameFromList(List<DoctorData> items) {
         StringBuilder appendedOutput = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             appendedOutput.append(viewUsername(items.get(i)));

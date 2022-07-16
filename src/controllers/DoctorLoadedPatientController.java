@@ -20,8 +20,8 @@ public class DoctorLoadedPatientController extends TerminalController{
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> c  = super.AllCommands();
-        c.put("back", back(prev));
-        c.put("pescription", persciption());
+        c.put("unload patient", back(prev));
+        c.put("prescription", persciption());
         c.put("appointments", appointments());
         return c;
     }
@@ -49,11 +49,5 @@ public class DoctorLoadedPatientController extends TerminalController{
         return (x) -> {
             return false;
         };
-    }
-
-
-    @Override
-    void WelcomeMessage() {
-
     }
 }

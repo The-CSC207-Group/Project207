@@ -7,7 +7,6 @@ import entities.*;
 import useCases.managers.*;
 import utilities.DatabaseQueryUtility;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -156,18 +155,14 @@ public class  DoctorAccess {
     public Optional<Integer> getPatientId(String name){
         return patientManager.getPatientId(name);
     }
-    public Optional<PatientData> getPatient(Integer patientId){
-        return Optional.ofNullable(patientManager.getPatient(patientId))
-                .map(x -> new PatientData(x));
+    public Optional<PatientData> getPatient(String username){
+        return Optional.ofNullable(patientManager.getUser(username))
+                .map(PatientData::new);
     }
     public Optional<DoctorData> getDoctorData(Integer doctorId){
         return Optional.ofNullable(doctorDatabase.get(doctorId)).map(x -> new DoctorData(x));
     }
-    public Optional<PatientData> getPatient(String name){
-        return patientDatabase.stream().filter(x -> x.getUsername() == name)
-                .findFirst()
-                .map(x -> new PatientData(x));
-    }
+
 
 
 }

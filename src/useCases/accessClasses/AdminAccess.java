@@ -54,8 +54,14 @@ public class AdminAccess {
      */
     public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber) {
-        return patientManager.createPatient(username, password, contactData, healthNumber);
+        return patientManager.createPatient(username, password);
 
+    }
+    public DoctorData createDoctor (String username, String password){
+        return doctorManager.createDoctor(username, password);
+    }
+    public SecretaryData createSecretary (String username, String password){
+        return secretaryManager.createSecretary(username, password);
     }
 
     /**

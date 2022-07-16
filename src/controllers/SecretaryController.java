@@ -1,7 +1,7 @@
 package controllers;
 
 import dataBundles.ContactData;
-import dataBundles.LogDataBundle;
+import dataBundles.LogData;
 import dataBundles.SecretaryData;
 import useCases.accessClasses.SecretaryAccess;
 
@@ -23,19 +23,15 @@ public class SecretaryController extends TerminalController {
 
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap commands = super.AllCommands();
-        commands.put("changePassword", new ChangePassword());
-        commands.put("createPatientAccount", new CreatePatientAccount());
-        commands.put("createDoctorAccount", new CreateDoctorAccount());
-        commands.put("getLogs", new Logs());
-        commands.put("Load Patient", new LoadPatient());
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("change password", new ChangePassword());
+        commands.put("create patient", new CreatePatientAccount());
+        commands.put("create doctor", new CreateDoctorAccount());
+        commands.put("get logs", new GetLogs());
+        commands.put("load patient", new LoadPatient());
         return commands;
     }
 
-    @Override
-    void WelcomeMessage() {
-
-    }
     class LoadPatient implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
@@ -70,11 +66,11 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
+
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
-            ContactData contact;
             if (secretaryAccess.doesDoctorExist(username)){
-//                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
+                secretaryAccess.createDoctor(username, password);
                 presenter.successMessage("Successfully created new doctor");}
             else {
                 presenter.warningMessage("This username already exists. No new doctor account created");}
@@ -88,7 +84,7 @@ public class SecretaryController extends TerminalController {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changeSecretaryPassword(secretaryData.getSecretaryId(), p1 );
+                secretaryAccess.changeSecretaryPassword(secretaryData, p1 );
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
@@ -96,11 +92,11 @@ public class SecretaryController extends TerminalController {
             return false;
         }
     }
-    class Logs implements Command{
+    class GetLogs implements Command{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            ArrayList<LogDataBundle> logs = secretaryAccess.getLogs(secretaryData.getUsername());
+            ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData.getUsername());
             return false;
         }
     }

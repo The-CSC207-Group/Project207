@@ -4,7 +4,7 @@ import entities.Admin;
 
 import java.util.ArrayList;
 
-public class AdminData extends UserDataBundle<Admin>{
+public class AdminData extends UserData<Admin> {
     private final Admin admin;
 
     public AdminData(Admin admin) {

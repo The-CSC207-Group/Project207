@@ -4,7 +4,7 @@ import entities.Secretary;
 
 import java.util.ArrayList;
 
-public class SecretaryData extends UserDataBundle<Secretary> {
+public class SecretaryData extends UserData<Secretary> {
     private final Secretary secretary;
 
     public SecretaryData(Secretary secretary) {

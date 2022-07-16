@@ -4,10 +4,10 @@ import entities.User;
 
 import java.util.ArrayList;
 
-public abstract class UserDataBundle<T extends User> extends DataBundle{
+public abstract class UserData<T extends User> extends DataBundle{
     T user;
 
-    public UserDataBundle(T user){
+    public UserData(T user){
         super(user);
         this.user = user;
     }

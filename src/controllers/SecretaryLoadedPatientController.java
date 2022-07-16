@@ -26,18 +26,17 @@ public class SecretaryLoadedPatientController extends TerminalController{
 
     public HashMap<String, Command> AllCommands(){
         HashMap<String, Command> command  = super.AllCommands();
-        command.put("View Active Prescription", new ViewActivePrescription());
-        command.put("View All Prescriptions", new ViewPrescriptionHistory());
-        command.put("View Patient Appointments", new ViewAppointments());
-        command.put("Change Patient Password", new ChangePatientPassword());
-        command.put("Book Appointment", new BookAppointment());
-        command.put("Reschedule Appointment", new RescheduleAppointment());
-        command.put("Cancel Appointment", new CancelAppointment());
+        command.put("view active prescription", new ViewActivePrescription());
+        command.put("view all prescriptions", new ViewPrescriptionHistory());
+        command.put("view appointments", new ViewAppointments());
+        command.put("change patient password", new ChangePatientPassword());
+        command.put("book appointment", new BookAppointment());
+        command.put("reschedule appointment", new RescheduleAppointment());
+        command.put("cancel appointment", new CancelAppointment());
+        command.put("unload patient", back(secretaryController));
         return command;
     }
-    @Override
-    void WelcomeMessage() {
-    }
+
     class ViewActivePrescription implements Command {
         @Override
         public boolean execute(ArrayList<String> args) {
@@ -70,7 +69,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changePatientPassword(patientData.getPatientUsername(), p1);
+                secretaryAccess.changePatientPassword(patientData, p1);
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
