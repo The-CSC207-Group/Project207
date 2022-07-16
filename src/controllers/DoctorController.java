@@ -54,12 +54,12 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            String password = presenter.promptPopup("chooseNewPassword");
-            String password2 = presenter.promptPopup("validatePassword");
-            if (password2 == password){
-                doctorAccess.changePassword(doctorData.getId(), password );
+            String newPassword1 = presenter.promptPopup("Enter a new password");
+            String newPassword2 = presenter.promptPopup("Re-enter the new password");
+            if (newPassword1.equals(newPassword2)){
+                doctorAccess.changePassword(doctorData.getId(), newPassword1);
             } else {
-                presenter.errorMessage("these do not match");
+                presenter.errorMessage("These do not match");
             }
             return false;
         }
