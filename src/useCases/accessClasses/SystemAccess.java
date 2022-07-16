@@ -84,7 +84,7 @@ public class SystemAccess {
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public DoctorData doctorData(String username, String password) {
+    public DoctorData doctorSignIn(String username, String password) {
         Doctor doctor = doctorDatabase.getByCondition(user -> user.getUsername().equals(username));
         if (doctor == null || !doctor.comparePassword(password)) {
             return null;
