@@ -20,10 +20,6 @@ public class AdminData extends UserDataBundle<Admin>{
         return admin.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs() {
-        return admin.getLogIds();
-    }
-
     public Integer getId() {
         return admin.getId();
     }

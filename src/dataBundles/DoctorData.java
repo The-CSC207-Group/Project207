@@ -22,10 +22,6 @@ public class DoctorData extends UserDataBundle<Doctor>{
         return doctor.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs(){
-        return doctor.getLogIds();
-    }
-
     public ArrayList<AvailabilityData> getAvailability(){
         return doctor.getAvailability();
     }

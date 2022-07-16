@@ -16,7 +16,7 @@ class AccessCommonMethods {
     protected  <T extends User> void attachUserSignInLog(DataMapperGateway<T> database, Integer userId, LogManager logManager) {
         User user = database.get(userId);
         if (user != null){
-            logManager.addLog(user.getUsername() + " signed in", userId, database);
+            logManager.addLog(user.getUsername() + " signed in", userId);
         }
     }
 }

@@ -1,9 +1,6 @@
 package useCases.accessClasses;
 
-import dataBundles.AppointmentData;
-import dataBundles.LogDataBundle;
-import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
+import dataBundles.*;
 import database.DataMapperGateway;
 import database.Database;
 import entities.*;
@@ -81,10 +78,10 @@ public class PatientAccess {
 
     /**
      * Gets an arraylist of log data bundles associated with a username. Should only get logs from the logged in patients.
-     * @param username - username of the user whose logs we want to get.
+     * @param userData - username of the user whose logs we want to get.
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
-    public ArrayList<LogDataBundle> getLogs(String username){
-        return logManager.getLogDataBundlesFromUsername(username, patientDatabase);
+    public <T extends User> ArrayList<LogDataBundle> getLogs(UserDataBundle<T> userData){
+        return logManager.getLogDataBundlesFromUserDataBundle(userData);
     }
 }

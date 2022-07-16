@@ -20,9 +20,6 @@ public abstract class UserDataBundle<T extends User> extends DataBundle{
         return user.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs() {
-        return user.getLogIds();
-    }
 
 
 

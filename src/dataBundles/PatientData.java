@@ -20,17 +20,9 @@ public class PatientData extends UserDataBundle<Patient>{
         return patient.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs() {
-        return patient.getLogIds();
-    }
-
 
     public String getHealthNumber() {
         return patient.getHealthNumber();
-    }
-
-    public ArrayList<Integer> getReports() {
-        return patient.getReportIds();
     }
 
     public Integer getId() {

@@ -20,10 +20,6 @@ public class SecretaryData extends UserDataBundle<Secretary> {
         return secretary.getContactInfoId();
     }
 
-    public ArrayList<Integer> getLogs(){
-        return secretary.getLogIds();
-    }
-
     public Integer getSecretaryId() {
         return secretary.getId();
     }

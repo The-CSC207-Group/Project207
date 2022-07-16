@@ -275,7 +275,7 @@ public class DatabaseTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Log> originalLogDatabase = originalDatabase.getLogDatabase();
 
-        Log originalLog = new Log("jeff");
+        Log originalLog = new Log(userId, "jeff");
 
         Integer logID = originalLogDatabase.add(originalLog);
         originalLogDatabase.save();

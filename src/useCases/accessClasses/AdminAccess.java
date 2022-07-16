@@ -73,23 +73,11 @@ public class AdminAccess {
 
     /**
      * Gets an arraylist of log data bundles associated with a username. Can get logs from admins, patients, secretaries and doctors.
-     * @param username - username of the user whose logs we want to get.
+     * @param userDataBundle - username of the user whose logs we want to get.
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
-    public ArrayList<LogDataBundle> getLogs(String username) {
-
-        ArrayList<LogDataBundle> dataBundlesPatient =  logManager.getLogDataBundlesFromUsername(username, patientDatabase);
-        if (dataBundlesPatient != null){return dataBundlesPatient;}
-
-        ArrayList<LogDataBundle> dataBundlesSecretary = logManager.getLogDataBundlesFromUsername(username, secretaryDatabase);
-        if (dataBundlesSecretary != null){return dataBundlesSecretary;}
-
-        ArrayList<LogDataBundle> dataBundlesDoctor = logManager.getLogDataBundlesFromUsername(username, doctorDatabase);
-        if (dataBundlesDoctor != null){return dataBundlesDoctor;}
-
-        ArrayList<LogDataBundle> dataBundlesAdmin = logManager.getLogDataBundlesFromUsername(username, adminDatabase);
-        if (dataBundlesAdmin != null){return dataBundlesAdmin;}
-        return null;
+    public <T extends User>ArrayList<LogDataBundle> getLogs(UserDataBundle<T> userDataBundle) {
+        return logManager.getLogDataBundlesFromUserDataBundle(userDataBundle);
     }
 
     private <T extends User> void changePassUsingUsername(DataMapperGateway<T> database, String username, String newPassword){
