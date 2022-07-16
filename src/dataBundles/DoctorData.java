@@ -4,12 +4,14 @@ import entities.AvailabilityData;
 import entities.Doctor;
 import entities.TimeBlock;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 
-public class DoctorData {
+public class DoctorData extends UserDataBundle<Doctor>{
     private final Doctor doctor;
 
     public DoctorData(Doctor doctor) {
+        super(doctor);
         this.doctor = doctor;
     }
     public String getUsername(){

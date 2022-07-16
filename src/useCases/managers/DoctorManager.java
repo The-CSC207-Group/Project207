@@ -5,8 +5,9 @@ import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import entities.Contact;
 import entities.Doctor;
+import entities.User;
 
-public class DoctorManager {
+public class DoctorManager extends UserManager<Doctor> {
 
     DataMapperGateway<Doctor> doctorDatabase;
     GenericUserManagerMethods<Doctor> doctorMethods;
@@ -18,6 +19,7 @@ public class DoctorManager {
      * @param contactDatabase DataMapperGateway<Contact>
      */
     public DoctorManager(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Contact> contactDatabase) {
+        super(doctorDatabase);
         this.doctorDatabase = doctorDatabase;
         this.doctorMethods = new GenericUserManagerMethods<>(doctorDatabase);
         this.contactDatabase = contactDatabase;
