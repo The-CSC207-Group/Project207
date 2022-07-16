@@ -115,7 +115,7 @@ public class SecretaryAccess {
      * @param userId id of secretary/patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePassword(Integer userId, String newPassword){
+    public void changeSecretaryPassword(Integer userId, String newPassword){
         secretaryManager.changeUserPassword(userId, newPassword);
         patientManager.changeUserPassword(userId, newPassword);
     }
@@ -126,7 +126,7 @@ public class SecretaryAccess {
      * @param patientUsername username of patient.
      * @param newPassword new password of the secretary/patient;
      */
-    public void changePassword(String patientUsername, String newPassword){
+    public void changePatientPassword(String patientUsername, String newPassword){
         Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
         if (patient != null) {
             secretaryManager.changeUserPassword(patient.getId(), newPassword);
@@ -138,7 +138,7 @@ public class SecretaryAccess {
         return appointmentManager.getScheduleData(doctorId, selectedDay);
     }
     public AppointmentData bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
-        return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
+        //return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
     }
     public void removeAppointment(Integer appointmentId){
         appointmentManager.removeAppointment(appointmentId);
@@ -169,7 +169,7 @@ public class SecretaryAccess {
     public boolean doesPatientExist(String patient_username){
         return patientManager.doesPatientExist(patient_username);
     }
-    public boolean doseDoctorExist (String doctor_username){
+    public boolean doesDoctorExist (String doctor_username){
         return doctorManager.doesDoctorExist(doctor_username);
     }
     public Optional<PatientData> getPatient(String name){

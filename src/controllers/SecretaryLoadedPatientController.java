@@ -58,4 +58,11 @@ public class SecretaryLoadedPatientController extends TerminalController{
             return false;
         }
     }
+    class ChangePatientPassword implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
 }
