@@ -41,14 +41,13 @@ abstract public class TerminalController {
     }
 
     void ProcessCommands() {
-//        getDatabase().save();
-
+        getDatabase().save();
         String command = presenter.promptPopup(">>> ");
         if (!AllCommands().containsKey(command)) {
             presenter.errorMessage("Invalid command: " + command);
         } else {
             AllCommands().get(command).execute(new ArrayList<>());
-//            getDatabase().save();
+            getDatabase().save();
         }
     }
 
