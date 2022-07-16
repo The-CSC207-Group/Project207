@@ -71,7 +71,7 @@ public class SecretaryController extends TerminalController {
             String password = presenter.promptPopup("Enter Password");
             ContactData contact;
             if (secretaryAccess.doesDoctorExist(username)){
-//                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
+                secretaryAccess.createDoctor(username, password);
                 presenter.successMessage("Successfully created new doctor");}
             else {
                 presenter.warningMessage("This username already exists. No new doctor account created");}
