@@ -1,6 +1,6 @@
 package controllers;
 
-import dataBundles.DoctorDataBundle;
+import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import presenter.screenViews.DoctorView;
 import useCases.accessClasses.DoctorAccess;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class DoctorLoadedPatientController extends TerminalController{
     PatientData patientData;
-    DoctorDataBundle doctorData;
+    DoctorData doctorData;
     DoctorAccess doctorAccess;
 
     DoctorView doctorView = new DoctorView();
@@ -25,7 +25,7 @@ public class DoctorLoadedPatientController extends TerminalController{
         return c;
     }
 
-    public DoctorLoadedPatientController(Context parent, DoctorController prev, DoctorDataBundle doctorData, PatientData patientData) {
+    public DoctorLoadedPatientController(Context parent, DoctorController prev, DoctorData doctorData, PatientData patientData) {
         super(parent);
         this.patientData = patientData;
         this.doctorData = doctorData;

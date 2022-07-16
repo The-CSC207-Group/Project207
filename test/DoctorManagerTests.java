@@ -1,5 +1,5 @@
 import dataBundles.ContactDataBundle;
-import dataBundles.DoctorDataBundle;
+import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
@@ -38,7 +38,7 @@ public class DoctorManagerTests {
 
         DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
 
-        DoctorDataBundle doctorDataBundle = doctorManager.createDoctor(username, password, contactDataBundle);
+        DoctorData doctorDataBundle = doctorManager.createDoctor(username, password, contactDataBundle);
 
         /* Testing if the return doctor data bundle is valid by testing if the fields of are equal to the parameters of
         createDoctor */

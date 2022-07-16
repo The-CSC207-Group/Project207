@@ -1,7 +1,6 @@
 package controllers;
 
 import dataBundles.PatientData;
-import dataBundles.PatientData;
 import dataBundles.SecretaryDataBundle;
 import useCases.accessClasses.SecretaryAccess;
 
