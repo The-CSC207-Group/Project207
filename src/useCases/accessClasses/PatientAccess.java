@@ -2,6 +2,7 @@ package useCases.accessClasses;
 
 import dataBundles.AppointmentData;
 import dataBundles.LogDataBundle;
+import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
@@ -74,8 +75,8 @@ public class PatientAccess {
     public ArrayList<PrescriptionData> getAllPrescriptions(Integer userId){
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
     }
-    public ArrayList<AppointmentData> getAppointments(Integer patientId){
-        return appointmentManager.getPatientAppointments(patientId);
+    public ArrayList<AppointmentData> getAppointments(PatientData patientData){
+        return appointmentManager.getPatientAppointments(patientData);
     }
 
     /**
