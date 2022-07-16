@@ -41,6 +41,13 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
+            String username = presenter.promptPopup("Enter Username");
+            String password = presenter.promptPopup("Enter Password");
+            if (adminAccess.doesSecretaryExist(username)){
+                adminAccess.createSecretary(username, password);
+                presenter.successMessage("Successfully created new secretary");}
+            else {
+                presenter.warningMessage("This username already exists. No new secretary account created");}
             return false;
         }
     }
@@ -48,6 +55,13 @@ public class AdminController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
+            String username = presenter.promptPopup("Enter Username");
+            String password = presenter.promptPopup("Enter Password");
+            if (adminAccess.doesPatientExist(username)){
+                adminAccess.createPatient(username, password);
+                presenter.successMessage("Successfully created new patient");}
+            else {
+                presenter.warningMessage("This username already exists. No new patient account created");}
             return false;
         }
     }
@@ -57,12 +71,11 @@ public class AdminController extends TerminalController{
         public boolean execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
-
-//            if (adminAccess.doesDoctorExist(username)){
-//               secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
-//                presenter.successMessage("Successfully created new doctor");}
-//            else {
-//                presenter.warningMessage("This username already exists. No new doctor account created");}
+            if (adminAccess.doesDoctorExist(username)){
+               adminAccess.createDoctor(username, password);
+                presenter.successMessage("Successfully created new doctor");}
+            else {
+                presenter.warningMessage("This username already exists. No new doctor account created");}
             return false;
         }
     }
