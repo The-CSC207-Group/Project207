@@ -70,7 +70,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                secretaryAccess.changePatientPassword(patientData.getPatientUsername(), p1);
+                secretaryAccess.changePatientPassword(patientData, p1);
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");

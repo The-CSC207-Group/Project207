@@ -108,30 +108,28 @@ public class SecretaryAccess {
         if (patient == null){return null;}
         return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
     }
-//    /**
-//     * Change the password of the signed in secretary or a patient. If the userId is not associated with a secretary/patient
-//     * in the database, nothing happens.
-//     * @param userId id of secretary/patient.
-//     * @param newPassword new password of the secretary/patient;
-//     */
-//    public void changeSecretaryPassword(Integer userId, String newPassword){
-//        secretaryManager.changeUserPassword(userId, newPassword);
-//        patientManager.changeUserPassword(userId, newPassword);
-//    }
+    /**
+     * Change the password of the signed in secretary or a patient. If the userId is not associated with a secretary/patient
+     * in the database, nothing happens.
+     * @param userId id of secretary/patient.
+     * @param newPassword new password of the secretary/patient;
+     */
+    public void changeSecretaryPassword(SecretaryData secretaryData, String newPassword){
+        secretaryManager.changeUserPassword(secretaryData, newPassword);
+    }
 
-//    /**
-//     * Change the password of a patient by their username. If the userId is not associated with a patient
-//     * in the database, nothing happens.
-//     * @param patientUsername username of patient.
-//     * @param newPassword new password of the secretary/patient;
-//     */
-//    public void changePatientPassword(String patientUsername, String newPassword){
-//        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
-//        if (patient != null) {
-//            secretaryManager.changeUserPassword(patient.getId(), newPassword);
-//            patientManager.changeUserPassword(patient.getId(), newPassword);
-//        }
-//    }
+    /**
+     * Change the password of a patient by their username. If the userId is not associated with a patient
+     * in the database, nothing happens.
+     * @param patientUsername username of patient.
+     * @param newPassword new password of the secretary/patient;
+     */
+    public void changePatientPassword(PatientData patientData, String newPassword){
+        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientData.getUsername());
+        if (patient != null) {
+            patientManager.changeUserPassword(patientData, newPassword);
+        }
+    }
 
     public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
         return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
