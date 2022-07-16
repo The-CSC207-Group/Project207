@@ -10,12 +10,14 @@ public class SecretaryLoadedPatientController extends TerminalController{
     PatientData patientData;
     SecretaryDataBundle secretaryDataBundle;
     SecretaryAccess secretaryAccess;
-    DoctorController doctorController;
+    SecretaryController secretaryController;
 
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
-                                            PatientData patientDataBundle) {
-
+                                            PatientData patientData) {
         super(context);
+        this.secretaryController = secretaryController;
+        this.patientData = patientData;
+        this.secretaryAccess = new SecretaryAccess(getDatabase());
     }
 
 
