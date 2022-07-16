@@ -80,64 +80,64 @@ public class SystemAccess {
 
     /**
      * Sign In method for doctors.
-     * @param userId   Integer userId of the user
+     * @param username String username of the user trying to sign in
      * @param password String password of the user trying to sign in
-     * @return AppointmentData if sign in is successful, or else return null.
+     * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public DoctorData doctorSignIn(Integer userId, String password) {
-        Doctor doctor = doctorDatabase.get(userId);
-        if (doctor.comparePassword(password)) {
-            commonMethods.attachUserSignInLog(doctorDatabase, userId, logManager);
+    public DoctorData doctorData(String username, String password) {
+        Doctor doctor = doctorDatabase.getByCondition(user -> user.getUsername().equals(username));
+        if (doctor == null || !doctor.comparePassword(password)) {
+            return null;
+        } else {
             return new DoctorData(doctor);
         }
-        return null;
     }
 
     /**
      * Sign In method for Patients.
-     * @param userId   Integer userId of the user
+     * @param username String username of the user trying to sign in
      * @param password String password of the user trying to sign in
-     * @return AppointmentData if sign in is successful, or else return null.
+     * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public PatientData patientSignIn(Integer userId, String password) {
-        Patient patient = patientDatabase.get(userId);
-        if (patient.comparePassword((password))) {
-            commonMethods.attachUserSignInLog(patientDatabase, userId, logManager);
+    public PatientData patientSignIn(String username, String password) {
+        Patient patient = patientDatabase.getByCondition(user -> user.getUsername().equals(username));
+        if (patient == null || !patient.comparePassword(password)) {
+            return null;
+        } else {
             return new PatientData(patient);
         }
-        return null;
     }
 
     /**
      * Sign In method for Secretaries.
-     * @param userId   Integer userId of the user
+     *
+     * @param username String username of the user trying to sign in
      * @param password String password of the user trying to sign in
-     * @return AppointmentData if sign in is successful, or else return null.
+     * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public SecretaryData secretarySignIn(Integer userId, String password) {
-        Secretary secretary = secretaryDatabase.get(userId);
-        if (secretary.comparePassword(password)) {
-            commonMethods.attachUserSignInLog(secretaryDatabase, userId, logManager);
+    public SecretaryData secretarySignIn(String username, String password) {
+        Secretary secretary = secretaryDatabase.getByCondition(user -> user.getUsername().equals(username));
+        if (secretary == null || !secretary.comparePassword(password)) {
+            return null;
+        } else {
             return new SecretaryData(secretary);
         }
-        return null;
     }
 
     /**
      * Sign In method for admins.
-     * @param userId   Integer userId of the user
+     * @param username String username of the user trying to sign in
      * @param password String password of the user trying to sign in
-     * @return AppointmentData if sign in is successful, or else return null.
+     * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public AdminData adminSignIn(Integer userId, String password) {
-        Admin admin = adminDatabase.get(userId);
-        if (admin.comparePassword(password)) {
-            commonMethods.attachUserSignInLog(adminDatabase, userId, logManager);
+    public AdminData adminSignIn(String username, String password) {
+        Admin admin = adminDatabase.getByCondition(user -> user.getUsername().equals(username));
+        if (admin == null || !admin.comparePassword(password)) {
+            return null;
+        } else {
             return new AdminData(admin);
         }
-        return null;
     }
-
 
 }
 
