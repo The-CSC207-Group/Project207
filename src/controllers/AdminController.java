@@ -27,10 +27,7 @@ public class AdminController extends TerminalController{
         return commands;
     }
 
-    @Override
-    void WelcomeMessage() {
 
-    }
     class CreateSecretaryAccount implements Command{
 
         @Override
