@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.AdminData;
+import dataBundles.ContactData;
 import dataBundles.LogDataBundle;
 import dataBundles.SecretaryData;
 import useCases.accessClasses.AdminAccess;
@@ -22,6 +23,7 @@ public class AdminController extends TerminalController{
         HashMap commands = super.AllCommands();
         commands.put("Create Secretary Account", new CreateSecretaryAccount());
         commands.put("Create Doctor account", new CreateDoctorAccount());
+        commands.put("Create Patient account", new CreatePatientAccount());
         commands.put("Change Admin Password", new ChangeAdminPassword());
         commands.put("getLogs", new getLogs());
         return commands;
@@ -38,10 +40,25 @@ public class AdminController extends TerminalController{
             return false;
         }
     }
+    class CreatePatientAccount implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            return false;
+        }
+    }
     class CreateDoctorAccount implements Command{
 
         @Override
         public boolean execute(ArrayList<String> args) {
+            String username = presenter.promptPopup("Enter Username");
+            String password = presenter.promptPopup("Enter Password");
+            ContactData contact;
+//            if (adminAccess.doesDoctorExist(username)){
+//////                secretaryAccess.createDoctor(username, password, contact);// need to implement error or success message
+////                presenter.successMessage("Successfully created new doctor");}
+////            else {
+////                presenter.warningMessage("This username already exists. No new doctor account created");}
             return false;
         }
     }
