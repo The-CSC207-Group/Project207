@@ -16,7 +16,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
                                             PatientData patientData) {
         super(context);
         this.secretaryController = secretaryController;
-        this. patientData = patientData;
+        this.patientData = patientData;
         this.secretaryAccess = new SecretaryAccess(getDatabase());
     }
 
