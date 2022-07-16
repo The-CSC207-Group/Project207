@@ -5,6 +5,7 @@ import entities.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 public class Database {
@@ -87,8 +88,14 @@ public class Database {
         return contactDatabase;
     }
 
-    public DataMapperGateway<Clinic> getClinicDatabase() {
-        return clinicDatabase;
+    public Clinic getClinic() {
+        Optional<Clinic> clinic = clinicDatabase.stream().findFirst();
+        return clinic.orElse(null);
+    }
+
+    public void setClinic(Clinic clinic) {
+        clinicDatabase.stream().forEach(c -> clinicDatabase.remove(c.getId()));
+        clinicDatabase.add(clinic);
     }
 
     public void save() {
