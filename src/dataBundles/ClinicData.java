@@ -32,4 +32,12 @@ public class ClinicData {
         return clinic.getName();
     }
 
+    public Integer getClinicId() {
+        return clinic.getId();
+    }
+
+
+
+
+
 }

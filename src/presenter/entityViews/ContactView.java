@@ -48,15 +48,15 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     public String viewFull(ContactData item) {
-        return "Your name is " + item.getName() + ".\n" +
-                "Your email is " + item.getEmail() + ".\n" +
-                "Your phone number is " + item.getPhoneNumber() + ".\n" +
-                "Your address is " + item.getAddress() + ".\n" +
-                "Your date of birth is " + item.getBirthday().toString() + ".\n" +
-                "Your emergency contact name is " + item.getEmergencyContactName() + ".\n" +
-                "Your emergency contact email is " + item.getEmergencyContactEmail() + ".\n" +
-                "Your emergency contact phone number is " + item.getEmergencyContactPhoneNumber() + ".\n" +
-                "Your emergency contact is your " + item.getEmergencyRelationship() + ".";
+        return viewName(item) + "\n"
+                + viewEmail(item) + "\n"
+                + viewPhoneNumber(item) + "\n"
+                + viewAddress(item) + "\n"
+                + viewBirthday(item) + "\n"
+                + viewEmergencyContactName(item) + "\n"
+                + viewEmergencyContactEmail(item) + "\n"
+                + viewEmergencyContactPhoneNumber(item) + "\n"
+                + viewEmergencyRelationship(item);
     }
 
     public String viewNameFromList(List<ContactData> items) {
