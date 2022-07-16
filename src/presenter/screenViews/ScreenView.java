@@ -1,5 +1,7 @@
 package presenter.screenViews;
 
+import presenter.response.UserCredentials;
+
 import java.util.Scanner;
 
 public abstract class ScreenView {
@@ -21,7 +23,15 @@ public abstract class ScreenView {
         System.out.println("⚠ " + message);
     }
 
-    public void errorMessage(String message) {
+    protected void errorMessage(String message) {
         System.out.println("✗ " + message);
+    }
+
+
+    protected UserCredentials registerAccountPrompt(String accountType) {
+        infoMessage("You are about to create a new " + accountType + " account.");
+        String username = input("Enter " + accountType + " username: ");
+        String password = input("Enter " + accountType + " password: ");
+        return new UserCredentials(username, password);
     }
 }
