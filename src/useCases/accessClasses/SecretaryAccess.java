@@ -2,6 +2,7 @@ package useCases.accessClasses;
 
 import dataBundles.*;
 import database.DataMapperGateway;
+import database.Database;
 import entities.*;
 import useCases.managers.*;
 import utilities.DatabaseQueryUtility;
@@ -37,20 +38,15 @@ public class SecretaryAccess {
      * @param contactDatabase database for storing contacts.
      * @param appointmentDatabase database for storing appointments.
      */
-    public SecretaryAccess(DataMapperGateway<Prescription> prescriptionDatabase,
-                           DataMapperGateway<Patient> patientDatabase, DataMapperGateway<Doctor>
-                                   doctorDatabase, DataMapperGateway<Secretary> secretaryDatabase,
-                           DataMapperGateway<Log> logDatabase,
-                           DataMapperGateway<Contact> contactDatabase,
-                           DataMapperGateway<Appointment> appointmentDatabase) {
-        this.patientDatabase = patientDatabase;
-        this.secretaryDatabase = secretaryDatabase;
-        this.prescriptionManager = new PrescriptionManager(prescriptionDatabase);
-        this.patientManager = new PatientManager(patientDatabase, contactDatabase);
-        this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+    public SecretaryAccess(Database database) {
+        this.patientDatabase = database.getPatientDatabase();
+        this.secretaryDatabase = database.getSecretaryDatabase();
+        this.prescriptionManager = new PrescriptionManager(database.getPrescriptionDatabase());
+        this.patientManager = new PatientManager(database);
+        this.doctorManager = new DoctorManager(database.getDoctorDatabase(), database.getContactDatabase());
         this.secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
-        this.logManager = new LogManager(logDatabase);
-        this.appointmentManager = new AppointmentManager(appointmentDatabase, doctorDatabase);
+        this.logManager = new LogManager(database.getLogDatabase());
+        this.appointmentManager = new AppointmentManager(database);
     }
 
     /**

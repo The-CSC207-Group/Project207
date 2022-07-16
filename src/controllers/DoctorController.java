@@ -42,10 +42,9 @@ public class DoctorController extends TerminalController{
         @Override
         public boolean execute(ArrayList<String> args) {
             String name = presenter.promptPopup("name");
-            doctorAccess.getPatient(name).map(
-                    (x) -> {
-                        changeCurrentController(new DoctorLoadedPatientController(getContext(), self, doctorData, x));
-                        return null;
+            doctorAccess.getPatient(name).ifPresent(
+                    (patientData) -> {
+                        changeCurrentController(new DoctorLoadedPatientController(getContext(), self, doctorData, patientData));
                     }
             );
             return false;

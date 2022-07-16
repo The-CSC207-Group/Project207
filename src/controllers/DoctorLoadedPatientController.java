@@ -22,9 +22,6 @@ public class DoctorLoadedPatientController extends TerminalController{
         c.put("back", back(prev));
         c.put("pescription", persciption());
         c.put("appointments", appointments());
-
-
-
         return c;
     }
 

@@ -10,7 +10,7 @@ public class AppointmentQueries {
         this.appointment = appointment;
     }
     public boolean isDoctorsAppointment(Integer doctorId){
-        return appointment.getDoctorId() == doctorId;
+        return appointment.getDoctorId().equals(doctorId);
     }
 
 }
