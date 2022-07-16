@@ -70,6 +70,7 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
+
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             ContactData contact;
