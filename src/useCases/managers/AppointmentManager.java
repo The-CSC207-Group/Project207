@@ -34,12 +34,17 @@ public class AppointmentManager {
     }
 
     /**
-     * Books an appointment and adds it to the Appointment database after validating the proposed time scheduled for
-     * the new appointment.
-     * @param patientId     id of the patient the Appointment was assigned to.
-     * @param doctorId      id of the doctor the Appointment was assigned to.
-     * @param proposedTime  the new proposed TimeBlock representing the duration of an Appointment.
-     * @return an AppointmentData that represents the new Appointment that has been booked.
+     *
+     * @param patientData       data representing a patient entity.
+     * @param doctorData        data representing a doctor entity.
+     * @param year              an integer value that represents a year.
+     * @param month             an integer value that represents a month of a year.
+     * @param day               an integer value that represents a day of a month.
+     * @param hour              an integer value that represents an hour of a day.
+     * @param minute            an integer value that represents a minute of an hour.
+     * @param lenOfAppointment  an integer value in minutes that represents the length of an appointment.
+     * @return  returns the newly booked appointment in an AppointmentData form. itherwise returns null if invalid time
+     * was submitted.
      */
     public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
                                            Integer year, Integer month, Integer day, Integer hour, Integer minute,
@@ -48,7 +53,7 @@ public class AppointmentManager {
                 lenOfAppointment);
         //add validation
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
-                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
+                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData,
                 proposedTime.getStartTime().toLocalDate()), proposedTime)) {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
@@ -71,7 +76,7 @@ public class AppointmentManager {
 
     /**
      *  removes an Appointment from the database.
-     * @param appointmentId: Integer id of the Appointment.
+     * @param appointmentData   data representing an appointment entity.
      */
     public void removeAppointment(AppointmentData appointmentData){
         appointmentDatabase.remove(appointmentData.getAppointmentId());
@@ -79,14 +84,14 @@ public class AppointmentManager {
 
     /**
      *
-     * @param appointmentData data that represents an appointment entity
-     * @param year            an integer value that represents a year
-     * @param month           an integer value that represents a month of a year
-     * @param day               
-     * @param hour
-     * @param minute
-     * @param lenOfAppointment
-     * @return
+     * @param appointmentData data that represents an appointment entity.
+     * @param year              an integer value that represents a year.
+     * @param month             an integer value that represents a month of a year.
+     * @param day               an integer value that represents a day of a month.
+     * @param hour              an integer value that represents an hour of a day.
+     * @param minute            an integer value that represents a minute of an hour.
+     * @param lenOfAppointment  an integer value in minutes that represents the length of an appointment.
+     * @return a boolean representing if the appointment successfully rescheduled.
      */
     public boolean rescheduleAppointment(AppointmentData appointmentData, Integer year, Integer month, Integer day, Integer hour, Integer minute,
                                          Integer lenOfAppointment){

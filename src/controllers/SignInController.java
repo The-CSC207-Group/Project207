@@ -1,8 +1,6 @@
 package controllers;
 
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.SecretaryData;
+import dataBundles.*;
 import useCases.accessClasses.SystemAccess;
 
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ public class SignInController extends TerminalController {
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("sign in", new SignInCommand());
-        commands.put("register", new RegisterCommand());
         return commands;
     }
 
@@ -44,7 +41,8 @@ public class SignInController extends TerminalController {
             String password = responses.get(fields.get(1));
             
             if (systemAccess.adminSignIn(username, password) != null) {
-                return false;
+                AdminData adminData = systemAccess.adminSignIn(username, password);
+                new AdminController(getContext(), adminData);
                 
             } else if (systemAccess.patientSignIn(username, password) != null) {
                 PatientData patientData = systemAccess.patientSignIn(username, password);
@@ -66,24 +64,6 @@ public class SignInController extends TerminalController {
         }
     }
 
-    class RegisterCommand implements Command {
-
-        @Override
-        public boolean execute(ArrayList<String> args) {
-            List<String> fields = Arrays.asList("username", "password");
-            HashMap<String, String> responses = presenter.promptPopup(fields);
-            String username = responses.get(fields.get(0));
-            String password = responses.get(fields.get(1));
-
-//            if (systemManager.createUser(username, password)) {
-//                presenter.successMessage("User " + username + " has been created");
-//            } else {
-//                presenter.errorMessage("Failed to create user: Username already exists");
-//            }
-
-            return true;
-        }
-    }
     class BackCommand implements Command{
 
         @Override
