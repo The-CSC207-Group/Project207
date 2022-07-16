@@ -7,8 +7,16 @@ import java.util.List;
 public class ContactView extends EntityView<ContactData> {
 
     @Override
-    public String view(ContactData item) {
-        return null;
+    public String viewFull(ContactData item) {
+        return viewName(item) + "\n"
+                + viewEmail(item) + "\n"
+                + viewPhoneNumber(item) + "\n"
+                + viewAddress(item) + "\n"
+                + viewBirthday(item) + "\n"
+                + viewEmergencyContactName(item) + "\n"
+                + viewEmergencyContactEmail(item) + "\n"
+                + viewEmergencyContactPhoneNumber(item) + "\n"
+                + viewEmergencyRelationship(item);
     }
 
     public String viewName(ContactData item) {
@@ -45,18 +53,6 @@ public class ContactView extends EntityView<ContactData> {
 
     public String viewEmergencyRelationship(ContactData item) {
         return "Your emergency contact is your " + item.getEmergencyRelationship() + ".";
-    }
-
-    public String viewFull(ContactData item) {
-        return viewName(item) + "\n"
-                + viewEmail(item) + "\n"
-                + viewPhoneNumber(item) + "\n"
-                + viewAddress(item) + "\n"
-                + viewBirthday(item) + "\n"
-                + viewEmergencyContactName(item) + "\n"
-                + viewEmergencyContactEmail(item) + "\n"
-                + viewEmergencyContactPhoneNumber(item) + "\n"
-                + viewEmergencyRelationship(item);
     }
 
     public String viewNameFromList(List<ContactData> items) {
@@ -151,17 +147,6 @@ public class ContactView extends EntityView<ContactData> {
         StringBuilder appendedOutput = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             appendedOutput.append(viewEmergencyRelationship(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewFullFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewFull(items.get(i)));
             if (i != items.size() - 1) {
                 appendedOutput.append("\n");
             }

@@ -6,7 +6,7 @@ import entities.TimeBlock;
 public class AppointmentView extends EntityView<AppointmentData> {
 
     @Override
-    public String view(AppointmentData item) {
+    public String viewFull(AppointmentData item) {
         TimeBlock timeBlock = item.getTimeBlock();
         return "Appointment starting at " + timeBlock.getStartTime() + " and ending at " + timeBlock.getEndTime()
                 + ".";
