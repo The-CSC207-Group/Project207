@@ -57,7 +57,7 @@ public class DoctorController extends TerminalController{
             String newPassword1 = presenter.promptPopup("Enter a new password");
             String newPassword2 = presenter.promptPopup("Re-enter the new password");
             if (newPassword1.equals(newPassword2)){
-                doctorAccess.changePassword(doctorData.getId(), newPassword1);
+                doctorAccess.changePassword(doctorData, newPassword1);
             } else {
                 presenter.errorMessage("These do not match");
             }

@@ -30,6 +30,9 @@ public class Contact extends JsonSerializable {
         this.emergencyContactPhoneNumber = emergencyContactPhoneNumber;
         this.emergencyRelationship = emergencyRelationship;
     }
+    public Contact(){
+
+    }
 
     public String getName() {
         return name;

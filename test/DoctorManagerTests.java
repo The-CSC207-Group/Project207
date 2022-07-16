@@ -38,7 +38,7 @@ public class DoctorManagerTests {
 
         DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
 
-        DoctorData AppointmentData = doctorManager.createDoctor(username, password, contactData);
+        DoctorData AppointmentData = doctorManager.createDoctor(username, password);
 
         /* Testing if the return doctor data bundle is valid by testing if the fields of are equal to the parameters of
         createDoctor */
@@ -71,7 +71,7 @@ public class DoctorManagerTests {
         assertNotNull("A doctor object should be returned before it is deleted ",
                 doctorDatabase.get(doctorID));
 
-        doctorManager.deleteDoctor(doctorID);
+        doctorManager.deleteUser(doctor.getUsername());
 
         assertNull("A doctor object should not be returned after it is deleted ",
                 doctorDatabase.get(doctorID));
@@ -88,12 +88,14 @@ public class DoctorManagerTests {
 
         DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
 
+        DoctorData doctorData = new DoctorData(doctor);
+
         Integer doctorID = doctorDatabase.add(doctor);
 
         assertTrue("The password should remain the same before the change ",
                 doctorDatabase.get(doctorID).comparePassword("123"));
 
-        doctorManager.changeUserPassword(doctorID, "456");
+        doctorManager.changeUserPassword(doctorData, "456");
 
         assertTrue("The doctor object should have the same password as we inputted into the parameters " +
                         "of the changeUserPassword method ",
@@ -120,7 +122,7 @@ public class DoctorManagerTests {
         assertEquals("Original doctor should share the same ID from the database",
                 originalDoctor.getId(), doctorID);
 
-        Doctor loadedDoctor = doctorManager.getDoctor(doctorID);
+        Doctor loadedDoctor = doctorManager.getUser(originalDoctor.getUsername());
 
         /* Testing if the loaded doctor and the original doctor are equal by testing whether all the fields of both
         objects are equal */
