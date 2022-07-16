@@ -1,6 +1,9 @@
 package useCases.managers;
 
 import dataBundles.AppointmentData;
+import dataBundles.AppointmentData;
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Appointment;
@@ -36,20 +39,23 @@ public class AppointmentManager {
      * @param patientId     id of the patient the Appointment was assigned to.
      * @param doctorId      id of the doctor the Appointment was assigned to.
      * @param proposedTime  the new proposed TimeBlock representing the duration of an Appointment.
-     * @return an AppointmentDataBundle that represents the new Appointment that has been booked.
+     * @return an AppointmentData that represents the new Appointment that has been booked.
      */
-    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime) {
-
-        if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorId, patientId), proposedTime)
-                & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorId,
+    public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
+                                           Integer year, Integer month, Integer day, Integer hour, Integer minute,
+                                           Integer LenOfAppointment) {
+        TimeBlock proposedTime = new TimeBlockManager().createTimeBlock(year, month, day, hour, minute,
+                LenOfAppointment);
+        if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
+                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
                 proposedTime.getStartTime().toLocalDate()), proposedTime)) {
-            Appointment newApp = new Appointment(proposedTime, doctorId, patientId);
+            Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
             return new AppointmentData(newApp);
         }
         return null;
     }
-//    public AppointmentDataBundle bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
+//    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
 //        ZonedDateTime startTime = new ZonedDateTimeCreator().createZonedDataTime(year, month, day, )
 //        bookAppointment(patientId, doctorId, database.getClinicDatabase(). )
 //    }
@@ -106,11 +112,11 @@ public class AppointmentManager {
     /**
      * gets all appointments related to a single patient id.
      * @param patientId id of the patient the Appointment was assigned to.
-     * @return ArrayList of AppointmentDataBundle which includes information of specific patient Appointments.
+     * @return ArrayList of AppointmentData which includes information of specific patient Appointments.
      */
     public ArrayList<AppointmentData> getPatientAppointments(Integer patientId){
         return getAllPatientAppointments(patientId).stream()
-                .map(x -> new AppointmentData(x))
+                .map(x -> new AppointmentData(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -123,23 +129,23 @@ public class AppointmentManager {
     /**
      *  gets all appointments related to a single doctor id.
      * @param doctorId id of the doctor the Appointment was assigned to.
-     * @return ArrayList of AppointmentDataBundle which includes information of specific doctor Appointments.
+     * @return ArrayList of AppointmentData which includes information of specific doctor Appointments.
      */
     public ArrayList<AppointmentData> getDoctorAppointments(Integer doctorId){
         return getAppointments().stream()
                 .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorId))
-                .map(x -> new AppointmentData(x))
+                .map(x -> new AppointmentData(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      *  get all appointments in the appointment database.
-     * @return ArrayList of AppointmentDataBundle which includes information of many Appointments.
+     * @return ArrayList of AppointmentData which includes information of many Appointments.
      */
     public ArrayList<AppointmentData> getAllAppointments(){
 
         return getAppointments().stream()
-                .map(x -> new AppointmentData(x))
+                .map(x -> new AppointmentData(x.getId(), x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -234,7 +240,7 @@ public class AppointmentManager {
      * gets all doctor specific appointments in a single day.
      * @param doctorId    id of the doctor the Appointment was assigned to.
      * @param selectedDay LocalDate that represents a date without a specific time attached.
-     * @return ArrayList of AppointmentDataBundle which includes information of many Appointments.
+     * @return ArrayList of AppointmentData which includes information of many Appointments.
      */
     public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return getAllAppointments().stream()

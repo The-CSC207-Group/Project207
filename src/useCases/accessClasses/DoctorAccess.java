@@ -45,7 +45,7 @@ public class  DoctorAccess {
                         PrescriptionManager prescriptionManager, DoctorManager doctorManager, DataMapperGateway<Log>
                                 logDatabase){
     }
-//    boolean CreateAppointment(PatientDataBundle patientData, DoctorDataBundle doctorData, ){
+//    boolean CreateAppointment(PatientDataBundle patientData, AppointmentData doctorData, ){
 //        return appointmentManager.bookAppointment(patientData.getId(), doctorData.getId(),
 //                new TimeBlock(
 //            ZonedDateTime.

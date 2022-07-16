@@ -1,18 +1,24 @@
 package useCases.managers;
 
-import database.DataMapperGateway;
 import database.Database;
 import entities.TimeBlock;
-import entities.Clinic;
-import utilities.ZonedDateTimeCreator;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class TimeBlockManager {
 
-    public TimeBlockManager(Database database){
-
+    public TimeBlock createTimeBlock(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer LenOfAppointment){
+        return new TimeBlock(createZonedDataTime(year, month, day, hour, minute),
+                createZonedDataTime(year, month, day, hour, LenOfAppointment));
     }
-
-    public TimeBlock createTimeBlock(Integer year, Integer month, Integer day, Integer hour){
-        return new TimeBlock(ZonedDateTimeCreator(year, month, day, hour, 0, ),
+    public TimeBlock createTimeBlock(Integer month, Integer day, Integer hour, Integer minute, Integer LenOfAppointment){
+        return new TimeBlock(createZonedDataTime(ZonedDateTime.now().getYear(), month, day, hour, minute),
+                createZonedDataTime(ZonedDateTime.now().getYear(), month, day, hour, LenOfAppointment));
+    }
+    public ZonedDateTime createZonedDataTime(Integer year, Integer month, Integer dayOfMonth, Integer hour,
+                                             Integer minute){
+        return ZonedDateTime.of(year, month, dayOfMonth, hour,
+                minute, 0, 0, ZoneId.of("US/Eastern"));
     }
 }

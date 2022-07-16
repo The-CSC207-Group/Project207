@@ -82,7 +82,7 @@ public class SystemAccess {
      * Sign In method for doctors.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public DoctorData doctorSignIn(Integer userId, String password) {
         Doctor doctor = doctorDatabase.get(userId);
@@ -97,7 +97,7 @@ public class SystemAccess {
      * Sign In method for Patients.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public PatientData patientSignIn(Integer userId, String password) {
         Patient patient = patientDatabase.get(userId);
@@ -112,7 +112,7 @@ public class SystemAccess {
      * Sign In method for Secretaries.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public SecretaryData secretarySignIn(Integer userId, String password) {
         Secretary secretary = secretaryDatabase.get(userId);
@@ -127,7 +127,7 @@ public class SystemAccess {
      * Sign In method for admins.
      * @param userId   Integer userId of the user
      * @param password String password of the user trying to sign in
-     * @return DoctorDataBundle if sign in is successful, or else return null.
+     * @return AppointmentData if sign in is successful, or else return null.
      */
     public AdminData adminSignIn(Integer userId, String password) {
         Admin admin = adminDatabase.get(userId);

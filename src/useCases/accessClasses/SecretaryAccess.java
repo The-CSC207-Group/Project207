@@ -144,11 +144,11 @@ public class SecretaryAccess {
         appointmentManager.removeAppointment(appointmentId);
     }
 
-    public ArrayList<AppointmentData> getPatientAppointmentDataBundles(Integer patientId){
+    public ArrayList<AppointmentData> getPatientAppointmentDatas(Integer patientId){
         return  appointmentManager.getPatientAppointments(patientId);
     }
 
-    public ArrayList<AppointmentData> getDoctorAppointmentDataBundles(Integer doctorId){
+    public ArrayList<AppointmentData> getDoctorAppointmentDatas(Integer doctorId){
         return appointmentManager.getDoctorAppointments(doctorId);
     }
 
@@ -173,7 +173,7 @@ public class SecretaryAccess {
         return doctorManager.doesDoctorExist(doctor_username);
     }
     public Optional<PatientData> getPatient(String name){
-        return patientDatabase.stream().filter(x -> x.getUsername() == name)
+        return patientDatabase.stream().filter(x -> x.getUsername().equals(name))
                 .findFirst()
                 .map(x -> new PatientData(x));
     }
