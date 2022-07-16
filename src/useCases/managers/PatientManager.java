@@ -80,13 +80,13 @@ public class PatientManager {
     public boolean doesPatientExist(String name){
         return patientDatabase.getAllIds().stream()
                 .map(x -> patientDatabase.get(x))
-                .anyMatch(x -> x.getUsername() == name);
+                .anyMatch(x -> x.getUsername().equals(name));
     }
 
     public Optional<Integer> getPatientId(String name){
         return patientDatabase.getAllIds().stream()
                 .map(x -> patientDatabase.get(x))
-                .filter(x -> x.getUsername() == name)
+                .filter(x -> x.getUsername().equals(name))
                 .findFirst()
                 .map(x -> x.getId());
     }

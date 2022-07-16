@@ -70,7 +70,7 @@ public class DoctorManager {
     }
     public boolean doesDoctorExist(String username){
         return doctorDatabase.getAllIds().stream().map(x -> doctorDatabase.get(x))
-                .anyMatch(x -> x.getUsername() == username);
+                .anyMatch(x -> x.getUsername().equals(username));
     }
 
 

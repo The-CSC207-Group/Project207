@@ -52,6 +52,8 @@ public class  DoctorAccess {
 //        ) );
 //    }
 
+    //boolean CreateAppointment(PatientDataBundle patientData, DoctorDataBundle doctorData, Integer Month, Integer day,
+    // Integer hour, Integer duration of appointment (in minutes))
 
     public boolean doesPatientExist(String patient_name){
         return patientManager.doesPatientExist(patient_name);
@@ -193,7 +195,7 @@ public class  DoctorAccess {
         return Optional.ofNullable(doctorDatabase.get(doctorId)).map(x -> new DoctorDataBundle(doctorId, x));
     }
     public Optional<PatientDataBundle> getPatient(String name){
-        return patientDatabase.stream().filter(x -> x.getUsername() == name)
+        return patientDatabase.stream().filter(x -> x.getUsername().equals(name))
                 .findFirst()
                 .map(x -> new PatientDataBundle(x.getId(), x));
     }

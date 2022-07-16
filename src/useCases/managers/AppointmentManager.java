@@ -97,8 +97,8 @@ public class AppointmentManager {
     private ArrayList<TimeBlock> getTimeBlocksWithPatientAndDoctor(Integer doctorId, Integer patientId){
         return appointmentDatabase.getAllIds().stream()
                 .map(x -> appointmentDatabase.get(x))
-                .filter(x -> x.getDoctorId() == doctorId)
-                .filter(x -> x.getPatientId() == patientId)
+                .filter(x -> x.getDoctorId().equals(doctorId))
+                .filter(x -> x.getPatientId().equals(patientId))
                 .map(Appointment::getTimeBlock)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -116,7 +116,7 @@ public class AppointmentManager {
 
     private ArrayList<Appointment> getAllPatientAppointments(Integer patientId){
         return getAppointments().stream()
-                .filter(x -> x.getPatientId() == patientId)
+                .filter(x -> x.getPatientId().equals(patientId))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -177,7 +177,7 @@ public class AppointmentManager {
     public ArrayList<AvailabilityData> getAvailabilityDataFromDayOfWeek(Integer doctorId, DayOfWeek dayOfWeek){
         return doctorDatabase.get(doctorId).getAvailability()
                 .stream()
-                .filter(x -> dayOfWeek.getValue() == x.getDayOfWeek().getValue())
+                .filter(x -> dayOfWeek.equals(x.getDayOfWeek()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -206,7 +206,7 @@ public class AppointmentManager {
                     .map(x -> appointmentDatabase.get(x))
                     .filter(x -> x.getTimeBlock().getStartTime().getDayOfYear() ==
                             availabilityTimeBlock.getStartTime().getDayOfYear())
-                    .filter(x -> x.getDoctorId() == doctorId)
+                    .filter(x -> x.getDoctorId().equals(doctorId))
                     .filter(x -> calculateNoConflictTime(x, startTime, parsedAvailability))
                     .close();
             if (startTime.get(0) != availabilityTimeBlock.getEndTime()){
@@ -218,7 +218,7 @@ public class AppointmentManager {
 
     private boolean calculateNoConflictTime(Appointment selectedAppointment, ArrayList<ZonedDateTime> startTime,
                                             ArrayList<TimeBlock> collectedTimeBlocks){
-        if (startTime.get(0) == selectedAppointment.getTimeBlock().getEndTime()){
+        if (startTime.get(0).equals(selectedAppointment.getTimeBlock().getEndTime())){
             startTime.remove(0);
             startTime.add(selectedAppointment.getTimeBlock().getEndTime());
         }
@@ -239,7 +239,7 @@ public class AppointmentManager {
     public ArrayList<AppointmentDataBundle> getScheduleData(Integer doctorId, LocalDate selectedDay){
         return getAllAppointments().stream()
                 .filter(x -> x.getDoctorID().equals(doctorId))
-                .filter(x->x.getTimeBlock().getStartTime().toLocalDate() == selectedDay)
+                .filter(x->x.getTimeBlock().getStartTime().toLocalDate().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     //pending implementation
