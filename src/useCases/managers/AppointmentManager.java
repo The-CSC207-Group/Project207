@@ -55,10 +55,10 @@ public class AppointmentManager {
         }
         return null;
     }
-//    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
+    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
 //        ZonedDateTime startTime = new ZonedDateTimeCreator().createZonedDataTime(year, month, day, )
 //        bookAppointment(patientId, doctorId, database.getClinicDatabase(). )
-//    }
+    }
 
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
@@ -116,7 +116,7 @@ public class AppointmentManager {
      */
     public ArrayList<AppointmentData> getPatientAppointments(Integer patientId){
         return getAllPatientAppointments(patientId).stream()
-                .map(x -> new AppointmentData(x.getId(), x))
+                .map(x -> new AppointmentData(x))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -134,7 +134,7 @@ public class AppointmentManager {
     public ArrayList<AppointmentData> getDoctorAppointments(Integer doctorId){
         return getAppointments().stream()
                 .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorId))
-                .map(x -> new AppointmentData(x.getId(), x))
+                .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -145,7 +145,7 @@ public class AppointmentManager {
     public ArrayList<AppointmentData> getAllAppointments(){
 
         return getAppointments().stream()
-                .map(x -> new AppointmentData(x.getId(), x))
+                .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
