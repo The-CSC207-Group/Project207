@@ -54,7 +54,7 @@ public class AdminAccess {
      */
     public PatientData createPatient(String username, String password, ContactData contactData,
                                      String healthNumber) {
-        return patientManager.createPatient(username, password, contactData, healthNumber);
+        return patientManager.createPatient(username, password);
 
     }
 

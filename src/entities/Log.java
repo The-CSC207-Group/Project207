@@ -22,8 +22,4 @@ public class Log extends JsonSerializable {
         return this.message;
     }
 
-    public String toString() {
-        return "Time: " + getTime() + ", Message: " + getMessage();
-    }
-
 }

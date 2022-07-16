@@ -6,4 +6,8 @@ public class Secretary extends User {
         super(username, password, contactInfoId);
     }
 
+    public Secretary(String username, String password){
+        super(username, password, new Contact().getId());
+    }
+
 }
