@@ -4,7 +4,7 @@ import entities.User;
 
 import java.util.ArrayList;
 
-public abstract class UserData<T extends User> extends DataBundle{
+public abstract class UserData<T extends User> extends DataBundle {
     T user;
 
     public UserData(T user){
@@ -19,8 +19,5 @@ public abstract class UserData<T extends User> extends DataBundle{
     public Integer getContact() {
         return user.getContactInfoId();
     }
-
-
-
 
 }
