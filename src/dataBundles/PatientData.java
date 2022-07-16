@@ -4,11 +4,10 @@ import entities.Patient;
 
 import java.util.ArrayList;
 
-public class PatientDataBundle extends DataBundle {
+public class PatientData {
     private final Patient patient;
 
-    public PatientDataBundle(Integer id, Patient patient) {
-        super(id);
+    public PatientData(Patient patient) {
         this.patient = patient;
     }
 
@@ -32,6 +31,10 @@ public class PatientDataBundle extends DataBundle {
 
     public ArrayList<Integer> getReports() {
         return patient.getReportIds();
+    }
+
+    public int getId(){
+        return patient.getId();
     }
 
 
