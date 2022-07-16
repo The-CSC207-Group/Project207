@@ -43,9 +43,10 @@ public class AppointmentManager {
      */
     public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
                                            Integer year, Integer month, Integer day, Integer hour, Integer minute,
-                                           Integer LenOfAppointment) {
-        TimeBlock proposedTime = new TimeBlockManager().createTimeBlock(year, month, day, hour, minute,
-                LenOfAppointment);
+                                           Integer lenOfAppointment) {
+        TimeBlock proposedTime = new TimeManager().createTimeBlock(year, month, day, hour, minute,
+                lenOfAppointment);
+        //add validation
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
                 proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
                 proposedTime.getStartTime().toLocalDate()), proposedTime)) {
@@ -55,10 +56,10 @@ public class AppointmentManager {
         }
         return null;
     }
-    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
+//    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, Integer year, Integer month, Integer day, Integer hour){
 //        ZonedDateTime startTime = new ZonedDateTimeCreator().createZonedDataTime(year, month, day, )
 //        bookAppointment(patientId, doctorId, database.getClinicDatabase(). )
-    }
+//    }
 
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
@@ -76,8 +77,8 @@ public class AppointmentManager {
      *  removes an Appointment from the database.
      * @param appointmentId: Integer id of the Appointment.
      */
-    public void removeAppointment(Integer appointmentId){
-        appointmentDatabase.remove(appointmentId);
+    public void removeAppointment(AppointmentData appointmentData){
+        appointmentDatabase.remove(appointmentData.getAppointmentId());
     }
 
     /**
@@ -87,14 +88,15 @@ public class AppointmentManager {
      * @param newEnd        ZonedDateTime representing a new end time for an Appointment's TimeBlock
      * @return boolean that represents whether the rescheduling Appointment Time was valid or not.
      */
-    public boolean rescheduleAppointment(Integer appointmentId, ZonedDateTime newStart, ZonedDateTime newEnd){
-        Appointment appointment = appointmentDatabase.get(appointmentId);
-        removeAppointment(appointmentId);
-        TimeBlock proposedTime = new TimeBlock(newStart, newEnd);
+    public boolean rescheduleAppointment(AppointmentData appointmentData, Integer year, Integer month, Integer day, Integer hour, Integer minute,
+                                         Integer lenOfAppointment){
+        Appointment appointment = appointmentDatabase.get(appointmentData.getAppointmentId());
+        appointmentDatabase.get(appointmentData.getAppointmentId()).setTimeBlock(null);
+        TimeBlock proposedTime = new TimeManager().createTimeBlock(year, month, day, hour, minute, lenOfAppointment);
         ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorId(),
                 appointment.getPatientId());
         if (isNoTimeBlockConflictAppointment(consideration, proposedTime)) {
-            bookAppointment(appointment.getPatientId(), appointment.getDoctorId(), proposedTime);
+            appointmentDatabase.add(appointment);
             return true;
         }
         return false;
@@ -116,7 +118,7 @@ public class AppointmentManager {
      */
     public ArrayList<AppointmentData> getPatientAppointments(Integer patientId){
         return getAllPatientAppointments(patientId).stream()
-                .map(x -> new AppointmentData(x))
+                .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -238,13 +240,13 @@ public class AppointmentManager {
 
     /**
      * gets all doctor specific appointments in a single day.
-     * @param doctorId    id of the doctor the Appointment was assigned to.
+     * @param doctorData  the data representing a specfic doctor in the database
      * @param selectedDay LocalDate that represents a date without a specific time attached.
      * @return ArrayList of AppointmentData which includes information of many Appointments.
      */
-    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
+    public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, LocalDate selectedDay){
         return getAllAppointments().stream()
-                .filter(x -> x.getDoctorID().equals(doctorId))
+                .filter(x -> x.getDoctorId().equals(doctorData.getId()))
                 .filter(x->x.getTimeBlock().getStartTime().toLocalDate().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
     }

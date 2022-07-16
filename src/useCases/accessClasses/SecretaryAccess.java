@@ -134,14 +134,16 @@ public class SecretaryAccess {
         }
     }
 
-    public ArrayList<AppointmentData> getScheduleData(Integer doctorId, LocalDate selectedDay){
-        return appointmentManager.getScheduleData(doctorId, selectedDay);
+    public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
+        return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
     }
-    public AppointmentData bookAppointment(Integer patientId, Integer doctorId, TimeBlock proposedTime){
-        return appointmentManager.bookAppointment(patientId, doctorId, proposedTime);
+    public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
+                                           Integer year, Integer month, Integer day, Integer hour, Integer minute,
+                                           Integer lenOfAppointment){
+        return appointmentManager.bookAppointment(patientData, doctorData, year, month, day, hour, minute, lenOfAppointment);
     }
-    public void removeAppointment(Integer appointmentId){
-        appointmentManager.removeAppointment(appointmentId);
+    public void removeAppointment(AppointmentData appointmentData){
+        appointmentManager.removeAppointment(appointmentData);
     }
 
     public ArrayList<AppointmentData> getPatientAppointmentDataBundles(Integer patientId){

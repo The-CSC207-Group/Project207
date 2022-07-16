@@ -18,7 +18,7 @@ public class AppointmentData {
         return appointment.getTimeBlock();
     }
 
-    public Integer getDoctorID() {
+    public Integer getDoctorId() {
         return appointment.getDoctorId();
     }
 
