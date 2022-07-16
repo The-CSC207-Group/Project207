@@ -6,11 +6,10 @@ import entities.TimeBlock;
 
 import java.util.ArrayList;
 
-public class DoctorDataBundle extends DataBundle {
+public class DoctorData {
     private final Doctor doctor;
 
-    public DoctorDataBundle(Integer id, Doctor doctor) {
-        super(id);
+    public DoctorData(Doctor doctor) {
         this.doctor = doctor;
     }
     public String getUsername(){
@@ -33,5 +32,7 @@ public class DoctorDataBundle extends DataBundle {
         return doctor.getAbsence();
     }
 
-
+    public int getId(){
+        return doctor.getId();
+    }
 }

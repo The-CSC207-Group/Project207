@@ -2,7 +2,7 @@ package useCases.accessClasses;
 
 import dataBundles.ContactDataBundle;
 import dataBundles.LogDataBundle;
-import dataBundles.PatientDataBundle;
+import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.*;
@@ -57,8 +57,8 @@ public class AdminAccess {
      * @param contactDataBundle ContactDataBundle which includes contact info of the user.
      * @return PatientDataBundle which includes information of the patient.
      */
-    public PatientDataBundle createPatient(String username, String password, ContactDataBundle contactDataBundle,
-                                           String healthNumber) {
+    public PatientData createPatient(String username, String password, ContactDataBundle contactDataBundle,
+                                     String healthNumber) {
         return patientManager.createPatient(username, password, contactDataBundle, healthNumber);
 
     }
