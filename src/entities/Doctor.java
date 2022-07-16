@@ -35,4 +35,5 @@ public class Doctor extends User {
     public void addAvailability(AvailabilityData availabilityData) {
         availability.add(availabilityData);
     }
+
 }

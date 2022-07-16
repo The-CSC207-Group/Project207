@@ -1,7 +1,7 @@
 package controllers;
 
 import dataBundles.AppointmentDataBundle;
-import dataBundles.DoctorDataBundle;
+import dataBundles.DoctorData;
 import dataBundles.LogDataBundle;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
@@ -14,10 +14,10 @@ public class DoctorController extends TerminalController{
     private DoctorAccess doctorAccess;
     private DoctorScreenView view = new DoctorScreenView();
 
-    private DoctorDataBundle doctorData;
+    private DoctorData doctorData;
     private DoctorController self = this;
 
-    public DoctorController(Context context, DoctorDataBundle doctorData){
+    public DoctorController(Context context, DoctorData doctorData){
         super(context);
         this.doctorAccess = new DoctorAccess(getDatabase());
         this.doctorData = doctorData;

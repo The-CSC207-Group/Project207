@@ -84,11 +84,11 @@ public class SystemAccess {
      * @param password String password of the user trying to sign in
      * @return DoctorDataBundle if sign in is successful, or else return null.
      */
-    public DoctorDataBundle doctorSignIn(Integer userId, String password) {
+    public DoctorData doctorSignIn(Integer userId, String password) {
         Doctor doctor = doctorDatabase.get(userId);
         if (doctor.comparePassword(password)) {
             commonMethods.attachUserSignInLog(doctorDatabase, userId, logManager);
-            return new DoctorDataBundle(userId, doctor);
+            return new DoctorData(doctor);
         }
         return null;
     }
