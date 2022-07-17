@@ -87,7 +87,7 @@ public class SecretaryAccess {
         if (patient == null) {
             return null;
         }
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patient.getId());
+        return prescriptionManager.getAllActivePrescriptions(new PatientData(patient));
     }
 
     /**
@@ -103,7 +103,7 @@ public class SecretaryAccess {
         if (patient == null) {
             return null;
         }
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patient.getId());
+        return prescriptionManager.getAllPrescriptions(new PatientData(patient));
     }
 
     /**

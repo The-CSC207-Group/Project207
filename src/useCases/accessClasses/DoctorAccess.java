@@ -63,7 +63,7 @@ public class  DoctorAccess implements AccessMixin{
      * patient that is active or null if the patient does not exist in the patient database.
      */
     public ArrayList<PrescriptionData> getActivePrescriptions(PatientData patientData){
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(patientData.getId());
+        return prescriptionManager.getAllActivePrescriptions(patientData);
     }
     /**
      * Change the password of this doctor. If the userId is not associated with a doctor in the database,
@@ -82,7 +82,7 @@ public class  DoctorAccess implements AccessMixin{
      * patient or null if the patient does not exist in the patient database.
      */
     public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patientData){
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(patientData.getId());
+        return prescriptionManager.getAllPrescriptions(patientData);
     }
 
     /**

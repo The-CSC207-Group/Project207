@@ -60,8 +60,8 @@ public class PatientAccess {
      * @return Arraylist of PrescriptionDataBundles representing the patient's prescriptions. If the patient
      * does not exist, empty arraylist is returned.
      */
-    public ArrayList<PrescriptionData> getActivePrescriptions(Integer userId){
-        return prescriptionManager.getPatientActivePrescriptionDataByUserId(userId);
+    public ArrayList<PrescriptionData> getActivePrescriptions(PatientData patientData){
+        return prescriptionManager.getAllActivePrescriptions(patientData);
     }
     /**
      * Get prescriptionDataBundles representing the prescriptions associated with a patient.
@@ -69,8 +69,8 @@ public class PatientAccess {
      * @return Arraylist of PrescriptionDataBundles representing the patient's prescriptions. If the patient
      * does not exist, empty arraylist is returned.
      */
-    public ArrayList<PrescriptionData> getAllPrescriptions(Integer userId){
-        return prescriptionManager.getPatientAllPrescriptionDataByUserId(userId);
+    public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patientData){
+        return prescriptionManager.getAllPrescriptions(patientData);
     }
     public ArrayList<AppointmentData> getAppointments(PatientData patientData){
         return appointmentManager.getPatientAppointments(patientData);

@@ -24,33 +24,6 @@ public class PrescriptionManager {
         this.prescriptionsDatabase = prescriptionsDatabase;
     }
 
-    /**
-     *
-     * @param userId the id associated with the patient in the database. Assumes userId is a valid user id that
-     * exists in the database. If not, an empty list will be returned.
-     * @return An array list of PrescriptionDataBundles for each prescription in the database belonging to the
-     * user that is active.
-     */
-    public ArrayList<PrescriptionData> getPatientActivePrescriptionDataByUserId(Integer userId) {
-        Stream<PrescriptionData> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
-                filter(x -> !isExpiredPrescription(x)).
-                filter(x -> isPatientsPrescription(x, userId)).
-                map(PrescriptionData::new);
-        return databaseUtilities.toArrayList(dataBundleStream);
-    }
-    /**
-     *
-     * @param userId the id associated with the patient in the database. Should not be null. An empty arraylist is
-     * returned if the user does not exist or does not have any prescriptions.
-     * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
-     * user.
-     */
-    public ArrayList<PrescriptionData> getPatientAllPrescriptionDataByUserId(Integer userId) {
-        Stream<PrescriptionData> dataBundleStream = databaseUtilities.getAllItems(prescriptionsDatabase).
-                filter(x -> isPatientsPrescription(x, userId)).
-                map(PrescriptionData::new);
-        return databaseUtilities.toArrayList(dataBundleStream);
-    }
     private Stream<Prescription> getAll(PatientData patient){
        return prescriptionsDatabase.stream()
                         .filter(p -> p.getPatientId() == patient.getId());
