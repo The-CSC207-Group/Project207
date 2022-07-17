@@ -35,4 +35,12 @@ public abstract class ScreenView {
         String password = input("Enter " + accountType + " password: ");
         return new UserCredentials(username, password);
     }
+
+    protected String enterPatientUsernamePrompt() {
+        return input("Enter patient username: ");
+    }
+
+    protected String enterDoctorUsernamePrompt() {
+        return input("Enter doctor username: ");
+    }
 }
