@@ -101,10 +101,10 @@ public class AdminController extends TerminalController{
     class deletePatient implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter username to be deleted");
             adminAccess.deletePatientUser(username);
-            return false;
+
         }
     }
 }
