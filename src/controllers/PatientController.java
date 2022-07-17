@@ -40,7 +40,7 @@ public class PatientController extends TerminalController {
     class ChangePassword implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String newPassword1 = presenter.promptPopup("Enter a new password");
             String newPassword2 = presenter.promptPopup("Re-enter the new password");
             if (newPassword1.equals(newPassword2)){
@@ -48,63 +48,56 @@ public class PatientController extends TerminalController {
             } else {
                 presenter.errorMessage("These do not match");
             }
-            return false;
         }
     }
 
     class ViewAppointments implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<AppointmentData> appointments = patientAccess.getAppointments(patientData);
-            return false;
         }
     }
 
     class ViewAllPrescriptions implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
             patientScreenView.viewPrescriptionHistory(prescriptions, false);
-            return false;
         }
     }
 
     class ViewActivePrescriptions implements Command {
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
             patientScreenView.viewActivePrescriptions(prescriptions, false);
-            return false;
         }
     }
 
     class ViewAllPrescriptionsDetailed implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
             patientScreenView.viewPrescriptionHistory(prescriptions, true);
-            return false;
         }
     }
 
     class ViewActivePrescriptionsDetailed implements Command {
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
             patientScreenView.viewActivePrescriptions(prescriptions, true);
-            return false;
         }
     }
 
     class GetLogs implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = patientAccess.getLogs(patientData);
-            return false;
         }
     }
 }

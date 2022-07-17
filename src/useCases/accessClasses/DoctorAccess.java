@@ -37,17 +37,9 @@ public class  DoctorAccess {
         this.prescriptionDatabase = database.getPrescriptionDatabase();
         this.appointmentManager = new AppointmentManager(database);
         this.reportDatabase = database.getReportDatabase();
-        this.prescriptionManager = prescriptionManager;
-        this.doctorManager = doctorManager;
         this.reportManager = new ReportManager(reportDatabase);
         this.logManager = new LogManager(database.getLogDatabase());
         this.patientManager = new PatientManager(database);
-    }
-    public DoctorAccess(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Patient> patientDatabase,
-                        DataMapperGateway<Prescription> prescriptionDatabase, AppointmentManager appointmentManager,
-                        PrescriptionManager prescriptionManager, DoctorManager doctorManager, DataMapperGateway<Log>
-                                logDatabase){
-
     }
 
     public boolean doesPatientExist(String patient_name){
@@ -56,8 +48,8 @@ public class  DoctorAccess {
     public ArrayList<ReportData> getPatientReports(PatientData patientData){
         return reportManager.getReportDataBundlesFromPatientDataBundle(patientData);
     }
-    public void addPatientReport(Report report){
-        reportDatabase.add(report);
+    public void addPatientReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
+        reportManager.addReport(dateNoted, header, body, patientData.getId(), doctorData.getId());
     }
     public void removePatientReport(Integer reportId){
         reportManager.deleteReport(reportId);
@@ -160,7 +152,7 @@ public class  DoctorAccess {
                 .map(PatientData::new);
     }
     public Optional<DoctorData> getDoctorData(Integer doctorId){
-        return Optional.ofNullable(doctorDatabase.get(doctorId)).map(x -> new DoctorData(x));
+        return Optional.ofNullable(doctorDatabase.get(doctorId)).map(DoctorData::new);
     }
 
 
