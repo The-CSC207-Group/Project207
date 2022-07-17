@@ -24,6 +24,7 @@ public class AdminController extends TerminalController{
         commands.put("change password", new ChangeAdminPassword());
         commands.put("get logs", new getLogs());
         commands.put("sign out", signOut());
+        commands.put("Delete patient", new deletePatient());
         return commands;
     }
 
@@ -95,6 +96,15 @@ public class AdminController extends TerminalController{
         @Override
         public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = adminAccess.getLogs(adminData);
+        }
+    }
+    class deletePatient implements Command{
+
+        @Override
+        public void execute(ArrayList<String> args) {
+            String username = presenter.promptPopup("Enter username to be deleted");
+            adminAccess.deletePatientUser(username);
+
         }
     }
 }

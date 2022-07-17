@@ -42,7 +42,7 @@ public class AdminAccess {
      * @param username Integer userID of the user being deleted. Can delete from admin, doctor, patient and secretary
      * databases.
      */
-    public boolean deleteAdminUser(String username) {
+    public boolean deletePatientUser(String username) {
         return adminManager.deleteUser(username);
     }
 
