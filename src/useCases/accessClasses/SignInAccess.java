@@ -11,7 +11,7 @@ import useCases.managers.PatientManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SystemAccess {
+public class SignInAccess {
 
     private final DataMapperGateway<Patient> patientDatabase;
     private final DataMapperGateway<Admin> adminDatabase;
@@ -28,7 +28,7 @@ public class SystemAccess {
 
     /**
      */
-    public SystemAccess(Database database) {
+    public SignInAccess(Database database) {
         this.patientDatabase = database.getPatientDatabase();
         this.patientManager = new PatientManager(database);
         this.adminDatabase = database.getAdminDatabase();
