@@ -1,5 +1,6 @@
 package useCases.managers;
 
+import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import entities.Prescription;
@@ -7,7 +8,7 @@ import utilities.DatabaseQueryUtility;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class PrescriptionManager {
@@ -49,6 +50,23 @@ public class PrescriptionManager {
                 filter(x -> isPatientsPrescription(x, userId)).
                 map(PrescriptionData::new);
         return databaseUtilities.toArrayList(dataBundleStream);
+    }
+    private Stream<Prescription> getAll(PatientData patient){
+       return prescriptionsDatabase.stream()
+                        .filter(p -> p.getPatientId() == patient.getId());
+    }
+    public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patient){
+        return databaseUtilities.toArrayList(
+                getAll(patient)
+                        .map(PrescriptionData::new)
+        );
+    }
+    public ArrayList<PrescriptionData> getAllActivePrescriptions(PatientData patientData){
+        return databaseUtilities.toArrayList(
+                getAll(patientData)
+                        .filter(p -> !isExpiredPrescription(p))
+                        .map(PrescriptionData::new)
+        );
     }
 
 

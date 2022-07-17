@@ -21,7 +21,6 @@ public class SignInAccess {
 
     private final LogManager logManager;
 
-    private AccessCommonMethods commonMethods = new AccessCommonMethods();
 
     private enum userType {
         patient, admin, secretary, doctor

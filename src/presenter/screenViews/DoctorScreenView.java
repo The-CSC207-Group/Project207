@@ -2,10 +2,12 @@ package presenter.screenViews;
 
 import dataBundles.AppointmentData;
 import dataBundles.PrescriptionData;
+import dataBundles.ReportData;
 import entities.Patient;
 import entities.Prescription;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.PrescriptionView;
+import presenter.entityViews.ReportView;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
 
@@ -36,6 +38,21 @@ public class DoctorScreenView extends UserScreenView {
         String header = input("Enter your prescription header: ");
         String body = input("Enter your prescription body: ");
         return new PrescriptionDetails(header, body);
+    }
+
+    public Integer deleteReportPrompt(List<ReportData> reportData) {
+        ReportView reportView = new ReportView();
+        for (int i = 1; i <= reportData.size(); i++) {
+            infoMessage(i + ":");
+            reportView.viewFull(reportData.get(i - 1));
+        }
+        warningMessage("This action cannot be undone!");
+        String number = input("Input prescription number to delete: ");
+        return Integer.getInteger(number);
+    }
+
+    public void showDeleteReportError() {
+        errorMessage("Could not delete report.");
     }
 
     public ReportDetails reportDetailsPrompt() {

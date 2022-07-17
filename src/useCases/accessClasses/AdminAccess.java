@@ -82,6 +82,7 @@ public class AdminAccess {
         changePassUsingUsername(secretaryDatabase, username, newPassword);
         changePassUsingUsername(doctorDatabase, username, newPassword);
         changePassUsingUsername(adminDatabase, username, newPassword);
+
     }
 
     /**
