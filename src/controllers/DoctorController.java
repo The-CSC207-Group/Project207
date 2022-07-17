@@ -37,20 +37,19 @@ public class DoctorController extends TerminalController{
     class LoadPatient implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String name = presenter.promptPopup("name");
             doctorAccess.getPatient(name).ifPresent(
                     (patientData) -> {
                         changeCurrentController(new DoctorLoadedPatientController(getContext(), self, doctorData, patientData));
                     }
             );
-            return false;
         }
     }
     class ChangePassword implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String newPassword1 = presenter.promptPopup("Enter a new password");
             String newPassword2 = presenter.promptPopup("Re-enter the new password");
             if (newPassword1.equals(newPassword2)){
@@ -58,24 +57,21 @@ public class DoctorController extends TerminalController{
             } else {
                 presenter.errorMessage("These do not match");
             }
-            return false;
         }
     }
 
     class CheckSchedule implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             List<AppointmentData> appointments = doctorAccess.getAllDoctorAppointments(doctorData);
-            return false;
         }
     }
     class GetLogs implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = doctorAccess.getLogs(doctorData);
-            return false;
         }
     }
 }

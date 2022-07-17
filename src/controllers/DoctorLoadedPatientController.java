@@ -21,7 +21,7 @@ public class DoctorLoadedPatientController extends TerminalController{
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> c  = super.AllCommands();
         c.put("unload patient", back(prev));
-        c.put("prescription", persciption());
+        c.put("prescription", prescription());
         c.put("appointments", appointments());
         return c;
     }
@@ -33,21 +33,18 @@ public class DoctorLoadedPatientController extends TerminalController{
         doctorAccess = new DoctorAccess(getDatabase());
         this.prev = prev;
     }
-    private Command persciption(){
+    private Command prescription(){
         return (x) -> {
-           return false;
         };
     }
     private Command appointments(){
         return (x) -> {
 //            doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData.getId()));
-            return false;
         };
     }
 
-    private Command createAppointent(){
+    private Command createAppointment(){
         return (x) -> {
-            return false;
         };
     }
 }

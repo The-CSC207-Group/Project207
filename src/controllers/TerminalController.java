@@ -58,36 +58,32 @@ abstract public class TerminalController {
     protected Command back(TerminalController prev){
         return (x) -> {
             changeCurrentController(prev);
-            return false;
         };
     }
 
     protected Command signOut(){
         return (x) -> {
             changeCurrentController(new SignInController(context));
-            return false;
         };
     }
 
     class Help implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             List<String> helpList = new ArrayList<>(AllCommands().keySet());
             presenter.infoMessage("List of available commands:");
             for (String i : helpList) {
                 presenter.infoMessage(i);
             }
-            return true;
         }
     }
 
     class Exit implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             exit();
-            return true;
         }
     }
 }

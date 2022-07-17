@@ -36,7 +36,7 @@ public class SecretaryController extends TerminalController {
 
     class LoadPatient implements Command {
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String name = presenter.promptPopup("username of patient");
             secretaryAccess.getPatient(name).ifPresent(
                     (patientData) -> {
@@ -44,14 +44,13 @@ public class SecretaryController extends TerminalController {
 
                     }
             );
-            return false;
         }
     }
 
     class CreatePatientAccount implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             if (secretaryAccess.doesPatientExist(username)){
@@ -59,13 +58,12 @@ public class SecretaryController extends TerminalController {
                 presenter.successMessage("Successfully created new Patient");}
             else {
                 presenter.warningMessage("This username already exists. No new patient account created");}
-            return false;
         }
     }
     class CreateDoctorAccount implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
 
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
@@ -74,13 +72,12 @@ public class SecretaryController extends TerminalController {
                 presenter.successMessage("Successfully created new doctor");}
             else {
                 presenter.warningMessage("This username already exists. No new doctor account created");}
-            return false;
         }
     }
     class ChangePassword implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
@@ -89,22 +86,20 @@ public class SecretaryController extends TerminalController {
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }
-            return false;
         }
     }
     class GetLogs implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData);
-            return false;
         }
     }
 
     class BookAppointment implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String patient = presenter.promptPopup("Enter Patient Username ");
             String doctor = presenter.promptPopup("Enter Doctor Username ");
             if (secretaryAccess.getPatient(patient).isPresent() && secretaryAccess.getDoctor(doctor).isPresent()){
@@ -116,15 +111,13 @@ public class SecretaryController extends TerminalController {
                 Integer hour = Integer.valueOf(presenter.promptPopup("Enter hour "));
                 Integer minute = Integer.valueOf(presenter.promptPopup("Enter Minute "));
                 Integer len = Integer.valueOf(presenter.promptPopup("Enter length of appointment "));
-                return secretaryAccess.bookAppointment(patientData, doctorData, year,
-                        month, day, hour, minute, len) != null;
+//                return secretaryAccess.bookAppointment(patientData, doctorData, year,
+//                        month, day, hour, minute, len) != null;
 
             } else {
                 presenter.errorMessage("Patient or Doctor does not exist");
 
             }
-            return false;
-
         }
 
     }
