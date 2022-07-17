@@ -77,9 +77,8 @@ public class DoctorController extends TerminalController{
     class ViewAllDoctorAppointments implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             doctorView.viewAppointments(doctorAccess.getAllDoctorAppointments(doctorData));
-            return false;
         }
     }
     class GetLogs implements Command{

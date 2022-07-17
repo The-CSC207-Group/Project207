@@ -55,11 +55,10 @@ public class DoctorLoadedPatientController extends TerminalController{
     }
     class newReport implements Command {
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
 
             doctorAccess.addPatientReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
                     doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
-            return false;
         }
     }
 
