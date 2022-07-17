@@ -52,15 +52,7 @@ public class SecretaryAccess {
 
     }
 
-    /**
-     * Delete user with given id from their database. This user can delete secretaries and patients.
-     *
-     * @param username associated with the user to be deleted.
-     */
-    public void deleteUser(String username) {
-        secretaryManager.deleteUser(username);
-        patientManager.deleteUser(username);
-    }
+
 
     /**
      * NOTE: Handling of creating a patient that already exists is not present yet.
