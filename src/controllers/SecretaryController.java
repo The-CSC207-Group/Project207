@@ -56,10 +56,8 @@ public class SecretaryController extends TerminalController {
         public boolean execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
-            ContactData contact;
-            String healthNumber = presenter.promptPopup("Enter Health Number"); // need to confirm if health no is input by user or no
             if (secretaryAccess.doesPatientExist(username)){
-                // secretaryAccess.createPatient(username, password, contact, healthNumber);// need to implement error or success message
+                secretaryAccess.createPatient(username, password);
                 presenter.successMessage("Successfully created new Patient");}
             else {
                 presenter.warningMessage("This username already exists. No new patient account created");}
