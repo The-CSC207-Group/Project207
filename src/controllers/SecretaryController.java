@@ -2,11 +2,13 @@ package controllers;
 
 
 import dataBundles.*;
+import entities.Appointment;
 import entities.AvailabilityData;
 import entities.TimeBlock;
 import useCases.accessClasses.SecretaryAccess;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -112,9 +114,16 @@ public class SecretaryController extends TerminalController {
             if (secretaryAccess.getPatient(patient).isPresent() && secretaryAccess.getDoctor(doctor).isPresent()){
                 PatientData patientData = secretaryAccess.getPatient(patient).get();
                 DoctorData doctorData = secretaryAccess.getDoctor(doctor).get();
-                Integer year = Integer.valueOf(presenter.promptPopup("Enter Year "));
-                Integer month = Integer.valueOf(presenter.promptPopup("Enter Month "));
-                Integer day = Integer.valueOf(presenter.promptPopup("Enter day "));
+                int year = Integer.parseInt(presenter.promptPopup("Enter Year "));
+                int month = Integer.parseInt(presenter.promptPopup("Enter Month "));
+                int day = Integer.parseInt(presenter.promptPopup("Enter day "));
+
+                ArrayList<AppointmentData> scheduleData =  secretaryAccess.getScheduleData(doctorData, year, month,
+                        day);
+                for (AppointmentData data : scheduleData){
+                    presenter.infoMessage(data.getTimeBlock().getStartTime().toLocalDate().toString());
+                }
+
                 Integer hour = Integer.valueOf(presenter.promptPopup("Enter hour "));
                 Integer minute = Integer.valueOf(presenter.promptPopup("Enter Minute "));
                 Integer len = Integer.valueOf(presenter.promptPopup("Enter length of appointment "));
@@ -126,10 +135,11 @@ public class SecretaryController extends TerminalController {
 
             }
             return false;
-
         }
 
     }
+
+
 
 
 }
