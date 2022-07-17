@@ -4,6 +4,7 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
+import useCases.managers.PrescriptionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +12,15 @@ import java.util.HashMap;
 public class PrescriptionController extends TerminalController {
 
     private PatientData patientData;
-    private PatientAccess patientAccess;
     private PatientScreenView patientScreenView = new PatientScreenView();
     private PatientController patientController;
+    private PrescriptionManager prescriptionManager;
 
     public PrescriptionController(Context parent, PatientData patientData, PatientController patientController) {
         super(parent);
         this.patientData = patientData;
         this.patientController = patientController;
+        this.prescriptionManager = new PrescriptionManager(getDatabase().getPrescriptionDatabase());
     }
 
     @Override
@@ -45,10 +47,10 @@ public class PrescriptionController extends TerminalController {
         public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions;
             if (this.active) {
-                prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
+                prescriptions = prescriptionManager.getAllPrescriptions(patientData);
             }
             else {
-                prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
+                prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
             }
             patientScreenView.viewActivePrescriptions(prescriptions, this.detail);
         }

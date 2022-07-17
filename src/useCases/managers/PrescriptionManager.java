@@ -55,13 +55,13 @@ public class PrescriptionManager {
        return prescriptionsDatabase.stream()
                         .filter(p -> p.getPatientId() == patient.getId());
     }
-    public ArrayList<PrescriptionData> getAllPrescription(PatientData patient){
+    public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patient){
         return databaseUtilities.toArrayList(
                 getAll(patient)
                         .map(PrescriptionData::new)
         );
     }
-    public ArrayList<PrescriptionData> getAllActivePrescription(PatientData patientData){
+    public ArrayList<PrescriptionData> getAllActivePrescriptions(PatientData patientData){
         return databaseUtilities.toArrayList(
                 getAll(patientData)
                         .filter(p -> !isExpiredPrescription(p))
