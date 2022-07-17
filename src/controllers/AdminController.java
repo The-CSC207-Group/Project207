@@ -1,7 +1,6 @@
 package controllers;
 
 import dataBundles.AdminData;
-import dataBundles.ContactData;
 import dataBundles.LogData;
 import useCases.accessClasses.AdminAccess;
 
@@ -41,7 +40,7 @@ public class AdminController extends TerminalController{
     class CreateSecretaryAccount implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             if (adminAccess.doesSecretaryExist(username)){
@@ -49,13 +48,12 @@ public class AdminController extends TerminalController{
                 presenter.successMessage("Successfully created new secretary");}
             else {
                 presenter.warningMessage("This username already exists. No new secretary account created");}
-            return false;
         }
     }
     class CreatePatientAccount implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             if (adminAccess.doesPatientExist(username)){
@@ -63,13 +61,12 @@ public class AdminController extends TerminalController{
                 presenter.successMessage("Successfully created new patient");}
             else {
                 presenter.warningMessage("This username already exists. No new patient account created");}
-            return false;
         }
     }
     class CreateDoctorAccount implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
             if (adminAccess.doesDoctorExist(username)){
@@ -77,13 +74,12 @@ public class AdminController extends TerminalController{
                 presenter.successMessage("Successfully created new doctor");}
             else {
                 presenter.warningMessage("This username already exists. No new doctor account created");}
-            return false;
         }
     }
     class ChangeAdminPassword implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
@@ -93,15 +89,13 @@ public class AdminController extends TerminalController{
             else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }
-            return false;
         }
     }
     class getLogs implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = adminAccess.getLogs(adminData);
-            return false;
         }
     }
     class deletePatient implements Command{

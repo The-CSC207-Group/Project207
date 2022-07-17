@@ -32,7 +32,7 @@ public class SignInController extends TerminalController {
     class SignInCommand implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             UserCredentials userCredentials = view.userLoginPrompt();
             String username = userCredentials.username();
             String password = userCredentials.password();
@@ -59,18 +59,15 @@ public class SignInController extends TerminalController {
 
             } else {
                 view.showLoginError();
-                return false;
             }
-            return true;
         }
     }
 
     class BackCommand implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             changeCurrentController(new SignInController(getContext()));
-            return true;
         }
     }
 

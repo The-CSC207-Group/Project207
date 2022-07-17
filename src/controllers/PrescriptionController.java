@@ -43,7 +43,7 @@ public class PrescriptionController extends TerminalController {
         }
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions;
             if (this.active) {
                 prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
@@ -52,7 +52,6 @@ public class PrescriptionController extends TerminalController {
                 prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
             }
             patientScreenView.viewActivePrescriptions(prescriptions, this.detail);
-            return false;
         }
     }
 }

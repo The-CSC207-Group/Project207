@@ -39,34 +39,30 @@ public class SecretaryLoadedPatientController extends TerminalController{
 
     class ViewActivePrescription implements Command {
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.
                     getActivePrescriptions(patientData.getUsername());
-
-            return false;
         }
     }
     class ViewPrescriptionHistory implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
-            return false;
         }
     }
     class ViewAppointments implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             ArrayList<AppointmentData> appointments = secretaryAccess.
                     getPatientAppointmentDataBundles(patientData);
-            return false;
         }
     }
     class ChangePatientPassword implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
@@ -75,28 +71,23 @@ public class SecretaryLoadedPatientController extends TerminalController{
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }
-            return false;
         }
     }
     class BookAppointment implements Command{
         @Override
-        public boolean execute(ArrayList<String> args) {
-
-            return false;
+        public void execute(ArrayList<String> args) {
         }
     }
     class RescheduleAppointment implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
-            return false;
+        public void execute(ArrayList<String> args) {
         }
     }
     class CancelAppointment implements Command{
 
         @Override
-        public boolean execute(ArrayList<String> args) {
-            return false;
+        public void execute(ArrayList<String> args) {
         }
     }
 
