@@ -47,12 +47,14 @@ public class PrescriptionController extends TerminalController {
         public void execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions;
             if (this.active) {
-                prescriptions = prescriptionManager.getAllPrescriptions(patientData);
+                prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
+                patientScreenView.viewActivePrescriptions(prescriptions, this.detail);
+
             }
             else {
-                prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
+                prescriptions = prescriptionManager.getAllPrescriptions(patientData);
+                patientScreenView.viewPrescriptionHistory(prescriptions, this.detail);
             }
-            patientScreenView.viewActivePrescriptions(prescriptions, this.detail);
         }
     }
 }
