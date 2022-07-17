@@ -5,6 +5,7 @@ import dataBundles.*;
 import entities.Appointment;
 import entities.AvailabilityData;
 import entities.TimeBlock;
+import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.SecretaryAccess;
 
 import java.lang.reflect.Array;
@@ -18,6 +19,7 @@ public class SecretaryController extends TerminalController {
     private SecretaryAccess secretaryAccess;
     private SecretaryData secretaryData;
     private SecretaryController self = this;
+    private SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -53,8 +55,9 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
+
+            String username = secretaryScreenView.registerPatientAccount().username();
+            String password = secretaryScreenView.registerPatientAccount().password();
             if (secretaryAccess.doesPatientExist(username)){
                 secretaryAccess.createPatient(username, password);
                 presenter.successMessage("Successfully created new Patient");}
