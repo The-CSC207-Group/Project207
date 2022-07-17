@@ -1,14 +1,15 @@
 package useCases.managers;
 
-import dataBundles.*;
 import dataBundles.AppointmentData;
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
+import dataBundles.TimeBlockData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Appointment;
 import entities.AvailabilityData;
 import entities.Doctor;
 import entities.TimeBlock;
-import useCases.AppointmentQueries;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -153,7 +154,7 @@ public class AppointmentManager {
      */
     public ArrayList<AppointmentData> getDoctorAppointments(DoctorData doctorData){
         return getAppointments().stream()
-                .filter(x -> new AppointmentQueries(x).isDoctorsAppointment(doctorData.getId()))
+                .filter(x -> x.getDoctorId().equals(doctorData.getId()))
                 .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
