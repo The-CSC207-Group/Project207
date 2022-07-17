@@ -40,9 +40,19 @@ public class PatientScreenView extends UserScreenView {
         infoMessage(output);
     }
 
+    public void viewBookedAppointments(List<AppointmentData> items) {
+        infoMessage("Booked Appointments:");
+        viewAppointments(items);
+    }
+
     public void viewLogs(List<LogData> items) {
         LogView logView = new LogView();
         String output = logView.viewFullFromList(items);
         infoMessage(output);
+    }
+
+    public void viewAllLogs(List<LogData> items) {
+        infoMessage("All Logs:");
+        viewLogs(items);
     }
 }
