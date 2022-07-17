@@ -1,6 +1,10 @@
 package presenter.screenViews;
 
+import dataBundles.AppointmentData;
+import dataBundles.LogData;
 import dataBundles.PrescriptionData;
+import presenter.entityViews.AppointmentView;
+import presenter.entityViews.LogView;
 import presenter.entityViews.PrescriptionView;
 
 import java.util.List;
@@ -30,7 +34,15 @@ public class PatientScreenView extends UserScreenView {
         viewPrescriptions(items, details);
     }
 
-//    public viewAppointments
-//
-//    public viewLogs
+    public void viewAppointments(List<AppointmentData> items) {
+        AppointmentView appointmentView = new AppointmentView();
+        String output = appointmentView.viewFullFromList(items);
+        infoMessage(output);
+    }
+
+    public void viewLogs(List<LogData> items) {
+        LogView logView = new LogView();
+        String output = logView.viewFullFromList(items);
+        infoMessage(output);
+    }
 }
