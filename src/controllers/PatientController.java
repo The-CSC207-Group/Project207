@@ -14,6 +14,7 @@ public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
     private PatientScreenView patientScreenView = new PatientScreenView();
     private PatientData patientData;
+    private PatientController self = this;
 
     public PatientController(Context context, PatientData patientData) {
         super(context);
@@ -27,10 +28,7 @@ public class PatientController extends TerminalController {
         commands.put("change password", new ChangePassword());
         commands.put("logs", new GetLogs());
         commands.put("appointments", new ViewAppointments());
-        commands.put("active prescription", new ViewActivePrescriptions());
-        commands.put("all prescriptions", new ViewAllPrescriptions());
-        commands.put("active prescription details", new ViewActivePrescriptionsDetailed());
-        commands.put("all prescription details", new ViewAllPrescriptionsDetailed());
+        commands.put("prescriptions", new ViewPrescriptions());
         commands.put("sign out", signOut());
         return commands;
     }
@@ -57,37 +55,11 @@ public class PatientController extends TerminalController {
         }
     }
 
-    class ViewAllPrescriptions implements Command {
-
+    class ViewPrescriptions implements Command {
         @Override
         public void execute(ArrayList<String> args) {
-            ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
-            patientScreenView.viewPrescriptionHistory(prescriptions, false);
-        }
-    }
-
-    class ViewActivePrescriptions implements Command {
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
-            patientScreenView.viewActivePrescriptions(prescriptions, false);
-        }
-    }
-
-    class ViewAllPrescriptionsDetailed implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
-            patientScreenView.viewPrescriptionHistory(prescriptions, true);
-        }
-    }
-
-    class ViewActivePrescriptionsDetailed implements Command {
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
-            patientScreenView.viewActivePrescriptions(prescriptions, true);
+            PrescriptionController prescriptionController = new PrescriptionController(context, patientData, self);
+            changeCurrentController(prescriptionController);
         }
     }
 
