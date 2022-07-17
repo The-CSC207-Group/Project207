@@ -59,8 +59,6 @@ public class SecretaryAccess {
      *
      * @param username     username of the patient
      * @param password     password of the patient
-     * @param contactData  data bundle of patient contact info
-     * @param healthNumber health number of patient
      * @return PatientDataBundle with the newly created patient's information
      */
     public PatientData createPatient(String username, String password) {
