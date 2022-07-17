@@ -12,26 +12,8 @@ public class PatientData extends UserData<Patient> {
         this.patient = patient;
     }
 
-    public String getUsername() {
-        return patient.getUsername();
-    }
-
-    public Integer getContact() {
-        return patient.getContactInfoId();
-    }
-
-
     public String getHealthNumber() {
         return patient.getHealthNumber();
     }
-
-    public Integer getId() {
-        return patient.getId();
-    }
-
-    public String getPatientUsername(){
-        return patient.getUsername();
-    }
-
 
 }

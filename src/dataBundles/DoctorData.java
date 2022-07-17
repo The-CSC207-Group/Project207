@@ -13,13 +13,6 @@ public class DoctorData extends UserData<Doctor> {
         super(doctor);
         this.doctor = doctor;
     }
-    public String getUsername(){
-        return doctor.getUsername();
-    }
-
-    public Integer getContact(){
-        return doctor.getContactInfoId();
-    }
 
     public ArrayList<AvailabilityData> getAvailability(){
         return doctor.getAvailability();
@@ -29,7 +22,4 @@ public class DoctorData extends UserData<Doctor> {
         return doctor.getAbsence();
     }
 
-    public Integer getId(){
-        return doctor.getId();
-    }
 }
