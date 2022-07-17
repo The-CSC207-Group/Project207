@@ -26,15 +26,7 @@ public class DatabaseTests {
         Patient originalPatient = new
                 Patient("jeff", "123", 123456789, "5544");
 
-        for (int i = 1; i <= 3; i++) {
-            originalPatient.addLogId(i);
-            originalPatient.addReportId(i + 10);
-        }
-
         Integer patientID = originalPatientDatabase.add(originalPatient);
-
-        assertEquals("Original patient should share the same ID from the database",
-                originalPatient.getId(), patientID);
 
         originalPatientDatabase.save();
 
@@ -49,10 +41,6 @@ public class DatabaseTests {
                 originalPatient.getId(), loadedPatient.getId());
         assertEquals("Original patient and loaded patient should share the same unique username",
                 originalPatient.getUsername(), loadedPatient.getUsername());
-        assertEquals("Original patient and loaded patient should share the same reports",
-                originalPatient.getReportIds(), loadedPatient.getReportIds());
-        assertEquals("Original patient and loaded patient should share the same logs",
-                originalPatient.getLogIds(), loadedPatient.getLogIds());
         assertEquals("Original patient and loaded patient should share the same contact information",
                 originalPatient.getContactInfoId(), loadedPatient.getContactInfoId());
         assertEquals("Original patient and loaded patient should share the same health numbers",
@@ -69,10 +57,6 @@ public class DatabaseTests {
         Doctor originalDoctor = new
                 Doctor("jeff", "123", 123456789);
 
-        for (int i = 1; i <= 3; i++) {
-            originalDoctor.addLogId(i);
-        }
-
         Integer doctorID = originalDoctorDatabase.add(originalDoctor);
         originalDoctorDatabase.save();
 
@@ -87,8 +71,6 @@ public class DatabaseTests {
                 originalDoctor.getUsername(), loadedDoctor.getUsername());
         assertEquals("Original doctor and loaded doctor should share the same contact information",
                 originalDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
-        assertEquals("Original doctor and loaded doctor should share the same logs",
-                originalDoctor.getLogIds(), originalDoctor.getLogIds());
         assertTrue("Original doctor and loaded doctor should share the same password",
                 loadedDoctor.comparePassword("123"));
     }
@@ -100,10 +82,6 @@ public class DatabaseTests {
 
         Secretary originalSecretary = new
                 Secretary("jeff", "123", 123456789);
-
-        for (int i = 1; i <= 3; i++) {
-            originalSecretary.addLogId(i);
-        }
 
         Integer secretaryID = originalSecretaryDatabase.add(originalSecretary);
         originalSecretaryDatabase.save();
@@ -119,8 +97,6 @@ public class DatabaseTests {
                 originalSecretary.getUsername(), loadedSecretary.getUsername());
         assertEquals("Original secretary and loaded secretary should share the same contact information",
                 originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
-        assertEquals("Original secretary and loaded secretary should share the same logs",
-                originalSecretary.getLogIds(), originalSecretary.getLogIds());
         assertTrue("Original secretary and loaded secretary should share the same password",
                 loadedSecretary.comparePassword("123"));
     }
@@ -132,10 +108,6 @@ public class DatabaseTests {
 
         Admin originalAdmin = new
                 Admin("jeff", "123", 123456789);
-
-        for (int i = 1; i <= 3; i++) {
-            originalAdmin.addLogId(i);
-        }
 
         Integer adminID = originalAdminDatabase.add(originalAdmin);
         originalAdminDatabase.save();
@@ -151,8 +123,6 @@ public class DatabaseTests {
                 originalAdmin.getUsername(), loadedAdmin.getUsername());
         assertEquals("Original admin and loaded admin should share the same contact information",
                 originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
-        assertEquals("Original admin and loaded admin should share the same logs",
-                originalAdmin.getLogIds(), originalAdmin.getLogIds());
         assertTrue("Original admin and loaded admin should share the same password",
                 loadedAdmin.comparePassword("123"));
     }
@@ -275,7 +245,7 @@ public class DatabaseTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Log> originalLogDatabase = originalDatabase.getLogDatabase();
 
-        Log originalLog = new Log(userId, "jeff");
+        Log originalLog = new Log(21, "jeff");
 
         Integer logID = originalLogDatabase.add(originalLog);
         originalLogDatabase.save();
@@ -287,6 +257,8 @@ public class DatabaseTests {
 
         /* Testing if the loaded log and the original log are equal by testing whether all the fields of both
         objects are equal */
+        assertEquals("Original log and loaded log should share the same UserID",
+                originalLog.getUserId(), loadedLog.getUserId());
         assertEquals("Original log and loaded log should share the same timestamp",
                 originalLog.getTime(), loadedLog.getTime());
         assertEquals("Original log and loaded log should share the same message",
