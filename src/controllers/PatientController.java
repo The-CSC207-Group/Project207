@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
-    private PatientScreenView patientView = new PatientScreenView();
+    private PatientScreenView patientScreenView = new PatientScreenView();
     private PatientData patientData;
 
     public PatientController(Context context, PatientData patientData) {
@@ -64,7 +64,7 @@ public class PatientController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
-            patientView.viewPrescriptionHistory(prescriptions, false);
+            patientScreenView.viewPrescriptionHistory(prescriptions, false);
             return false;
         }
     }
@@ -73,7 +73,7 @@ public class PatientController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
-            patientView.viewActivePrescriptions(prescriptions, false);
+            patientScreenView.viewActivePrescriptions(prescriptions, false);
             return false;
         }
     }
@@ -83,7 +83,7 @@ public class PatientController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
-            patientView.viewPrescriptionHistory(prescriptions, true);
+            patientScreenView.viewPrescriptionHistory(prescriptions, true);
             return false;
         }
     }
@@ -92,7 +92,7 @@ public class PatientController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
-            patientView.viewActivePrescriptions(prescriptions, true);
+            patientScreenView.viewActivePrescriptions(prescriptions, true);
             return false;
         }
     }
