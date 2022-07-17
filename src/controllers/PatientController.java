@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
-    private PatientScreenView view = new PatientScreenView();
+    private PatientScreenView patientView = new PatientScreenView();
     private PatientData patientData;
 
     public PatientController(Context context, PatientData patientData) {
@@ -25,10 +25,12 @@ public class PatientController extends TerminalController {
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", new ChangePassword());
-        commands.put("get logs", new GetLogs());
-        commands.put("view appointments", new ViewAppointments());
-        commands.put("view active prescription", new ViewActivePrescriptions());
-        commands.put("view all prescription", new ViewAllPrescriptions());
+        commands.put("logs", new GetLogs());
+        commands.put("appointments", new ViewAppointments());
+        commands.put("active prescription", new ViewActivePrescriptions());
+        commands.put("all prescriptions", new ViewAllPrescriptions());
+        commands.put("active prescription details", new ViewActivePrescriptionsDetailed());
+        commands.put("all prescription details", new ViewAllPrescriptionsDetailed());
         commands.put("sign out", signOut());
         return commands;
     }
@@ -62,6 +64,7 @@ public class PatientController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
+            patientView.viewPrescriptionHistory(prescriptions, false);
             return false;
         }
     }
@@ -70,6 +73,26 @@ public class PatientController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
+            patientView.viewActivePrescriptions(prescriptions, false);
+            return false;
+        }
+    }
+
+    class ViewAllPrescriptionsDetailed implements Command {
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<PrescriptionData> prescriptions = patientAccess.getAllPrescriptions(patientData.getId());
+            patientView.viewPrescriptionHistory(prescriptions, true);
+            return false;
+        }
+    }
+
+    class ViewActivePrescriptionsDetailed implements Command {
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            ArrayList<PrescriptionData> prescriptions = patientAccess.getActivePrescriptions(patientData.getId());
+            patientView.viewActivePrescriptions(prescriptions, true);
             return false;
         }
     }
