@@ -5,6 +5,11 @@ import dataBundles.*;
 import entities.Appointment;
 import entities.AvailabilityData;
 import entities.TimeBlock;
+import presenter.entityViews.AppointmentView;
+import presenter.response.UserCredentials;
+import presenter.screenViews.DoctorScreenView;
+import presenter.screenViews.PatientScreenView;
+import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.SecretaryAccess;
 
 import java.lang.reflect.Array;
@@ -12,12 +17,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class SecretaryController extends TerminalController {
 
 
     private SecretaryAccess secretaryAccess;
     private SecretaryData secretaryData;
     private SecretaryController self = this;
+
+    private DoctorScreenView doctorScreenView =  new DoctorScreenView();
+    private SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
+
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -33,6 +43,7 @@ public class SecretaryController extends TerminalController {
         commands.put("create doctor", new CreateDoctorAccount());
         commands.put("get logs", new GetLogs());
         commands.put("load patient", new LoadPatient());
+        commands.put("book", new BookAppointment());
         return commands;
     }
 
@@ -54,10 +65,9 @@ public class SecretaryController extends TerminalController {
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (secretaryAccess.doesPatientExist(username)){
-                secretaryAccess.createPatient(username, password);
+            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
+            if (secretaryAccess.doesPatientExist(userCredentials.username())){
+                secretaryAccess.createPatient(userCredentials.username(), userCredentials.password());
                 presenter.successMessage("Successfully created new Patient");}
             else {
                 presenter.warningMessage("This username already exists. No new patient account created");}
@@ -69,10 +79,9 @@ public class SecretaryController extends TerminalController {
         @Override
         public boolean execute(ArrayList<String> args) {
 
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (secretaryAccess.doesDoctorExist(username)){
-                secretaryAccess.createDoctor(username, password);
+            UserCredentials userCredentials = secretaryScreenView.registerDoctorAccount();
+            if (secretaryAccess.doesDoctorExist(userCredentials.username())){
+                secretaryAccess.createDoctor(userCredentials.username(), userCredentials.password());
                 presenter.successMessage("Successfully created new doctor");}
             else {
                 presenter.warningMessage("This username already exists. No new doctor account created");}
@@ -118,9 +127,8 @@ public class SecretaryController extends TerminalController {
 
                 ArrayList<AppointmentData> scheduleData =  secretaryAccess.getScheduleData(doctorData, year, month,
                         day);
-                for (AppointmentData data : scheduleData){
-                    presenter.infoMessage(data.getTimeBlock().getStartTime().toLocalDate().toString());
-                }
+                doctorScreenView.viewAppointments(scheduleData);
+
 
                 Integer hour = Integer.valueOf(presenter.promptPopup("Enter hour "));
                 Integer minute = Integer.valueOf(presenter.promptPopup("Enter Minute "));
@@ -136,6 +144,26 @@ public class SecretaryController extends TerminalController {
         }
 
     }
+
+    class PatientAppointments implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            String username = presenter.promptPopup("Enter username ");
+            if (secretaryAccess.getPatient(username).isPresent()){
+                PatientData patientData = secretaryAccess.getPatient(username).get();
+                ArrayList<AppointmentData> patientAppointment =
+                        secretaryAccess.getPatientAppointmentDataBundles(patientData);
+                for (AppointmentData data: patientAppointment){
+                    presenter.infoMessage(data.getTimeBlock().toString());
+                }
+
+            }
+            return false;
+        }
+    }
+
+
 
 
 

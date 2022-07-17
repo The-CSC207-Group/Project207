@@ -5,6 +5,7 @@ import dataBundles.LogData;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import presenter.screenViews.PatientScreenView;
+import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.PatientAccess;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
     private PatientScreenView patientScreenView = new PatientScreenView();
+    private SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private PatientData patientData;
 
     public PatientController(Context context, PatientData patientData) {
