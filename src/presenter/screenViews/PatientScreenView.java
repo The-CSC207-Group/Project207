@@ -29,4 +29,8 @@ public class PatientScreenView extends UserScreenView {
         infoMessage("Prescription History:");
         viewPrescriptions(items, details);
     }
+
+//    public viewAppointments
+//
+//    public viewLogs
 }
