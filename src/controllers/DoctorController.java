@@ -5,7 +5,9 @@ import dataBundles.DoctorData;
 import dataBundles.LogData;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
+import useCases.managers.TimeManager;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,7 @@ public class DoctorController extends TerminalController{
         h.put("show schedule", new CheckSchedule());
         h.put("show logs", new GetLogs());
         h.put("sign out", signOut());
+        h.put("show assigned appointments", new ViewAllDoctorAppointments());
         return h;
     }
 
@@ -66,10 +69,23 @@ public class DoctorController extends TerminalController{
 
         @Override
         public boolean execute(ArrayList<String> args) {
-            List<AppointmentData> appointments = doctorAccess.getAllDoctorAppointments(doctorData);
+            String year = presenter.promptPopup("Enter the year:");
+            String month = presenter.promptPopup("Enter the month:");
+            String day = presenter.promptPopup("Enter the day of month:");
+            List<AppointmentData> appointments = doctorAccess.getScheduleData(doctorData, Integer.parseInt(year),
+                    Integer.parseInt(month), Integer.parseInt(day));
             return false;
         }
     }
+    class ViewAllDoctorAppointments implements Command {
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            doctorView.viewAppointments(doctorAccess.getAllDoctorAppointments(doctorData));
+            return false;
+        }
+    }
+
     class GetLogs implements Command{
 
         @Override
