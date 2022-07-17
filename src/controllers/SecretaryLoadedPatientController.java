@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class SecretaryLoadedPatientController extends TerminalController{
     PatientData patientData;
+
     SecretaryData secretaryData;
     SecretaryAccess secretaryAccess;
     SecretaryController secretaryController;
