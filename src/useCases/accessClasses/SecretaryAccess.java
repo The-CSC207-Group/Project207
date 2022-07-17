@@ -83,7 +83,7 @@ public class SecretaryAccess {
      * patient that is active or null if the patient does not exist in the patient database.
      */
     public ArrayList<PrescriptionData> getActivePrescriptions(String patientUsername) {
-        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        Patient patient = patientDatabase.getByCondition(x -> x.getUsername().equals(patientUsername));
         if (patient == null) {
             return null;
         }
@@ -99,7 +99,7 @@ public class SecretaryAccess {
      * patient or null if the patient does not exist in the patient database.
      */
     public ArrayList<PrescriptionData> getAllPrescriptions(String patientUsername) {
-        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientUsername);
+        Patient patient = patientDatabase.getByCondition(x -> x.getUsername().equals(patientUsername)) ;
         if (patient == null) {
             return null;
         }
@@ -124,7 +124,7 @@ public class SecretaryAccess {
      * @param newPassword new password of the secretary/patient;
      */
     public void changePatientPassword(PatientData patientData, String newPassword) {
-        Patient patient = databaseQueryUtility.getUserByUsername(patientDatabase, patientData.getUsername());
+        Patient patient = patientDatabase.getByCondition(x -> x.getUsername().equals(patientData.getUsername()));
         if (patient != null) {
             patientManager.changeUserPassword(patientData, newPassword);
         }

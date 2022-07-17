@@ -95,7 +95,7 @@ public class AdminAccess {
     }
 
     private <T extends User> void changePassUsingUsername(DataMapperGateway<T> database, String username, String newPassword){
-        User user = databaseQueryUtility.getUserByUsername(database, username);
+        User user = database.getByCondition(x -> x.getUsername().equals(username));
         if (user != null){ user.setPassword(newPassword);}
     }
 
