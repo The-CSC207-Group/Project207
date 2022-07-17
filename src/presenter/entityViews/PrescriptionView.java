@@ -2,8 +2,6 @@ package presenter.entityViews;
 
 import dataBundles.PrescriptionData;
 
-import java.util.List;
-
 public class PrescriptionView extends EntityView<PrescriptionData> {
 
     @Override
@@ -29,49 +27,4 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     public String viewBody(PrescriptionData item) {
         return "Prescription body reads: " + item.getBody();
     }
-
-    public String viewDateNotedFromList(List<PrescriptionData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewDateNoted(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewExpiryDateFromList(List<PrescriptionData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewExpiryDate(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewHeaderFromList(List<PrescriptionData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewHeader(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewBodyFromList(List<PrescriptionData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewBody(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
 }

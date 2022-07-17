@@ -2,8 +2,6 @@ package presenter.entityViews;
 
 import dataBundles.ContactData;
 
-import java.util.List;
-
 public class ContactView extends EntityView<ContactData> {
 
     @Override
@@ -53,105 +51,6 @@ public class ContactView extends EntityView<ContactData> {
 
     public String viewEmergencyRelationship(ContactData item) {
         return "Your emergency contact is your " + item.getEmergencyRelationship() + ".";
-    }
-
-    public String viewNameFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewName(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewEmailFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewEmail(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewPhoneNumberFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewPhoneNumber(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewAddressFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewAddress(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewBirthdayFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewBirthday(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewEmergencyContactNameFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewEmergencyContactName(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewEmergencyContactEmailFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewEmergencyContactEmail(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewEmergencyContactPhoneNumberFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewEmergencyContactPhoneNumber(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
-
-    public String viewEmergencyRelationshipFromList(List<ContactData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewEmergencyRelationship(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
     }
 
 }

@@ -7,9 +7,13 @@ public abstract class EntityView<T> {
     public abstract String viewFull(T item);
 
     public String viewFullFromList(List<T> items) {
+        return viewFromList(items, this::viewFull);
+    }
+
+    public String viewFromList(List<T> items, ViewMethod<T> function) {
         StringBuilder appendedOutput = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewFull(items.get(i)));
+            appendedOutput.append(function.view(items.get(i)));
             if (i != items.size() - 1) {
                 appendedOutput.append("\n");
             }

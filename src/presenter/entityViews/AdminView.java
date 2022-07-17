@@ -14,15 +14,4 @@ public class AdminView extends EntityView<AdminData> {
     public String viewUsername(AdminData item) {
         return "Admin username is " + item.getUsername() + ".";
     }
-
-    public String viewUsernameFromList(List<AdminData> items) {
-        StringBuilder appendedOutput = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(viewUsername(items.get(i)));
-            if (i != items.size() - 1) {
-                appendedOutput.append("\n");
-            }
-        }
-        return appendedOutput.toString();
-    }
 }

@@ -11,10 +11,11 @@ public class PatientScreenView extends UserScreenView {
 
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
         String output;
+        PrescriptionView prescriptionView = new PrescriptionView();
         if (details) {
-            output = new PrescriptionView().viewFullFromList(items);
+            output = prescriptionView.viewFullFromList(items);
         } else {
-            output = new PrescriptionView().viewHeaderFromList(items);
+            output = prescriptionView.viewFromList(items, prescriptionView::viewHeader);
         }
         infoMessage(output);
     }
