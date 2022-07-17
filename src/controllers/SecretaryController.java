@@ -1,11 +1,12 @@
 package controllers;
 
-import dataBundles.ContactData;
-import dataBundles.LogData;
-import dataBundles.SecretaryData;
-import presenter.screenViews.SecretaryScreenView;
+
+import dataBundles.*;
+import entities.AvailabilityData;
+import entities.TimeBlock;
 import useCases.accessClasses.SecretaryAccess;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,7 +16,6 @@ public class SecretaryController extends TerminalController {
     private SecretaryAccess secretaryAccess;
     private SecretaryData secretaryData;
     private SecretaryController self = this;
-    private SecretaryScreenView view = new SecretaryScreenView();
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -54,8 +54,10 @@ public class SecretaryController extends TerminalController {
         public boolean execute(ArrayList<String> args) {
             String username = presenter.promptPopup("Enter Username");
             String password = presenter.promptPopup("Enter Password");
+            ContactData contact;
+            String healthNumber = presenter.promptPopup("Enter Health Number"); // need to confirm if health no is input by user or no
             if (secretaryAccess.doesPatientExist(username)){
-                secretaryAccess.createPatient(username, password);
+                // secretaryAccess.createPatient(username, password, contact, healthNumber);// need to implement error or success message
                 presenter.successMessage("Successfully created new Patient");}
             else {
                 presenter.warningMessage("This username already exists. No new patient account created");}
@@ -100,4 +102,34 @@ public class SecretaryController extends TerminalController {
             return false;
         }
     }
+
+    class BookAppointment implements Command{
+
+        @Override
+        public boolean execute(ArrayList<String> args) {
+            String patient = presenter.promptPopup("Enter Patient Username ");
+            String doctor = presenter.promptPopup("Enter Doctor Username ");
+            if (secretaryAccess.getPatient(patient).isPresent() && secretaryAccess.getDoctor(doctor).isPresent()){
+                PatientData patientData = secretaryAccess.getPatient(patient).get();
+                DoctorData doctorData = secretaryAccess.getDoctor(doctor).get();
+                Integer year = Integer.valueOf(presenter.promptPopup("Enter Year "));
+                Integer month = Integer.valueOf(presenter.promptPopup("Enter Month "));
+                Integer day = Integer.valueOf(presenter.promptPopup("Enter day "));
+                Integer hour = Integer.valueOf(presenter.promptPopup("Enter hour "));
+                Integer minute = Integer.valueOf(presenter.promptPopup("Enter Minute "));
+                Integer len = Integer.valueOf(presenter.promptPopup("Enter length of appointment "));
+                return secretaryAccess.bookAppointment(patientData, doctorData, year,
+                        month, day, hour, minute, len) != null;
+
+            } else {
+                presenter.errorMessage("Patient or Doctor does not exist");
+
+            }
+            return false;
+
+        }
+
+    }
+
+
 }
