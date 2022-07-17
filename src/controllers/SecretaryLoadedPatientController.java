@@ -42,6 +42,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
         public boolean execute(ArrayList<String> args) {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.
                     getActivePrescriptions(patientData.getUsername());
+
             return false;
         }
     }
@@ -80,6 +81,7 @@ public class SecretaryLoadedPatientController extends TerminalController{
     class BookAppointment implements Command{
         @Override
         public boolean execute(ArrayList<String> args) {
+
             return false;
         }
     }
