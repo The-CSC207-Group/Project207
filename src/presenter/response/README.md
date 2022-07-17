@@ -26,13 +26,13 @@ Now consider this code:
 
 ```java
 import presenter.response.UserCredentials;
-import useCases.accessClasses.SystemAccess;
+import useCases.accessClasses.SignInAccess;
 
 public class Main {
     public static void main() {
 
         UserCredentials x = new SignInView().askForLoginDetails();
-        new SystemAccess().patientSignIn(x.username(), x.password());
+        new SignInAccess().patientSignIn(x.username(), x.password());
 
     }
 }
