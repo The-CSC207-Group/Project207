@@ -2,7 +2,6 @@ package controllers;
 
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
-import presenter.entityViews.PatientView;
 import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 

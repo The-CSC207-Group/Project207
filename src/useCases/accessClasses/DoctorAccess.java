@@ -10,9 +10,8 @@ import utilities.DatabaseQueryUtility;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class  DoctorAccess {
+public class  DoctorAccess implements AccessMixin{
 
 
     private DataMapperGateway<Doctor> doctorDatabase;
@@ -30,6 +29,7 @@ public class  DoctorAccess {
     PatientManager patientManager;
 
     ReportManager reportManager;
+    Database database;
 
     public DoctorAccess(Database database){
         this.doctorDatabase = database.getDoctorDatabase();
@@ -40,6 +40,7 @@ public class  DoctorAccess {
         this.reportManager = new ReportManager(reportDatabase);
         this.logManager = new LogManager(database.getLogDatabase());
         this.patientManager = new PatientManager(database);
+        this.database = database;
     }
 
     public boolean doesPatientExist(String patient_name){
@@ -156,5 +157,8 @@ public class  DoctorAccess {
     }
 
 
-
+    @Override
+    public Database getDatabase() {
+        return database;
+    }
 }
