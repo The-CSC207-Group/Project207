@@ -38,22 +38,19 @@ public class DoctorLoadedPatientController extends TerminalController{
     }
     private Command prescription(){
         return (x) -> {
-           return false;
         };
     }
     private Command appointments(){
         return (x) -> {
 //            doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData.getId()));
-            return false;
         };
     }
 
     class getReport implements Command {
 
         @Override
-        public boolean execute(ArrayList<String> args) {
+        public void execute(ArrayList<String> args) {
             doctorAccess.getPatientReports(patientData);
-            return false;
         }
     }
     class newReport implements Command {
@@ -66,9 +63,8 @@ public class DoctorLoadedPatientController extends TerminalController{
         }
     }
 
-    private Command createAppointent(){
+    private Command createAppointment(){
         return (x) -> {
-            return false;
         };
     }
 }

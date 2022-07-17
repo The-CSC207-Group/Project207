@@ -9,5 +9,5 @@ public interface Command {
      *         false to leave the current controller and go back to the
      *         controller the current controller was instantiated at.
      */
-    boolean execute(ArrayList<String> args);
+    void execute(ArrayList<String> args);
 }
