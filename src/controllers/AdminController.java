@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class AdminController extends TerminalController{
     private AdminAccess adminAccess;
     private AdminData adminData;
-    private AdminScreenVIew v = new AdminScreenVIew();
+    private AdminScreenVIew adminScreenVIew = new AdminScreenVIew();
     public AdminController(Context parent, AdminData adminData) {
         super(parent);
         this.adminData = adminData;
@@ -31,89 +31,80 @@ public class AdminController extends TerminalController{
         return commands;
     }
 
-//    class CreateAccount implements Command{
-//
-//        @Override
-//        public boolean execute(ArrayList<String> args) {
-//            String username = presenter.promptPopup("Enter Username");
-//            String password = presenter.promptPopup("Enter Password");
-//            return false;
-//        }
-//    }
     Command CreateSecretary(){
         return (x) -> {
-            UserCredentials c = v.registerSecretaryPrompt();
+            UserCredentials c = adminScreenVIew.registerSecretaryPrompt();
             SecretaryData secretary = adminAccess.createSecretary(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateDoctor(){
         return (x) -> {
-            UserCredentials c = v.registerDoctorPrompt();
+            UserCredentials c = adminScreenVIew.registerDoctorPrompt();
             DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateAdmin(){
         return (x) -> {
-            UserCredentials c = v.registerAdminPrompt();
+            UserCredentials c = adminScreenVIew.registerAdminPrompt();
             DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreatePatient(){
         return (x) -> {
-            UserCredentials c = v.registerPatientPrompt();
+            UserCredentials c = adminScreenVIew.registerPatientPrompt();
             PatientData patient = adminAccess.createPatient(c.username(), c.password());
             displaySuccessOnCreateAcount(patient);
         };
     }
     private void displaySuccessOnCreateAcount(UserData user){
         if (user == null){
-            v.failedCreateAccount();
+            adminScreenVIew.failedCreateAccount();
         } else {
-            v.successCreateAccount();
+            adminScreenVIew.successCreateAccount();
         }
     }
-    class CreateSecretaryAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (adminAccess.doesSecretaryExist(username)){
-                adminAccess.createSecretary(username, password);
-                presenter.successMessage("Successfully created new secretary");}
-            else {
-                presenter.warningMessage("This username already exists. No new secretary account created");}
-        }
-    }
-    class CreatePatientAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (adminAccess.doesPatientExist(username)){
-                adminAccess.createPatient(username, password);
-                presenter.successMessage("Successfully created new patient");}
-            else {
-                presenter.warningMessage("This username already exists. No new patient account created");}
-        }
-    }
-    class CreateDoctorAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (adminAccess.doesDoctorExist(username)){
-               adminAccess.createDoctor(username, password);
-                presenter.successMessage("Successfully created new doctor");}
-            else {
-                presenter.warningMessage("This username already exists. No new doctor account created");}
-        }
-    }
+//    class CreateSecretaryAccount implements Command{
+//
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            String username = presenter.promptPopup("Enter Username");
+//            String password = presenter.promptPopup("Enter Password");
+//            if (adminAccess.doesSecretaryExist(username)){
+//                adminAccess.createSecretary(username, password);
+//                presenter.successMessage("Successfully created new secretary");}
+//            else {
+//                presenter.warningMessage("This username already exists. No new secretary account created");}
+//        }
+//    }
+//    class CreatePatientAccount implements Command{
+//
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            String username = presenter.promptPopup("Enter Username");
+//            String password = presenter.promptPopup("Enter Password");
+//            if (adminAccess.doesPatientExist(username)){
+//                adminAccess.createPatient(username, password);
+//                presenter.successMessage("Successfully created new patient");}
+//            else {
+//                presenter.warningMessage("This username already exists. No new patient account created");}
+//        }
+//    }
+//    class CreateDoctorAccount implements Command{
+//
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            String username = presenter.promptPopup("Enter Username");
+//            String password = presenter.promptPopup("Enter Password");
+//            if (adminAccess.doesDoctorExist(username)){
+//               adminAccess.createDoctor(username, password);
+//                presenter.successMessage("Successfully created new doctor");}
+//            else {
+//                presenter.warningMessage("This username already exists. No new doctor account created");}
+//        }
+//    }
     class ChangeAdminPassword implements Command{
 
         @Override
