@@ -57,7 +57,7 @@ public class  DoctorAccess implements AccessMixin{
     }
     /**
      * Get an array list of PrescriptionDataBundles containing each prescription in the database belonging to the patient
-     * @param patientUsername the username associated with the patient in the database. Should not be null. An empty arraylist is
+     * @param patientData Data relating to a patient stored in the database. Should not be null. An empty arraylist is
      * returned if the patient does not exist or does not have any prescriptions.
      * @return An array list of PrescriptionDataBundles containing each prescription in the database belonging to the
      * patient that is active or null if the patient does not exist in the patient database.
@@ -86,12 +86,13 @@ public class  DoctorAccess implements AccessMixin{
     }
 
     /**
-     *
+     * a method that creates a prescription for a specific patient assigned by a doctor, stored in the prescription
+     * database
      * @param dateNoted date the prescription was created.
      * @param header Prescription name.
      * @param body Additional info about the prescription.
-     * @param patientUsername Username of the patient to whom the prescription is assigned.
-     * @param doctorUsername Username of the doctor who created the prescription.
+     * @param patientData the username associated with the patient in the database. Should not be null.
+     * @param doctorData the username associated with the doctor in the database. Should not be null.
      * @param expiryDate Expiry data of the prescription.
      * @return The prescriptionDataBundle representing the prescription if both the doctor and patient exist in their
      * respective databases, otherwise return null.
@@ -120,16 +121,25 @@ public class  DoctorAccess implements AccessMixin{
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
     }
+    /**
+     * a function that gets all appointments independent of a specific patient or doctor.
+     * @return an arrayList of AppointmentData. if there is no appointments in the database, returns empty arrayList
+     */
     public ArrayList<AppointmentData> getAllAppointments(){
         return appointmentManager.getAllAppointments();
     }
+
+    /**
+     *
+     * @param doctorData the username associated with the doctor in the database. Should not be null.
+     * @return
+     */
     public ArrayList<AppointmentData> getAllDoctorAppointments(DoctorData doctorData){
         return appointmentManager.getDoctorAppointments(doctorData);
     }
     public ArrayList<AppointmentData> getAllPatientAppointments(PatientData patientData){
         return appointmentManager.getPatientAppointments(patientData);
     }
-
     public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
         return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
     }

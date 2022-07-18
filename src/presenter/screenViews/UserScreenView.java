@@ -1,6 +1,10 @@
 package presenter.screenViews;
 
+import dataBundles.LogData;
+import presenter.entityViews.LogView;
 import presenter.response.PasswordResetDetails;
+
+import java.util.List;
 
 public abstract class UserScreenView extends ScreenView{
 
@@ -13,5 +17,12 @@ public abstract class UserScreenView extends ScreenView{
 
     public void showResetPasswordMismatchError() {
         errorMessage("Cannot reset password: new password and confirmed new password do not match.");
+    }
+
+    public void viewUserLogs(List<LogData> items) {
+        LogView logView = new LogView();
+        String output = logView.viewFullFromList(items);
+        infoMessage("Logs:");
+        infoMessage(output);
     }
 }
