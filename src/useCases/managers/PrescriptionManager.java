@@ -3,6 +3,7 @@ package useCases.managers;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
+import database.Database;
 import entities.Prescription;
 import utilities.DatabaseQueryUtility;
 
@@ -16,12 +17,12 @@ public class PrescriptionManager {
 
     DatabaseQueryUtility databaseUtilities = new DatabaseQueryUtility();
 
-    /**
+    /***
      * Initializes Prescription Manager with the prescription database.
-     * @param prescriptionsDatabase database the prescriptionManager will access.
+     * @param database The entire database.
      */
-    public PrescriptionManager(DataMapperGateway<Prescription> prescriptionsDatabase){
-        this.prescriptionsDatabase = prescriptionsDatabase;
+    public PrescriptionManager(Database database){
+        this.prescriptionsDatabase = database.getPrescriptionDatabase();
     }
 
     private Stream<Prescription> getAll(PatientData patient){
