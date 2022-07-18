@@ -1,36 +1,32 @@
-package controllers;
+package controllers.common;
 
+import controllers.Command;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
+import database.Database;
 import presenter.screenViews.PatientScreenView;
-import useCases.accessClasses.PatientAccess;
 import useCases.managers.PrescriptionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PrescriptionController extends TerminalController {
+public class PrescriptionListCommands {
 
-    private PatientData patientData;
-    private PatientScreenView patientScreenView = new PatientScreenView();
-    private PatientController patientController;
-    private PrescriptionManager prescriptionManager;
+    private final PatientData patientData;
+    private final PatientScreenView patientScreenView = new PatientScreenView();
+    private final PrescriptionManager prescriptionManager;
 
-    public PrescriptionController(Context parent, PatientData patientData, PatientController patientController) {
-        super(parent);
+    public PrescriptionListCommands(Database database, PatientData patientData) {
         this.patientData = patientData;
-        this.patientController = patientController;
-        this.prescriptionManager = new PrescriptionManager(getDatabase());
+        this.prescriptionManager = new PrescriptionManager(database);
     }
 
-    @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> h = super.AllCommands();
-        h.put("back", back(patientController));
-        h.put("active", new ViewPrescriptions(true, false));
-        h.put("all", new ViewPrescriptions(false, false));
-        h.put("active detailed", new ViewPrescriptions(true, true));
-        h.put("all detailed", new ViewPrescriptions(false, true));
+        HashMap<String, Command> h = new HashMap<>();
+        h.put("active prescriptions", new ViewPrescriptions(true, false));
+        h.put("all prescriptions", new ViewPrescriptions(false, false));
+        h.put("active prescriptions detailed", new ViewPrescriptions(true, true));
+        h.put("all prescriptions detailed", new ViewPrescriptions(false, true));
         return h;
     }
 

@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.common.PrescriptionListCommands;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import presenter.screenViews.DoctorScreenView;
@@ -8,7 +9,6 @@ import useCases.managers.AppointmentManager;
 import useCases.managers.ReportManager;
 import useCases.managers.TimeManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DoctorLoadedPatientController extends TerminalController {
@@ -22,12 +22,19 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     @Override
     public HashMap<String, Command> AllCommands() {
+        PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
+
         HashMap<String, Command> c = super.AllCommands();
         c.put("unload patient", back(prev));
         c.put("view patient appointments", ViewPatientAppointments());
         c.put("get reports", getReport());
         c.put("create report", createReport());
         c.put("delete report", deleteReport());
+
+        HashMap<String, Command> commands = prescriptionController.AllCommands();
+        for (String key : commands.keySet()) {
+            c.put("patient " + key, commands.get(key));
+        }
         return c;
     }
 
