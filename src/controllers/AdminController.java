@@ -2,16 +2,15 @@ package controllers;
 
 import dataBundles.*;
 import presenter.response.UserCredentials;
-import presenter.screenViews.AdminScreenVIew;
+import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminController extends TerminalController{
     private AdminAccess adminAccess;
     private AdminData adminData;
-    private AdminScreenVIew adminScreenVIew = new AdminScreenVIew();
+    private AdminScreenView adminScreenView = new AdminScreenView();
     public AdminController(Context parent, AdminData adminData) {
         super(parent);
         this.adminData = adminData;
@@ -25,86 +24,48 @@ public class AdminController extends TerminalController{
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
         commands.put("change password", ChangePassword());
-        commands.put("get logs", new getLogs());
+        commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
-        commands.put("Delete patient", new deletePatient());
+        commands.put("Delete patient", deletePatient());
         return commands;
     }
 
     Command CreateSecretary(){
         return (x) -> {
-            UserCredentials c = adminScreenVIew.registerSecretaryPrompt();
+            UserCredentials c = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = adminAccess.createSecretary(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateDoctor(){
         return (x) -> {
-            UserCredentials c = adminScreenVIew.registerDoctorPrompt();
+            UserCredentials c = adminScreenView.registerDoctorPrompt();
             DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateAdmin(){
         return (x) -> {
-            UserCredentials c = adminScreenVIew.registerAdminPrompt();
+            UserCredentials c = adminScreenView.registerAdminPrompt();
             DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreatePatient(){
         return (x) -> {
-            UserCredentials c = adminScreenVIew.registerPatientPrompt();
+            UserCredentials c = adminScreenView.registerPatientPrompt();
             PatientData patient = adminAccess.createPatient(c.username(), c.password());
             displaySuccessOnCreateAcount(patient);
         };
     }
     private void displaySuccessOnCreateAcount(UserData user){
         if (user == null){
-            adminScreenVIew.failedCreateAccount();
+            adminScreenView.failedCreateAccount();
         } else {
-            adminScreenVIew.successCreateAccount();
+            adminScreenView.successCreateAccount();
         }
     }
-//    class CreateSecretaryAccount implements Command{
-//
-//        @Override
-//        public void execute(ArrayList<String> args) {
-//            String username = presenter.promptPopup("Enter Username");
-//            String password = presenter.promptPopup("Enter Password");
-//            if (adminAccess.doesSecretaryExist(username)){
-//                adminAccess.createSecretary(username, password);
-//                presenter.successMessage("Successfully created new secretary");}
-//            else {
-//                presenter.warningMessage("This username already exists. No new secretary account created");}
-//        }
-//    }
-//    class CreatePatientAccount implements Command{
-//
-//        @Override
-//        public void execute(ArrayList<String> args) {
-//            String username = presenter.promptPopup("Enter Username");
-//            String password = presenter.promptPopup("Enter Password");
-//            if (adminAccess.doesPatientExist(username)){
-//                adminAccess.createPatient(username, password);
-//                presenter.successMessage("Successfully created new patient");}
-//            else {
-//                presenter.warningMessage("This username already exists. No new patient account created");}
-//        }
-//    }
-//    class CreateDoctorAccount implements Command{
-//
-//        @Override
-//        public void execute(ArrayList<String> args) {
-//            String username = presenter.promptPopup("Enter Username");
-//            String password = presenter.promptPopup("Enter Password");
-//            if (adminAccess.doesDoctorExist(username)){
-//               adminAccess.createDoctor(username, password);
-//                presenter.successMessage("Successfully created new doctor");}
-//            else {
-//                presenter.warningMessage("This username already exists. No new doctor account created");}
-//        }
-//    }
+
     Command ChangePassword(){
         return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
@@ -116,21 +77,15 @@ public class AdminController extends TerminalController{
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }};
     }
-
-    class getLogs implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<LogData> logs = adminAccess.getLogs(adminData);
-        }
+    private Command getLogs (){
+        return (x) -> {
+            adminScreenView.viewAllLogs(adminAccess.getLogs(adminData));
+        };
     }
-    class deletePatient implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter username to be deleted");
+    private Command deletePatient (){
+        return (x) -> {
+            String username = adminScreenView.patientUsernamePrompt();
             adminAccess.deletePatientUser(username);
-
-        }
+        };
     }
 }

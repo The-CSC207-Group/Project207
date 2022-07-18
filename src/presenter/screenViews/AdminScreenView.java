@@ -6,7 +6,7 @@ import presenter.response.UserCredentials;
 
 import java.util.List;
 
-public class AdminScreenVIew extends UserScreenView {
+public class AdminScreenView extends UserScreenView {
     public UserCredentials registerSecretaryPrompt() {
         return registerAccountPrompt("secretary");
     }
@@ -26,6 +26,9 @@ public class AdminScreenVIew extends UserScreenView {
     }
     public void successCreateAccount(){
         System.out.println("succeeded needs work on this method");
+    }
+    public String patientUsernamePrompt(){
+        return enterPatientUsernamePrompt();
     }
 
     public void viewAllLogs(List<LogData> items) {
