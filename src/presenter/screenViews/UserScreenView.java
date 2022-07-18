@@ -34,27 +34,27 @@ public abstract class UserScreenView extends ScreenView{
         return enterUsernamePrompt("doctor");
     }
 
-    public String enterYearPrompt(String event) {
-        return input("Enter the year of your " + event + " (YYYY): ");
+    public String enterYearPrompt() {
+        return input("Enter your desired year (YYYY): ");
     }
 
-    public String enterMonthPrompt(String event) {
-        return input("Enter the month of your " + event + " (MM): ");
+    public String enterMonthPrompt() {
+        return input("Enter your desired month (MM): ");
     }
 
-    public String enterDayPrompt(String event) {
-        return input("Enter the day of your " + event + " (DD): ");
+    public String enterDayPrompt() {
+        return input("Enter your desired day (DD): ");
     }
 
-    public String enterHourPrompt(String event) {
-        return input("Enter the hour of your " + event + " (HH): ");
+    public String enterHourPrompt() {
+        return input("Enter your desired hour (HH): ");
     }
 
-    public String enterMinutePrompt(String event) {
-        return input("Enter the minute of your " + event + " (MM): ");
+    public String enterMinutePrompt() {
+        return input("Enter your desired minute (MM): ");
     }
 
-    public String enterLengthPrompt(String event) {
-        return input("Enter the length of your " + event + " in minutes: ");
+    public String enterLengthPrompt() {
+        return input("Enter your desired length in minutes: ");
     }
 }

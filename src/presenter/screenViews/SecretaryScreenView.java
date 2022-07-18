@@ -19,9 +19,9 @@ public class SecretaryScreenView extends UserScreenView {
     public AppointmentDayDetails bookAppointmentDayPrompt() {
         String patientUsername = enterUsernamePrompt("patient");
         String doctorUsername = enterUsernamePrompt("doctor");
-        String year = enterYearPrompt("desired appointment");
-        String month = enterMonthPrompt("desired appointment");
-        String day = enterDayPrompt("desired appointment");
+        String year = enterYearPrompt();
+        String month = enterMonthPrompt();
+        String day = enterDayPrompt();
         infoMessage("Appointment booked for " + patientUsername + "with " + doctorUsername + "on " + day
                 + "/" + month + "/" + year + ".");
         return new AppointmentDayDetails(patientUsername, doctorUsername, Integer.valueOf(year),
@@ -29,9 +29,9 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     public AppointmentTimeDetails bookAppointmentTimePrompt() {
-        String hour = enterHourPrompt("desired appointment");
-        String minute = enterMinutePrompt("desired appointment");
-        String length = enterLengthPrompt("desired appointment");
+        String hour = enterHourPrompt();
+        String minute = enterMinutePrompt();
+        String length = enterLengthPrompt();
         infoMessage("Appointment booked at " + hour + ":" + minute + "for " + length + "minutes." );
         return new AppointmentTimeDetails(Integer.valueOf(hour), Integer.valueOf(minute), Integer.valueOf(length));
     }
