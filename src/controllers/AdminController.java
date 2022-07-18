@@ -4,20 +4,20 @@ import dataBundles.*;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
-import useCases.accessClasses.userType;
+
 import useCases.managers.*;
 
 import java.util.HashMap;
 
 public class AdminController extends TerminalController{
-    private AdminAccess adminAccess;
+
     private AdminData adminData;
     private AdminScreenView adminScreenView = new AdminScreenView();
     AdminManager adminManager = new AdminManager(getDatabase());
     public AdminController(Context parent, AdminData adminData) {
         super(parent);
         this.adminData = adminData;
-        this.adminAccess = new AdminAccess(getDatabase());
+
     }
     @Override
     public HashMap<String, Command> AllCommands() {
@@ -34,16 +34,16 @@ public class AdminController extends TerminalController{
     }
 
     Command CreateSecretary(){
+        SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
-            SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateDoctor(){
+        DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
-            DoctorManager doctorManager = new DoctorManager(getDatabase());
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
             DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
             displaySuccessOnCreateAcount(doctor);
