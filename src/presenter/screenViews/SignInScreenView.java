@@ -12,8 +12,8 @@ public class SignInScreenView extends ScreenView {
     }
 
     public UserCredentials userLoginPrompt() {
-        String username = input("Enter your username: ");
-        String password = input("Enter your password: ");
+        String username = enterUsernamePrompt("your");
+        String password = enterPasswordPrompt("your");
         return new UserCredentials(username, password);
     }
 
