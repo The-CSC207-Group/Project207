@@ -37,7 +37,7 @@ public class  DoctorAccess {
         this.prescriptionDatabase = database.getPrescriptionDatabase();
         this.appointmentManager = new AppointmentManager(database);
         this.reportDatabase = database.getReportDatabase();
-        this.reportManager = new ReportManager(reportDatabase);
+        this.reportManager = new ReportManager(database);
         this.logManager = new LogManager(database);
         this.patientManager = new PatientManager(database);
         this.database = database;
