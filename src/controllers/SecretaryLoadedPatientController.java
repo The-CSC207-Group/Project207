@@ -6,11 +6,10 @@ import presenter.entityViews.AppointmentView;
 import presenter.response.AppointmentDayDetails;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
-import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import presenter.entityViews.PrescriptionView;
-import useCases.accessClasses.SecretaryAccess;
+import useCases.managers.AppointmentManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +21,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     SecretaryAccess secretaryAccess;
     SecretaryController secretaryController;
     PrescriptionView prescriptionView;
+    AppointmentManager appointmentManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final AppointmentView appointmentView = new AppointmentView();
     private final AdminScreenView adminScreenVIew = new AdminScreenView();
@@ -42,10 +42,14 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("view appointments", ViewAppointments());
         commands.put("change patient password", ChangePatientPassword());
         commands.put("unload patient", back(secretaryController));
+        commands.put("reschedule", RescheduleAppointment());
+        commands.put("book", BookAppointment());
+        commands.put("cancel", CancelAppointment());
+        commands.put("get appointments", PatientAppointments());
         return commands;
     }
 
-    Command ViewActivePrescription() {
+    private Command ViewActivePrescription() {
         return (x) -> {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.
                     getActivePrescriptions(patientData.getUsername());
@@ -56,7 +60,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
-    Command ViewPrescriptionHistory() {
+    private Command ViewPrescriptionHistory() {
         return (x) -> {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
             for (PrescriptionData prescriptionData : prescriptions) {
@@ -65,7 +69,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
-    Command ViewAppointments() {
+    private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDataBundles(patientData);
             appointmentView.viewFullFromList(appointments);
@@ -73,7 +77,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
-    Command ChangePatientPassword() {
+    private Command ChangePatientPassword() {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
             secretaryAccess.changePatientPassword(patientData, passwordResetDetails.password());
@@ -124,6 +128,22 @@ public class SecretaryLoadedPatientController extends TerminalController {
             int index = Integer.parseInt(presenter.promptPopup("Enter id"));
             secretaryAccess.removeAppointment(data.get(index));
         };
+    }
+
+    private Command RescheduleAppointment() {
+
+        return (x) -> {
+            ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDataBundles(patientData);
+            appointmentView.viewFullFromList(appointments);
+            // need something to prompt which one to change
+            int index = Integer.parseInt(presenter.promptPopup("Enter id"));
+            AppointmentDayDetails day = secretaryScreenView.bookAppointmentDayPrompt();
+            AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
+            appointmentManager.rescheduleAppointment(appointments.get(index), day.year(), day.month(), day.day(),
+                    time.hour(), time.minute(), time.length());
+
+        };
+
     }
 
 
