@@ -8,6 +8,7 @@ import useCases.managers.*;
 import utilities.DatabaseQueryUtility;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class AdminAccess {
 
@@ -54,6 +55,23 @@ public class AdminAccess {
         return patientManager.createPatient(username, password);
 
     }
+    public UserData createAcount(String username, String password, userType type){
+        switch (type){
+            case Admin -> {
+                return createAdmin(username, password);
+            }
+            case Patient -> {
+                return createPatient(username, password);
+            }
+            case Doctor -> {
+                return createDoctor(username, password);
+            }
+            case Secretary -> {
+                return createSecretary(username, password);
+            }
+        }
+        throw new NoSuchElementException();
+    }
     public DoctorData createDoctor (String username, String password){
         return doctorManager.createDoctor(username, password);
     }
@@ -97,6 +115,9 @@ public class AdminAccess {
     private <T extends User> void changePassUsingUsername(DataMapperGateway<T> database, String username, String newPassword){
         User user = database.getByCondition(x -> x.getUsername().equals(username));
         if (user != null){ user.setPassword(newPassword);}
+    }
+    public AdminData createAdmin(String userName, String password){
+        return adminManager.createAdmin(userName, password);
     }
 
 

@@ -42,7 +42,7 @@ public class DoctorLoadedPatientController extends TerminalController{
     }
     private Command appointments(){
         return (x) -> {
-//            doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData.getId()));
+            doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData));
         };
     }
 
