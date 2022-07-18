@@ -27,7 +27,7 @@ public class AdminController extends TerminalController{
         commands.put("change password", ChangePassword());
         commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
-        commands.put("Delete patient", new deletePatient());
+        commands.put("Delete patient", deletePatient());
         return commands;
     }
 
@@ -121,14 +121,10 @@ public class AdminController extends TerminalController{
             adminScreenVIew.viewAllLogs(adminAccess.getLogs(adminData));
         };
     }
-
-    class deletePatient implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command deletePatient (){
+        return (x) -> {
             String username = presenter.promptPopup("Enter username to be deleted");
             adminAccess.deletePatientUser(username);
-
-        }
+        };
     }
 }
