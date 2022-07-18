@@ -1,7 +1,8 @@
 package controllers;
 
-import dataBundles.AdminData;
-import dataBundles.LogData;
+import dataBundles.*;
+import presenter.response.UserCredentials;
+import presenter.screenViews.AdminScreenVIew;
 import useCases.accessClasses.AdminAccess;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 public class AdminController extends TerminalController{
     private AdminAccess adminAccess;
     private AdminData adminData;
+    private AdminScreenVIew v = new AdminScreenVIew();
     public AdminController(Context parent, AdminData adminData) {
         super(parent);
         this.adminData = adminData;
@@ -18,9 +20,10 @@ public class AdminController extends TerminalController{
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("create secretary", new CreateSecretaryAccount());
-        commands.put("create doctor", new CreateDoctorAccount());
-        commands.put("create patient", new CreatePatientAccount());
+        commands.put("create admin", CreateAdmin());
+        commands.put("create secretary", CreateSecretary());
+        commands.put("create doctor", CreateDoctor());
+        commands.put("create patient", CreatePatient());
         commands.put("change password", new ChangeAdminPassword());
         commands.put("get logs", new getLogs());
         commands.put("sign out", signOut());
@@ -37,6 +40,41 @@ public class AdminController extends TerminalController{
 //            return false;
 //        }
 //    }
+    Command CreateSecretary(){
+        return (x) -> {
+            UserCredentials c = v.registerSecretaryPrompt();
+            SecretaryData secretary = adminAccess.createSecretary(c.username(), c.password());
+            displaySuccessOnCreateAcount(secretary);
+        };
+    }
+    Command CreateDoctor(){
+        return (x) -> {
+            UserCredentials c = v.registerDoctorPrompt();
+            DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
+            displaySuccessOnCreateAcount(secretary);
+        };
+    }
+    Command CreateAdmin(){
+        return (x) -> {
+            UserCredentials c = v.registerAdminPrompt();
+            DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
+            displaySuccessOnCreateAcount(secretary);
+        };
+    }
+    Command CreatePatient(){
+        return (x) -> {
+            UserCredentials c = v.registerPatientPrompt();
+            PatientData patient = adminAccess.createPatient(c.username(), c.password());
+            displaySuccessOnCreateAcount(patient);
+        };
+    }
+    private void displaySuccessOnCreateAcount(UserData user){
+        if (user == null){
+            v.failedCreateAccount();
+        } else {
+            v.successCreateAccount();
+        }
+    }
     class CreateSecretaryAccount implements Command{
 
         @Override
