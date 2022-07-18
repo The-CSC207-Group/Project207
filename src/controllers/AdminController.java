@@ -7,6 +7,7 @@ import useCases.accessClasses.AdminAccess;
 import useCases.accessClasses.userType;
 import useCases.managers.AdminManager;
 import useCases.managers.LogManager;
+import useCases.managers.PatientManager;
 
 import java.util.HashMap;
 
@@ -14,6 +15,7 @@ public class AdminController extends TerminalController{
     private AdminAccess adminAccess;
     private AdminData adminData;
     private AdminScreenView adminScreenView = new AdminScreenView();
+    AdminManager adminManager = new AdminManager(getDatabase());
     public AdminController(Context parent, AdminData adminData) {
         super(parent);
         this.adminData = adminData;
@@ -55,9 +57,10 @@ public class AdminController extends TerminalController{
         };
     }
     private Command CreatePatient(){
+        PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            UserCredentials c = adminScreenView.registerPatientPrompt();
-            PatientData patient = adminAccess.createPatient(c.username(), c.password());
+            UserCredentials userCred = adminScreenView.registerPatientPrompt();
+            PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
             displaySuccessOnCreateAcount(patient);
         };
     }
@@ -70,7 +73,7 @@ public class AdminController extends TerminalController{
     }
 
     private Command ChangePassword(){
-        AdminManager adminManager = new AdminManager(getDatabase());
+
         return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
@@ -90,7 +93,7 @@ public class AdminController extends TerminalController{
     private Command deletePatient (){
         return (x) -> {
             String username = adminScreenView.patientUsernamePrompt();
-            adminAccess.deletePatientUser(username);
+            adminManager.deleteUser(username);
         };
     }
 }
