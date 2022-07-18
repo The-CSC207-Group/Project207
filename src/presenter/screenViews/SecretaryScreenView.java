@@ -17,8 +17,8 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     public AppointmentDayDetails bookAppointmentDayPrompt() {
-        String patientUsername = enterPatientUsernamePrompt();
-        String doctorUsername = enterDoctorUsernamePrompt();
+        String patientUsername = enterUsernamePrompt("patient");
+        String doctorUsername = enterUsernamePrompt("doctor");
         String year = input("Enter the year of your desired appointment (YYYY): ");
         String month = input("Enter the month of your desired appointment (MM): ");
         String day = input("Enter the day of your desired appointment (DD): ");
