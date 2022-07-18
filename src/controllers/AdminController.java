@@ -24,7 +24,7 @@ public class AdminController extends TerminalController{
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
-        commands.put("change password", new ChangeAdminPassword());
+        commands.put("change password", ChangePassword());
         commands.put("get logs", new getLogs());
         commands.put("sign out", signOut());
         commands.put("Delete patient", new deletePatient());
@@ -105,6 +105,17 @@ public class AdminController extends TerminalController{
 //                presenter.warningMessage("This username already exists. No new doctor account created");}
 //        }
 //    }
+    Command ChangePassword(){
+        return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
+            String p2 = presenter.promptPopup("Re-enter new password");
+            if (p1.equals(p2)){
+                adminAccess.changePassword(adminData.getUsername(), p1);
+                presenter.successMessage("Successfully changed password");
+            }
+            else {
+                presenter.errorMessage("Invalid! Please ensure both passwords match");
+            }};
+    }
     class ChangeAdminPassword implements Command{
 
         @Override
