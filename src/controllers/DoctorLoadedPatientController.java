@@ -4,6 +4,8 @@ import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
+import useCases.managers.AppointmentManager;
+import useCases.managers.ReportManager;
 import useCases.managers.TimeManager;
 
 import java.util.ArrayList;
@@ -39,19 +41,19 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command ViewPatientAppointments() {
         return (x) -> {
-            doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData));
+            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getPatientAppointments(patientData));
         };
     }
 
     private Command getReport() {
         return (x) -> {
-            doctorAccess.getPatientReports(patientData);
+            new ReportManager(getDatabase().getReportDatabase()).getReportDataBundlesFromPatientDataBundle(patientData);
         };
     }
 
     private Command createReport() {
         return (x) -> {
-            doctorAccess.addPatientReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
+            new ReportManager(getDatabase().getReportDatabase()).addReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
                     doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
         };
     }
