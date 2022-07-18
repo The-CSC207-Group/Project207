@@ -2,8 +2,11 @@ package useCases.managers;
 
 import dataBundles.SecretaryData;
 import database.DataMapperGateway;
+import database.Database;
 import entities.Contact;
 import entities.Secretary;
+
+import java.time.LocalDateTime;
 
 public class SecretaryManager extends UserManager<Secretary> {
 
@@ -14,14 +17,12 @@ public class SecretaryManager extends UserManager<Secretary> {
     /**
      * Stores the databases.
      *
-     * @param secretaryDatabase DataMapperGateway<Secretary>
-     * @param contactDatabase   DataMapperGateway<Contact>
      */
 
-    public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact> contactDatabase) {
-        super(secretaryDatabase);
-        this.secretaryDatabase = secretaryDatabase;
-        this.contactDatabase = contactDatabase;
+    public SecretaryManager(Database database) {
+        super(database.getSecretaryDatabase(), database);
+        this.secretaryDatabase = database.getSecretaryDatabase();
+        this.contactDatabase = database.getContactDatabase();
     }
 
     /**

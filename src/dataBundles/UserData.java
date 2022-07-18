@@ -14,7 +14,7 @@ public abstract class UserData<T extends User> extends DataBundle {
         return user.getUsername();
     }
 
-    public Integer getContact() {
+    public Integer getContactInfoId() {
         return user.getContactInfoId();
     }
 

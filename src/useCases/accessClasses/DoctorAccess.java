@@ -49,6 +49,10 @@ public class  DoctorAccess {
     public ArrayList<ReportData> getPatientReports(PatientData patientData){
         return reportManager.getReportDataBundlesFromPatientDataBundle(patientData);
     }
+    public PatientData getPatientData(String username){
+        return new PatientData(patientManager.getUser(username));
+    }
+
     public void addPatientReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
         reportManager.addReport(patientData, doctorData, dateNoted, header, body);
     }

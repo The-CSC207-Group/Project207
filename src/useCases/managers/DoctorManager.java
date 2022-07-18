@@ -16,7 +16,7 @@ public class DoctorManager extends UserManager<Doctor> {
      * @param database The entire database.
      */
     public DoctorManager(Database database) {
-        super(database.getDoctorDatabase());
+        super(database.getDoctorDatabase(), database);
         this.doctorDatabase = database.getDoctorDatabase();
         this.contactDatabase = database.getContactDatabase();
     }

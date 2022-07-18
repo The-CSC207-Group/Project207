@@ -15,7 +15,7 @@ public class AdminManager extends UserManager<Admin>{
      * @param database The entire database.
      */
     public AdminManager(Database database){
-        super(database.getAdminDatabase());
+        super(database.getAdminDatabase(), database);
         this.adminDatabase = database.getAdminDatabase();
         this.contactDatabase = database.getContactDatabase();
     }

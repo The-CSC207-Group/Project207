@@ -17,7 +17,7 @@ public class PatientManager extends UserManager<Patient> {
      *
      */
     public PatientManager(Database database) {
-        super(database.getPatientDatabase());
+        super(database.getPatientDatabase(), database);
         this.patientDatabase = database.getPatientDatabase();
         this.contactDatabase = database.getContactDatabase();
     }

@@ -78,6 +78,28 @@ public class AdminAccess {
     public SecretaryData createSecretary (String username, String password){
         return secretaryManager.createSecretary(username, password);
     }
+    public PatientData getPatientData(String username){
+        return new PatientData(patientManager.getUser(username));
+    }
+    public DoctorData getDoctorData(String username){
+        return new DoctorData(doctorManager.getUser(username));
+    }
+    public SecretaryData getSecretaryData(String username){
+        return new SecretaryData(secretaryManager.getUser(username));
+    }
+    public AdminData getAdminData(String username){
+        return new AdminData(adminManager.getUser(username));
+    }
+    public boolean deletePatient(PatientData patientData){
+        return patientManager.deleteUser(patientData.getUsername());
+    }
+    public boolean deleteDoctor(DoctorData doctorData){
+        return doctorManager.deleteUser(doctorData.getUsername());
+    }
+    public boolean deleteSecretary(SecretaryData secretaryData){
+        return secretaryManager.deleteUser(secretaryData.getUsername());
+    }
+
 
     /**
      * Change the password of any user given their username. If the userId is not associated with a user any user database,
