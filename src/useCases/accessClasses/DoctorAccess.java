@@ -153,7 +153,7 @@ public class  DoctorAccess {
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
     public <T extends User> ArrayList<LogData> getLogs(UserData<T> userDataBundle){
-        return logManager.getLogDataBundlesFromUserDataBundle(userDataBundle);
+        return logManager.getUserLogs(userDataBundle);
     }
     public Optional<Integer> getPatientId(String name){
         return patientManager.getPatientId(name);

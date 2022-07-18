@@ -109,7 +109,7 @@ public class AdminAccess {
      * @return null if the user does not exist in any databases or an arraylist of logs otherwise.
      */
     public <T extends User>ArrayList<LogData> getLogs(UserData<T> userDataBundle) {
-        return logManager.getLogDataBundlesFromUserDataBundle(userDataBundle);
+        return logManager.getUserLogs(userDataBundle);
     }
 
     private <T extends User> void changePassUsingUsername(DataMapperGateway<T> database, String username, String newPassword){

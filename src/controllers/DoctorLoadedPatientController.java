@@ -58,8 +58,8 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command deleteReport() {
         return (x) -> {
-            doctorAccess.removePatientReport(doctorAccess.getPatientReports(patientData)
-                    .get(doctorView.deleteReportPrompt(doctorAccess.getPatientReports(patientData))));
+            //doctorAccess.removePatientReport(doctorAccess.getPatientReports(patientData)
+                    //.get(doctorView.deletePatientReportPrompt(patientData., doctorAccess.getPatientReports(patientData))));
         };
     }
 }
