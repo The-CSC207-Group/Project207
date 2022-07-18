@@ -28,7 +28,7 @@ public class AdminScreenView extends UserScreenView {
         System.out.println("succeeded needs work on this method");
     }
     public String patientUsernamePrompt(){
-        return enterPatientUsernamePrompt();
+        return enterUsernamePrompt("patient");
     }
 
     public void viewAllLogs(List<LogData> items) {
