@@ -57,16 +57,16 @@ public class AdminAccess {
     }
     public UserData createAcount(String username, String password, userType type){
         switch (type){
-            case Admin -> {
+            case Admin: {
                 return createAdmin(username, password);
             }
-            case Patient -> {
+            case Patient: {
                 return createPatient(username, password);
             }
-            case Doctor -> {
+            case Doctor: {
                 return createDoctor(username, password);
             }
-            case Secretary -> {
+            case Secretary: {
                 return createSecretary(username, password);
             }
         }
