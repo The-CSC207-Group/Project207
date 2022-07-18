@@ -24,7 +24,7 @@ public class PatientAccess {
      *
      */
     public PatientAccess(Database database) {
-        this.prescriptionManager = new PrescriptionManager(database.getPrescriptionDatabase());
+        this.prescriptionManager = new PrescriptionManager(database);
         this.patientManager = new PatientManager(database);
         this.logManager = new LogManager(database);
         this.appointmentManager = new AppointmentManager(database);
