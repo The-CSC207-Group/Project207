@@ -11,12 +11,14 @@ import presenter.screenViews.SecretaryScreenView;
 import presenter.entityViews.PrescriptionView;
 import useCases.managers.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class SecretaryLoadedPatientController extends TerminalController {
     PatientData patientData;
-    SecretaryAccess secretaryAccess;
+
     SecretaryController secretaryController;
     PrescriptionView prescriptionView;
     AppointmentManager appointmentManager;
@@ -26,14 +28,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
     PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final AppointmentView appointmentView = new AppointmentView();
-    private final AdminScreenView adminScreenVIew = new AdminScreenView();
 
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
         super(context);
         this.secretaryController = secretaryController;
         this.patientData = patientData;
-        this.secretaryAccess = new SecretaryAccess(getDatabase());
     }
 
 
@@ -94,13 +94,14 @@ public class SecretaryLoadedPatientController extends TerminalController {
             int year = appointmentDayDetails.year();
             String doctor = appointmentDayDetails.doctorUsername();
 
-            if (doctorManager.doesUserExist(doctor)) {
+            if (doctorManager.getDoctor(doctor).isPresent()) {
                 // need a method that returns DoctorData
-                DoctorData doctorData = secretaryAccess.getDoctor(doctor).get();
-                appointmentView.viewFullFromList(secretaryAccess.getScheduleData(doctorData, year, month, day));
+                DoctorData doctorData = doctorManager.getDoctor(doctor).get();
+                appointmentView.viewFullFromList(appointmentManager.getScheduleData(doctorData,
+                        LocalDate.of(year, month, day)));
 
                 AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
-                secretaryAccess.bookAppointment(
+                appointmentManager.bookAppointment(
                         patientData, doctorData, year, month, day,
                         appointmentTimeDetails.hour(),
                         appointmentTimeDetails.minute(),
@@ -115,25 +116,25 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command PatientAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> patientAppointment =
-                    secretaryAccess.getPatientAppointmentDataBundles(patientData);
+                    appointmentManager.getPatientAppointments(patientData);
             appointmentView.viewFullFromList(patientAppointment);
         };
     }
 
     private Command CancelAppointment() {
         return (x) -> {
-            ArrayList<AppointmentData> data = secretaryAccess.getPatientAppointmentDataBundles(patientData);
+            ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
             appointmentView.viewFullFromList(data);
             // need something to prompt which one to remove
             int index = Integer.parseInt(presenter.promptPopup("Enter id"));
-            secretaryAccess.removeAppointment(data.get(index));
+            appointmentManager.removeAppointment(data.get(index));
         };
     }
 
     private Command RescheduleAppointment() {
 
         return (x) -> {
-            ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDataBundles(patientData);
+            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             appointmentView.viewFullFromList(appointments);
             // need something to prompt which one to change
             int index = Integer.parseInt(presenter.promptPopup("Enter id"));

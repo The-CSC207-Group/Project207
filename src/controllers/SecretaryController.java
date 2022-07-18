@@ -8,6 +8,7 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.SecretaryAccess;
+import useCases.managers.*;
 
 
 import java.util.ArrayList;
@@ -17,17 +18,22 @@ import java.util.HashMap;
 public class SecretaryController extends TerminalController {
 
 
-    private final SecretaryAccess secretaryAccess;
+
     private final SecretaryData secretaryData;
+
     private final SecretaryController self = this;
+
+
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-    private final AppointmentView appointmentView = new AppointmentView();
-    private final AdminScreenView adminScreenVIew = new AdminScreenView();
+    private final AdminScreenView adminScreenView = new AdminScreenView();
+    PatientManager patientManager;
+    DoctorManager doctorManager;
+    SecretaryManager secretaryManager;
+    LogManager logManager;
 
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
-        this.secretaryAccess = new SecretaryAccess(getDatabase());
         this.secretaryData = secretaryData;
     }
 
@@ -46,7 +52,7 @@ public class SecretaryController extends TerminalController {
         @Override
         public void execute(ArrayList<String> args) {
             String username = secretaryScreenView.enterPatientUsernamePrompt();
-            secretaryAccess.getPatient(username).ifPresent(
+            doctorManager.getPatient(username).ifPresent(
                     (patientData) -> {
                         changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
                     }
@@ -57,11 +63,11 @@ public class SecretaryController extends TerminalController {
     private Command CreatePatientAccount() {
         return (x) -> {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
-            if (!secretaryAccess.doesPatientExist(userCredentials.username())) {
-                secretaryAccess.createPatient(userCredentials.username(), userCredentials.password());
-                adminScreenVIew.successCreateAccount();
+            if (!patientManager.doesUserExist(userCredentials.username())) {
+                patientManager.createPatient(userCredentials.username(), userCredentials.password());
+                adminScreenView.successCreateAccount();
             } else {
-                adminScreenVIew.failedCreateAccount();
+                adminScreenView.failedCreateAccount();
             }
 
         };
@@ -70,11 +76,11 @@ public class SecretaryController extends TerminalController {
     private Command CreateDoctorAccount() {
         return (x) -> {
             UserCredentials userCredentials = secretaryScreenView.registerDoctorAccount();
-            if (!secretaryAccess.doesDoctorExist(userCredentials.username())) {
-                secretaryAccess.createDoctor(userCredentials.username(), userCredentials.password());
+            if (!doctorManager.doesUserExist(userCredentials.username())) {
+                doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
             } else {
                 // need warning message
-                adminScreenVIew.failedCreateAccount();
+                adminScreenView.failedCreateAccount();
             }
         };
     }
@@ -83,7 +89,7 @@ public class SecretaryController extends TerminalController {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
-                secretaryAccess.changeSecretaryPassword(secretaryData, passwordResetDetails.password());
+                secretaryManager.changeUserPassword(secretaryData, passwordResetDetails.password());
                 // need success message
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
@@ -93,7 +99,7 @@ public class SecretaryController extends TerminalController {
 
     private Command GetLogs() {
         return (x) -> {
-            ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData);
+            ArrayList<LogData> logs = logManager.getUserLogs(secretaryData);
             secretaryScreenView.viewUserLogs(logs);
         };
     }
