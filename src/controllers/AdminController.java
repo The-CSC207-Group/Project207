@@ -44,14 +44,14 @@ public class AdminController extends TerminalController{
             displaySuccessOnCreateAcount(secretary);
         };
     }
-    Command CreateAdmin(){
+    private Command CreateAdmin(){
         return (x) -> {
             UserCredentials c = adminScreenView.registerAdminPrompt();
             DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
-    Command CreatePatient(){
+    private Command CreatePatient(){
         return (x) -> {
             UserCredentials c = adminScreenView.registerPatientPrompt();
             PatientData patient = adminAccess.createPatient(c.username(), c.password());
@@ -66,7 +66,7 @@ public class AdminController extends TerminalController{
         }
     }
 
-    Command ChangePassword(){
+    private Command ChangePassword(){
         return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
