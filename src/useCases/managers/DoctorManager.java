@@ -28,9 +28,14 @@ public class DoctorManager extends UserManager<Doctor> {
 
     }
     public DoctorData toDoctorData(Doctor doctor){
-        if (doctor == null){
+        if (doctor != null){
             return new DoctorData(doctor);
+        } else {
+            return null;
         }
+    }
+    public DoctorData SignInDoctor(String userName, String Password){
+        
     }
 }
 
