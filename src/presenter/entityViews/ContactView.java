@@ -3,6 +3,7 @@ package presenter.entityViews;
 import dataBundles.ContactData;
 
 public class ContactView extends EntityView<ContactData> {
+    // TODO refactor this
 
     @Override
     public String viewFull(ContactData item) {
@@ -18,11 +19,11 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     public String viewName(ContactData item) {
-        return "Your name is " + item.getName() + ".";
+        return getDefaultString(item.getName(), "unnamed");
     }
 
     public String viewEmail(ContactData item) {
-        return "Your email is " + item.getEmail() + ".";
+        return item.getEmail();
     }
 
     public String viewPhoneNumber(ContactData item) {
