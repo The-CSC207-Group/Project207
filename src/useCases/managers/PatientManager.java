@@ -11,7 +11,6 @@ import java.util.Optional;
 
 public class PatientManager extends UserManager<Patient>{
     DataMapperGateway<Patient> patientDatabase;
-    GenericUserManagerMethods<Patient> patientMethods;
     DataMapperGateway<Contact> contactDatabase;
 
 
@@ -20,7 +19,6 @@ public class PatientManager extends UserManager<Patient>{
     public PatientManager(Database database) {
         super(database.getPatientDatabase());
         this.patientDatabase = database.getPatientDatabase();
-        this.patientMethods = new GenericUserManagerMethods<>(patientDatabase);
         this.contactDatabase = database.getContactDatabase();
     }
 

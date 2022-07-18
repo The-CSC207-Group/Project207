@@ -11,6 +11,7 @@ import presenter.entityViews.ReportView;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
 
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class DoctorScreenView extends UserScreenView {
@@ -25,9 +26,13 @@ public class DoctorScreenView extends UserScreenView {
             infoMessage(i + ":");
             prescriptionView.viewFull(prescriptionData.get(i - 1));
         }
+
         warningMessage("This action cannot be undone!");
-        String number = input("Input prescription number to delete: ");
-        return Integer.getInteger(number);
+        try {
+            return inputInt("Input prescription number to delete: ");
+        } catch (InputMismatchException e) {
+            return null;
+        }
     }
 
     public void showDeletePrescriptionError() {
@@ -46,9 +51,13 @@ public class DoctorScreenView extends UserScreenView {
             infoMessage(i + ":");
             reportView.viewFull(reportData.get(i - 1));
         }
+
         warningMessage("This action cannot be undone!");
-        String number = input("Input prescription number to delete: ");
-        return Integer.getInteger(number);
+        try {
+            return inputInt("Input report number to delete: ");
+        } catch (InputMismatchException e) {
+            return null;
+        }
     }
 
     public void showDeleteReportError() {
