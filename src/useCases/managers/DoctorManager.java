@@ -27,10 +27,10 @@ public class DoctorManager extends UserManager<Doctor> {
         return new DoctorData(doctor);
 
     }
-    public DoctorData toDoctorData(Doctor doctor) {
-        if (doctor == null) {
-            return new DoctorData(doctor);
-        }
-    }
+//    public DoctorData toDoctorData(Doctor doctor) {
+//        if (doctor == null) {
+//            return new DoctorData(doctor);
+//        }
+//    }
 }
 
