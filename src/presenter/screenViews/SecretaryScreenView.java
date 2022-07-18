@@ -35,12 +35,4 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage("Appointment booked at " + hour + ":" + minute + "for " + length + "minutes." );
         return new AppointmentTimeDetails(Integer.valueOf(hour), Integer.valueOf(minute), Integer.valueOf(length));
     }
-
-    public String enterPatientUsernamePrompt() {
-        return enterUsernamePrompt("patient");
-    }
-
-    public String enterDoctorUsernamePrompt() {
-        return enterUsernamePrompt("doctor");
-    }
 }

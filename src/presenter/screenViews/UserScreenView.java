@@ -25,4 +25,12 @@ public abstract class UserScreenView extends ScreenView{
         infoMessage("Logs:");
         infoMessage(output);
     }
+
+    public String enterPatientUsernamePrompt() {
+        return enterUsernamePrompt("patient");
+    }
+
+    public String enterDoctorUsernamePrompt() {
+        return enterUsernamePrompt("doctor");
+    }
 }
