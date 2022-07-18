@@ -121,7 +121,6 @@ public class  DoctorAccess implements AccessMixin{
     public void deletePrescription(Integer prescriptionId){
         prescriptionManager.removePrescription(prescriptionId);
     }
-
     /**
      * a function that gets all appointments independent of a specific patient or doctor.
      * @return an arrayList of AppointmentData. if there is no appointments in the database, returns empty arrayList

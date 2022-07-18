@@ -29,11 +29,12 @@ public class DoctorController extends TerminalController{
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> h = super.AllCommands();
         h.put("load patient", new LoadPatient());
-        h.put("change password", new ChangePassword());
-        h.put("show schedule", new CheckSchedule());
-        h.put("show logs", new GetLogs());
+        h.put("change password", ChangePassword());
+        h.put("show schedule", ViewSchedule());
+        h.put("show logs", GetLogs());
         h.put("sign out", signOut());
-        h.put("show assigned appointments", new ViewAllDoctorAppointments());
+        h.put("show assigned appointments", ViewAllDoctorAppointments());
+        h.put("show all appointments", ViewAllAppointments());
         return h;
     }
 
@@ -49,10 +50,8 @@ public class DoctorController extends TerminalController{
             );
         }
     }
-    class ChangePassword implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ChangePassword(){
+        return (x) -> {
             String newPassword1 = presenter.promptPopup("Enter a new password");
             String newPassword2 = presenter.promptPopup("Re-enter the new password");
             if (newPassword1.equals(newPassword2)){
@@ -60,32 +59,30 @@ public class DoctorController extends TerminalController{
             } else {
                 presenter.errorMessage("These do not match");
             }
-        }
+        };
     }
-
-    class CheckSchedule implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ViewSchedule(){
+        return (x) -> {
             String year = presenter.promptPopup("Enter the year:");
             String month = presenter.promptPopup("Enter the month:");
             String day = presenter.promptPopup("Enter the day of month:");
-            List<AppointmentData> appointments = doctorAccess.getScheduleData(doctorData, Integer.parseInt(year),
-                    Integer.parseInt(month), Integer.parseInt(day));
-        }
+            doctorView.viewAppointments(doctorAccess.getScheduleData(doctorData, Integer.parseInt(year),
+                    Integer.parseInt(month), Integer.parseInt(day)));
+        };
     }
-    class ViewAllDoctorAppointments implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ViewAllDoctorAppointments(){
+        return (x) -> {
             doctorView.viewAppointments(doctorAccess.getAllDoctorAppointments(doctorData));
-        }
+        };
     }
-    class GetLogs implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<LogData> logs = doctorAccess.getLogs(doctorData);
-        }
+    private Command GetLogs(){
+        return (x) -> {
+            doctorView.viewLogs(doctorAccess.getLogs(doctorData));
+        };
+    }
+    private Command ViewAllAppointments(){
+        return (x) -> {
+            doctorView.viewAppointments(doctorAccess.getAllAppointments());
+        };
     }
 }
