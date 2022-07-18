@@ -9,19 +9,21 @@ import presenter.response.PasswordResetDetails;
 import presenter.screenViews.AdminScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import presenter.entityViews.PrescriptionView;
-import useCases.managers.AppointmentManager;
+import useCases.managers.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SecretaryLoadedPatientController extends TerminalController {
     PatientData patientData;
-
-    SecretaryData secretaryData;
     SecretaryAccess secretaryAccess;
     SecretaryController secretaryController;
     PrescriptionView prescriptionView;
     AppointmentManager appointmentManager;
+    PrescriptionManager prescriptionManager;
+    SecretaryManager secretaryManager;
+    DoctorManager doctorManager;
+    PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final AppointmentView appointmentView = new AppointmentView();
     private final AdminScreenView adminScreenVIew = new AdminScreenView();
@@ -51,8 +53,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private Command ViewActivePrescription() {
         return (x) -> {
-            ArrayList<PrescriptionData> prescriptions = secretaryAccess.
-                    getActivePrescriptions(patientData.getUsername());
+            ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
             for (PrescriptionData prescriptionData : prescriptions) {
                 prescriptionView.viewFull(prescriptionData);
             }
@@ -62,7 +63,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private Command ViewPrescriptionHistory() {
         return (x) -> {
-            ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
+            ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllPrescriptions(patientData);
             for (PrescriptionData prescriptionData : prescriptions) {
                 prescriptionView.viewFull(prescriptionData);
             }
@@ -71,7 +72,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private Command ViewAppointments() {
         return (x) -> {
-            ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDataBundles(patientData);
+            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             appointmentView.viewFullFromList(appointments);
 
         };
@@ -80,7 +81,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command ChangePatientPassword() {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
-            secretaryAccess.changePatientPassword(patientData, passwordResetDetails.password());
+            patientManager.changeUserPassword(patientData, passwordResetDetails.password());
         };
     }
 
@@ -93,7 +94,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
             int year = appointmentDayDetails.year();
             String doctor = appointmentDayDetails.doctorUsername();
 
-            if (secretaryAccess.getDoctor(doctor).isPresent()) {
+            if (doctorManager.doesUserExist(doctor)) {
+                // need a method that returns DoctorData
                 DoctorData doctorData = secretaryAccess.getDoctor(doctor).get();
                 appointmentView.viewFullFromList(secretaryAccess.getScheduleData(doctorData, year, month, day));
 
@@ -108,8 +110,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 presenter.errorMessage("Doctor does not exist");
             }
         };
-
-
     }
 
     private Command PatientAppointments() {
