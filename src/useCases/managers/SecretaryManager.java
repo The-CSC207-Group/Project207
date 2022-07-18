@@ -15,8 +15,7 @@ public class SecretaryManager extends UserManager<Secretary> {
     /**
      * Stores the databases.
      *
-     * @param secretaryDatabase DataMapperGateway<Secretary>
-     * @param contactDatabase   DataMapperGateway<Contact>
+     * @param database DataMapperGateway<Secretary>
      */
 
     public SecretaryManager(Database database) {

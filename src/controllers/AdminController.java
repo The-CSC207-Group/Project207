@@ -5,10 +5,7 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
 import useCases.accessClasses.userType;
-import useCases.managers.AdminManager;
-import useCases.managers.DoctorManager;
-import useCases.managers.LogManager;
-import useCases.managers.PatientManager;
+import useCases.managers.*;
 
 import java.util.HashMap;
 
@@ -38,24 +35,25 @@ public class AdminController extends TerminalController{
 
     Command CreateSecretary(){
         return (x) -> {
+            SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
-            SecretaryData secretary = adminAccess.createSecretary(c.username(), c.password());
+            SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateDoctor(){
         return (x) -> {
             DoctorManager doctorManager = new DoctorManager(getDatabase());
-            UserCredentials c = adminScreenView.registerDoctorPrompt();
-            DoctorData doctor = doctorManager.createDoctor(c.username(), c.password());
+            UserCredentials userCred = adminScreenView.registerDoctorPrompt();
+            DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
             displaySuccessOnCreateAcount(doctor);
         };
     }
     private Command CreateAdmin(){
         return (x) -> {
 
-            UserCredentials c = adminScreenView.registerAdminPrompt();
-            AdminData admin = adminManager.createAdmin(c.username(), c.password());
+            UserCredentials userCred = adminScreenView.registerAdminPrompt();
+            AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
             displaySuccessOnCreateAcount(admin);
         };
     }
