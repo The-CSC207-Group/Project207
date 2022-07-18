@@ -1,15 +1,18 @@
 package controllers;
 
 import dataBundles.*;
+import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenVIew;
 import useCases.accessClasses.AdminAccess;
+import useCases.managers.AdminManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminController extends TerminalController{
     private AdminAccess adminAccess;
+    private AdminManager adminManager;
     private AdminData adminData;
     private AdminScreenVIew v = new AdminScreenVIew();
     public AdminController(Context parent, AdminData adminData) {
@@ -24,22 +27,15 @@ public class AdminController extends TerminalController{
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
-        commands.put("change password", new ChangeAdminPassword());
+        commands.put("change password", changePassword());
         commands.put("get logs", new getLogs());
         commands.put("sign out", signOut());
-        commands.put("Delete patient", new deletePatient());
+        commands.put("delete patient", new deletePatient());
+        commands.put("getUserInfo", notImplemented());
         return commands;
     }
 
-//    class CreateAccount implements Command{
-//
-//        @Override
-//        public boolean execute(ArrayList<String> args) {
-//            String username = presenter.promptPopup("Enter Username");
-//            String password = presenter.promptPopup("Enter Password");
-//            return false;
-//        }
-//    }
+
     Command CreateSecretary(){
         return (x) -> {
             UserCredentials c = v.registerSecretaryPrompt();
@@ -75,67 +71,27 @@ public class AdminController extends TerminalController{
             v.successCreateAccount();
         }
     }
-    class CreateSecretaryAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (adminAccess.doesSecretaryExist(username)){
-                adminAccess.createSecretary(username, password);
-                presenter.successMessage("Successfully created new secretary");}
-            else {
-                presenter.warningMessage("This username already exists. No new secretary account created");}
-        }
-    }
-    class CreatePatientAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (adminAccess.doesPatientExist(username)){
-                adminAccess.createPatient(username, password);
-                presenter.successMessage("Successfully created new patient");}
-            else {
-                presenter.warningMessage("This username already exists. No new patient account created");}
-        }
-    }
-    class CreateDoctorAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (adminAccess.doesDoctorExist(username)){
-               adminAccess.createDoctor(username, password);
-                presenter.successMessage("Successfully created new doctor");}
-            else {
-                presenter.warningMessage("This username already exists. No new doctor account created");}
-        }
-    }
-    class ChangeAdminPassword implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String p1 = presenter.promptPopup("Enter New Password");
-            String p2 = presenter.promptPopup("Re-enter new password");
-            if (p1.equals(p2)){
-                adminAccess.changePassword(adminData.getUsername(), p1);
-                presenter.successMessage("Successfully changed password");
+    Command changePassword(){
+        return (x) -> {
+            PasswordResetDetails pa = v.resetPasswordPrompt();
+            if (pa.password().equals(pa.confirmedPassword())){
+                adminAccess.changeAdminsPassword(adminData, pa.password());
             }
-            else {
-                presenter.errorMessage("Invalid! Please ensure both passwords match");
-            }
-        }
+            else v.showResetPasswordMismatchError();
+        };
     }
+
+
+
     class getLogs implements Command{
 
         @Override
         public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = adminAccess.getLogs(adminData);
+
         }
     }
+
     class deletePatient implements Command{
 
         @Override

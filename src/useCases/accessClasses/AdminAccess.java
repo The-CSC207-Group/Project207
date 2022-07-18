@@ -119,6 +119,9 @@ public class AdminAccess {
     public AdminData createAdmin(String userName, String password){
         return adminManager.createAdmin(userName, password);
     }
+    public boolean changeAdminsPassword(AdminData adminData, String newPassword){
+        return adminManager.changeUserPassword(adminData, newPassword);
+    }
 
 
 }

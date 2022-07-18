@@ -36,7 +36,7 @@ public abstract class UserManager<T extends User> {
     public Boolean doesUserExist(String username){
         return database.getByCondition(x -> x.getUsername().equals(username)) != null;
     }
-    public T signIn(String username, String password){
+    public User signIn(String username, String password){
         T user = getUser(username);
         if (user == null){return null;}
         if (user.comparePassword(password)){return user;}
