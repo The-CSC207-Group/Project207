@@ -22,4 +22,5 @@ public abstract class UserData<T extends User> extends DataBundle {
         return user.getId();
     }
 
+
 }
