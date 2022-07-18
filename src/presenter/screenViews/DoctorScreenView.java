@@ -47,8 +47,13 @@ public class DoctorScreenView extends UserScreenView {
             reportView.viewFull(reportData.get(i - 1));
         }
         warningMessage("This action cannot be undone!");
+
         String number = input("Input prescription number to delete: ");
-        return Integer.getInteger(number);
+        try {
+            return Integer.parseInt(number) - 1;
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public void showDeleteReportError() {
