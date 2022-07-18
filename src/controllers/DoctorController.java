@@ -5,6 +5,8 @@ import dataBundles.DoctorData;
 import dataBundles.LogData;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
+import useCases.managers.AppointmentManager;
+import useCases.managers.LogManager;
 import useCases.managers.TimeManager;
 
 import java.sql.Time;
@@ -66,23 +68,24 @@ public class DoctorController extends TerminalController{
             String year = presenter.promptPopup("Enter the year:");
             String month = presenter.promptPopup("Enter the month:");
             String day = presenter.promptPopup("Enter the day of month:");
-            doctorView.viewAppointments(doctorAccess.getScheduleData(doctorData, Integer.parseInt(year),
-                    Integer.parseInt(month), Integer.parseInt(day)));
+            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getScheduleData(doctorData,
+                    new TimeManager().createLocalDate(Integer.parseInt(year),
+                    Integer.parseInt(month), Integer.parseInt(day))));
         };
     }
     private Command ViewAllDoctorAppointments(){
         return (x) -> {
-            doctorView.viewAppointments(doctorAccess.getAllDoctorAppointments(doctorData));
+            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getDoctorAppointments(doctorData));
         };
     }
     private Command GetLogs(){
         return (x) -> {
-            doctorView.viewUserLogs(doctorAccess.getLogs(doctorData));
+            doctorView.viewUserLogs(new LogManager(getDatabase().getLogDatabase()).getUserLogs(doctorData));
         };
     }
     private Command ViewAllAppointments(){
         return (x) -> {
-            doctorView.viewAppointments(doctorAccess.getAllAppointments());
+            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
         };
     }
 }

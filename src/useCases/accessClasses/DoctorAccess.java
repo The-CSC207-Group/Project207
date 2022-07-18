@@ -50,7 +50,7 @@ public class  DoctorAccess {
         return reportManager.getReportDataBundlesFromPatientDataBundle(patientData);
     }
     public void addPatientReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
-        reportManager.addReport(dateNoted, header, body, patientData.getId(), doctorData.getId());
+        reportManager.addReport(patientData, doctorData, dateNoted, header, body);
     }
     public void removePatientReport(ReportData reportData){
         reportManager.deleteReport(reportData.getReportId());

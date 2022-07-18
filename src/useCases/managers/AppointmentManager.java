@@ -186,7 +186,7 @@ public class AppointmentManager {
      * @return returns an arrayList of TimeBlockData that represents available appointment times between the search
      * start and end date.
      */
-    public ArrayList<TimeBlockData> getAvailability(DoctorData doctorData, Integer year, Integer month,
+    public ArrayList<TimeBlockData> getAvailableTimes(DoctorData doctorData, Integer year, Integer month,
                                                     Integer startDay, Integer endDay){
         TimeManager timeManager = new TimeManager();
         return searchAvailability(doctorData, timeManager.createZonedDataTime(year, month, startDay, 0, 0),
