@@ -37,14 +37,14 @@ public class DoctorScreenView extends UserScreenView {
      * Error raised when the user inputted integer is outside the size of the given data bundle list
      */
     public void showDeletePrescriptionOutOfRangeError() {
-        errorMessage("Could not delete prescription: index out of range.");
+        prescriptionScreenView.showDeletePrescriptionOutOfRangeError();
     }
 
     /***
      * Error raised when the user input is not an integer.
      */
     public void showDeletePrescriptionNotAnIntegerError() {
-        errorMessage("Could not delete prescription: please input a valid integer.");
+        prescriptionScreenView.showDeletePrescriptionNotAnIntegerError();
     }
 
     public PrescriptionDetails prescriptionDetailsPrompt() {
