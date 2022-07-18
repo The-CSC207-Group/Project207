@@ -85,7 +85,7 @@ public class AdminController extends TerminalController{
             }};
     }
     private Command getLogs (){
-        LogManager logManager = new LogManager(getDatabase().getLogDatabase());
+        LogManager logManager = new LogManager(getDatabase());
         return (x) -> {
             adminScreenView.viewAllLogs(logManager.getUserLogs(adminData));
         };
