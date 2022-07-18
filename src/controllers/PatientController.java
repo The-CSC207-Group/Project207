@@ -3,7 +3,6 @@ package controllers;
 import dataBundles.AppointmentData;
 import dataBundles.LogData;
 import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
 import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 
@@ -52,6 +51,7 @@ public class PatientController extends TerminalController {
         @Override
         public void execute(ArrayList<String> args) {
             ArrayList<AppointmentData> appointments = patientAccess.getAppointments(patientData);
+            patientScreenView.viewAppointments(appointments);
         }
     }
 
@@ -68,6 +68,7 @@ public class PatientController extends TerminalController {
         @Override
         public void execute(ArrayList<String> args) {
             ArrayList<LogData> logs = patientAccess.getLogs(patientData);
+            patientScreenView.viewLogs(logs);
         }
     }
 }
