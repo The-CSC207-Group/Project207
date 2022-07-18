@@ -37,11 +37,7 @@ public class PatientScreenView extends UserScreenView {
     public void viewAppointments(List<AppointmentData> items) {
         AppointmentView appointmentView = new AppointmentView();
         String output = appointmentView.viewFullFromList(items);
-        infoMessage(output);
-    }
-
-    public void viewBookedAppointments(List<AppointmentData> items) {
         infoMessage("Booked Appointments:");
-        viewAppointments(items);
+        infoMessage(output);
     }
 }

@@ -22,11 +22,7 @@ public abstract class UserScreenView extends ScreenView{
     public void viewLogs(List<LogData> items) {
         LogView logView = new LogView();
         String output = logView.viewFullFromList(items);
+        infoMessage("Logs:");
         infoMessage(output);
-    }
-
-    public void viewAllLogs(List<LogData> items) {
-        infoMessage("All Logs:");
-        viewLogs(items);
     }
 }
