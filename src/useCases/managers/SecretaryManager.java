@@ -1,9 +1,9 @@
 package useCases.managers;
 
-import dataBundles.ContactData;
 import dataBundles.SecretaryData;
 import database.DataMapperGateway;
-import entities.*;
+import entities.Contact;
+import entities.Secretary;
 
 public class SecretaryManager extends UserManager<Secretary> {
 
@@ -36,5 +36,18 @@ public class SecretaryManager extends UserManager<Secretary> {
         secretaryDatabase.add(secretary);
         return new SecretaryData(secretary);
     }
+    public SecretaryData toSecretaryData(Secretary secretary){
+        if (secretary == null){
+            return null;
+        } else {
+            return new SecretaryData(secretary);
+        }
+    }
 
-}
+    @Override
+    public SecretaryData signIn(String userName, String password) {
+        return toSecretaryData(signInHelper(userName, password));
+
+    }
+
+    }
