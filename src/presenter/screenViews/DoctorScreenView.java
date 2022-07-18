@@ -3,8 +3,6 @@ package presenter.screenViews;
 import dataBundles.AppointmentData;
 import dataBundles.PrescriptionData;
 import dataBundles.ReportData;
-import entities.Patient;
-import entities.Prescription;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.PrescriptionView;
 import presenter.entityViews.ReportView;
@@ -20,13 +18,15 @@ public class DoctorScreenView extends UserScreenView {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
+    /**
+     * Delete prescription view. Show an enumeration of all prescription and ask user for integer input corresponding
+     * to a selection.
+     * @param prescriptionData a list of PrescriptionData to display.
+     * @return an integer, representing the selected PrescriptionData from the list.
+     *         null, if and only if the user input is not an integer.
+     */
     public Integer deletePrescriptionPrompt(List<PrescriptionData> prescriptionData) {
-        PrescriptionView prescriptionView = new PrescriptionView();
-        for (int i = 1; i <= prescriptionData.size(); i++) {
-            infoMessage(i + ":");
-            prescriptionView.viewFull(prescriptionData.get(i - 1));
-        }
-
+        new PrescriptionView().viewFullAsEnumerationFromList(prescriptionData);
         warningMessage("This action cannot be undone!");
         try {
             return inputInt("Input prescription number to delete: ");
@@ -35,8 +35,18 @@ public class DoctorScreenView extends UserScreenView {
         }
     }
 
-    public void showDeletePrescriptionError() {
-        errorMessage("Could not delete prescription.");
+    /***
+     * Error raised when the user inputted integer is outside the size of the given data bundle list
+     */
+    public void showDeletePrescriptionOutOfRangeError() {
+        errorMessage("Could not delete prescription: index out of range.");
+    }
+
+    /***
+     * Error raised when the user input is not an integer.
+     */
+    public void showDeletePrescriptionNotAnIntegerError() {
+        errorMessage("Could not delete prescription: please input a valid integer.");
     }
 
     public PrescriptionDetails prescriptionDetailsPrompt() {
@@ -45,13 +55,15 @@ public class DoctorScreenView extends UserScreenView {
         return new PrescriptionDetails(header, body);
     }
 
+    /**
+     * Delete report view. Show an enumeration of all reports and ask user for integer input corresponding
+     * to a selection.
+     * @param reportData a list of reportData to display.
+     * @return an integer, representing the selected PrescriptionData from the list.
+     *         null, if and only if the user input is not an integer.
+     */
     public Integer deleteReportPrompt(List<ReportData> reportData) {
-        ReportView reportView = new ReportView();
-        for (int i = 1; i <= reportData.size(); i++) {
-            infoMessage(i + ":");
-            reportView.viewFull(reportData.get(i - 1));
-        }
-
+        new ReportView().viewFullAsEnumerationFromList(reportData);
         warningMessage("This action cannot be undone!");
         try {
             return inputInt("Input report number to delete: ");

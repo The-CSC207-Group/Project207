@@ -2,24 +2,34 @@ package controllers;
 
 
 import dataBundles.*;
-import entities.Appointment;
-import entities.AvailabilityData;
-import entities.TimeBlock;
+import entities.Patient;
+import presenter.entityViews.AppointmentView;
+import presenter.response.AppointmentDayDetails;
+import presenter.response.AppointmentTimeDetails;
+import presenter.response.PasswordResetDetails;
+import presenter.response.UserCredentials;
+import presenter.screenViews.AdminScreenView;
+import presenter.screenViews.DoctorScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.SecretaryAccess;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class SecretaryController extends TerminalController {
 
 
-    private SecretaryAccess secretaryAccess;
-    private SecretaryData secretaryData;
-    private SecretaryController self = this;
-    private SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
+    private final SecretaryAccess secretaryAccess;
+    private final SecretaryData secretaryData;
+    private final SecretaryController self = this;
+
+    private final DoctorScreenView doctorScreenView = new DoctorScreenView();
+    private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
+    private final AppointmentView appointmentView = new AppointmentView();
+    private final AdminScreenView adminScreenVIew = new AdminScreenView();
+
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -30,109 +40,129 @@ public class SecretaryController extends TerminalController {
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("change password", new ChangePassword());
-        commands.put("create patient", new CreatePatientAccount());
-        commands.put("create doctor", new CreateDoctorAccount());
-        commands.put("get logs", new GetLogs());
+        commands.put("change password", ChangePassword());
+        commands.put("create patient", CreatePatientAccount());
+        commands.put("create doctor", CreateDoctorAccount());
+        commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
+        commands.put("book", BookAppointment());
         return commands;
     }
 
     class LoadPatient implements Command {
         @Override
         public void execute(ArrayList<String> args) {
-            String name = presenter.promptPopup("username of patient");
-            secretaryAccess.getPatient(name).ifPresent(
+            String username = secretaryScreenView.enterPatientUsernamePrompt();
+            secretaryAccess.getPatient(username).ifPresent(
                     (patientData) -> {
-                        changeCurrentController(new SecretaryLoadedPatientController(getContext(), self,  patientData));
-
+                        changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
                     }
             );
         }
     }
 
-    class CreatePatientAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-
-            String username = secretaryScreenView.registerPatientAccount().username();
-            String password = secretaryScreenView.registerPatientAccount().password();
-            if (secretaryAccess.doesPatientExist(username)){
-                secretaryAccess.createPatient(username, password);
-                presenter.successMessage("Successfully created new Patient");}
-            else {
-                presenter.warningMessage("This username already exists. No new patient account created");
-            }
-        }
-    }
-    class CreateDoctorAccount implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-
-            String username = presenter.promptPopup("Enter Username");
-            String password = presenter.promptPopup("Enter Password");
-            if (secretaryAccess.doesDoctorExist(username)){
-                secretaryAccess.createDoctor(username, password);
-                presenter.successMessage("Successfully created new doctor");}
-            else {
-                presenter.warningMessage("This username already exists. No new doctor account created");}
-        }
-    }
-    class ChangePassword implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String p1 = presenter.promptPopup("Enter New Password");
-            String p2 = presenter.promptPopup("Re-enter new password");
-            if (p1.equals(p2)){
-                secretaryAccess.changeSecretaryPassword(secretaryData, p1 );
-                presenter.successMessage("Successfully changed password");
+    private Command CreatePatientAccount() {
+        return (x) -> {
+            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
+            if (!secretaryAccess.doesPatientExist(userCredentials.username())) {
+                secretaryAccess.createPatient(userCredentials.username(), userCredentials.password());
+                adminScreenVIew.successCreateAccount();
             } else {
-                presenter.errorMessage("Invalid! Please ensure both passwords match");
+                adminScreenVIew.failedCreateAccount();
             }
-        }
-    }
-    class GetLogs implements Command{
 
-        @Override
-        public void execute(ArrayList<String> args) {
+        };
+    }
+
+    private Command CreateDoctorAccount() {
+        return (x) -> {
+            UserCredentials userCredentials = secretaryScreenView.registerDoctorAccount();
+            if (!secretaryAccess.doesDoctorExist(userCredentials.username())) {
+                secretaryAccess.createDoctor(userCredentials.username(), userCredentials.password());
+            } else {
+                // need warning message
+                adminScreenVIew.failedCreateAccount();
+            }
+        };
+    }
+
+    private Command ChangePassword() {
+        return (x) -> {
+            PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
+            if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
+                secretaryAccess.changeSecretaryPassword(secretaryData, passwordResetDetails.password());
+                // need success message
+            } else {
+                secretaryScreenView.showResetPasswordMismatchError();
+            }
+        };
+    }
+
+    private Command GetLogs() {
+        return (x) -> {
             ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData);
-        }
+            secretaryScreenView.viewUserLogs(logs);
+        };
     }
 
-    class BookAppointment implements Command{
+    private Command BookAppointment() {
+        return (x) -> {
+            AppointmentDayDetails appointmentDayDetails = secretaryScreenView.bookAppointmentDayPrompt();
 
-        @Override
-        public void execute(ArrayList<String> args) {
-            String patient = presenter.promptPopup("Enter Patient Username ");
-            String doctor = presenter.promptPopup("Enter Doctor Username ");
-            if (secretaryAccess.getPatient(patient).isPresent() && secretaryAccess.getDoctor(doctor).isPresent()){
+            int day = appointmentDayDetails.day();
+            int month = appointmentDayDetails.month();
+            int year = appointmentDayDetails.year();
+            String doctor = appointmentDayDetails.doctorUsername();
+            String patient = appointmentDayDetails.patientUsername();
+
+            if (secretaryAccess.getPatient(patient).isPresent() && secretaryAccess.getDoctor(doctor).isPresent()) {
                 PatientData patientData = secretaryAccess.getPatient(patient).get();
                 DoctorData doctorData = secretaryAccess.getDoctor(doctor).get();
-                int year = Integer.parseInt(presenter.promptPopup("Enter Year "));
-                int month = Integer.parseInt(presenter.promptPopup("Enter Month "));
-                int day = Integer.parseInt(presenter.promptPopup("Enter day "));
 
-                ArrayList<AppointmentData> scheduleData =  secretaryAccess.getScheduleData(doctorData, year, month,
+                ArrayList<AppointmentData> scheduleData = secretaryAccess.getScheduleData(doctorData, year, month,
                         day);
-                for (AppointmentData data : scheduleData){
-                    presenter.infoMessage(data.getTimeBlock().getStartTime().toLocalDate().toString());
-                }
 
-                Integer hour = Integer.valueOf(presenter.promptPopup("Enter hour "));
-                Integer minute = Integer.valueOf(presenter.promptPopup("Enter Minute "));
-                Integer len = Integer.valueOf(presenter.promptPopup("Enter length of appointment "));
-//                return secretaryAccess.bookAppointment(patientData, doctorData, year,
-//                        month, day, hour, minute, len) != null;
+                appointmentView.viewFullFromList(scheduleData);
+
+
+                AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
+                secretaryAccess.bookAppointment(patientData, doctorData, year,
+                        month, day, appointmentTimeDetails.hour(),
+                        appointmentTimeDetails.minute(),
+                        appointmentTimeDetails.length());
 
             } else {
+                // need error message
                 presenter.errorMessage("Patient or Doctor does not exist");
 
             }
-        }
+        };
+    }
 
+    private Command PatientAppointments() {
+        return (x) -> {
+            String username = secretaryScreenView.enterPatientUsernamePrompt();
+            if (secretaryAccess.getPatient(username).isPresent()) {
+                PatientData patientData = secretaryAccess.getPatient(username).get();
+                ArrayList<AppointmentData> patientAppointment =
+                        secretaryAccess.getPatientAppointmentDataBundles(patientData);
+                appointmentView.viewFullFromList(patientAppointment);
+            }
+        };
+    }
+
+    private Command CancelAppointment() {
+        return (x) -> {
+            String username = secretaryScreenView.enterPatientUsernamePrompt();
+            if (secretaryAccess.getPatient(username).isPresent()) {
+                PatientData patientData = secretaryAccess.getPatient(username).get();
+                ArrayList<AppointmentData> data = secretaryAccess.getPatientAppointmentDataBundles(patientData);
+                appointmentView.viewFullFromList(data);
+                // need something to prompt which one to remove
+                int index = Integer.parseInt(presenter.promptPopup("Enter id"));
+                secretaryAccess.removeAppointment(data.get(index));
+            }
+        };
     }
 
 

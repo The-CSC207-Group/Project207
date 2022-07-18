@@ -4,6 +4,7 @@ import dataBundles.AppointmentData;
 import dataBundles.LogData;
 import dataBundles.PatientData;
 import presenter.screenViews.PatientScreenView;
+import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.PatientAccess;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 public class PatientController extends TerminalController {
     private PatientAccess patientAccess;
     private PatientScreenView patientScreenView = new PatientScreenView();
+    private SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private PatientData patientData;
     private PatientController self = this;
 
@@ -29,6 +31,8 @@ public class PatientController extends TerminalController {
         commands.put("appointments", new ViewAppointments());
         commands.put("prescriptions", new ViewPrescriptions());
         commands.put("sign out", signOut());
+        commands.put("cancel appointment", notImplemented());
+
         return commands;
     }
 
