@@ -99,7 +99,7 @@ public class SecretaryController extends TerminalController {
 
     private Command GetLogs() {
         return (x) -> {
-            ArrayList<LogData> logs = logManager.getLogDataBundlesFromUserDataBundle(secretaryData);
+            ArrayList<LogData> logs = logManager.getUserLogs(secretaryData);
             secretaryScreenView.viewUserLogs(logs);
         };
     }
