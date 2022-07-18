@@ -31,7 +31,7 @@ public class AdminAccess {
         this.doctorDatabase = database.getDoctorDatabase();
         this.secretaryDatabase = database.getSecretaryDatabase();
         this.adminDatabase = database.getAdminDatabase();
-        this.adminManager = new AdminManager(adminDatabase, contactDatabase);
+        this.adminManager = new AdminManager(database);
         this.patientManager = new PatientManager(database);
         this.doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
         this.secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
