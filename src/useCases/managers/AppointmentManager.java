@@ -280,14 +280,21 @@ public class AppointmentManager {
                 .filter(x->x.getTimeBlock().getStartTime().toLocalDate().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-    //pending implementation
-//    public boolean newAvailability(Integer doctorId, DayOfWeek dayOfWeek, LocalTime startTime,
-//                                      LocalTime endTime){
-//        Query<Appointment> query = new Query<>();
-//        ArrayList<QueryCondition<TimeBlock>> queryConditions = new ArrayList<>();
-//        queryConditions.add(new NoAppointmentConflict<>(true, appointmentDatabase));
-//        query.returnFirstMeetingConditions(new TimeBlock(startTime, endTime), queryConditions)
-//
-//    }
+
+    /**
+     * A function that adds a new availability section to a doctor's ArrayList
+     * @param doctorData        the data representing a specific doctor in the database
+     * @param dayOfWeek         An enum that represents a particular day of the week
+     * @param hour              An integer value representing the hour of LocalTime
+     * @param minute            An integer value representing the minute of an hour of LocalTime
+     * @param lenOfAvailability The length of the newly added availability in terms of minutes
+     */
+    public void newAvailability(DoctorData doctorData, DayOfWeek dayOfWeek, Integer hour, Integer minute,
+                                      Integer lenOfAvailability){
+        TimeManager timeManager = new TimeManager();
+        doctorDatabase.get(doctorData.getId()).addAvailability(new AvailabilityData(dayOfWeek,
+                timeManager.createLocalTime(hour, minute, 0), timeManager.createLocalTime(hour, minute,
+                0).plusMinutes(lenOfAvailability)));
+    }
 
 }
