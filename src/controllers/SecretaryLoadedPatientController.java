@@ -27,43 +27,55 @@ public class SecretaryLoadedPatientController extends TerminalController{
 
     public HashMap<String, Command> AllCommands(){
         HashMap<String, Command> command  = super.AllCommands();
-        command.put("view active prescription", new ViewActivePrescription());
-        command.put("view all prescriptions", new ViewPrescriptionHistory());
-        command.put("view appointments", new ViewAppointments());
-        command.put("change patient password", new ChangePatientPassword());
+        command.put("view active prescription", ViewActivePrescription());
+        command.put("view all prescriptions", ViewPrescriptionHistory());
+        command.put("view appointments", ViewAppointments());
+        command.put("change patient password", ChangePatientPassword());
         command.put("book appointment", new BookAppointment());
         command.put("reschedule appointment", new RescheduleAppointment());
         command.put("cancel appointment", new CancelAppointment());
         command.put("unload patient", back(secretaryController));
         return command;
     }
-
-    class ViewActivePrescription implements Command {
-        @Override
-        public void execute(ArrayList<String> args) {
+    Command ViewActivePrescription(){
+        return (x) -> {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.
-                    getActivePrescriptions(patientData.getUsername());
-        }
+                getActivePrescriptions(patientData.getUsername());};
     }
-    class ViewPrescriptionHistory implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
+//    class ViewActivePrescription implements Command {
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            ArrayList<PrescriptionData> prescriptions = secretaryAccess.
+//                    getActivePrescriptions(patientData.getUsername());
+//        }
+//    }
+    Command ViewPrescriptionHistory(){
+        return (x) -> {
             ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
-        }
+        };
     }
-    class ViewAppointments implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<AppointmentData> appointments = secretaryAccess.
-                    getPatientAppointmentDataBundles(patientData);
-        }
+//    class ViewPrescriptionHistory implements Command{
+//
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            ArrayList<PrescriptionData> prescriptions = secretaryAccess.getAllPrescriptions(patientData.getUsername());
+//        }
+//    }
+    Command ViewAppointments(){
+        return (x) -> {
+            ArrayList<AppointmentData> appointments = secretaryAccess.getPatientAppointmentDataBundles(patientData);
+        };
     }
-    class ChangePatientPassword implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
+//    class ViewAppointments implements Command {
+//
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            ArrayList<AppointmentData> appointments = secretaryAccess.
+//                    getPatientAppointmentDataBundles(patientData);
+//        }
+//    }
+    Command ChangePatientPassword() {
+        return (x) -> {
             String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
@@ -71,9 +83,22 @@ public class SecretaryLoadedPatientController extends TerminalController{
                 presenter.successMessage("Successfully changed password");
             } else {
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
-            }
-        }
+            }};
     }
+//    class ChangePatientPassword implements Command{
+//
+//        @Override
+//        public void execute(ArrayList<String> args) {
+//            String p1 = presenter.promptPopup("Enter New Password");
+//            String p2 = presenter.promptPopup("Re-enter new password");
+//            if (p1.equals(p2)){
+//                secretaryAccess.changePatientPassword(patientData, p1);
+//                presenter.successMessage("Successfully changed password");
+//            } else {
+//                presenter.errorMessage("Invalid! Please ensure both passwords match");
+//            }
+//        }
+//    }
     class BookAppointment implements Command{
         @Override
         public void execute(ArrayList<String> args) {
