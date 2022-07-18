@@ -6,6 +6,7 @@ import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
 import useCases.accessClasses.userType;
 import useCases.managers.AdminManager;
+import useCases.managers.DoctorManager;
 import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
 
@@ -44,16 +45,18 @@ public class AdminController extends TerminalController{
     }
     Command CreateDoctor(){
         return (x) -> {
+            DoctorManager doctorManager = new DoctorManager(getDatabase());
             UserCredentials c = adminScreenView.registerDoctorPrompt();
-            DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
-            displaySuccessOnCreateAcount(secretary);
+            DoctorData doctor = doctorManager.createDoctor(c.username(), c.password());
+            displaySuccessOnCreateAcount(doctor);
         };
     }
     private Command CreateAdmin(){
         return (x) -> {
+
             UserCredentials c = adminScreenView.registerAdminPrompt();
-            AdminData secretary = adminAccess.createAdmin(c.username(), c.password());
-            displaySuccessOnCreateAcount(secretary);
+            AdminData admin = adminManager.createAdmin(c.username(), c.password());
+            displaySuccessOnCreateAcount(admin);
         };
     }
     private Command CreatePatient(){
