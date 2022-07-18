@@ -34,7 +34,7 @@ public class AdminController extends TerminalController{
     }
 
     Command CreateSecretary(){
-        SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
+        SecretaryManager secretaryManager = new SecretaryManager(getDatabase().getSecretaryDatabase(), getDatabase().getContactDatabase());
         return (x) -> {
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
