@@ -2,14 +2,12 @@ package controllers;
 
 
 import dataBundles.*;
-import entities.Patient;
 import presenter.entityViews.AppointmentView;
 import presenter.response.AppointmentDayDetails;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
-import presenter.screenViews.DoctorScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.SecretaryAccess;
 
@@ -24,8 +22,6 @@ public class SecretaryController extends TerminalController {
     private final SecretaryAccess secretaryAccess;
     private final SecretaryData secretaryData;
     private final SecretaryController self = this;
-
-    private final DoctorScreenView doctorScreenView = new DoctorScreenView();
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final AppointmentView appointmentView = new AppointmentView();
     private final AdminScreenView adminScreenVIew = new AdminScreenView();
@@ -45,7 +41,6 @@ public class SecretaryController extends TerminalController {
         commands.put("create doctor", CreateDoctorAccount());
         commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
-        commands.put("book", BookAppointment());
         return commands;
     }
 
@@ -102,66 +97,6 @@ public class SecretaryController extends TerminalController {
         return (x) -> {
             ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData);
             secretaryScreenView.viewUserLogs(logs);
-        };
-    }
-
-    private Command BookAppointment() {
-        return (x) -> {
-            AppointmentDayDetails appointmentDayDetails = secretaryScreenView.bookAppointmentDayPrompt();
-
-            int day = appointmentDayDetails.day();
-            int month = appointmentDayDetails.month();
-            int year = appointmentDayDetails.year();
-            String doctor = appointmentDayDetails.doctorUsername();
-            String patient = appointmentDayDetails.patientUsername();
-
-            if (secretaryAccess.getPatient(patient).isPresent() && secretaryAccess.getDoctor(doctor).isPresent()) {
-                PatientData patientData = secretaryAccess.getPatient(patient).get();
-                DoctorData doctorData = secretaryAccess.getDoctor(doctor).get();
-
-                ArrayList<AppointmentData> scheduleData = secretaryAccess.getScheduleData(doctorData, year, month,
-                        day);
-
-                appointmentView.viewFullFromList(scheduleData);
-
-
-                AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
-                secretaryAccess.bookAppointment(patientData, doctorData, year,
-                        month, day, appointmentTimeDetails.hour(),
-                        appointmentTimeDetails.minute(),
-                        appointmentTimeDetails.length());
-
-            } else {
-                // need error message
-                presenter.errorMessage("Patient or Doctor does not exist");
-
-            }
-        };
-    }
-
-    private Command PatientAppointments() {
-        return (x) -> {
-            String username = secretaryScreenView.enterPatientUsernamePrompt();
-            if (secretaryAccess.getPatient(username).isPresent()) {
-                PatientData patientData = secretaryAccess.getPatient(username).get();
-                ArrayList<AppointmentData> patientAppointment =
-                        secretaryAccess.getPatientAppointmentDataBundles(patientData);
-                appointmentView.viewFullFromList(patientAppointment);
-            }
-        };
-    }
-
-    private Command CancelAppointment() {
-        return (x) -> {
-            String username = secretaryScreenView.enterPatientUsernamePrompt();
-            if (secretaryAccess.getPatient(username).isPresent()) {
-                PatientData patientData = secretaryAccess.getPatient(username).get();
-                ArrayList<AppointmentData> data = secretaryAccess.getPatientAppointmentDataBundles(patientData);
-                appointmentView.viewFullFromList(data);
-                // need something to prompt which one to remove
-                int index = Integer.parseInt(presenter.promptPopup("Enter id"));
-                secretaryAccess.removeAppointment(data.get(index));
-            }
         };
     }
 
