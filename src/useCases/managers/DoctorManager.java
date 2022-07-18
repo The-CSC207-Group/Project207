@@ -10,7 +10,6 @@ import entities.User;
 public class DoctorManager extends UserManager<Doctor> {
 
     DataMapperGateway<Doctor> doctorDatabase;
-    GenericUserManagerMethods<Doctor> doctorMethods;
     DataMapperGateway<Contact> contactDatabase;
 
     /**
@@ -21,7 +20,6 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorManager(DataMapperGateway<Doctor> doctorDatabase, DataMapperGateway<Contact> contactDatabase) {
         super(doctorDatabase);
         this.doctorDatabase = doctorDatabase;
-        this.doctorMethods = new GenericUserManagerMethods<>(doctorDatabase);
         this.contactDatabase = contactDatabase;
     }
 

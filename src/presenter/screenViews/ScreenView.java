@@ -36,11 +36,11 @@ public abstract class ScreenView {
         return new UserCredentials(username, password);
     }
 
-    protected String enterPatientUsernamePrompt() {
+    public String enterPatientUsernamePrompt() {
         return input("Enter patient username: ");
     }
 
-    protected String enterDoctorUsernamePrompt() {
+    public String enterDoctorUsernamePrompt() {
         return input("Enter doctor username: ");
     }
 }
