@@ -1,7 +1,6 @@
 package presenter.screenViews;
 
 import dataBundles.ClinicData;
-import entities.Clinic;
 import presenter.entityViews.ClinicView;
 import presenter.response.UserCredentials;
 
@@ -13,8 +12,8 @@ public class SignInScreenView extends ScreenView {
     }
 
     public UserCredentials userLoginPrompt() {
-        String username = input("Enter your username: ");
-        String password = input("Enter your password: ");
+        String username = enterUsernamePrompt("your");
+        String password = enterPasswordPrompt("your");
         return new UserCredentials(username, password);
     }
 

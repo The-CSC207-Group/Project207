@@ -1,7 +1,6 @@
 package useCases.managers;
 
 import dataBundles.AdminData;
-import dataBundles.ContactData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
@@ -25,5 +24,16 @@ public class AdminManager extends UserManager<Admin>{
         adminDatabase.add(admin);
         return new AdminData(admin);
     }
-    
+    public AdminData toAdminData(Admin admin){
+        if (admin == null){
+            return null;
+        } else {
+            return new AdminData(admin);
+        }
+    }
+
+    @Override
+    public AdminData signIn(String userName, String password) {
+        return toAdminData(signInHelper(userName, password));
+    }
 }

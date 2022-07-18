@@ -33,15 +33,18 @@ public abstract class ScreenView {
         System.out.println("✗ " + message);
     }
 
-
     protected UserCredentials registerAccountPrompt(String accountType) {
         infoMessage("You are about to create a new " + accountType + " account.");
-        String username = input("Enter " + accountType + " username: ");
-        String password = input("Enter " + accountType + " password: ");
+        String username = enterUsernamePrompt(accountType);
+        String password = enterPasswordPrompt(accountType);
         return new UserCredentials(username, password);
     }
 
     protected String enterUsernamePrompt(String accountType) {
-        return input("Enter " + accountType + "username: ");
+        return input("Enter " + accountType + " username: ");
+    }
+
+    protected String enterPasswordPrompt(String accountType) {
+        return input("Enter " + accountType + " password: ");
     }
 }
