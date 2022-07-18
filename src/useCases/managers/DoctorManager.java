@@ -50,5 +50,10 @@ public class DoctorManager extends UserManager<Doctor> {
         return Optional.ofNullable(patientManager.getUser(username))
                 .map(PatientData::new);
     }
+
+    public Optional<DoctorData> getDoctor(String username){
+        return Optional.ofNullable(getUser(username))
+                .map(DoctorData::new);
+    }
 }
 
