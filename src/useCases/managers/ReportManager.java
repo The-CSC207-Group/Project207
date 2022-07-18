@@ -1,5 +1,6 @@
 package useCases.managers;
 
+import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.ReportData;
 import database.DataMapperGateway;
@@ -25,8 +26,8 @@ public class ReportManager {
         return reportDatabase.remove(reportId);
     }
 
-    public ReportData addReport(ZonedDateTime dateNoted, String header, String body, Integer patientId, Integer doctorId){
-        Report report = new Report(dateNoted, header, body, patientId, doctorId);
+    public ReportData addReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
+        Report report = new Report(dateNoted, header, body, patientData.getId(), doctorData.getId());
         reportDatabase.add(report);
         return new ReportData(report);
     }
