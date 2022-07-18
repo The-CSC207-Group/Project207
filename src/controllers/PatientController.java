@@ -27,52 +27,45 @@ public class PatientController extends TerminalController {
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("change password", new ChangePassword());
-        commands.put("logs", new GetLogs());
-        commands.put("appointments", new ViewAppointments());
-        commands.put("prescriptions", new ViewPrescriptions());
+        commands.put("change password", ChangePassword());
+        commands.put("logs", GetLogs());
+        commands.put("appointments", ViewAppointments());
+        commands.put("prescriptions", ViewPrescriptions());
         commands.put("sign out", signOut());
         commands.put("cancel appointment", notImplemented());
 
         return commands;
     }
 
-    class ChangePassword implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ChangePassword() {
+        return (x) -> {
             PasswordResetDetails passwordResetDetails = patientScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
                 patientAccess.changeCurrentUserPassword(patientData, passwordResetDetails.password());
             } else {
                 patientScreenView.showResetPasswordMismatchError();
             }
-        }
+        };
     }
 
-    class ViewAppointments implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ViewAppointments() {
+        return (x) -> {
             ArrayList<AppointmentData> appointments = patientAccess.getAppointments(patientData);
             patientScreenView.viewAppointments(appointments);
-        }
+        };
     }
 
-    class ViewPrescriptions implements Command {
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ViewPrescriptions() {
+        return (x) -> {
             PrescriptionController prescriptionController = new PrescriptionController(context, patientData, self);
             changeCurrentController(prescriptionController);
-        }
+        };
     }
 
-    class GetLogs implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command GetLogs() {
+        return (x) -> {
             ArrayList<LogData> logs = patientAccess.getLogs(patientData);
             patientScreenView.viewUserLogs(logs);
-        }
+        };
     }
 }
