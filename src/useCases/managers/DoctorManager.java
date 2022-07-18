@@ -1,11 +1,9 @@
 package useCases.managers;
 
-import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import entities.Contact;
 import entities.Doctor;
-import entities.User;
 
 public class DoctorManager extends UserManager<Doctor> {
 
@@ -28,6 +26,11 @@ public class DoctorManager extends UserManager<Doctor> {
         doctorDatabase.add(doctor);
         return new DoctorData(doctor);
 
+    }
+    public DoctorData toDoctorData(Doctor doctor){
+        if (doctor == null){
+            return new DoctorData(doctor);
+        }
     }
 }
 
