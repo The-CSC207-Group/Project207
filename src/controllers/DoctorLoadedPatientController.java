@@ -47,13 +47,13 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command getReport() {
         return (x) -> {
-            new ReportManager(getDatabase().getReportDatabase()).getReportDataBundlesFromPatientDataBundle(patientData);
+            new ReportManager(getDatabase()).getReportDataBundlesFromPatientDataBundle(patientData);
         };
     }
 
     private Command createReport() {
         return (x) -> {
-            new ReportManager(getDatabase().getReportDatabase()).addReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
+            new ReportManager(getDatabase()).addReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
                     doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
         };
     }

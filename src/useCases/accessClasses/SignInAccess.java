@@ -34,7 +34,7 @@ public class SignInAccess {
         this.adminDatabase = database.getAdminDatabase();
         this.secretaryDatabase = database.getSecretaryDatabase();
         this.doctorDatabase = database.getDoctorDatabase();
-        this.logManager = new LogManager(database.getLogDatabase());
+        this.logManager = new LogManager(database);
     }
 
 

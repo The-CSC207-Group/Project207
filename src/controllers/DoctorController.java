@@ -79,7 +79,7 @@ public class DoctorController extends TerminalController{
     }
     private Command GetLogs(){
         return (x) -> {
-            doctorView.viewUserLogs(new LogManager(getDatabase().getLogDatabase()).getUserLogs(doctorData));
+            doctorView.viewUserLogs(new LogManager(getDatabase()).getUserLogs(doctorData));
         };
     }
     private Command ViewAllAppointments(){
