@@ -3,7 +3,6 @@ package controllers;
 import dataBundles.AppointmentData;
 import dataBundles.LogData;
 import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
 import presenter.screenViews.PatientScreenView;
 import useCases.accessClasses.PatientAccess;
 
@@ -30,6 +29,8 @@ public class PatientController extends TerminalController {
         commands.put("appointments", new ViewAppointments());
         commands.put("prescriptions", new ViewPrescriptions());
         commands.put("sign out", signOut());
+        commands.put("cancel appointment", notImplemented());
+
         return commands;
     }
 
