@@ -52,8 +52,8 @@ public class  DoctorAccess implements AccessMixin{
     public void addPatientReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
         reportManager.addReport(dateNoted, header, body, patientData.getId(), doctorData.getId());
     }
-    public void removePatientReport(Integer reportId){
-        reportManager.deleteReport(reportId);
+    public void removePatientReport(ReportData reportData){
+        reportManager.deleteReport(reportData.getReportId());
     }
     /**
      * Get an array list of PrescriptionDataBundles containing each prescription in the database belonging to the patient
