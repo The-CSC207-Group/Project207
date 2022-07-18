@@ -8,7 +8,6 @@ import entities.User;
 import utilities.DatabaseQueryUtility;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 
 public class LogManager {
@@ -78,7 +77,7 @@ public class LogManager {
 //        if (logStream == null){return null;}
 //        return databaseUtils.toArrayList(logStream.map(x -> new LogDataBundle(x)));
 //    }
-    public <T extends User> ArrayList<LogData> getLogDataBundlesFromUserDataBundle(UserData<T> userDataBundle){
+    public <T extends User> ArrayList<LogData> getUserLogs(UserData<T> userDataBundle){
         return databaseUtils.toArrayList(logDatabase.stream().
                 filter(log -> log.getId().equals(userDataBundle.getId())).map(LogData::new));
 
