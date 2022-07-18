@@ -5,22 +5,21 @@ import dataBundles.LogData;
 import dataBundles.PatientData;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.PatientScreenView;
-import presenter.screenViews.SecretaryScreenView;
 import useCases.accessClasses.PatientAccess;
+import useCases.managers.AppointmentManager;
+import useCases.managers.LogManager;
+import useCases.managers.PatientManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PatientController extends TerminalController {
-    private PatientAccess patientAccess;
     private PatientScreenView patientScreenView = new PatientScreenView();
-    private SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private PatientData patientData;
     private PatientController self = this;
 
     public PatientController(Context context, PatientData patientData) {
         super(context);
-        this.patientAccess = new PatientAccess(getDatabase());
         this.patientData = patientData;
     }
 
@@ -38,10 +37,11 @@ public class PatientController extends TerminalController {
     }
 
     private Command ChangePassword() {
+        PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
             PasswordResetDetails passwordResetDetails = patientScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
-                patientAccess.changeCurrentUserPassword(patientData, passwordResetDetails.password());
+                patientManager.changeUserPassword(patientData, passwordResetDetails.password());
             } else {
                 patientScreenView.showResetPasswordMismatchError();
             }
@@ -49,8 +49,9 @@ public class PatientController extends TerminalController {
     }
 
     private Command ViewAppointments() {
+        AppointmentManager appointmentManager = new AppointmentManager(getDatabase());
         return (x) -> {
-            ArrayList<AppointmentData> appointments = patientAccess.getAppointments(patientData);
+            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             patientScreenView.viewAppointments(appointments);
         };
     }
@@ -63,8 +64,9 @@ public class PatientController extends TerminalController {
     }
 
     private Command GetLogs() {
+        LogManager logManager = new LogManager(getDatabase().getLogDatabase());
         return (x) -> {
-            ArrayList<LogData> logs = patientAccess.getLogs(patientData);
+            ArrayList<LogData> logs = logManager.getUserLogs(patientData);
             patientScreenView.viewUserLogs(logs);
         };
     }
