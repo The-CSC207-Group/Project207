@@ -72,6 +72,12 @@ public class PatientAccess {
     public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patientData){
         return prescriptionManager.getAllPrescriptions(patientData);
     }
+
+    /**
+     * get all appointments relating to a specific patient.
+     * @param patientData the username associated with the patient in the database. Should not be null.
+     * @return an ArrayList of AppointmentData, representing all the appointments assigned to the patient.
+     */
     public ArrayList<AppointmentData> getAppointments(PatientData patientData){
         return appointmentManager.getPatientAppointments(patientData);
     }
