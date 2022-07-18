@@ -47,7 +47,7 @@ public class PrescriptionManagerTests {
 
         PrescriptionData originalPrescriptionBundle1 = new PrescriptionData(originalPrescription1);
 
-        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getPatientActivePrescriptionDataByUserId(123);
@@ -94,7 +94,7 @@ public class PrescriptionManagerTests {
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
 
-        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getPatientActivePrescriptionDataByUserId(123);
@@ -125,7 +125,7 @@ public class PrescriptionManagerTests {
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
 
-        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getPatientAllPrescriptionDataByUserId(123);
@@ -149,7 +149,7 @@ public class PrescriptionManagerTests {
         Integer patientID = 123;
         Integer doctorID = 456;
 
-        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
         PrescriptionData prescriptionData = prescriptionManager.createPrescription(zonedDateNoted,
                 header, body, patientID, doctorID, zonedExpiryDate);
@@ -213,7 +213,7 @@ public class PrescriptionManagerTests {
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
 
-        PrescriptionManager prescriptionManager = new PrescriptionManager(prescriptionDatabase);
+        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
         ArrayList<PrescriptionData> loadedPrescriptionList1 =
                 prescriptionManager.getPatientAllPrescriptionDataByUserId(123);

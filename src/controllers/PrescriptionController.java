@@ -20,7 +20,7 @@ public class PrescriptionController extends TerminalController {
         super(parent);
         this.patientData = patientData;
         this.patientController = patientController;
-        this.prescriptionManager = new PrescriptionManager(getDatabase().getPrescriptionDatabase());
+        this.prescriptionManager = new PrescriptionManager(getDatabase());
     }
 
     @Override

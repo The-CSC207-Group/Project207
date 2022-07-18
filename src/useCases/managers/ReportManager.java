@@ -4,6 +4,7 @@ import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.ReportData;
 import database.DataMapperGateway;
+import database.Database;
 import entities.Log;
 import entities.Report;
 import entities.User;
@@ -18,8 +19,8 @@ public class ReportManager {
 
     DatabaseQueryUtility databaseUtils = new DatabaseQueryUtility();
 
-    public ReportManager(DataMapperGateway<Report> reportDatabase){
-        this.reportDatabase = reportDatabase;
+    public ReportManager(Database database){
+        this.reportDatabase = database.getReportDatabase();
     }
 
     public boolean deleteReport(Integer reportId){

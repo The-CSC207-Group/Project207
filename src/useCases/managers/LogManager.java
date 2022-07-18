@@ -3,6 +3,7 @@ package useCases.managers;
 import dataBundles.LogData;
 import dataBundles.UserData;
 import database.DataMapperGateway;
+import database.Database;
 import entities.Log;
 import entities.User;
 import utilities.DatabaseQueryUtility;
@@ -16,12 +17,12 @@ public class LogManager {
 
     DatabaseQueryUtility databaseUtils = new DatabaseQueryUtility();
 
-    /**
+    /***
      * Stores the logDatabase and the database of a type that extends user for deleting and adding references to logs.
-     * @param logDatabase DataMapperGateway<Log> log database
+     * @param database The entire database.
      */
-    public LogManager(DataMapperGateway<Log> logDatabase){
-        this.logDatabase = logDatabase;
+    public LogManager(Database database){
+        this.logDatabase = database.getLogDatabase();
     }
 
 //    /**

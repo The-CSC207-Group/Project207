@@ -64,7 +64,7 @@ public class PatientController extends TerminalController {
     }
 
     private Command GetLogs() {
-        LogManager logManager = new LogManager(getDatabase().getLogDatabase());
+        LogManager logManager = new LogManager(getDatabase());
         return (x) -> {
             ArrayList<LogData> logs = logManager.getUserLogs(patientData);
             patientScreenView.viewUserLogs(logs);

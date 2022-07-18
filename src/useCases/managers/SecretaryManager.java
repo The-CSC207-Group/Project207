@@ -3,6 +3,7 @@ package useCases.managers;
 import dataBundles.ContactData;
 import dataBundles.SecretaryData;
 import database.DataMapperGateway;
+import database.Database;
 import entities.*;
 
 public class SecretaryManager extends UserManager<Secretary> {
@@ -14,14 +15,13 @@ public class SecretaryManager extends UserManager<Secretary> {
     /**
      * Stores the databases.
      *
-     * @param secretaryDatabase DataMapperGateway<Secretary>
-     * @param contactDatabase   DataMapperGateway<Contact>
+     * @param database DataMapperGateway<Secretary>
      */
 
-    public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact> contactDatabase) {
-        super(secretaryDatabase);
-        this.secretaryDatabase = secretaryDatabase;
-        this.contactDatabase = contactDatabase;
+    public SecretaryManager(Database database) {
+        super(database.getSecretaryDatabase());
+        this.secretaryDatabase = database.getSecretaryDatabase();
+        this.contactDatabase = database.getContactDatabase();
     }
 
     /**
