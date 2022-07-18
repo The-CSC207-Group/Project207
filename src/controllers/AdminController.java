@@ -25,7 +25,7 @@ public class AdminController extends TerminalController{
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
         commands.put("change password", ChangePassword());
-        commands.put("get logs", new getLogs());
+        commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
         commands.put("Delete patient", new deletePatient());
         return commands;
@@ -116,14 +116,12 @@ public class AdminController extends TerminalController{
                 presenter.errorMessage("Invalid! Please ensure both passwords match");
             }};
     }
-
-    class getLogs implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            ArrayList<LogData> logs = adminAccess.getLogs(adminData);
-        }
+    private Command getLogs (){
+        return (x) -> {
+            adminScreenVIew.viewAllLogs(adminAccess.getLogs(adminData));
+        };
     }
+
     class deletePatient implements Command{
 
         @Override
