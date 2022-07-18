@@ -2,33 +2,32 @@ package controllers;
 
 import dataBundles.AdminData;
 import dataBundles.DoctorData;
+import dataBundles.PatientData;
+import presenter.response.PasswordResetDetails;
+import presenter.response.UserCredentials;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
-import useCases.managers.AdminManager;
-import useCases.managers.AppointmentManager;
-import useCases.managers.LogManager;
-import useCases.managers.TimeManager;
+import useCases.managers.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class DoctorController extends TerminalController{
-    private DoctorAccess doctorAccess;
     private DoctorScreenView doctorView = new DoctorScreenView();
-
+    private DoctorManager doctorManager = new DoctorManager(getDatabase());
     private DoctorData doctorData;
     private DoctorController self = this;
 
     public DoctorController(Context context, DoctorData doctorData){
         super(context);
-        this.doctorAccess = new DoctorAccess(getDatabase());
         this.doctorData = doctorData;
     }
 
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> h = super.AllCommands();
-        h.put("load patient", new LoadPatient());
+        h.put("load patient", LoadPatient());
         h.put("change password", ChangePassword());
         h.put("show schedule", ViewSchedule());
         h.put("show logs", GetLogs());
@@ -38,40 +37,42 @@ public class DoctorController extends TerminalController{
         return h;
     }
 
-    class LoadPatient implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            String name = presenter.promptPopup("name");
-            doctorAccess.getPatient(name).ifPresent(
+    private Command LoadPatient() {
+        PatientManager patientManager = new PatientManager(getDatabase());
+        return (x) -> {
+            String patientUsername = doctorView.enterPatientUsernamePrompt();
+            Optional <PatientData> loadedPatientData = Optional.ofNullable(patientManager.getUser(patientUsername))
+                    .map(PatientData::new);
+            loadedPatientData.ifPresent(
                     (patientData) -> {
-                        changeCurrentController(new DoctorLoadedPatientController(getContext(), self, doctorData, patientData));
-                    }
-            );
-        }
+                        changeCurrentController(new DoctorLoadedPatientController(
+                                getContext(), self, doctorData, patientData));
+                    });
+        };
     }
+
     private Command ChangePassword(){
         return (x) -> {
-            String newPassword1 = presenter.promptPopup("Enter a new password");
-            String newPassword2 = presenter.promptPopup("Re-enter the new password");
-            if (newPassword1.equals(newPassword2)){
-                doctorAccess.changePassword(doctorData, newPassword1);
+            PasswordResetDetails passwordResetDetails = doctorView.resetPasswordPrompt();
+            if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
+                doctorManager.changeUserPassword(doctorData, passwordResetDetails.password());
             } else {
-                presenter.errorMessage("These do not match");
+                doctorView.showResetPasswordMismatchError();;
             }
         };
     }
+
     private Command ViewSchedule(){
         return (x) -> {
-            AdminData a = new AdminManager(getDatabase()).s
-            String year = presenter.promptPopup("Enter the year:");
-            String month = presenter.promptPopup("Enter the month:");
-            String day = presenter.promptPopup("Enter the day of month:");
+            String year = doctorView.enterYearPrompt();
+            String month = doctorView.enterMonthPrompt();
+            String day = doctorView.enterDayPrompt();
             doctorView.viewAppointments(new AppointmentManager(getDatabase()).getScheduleData(doctorData,
                     new TimeManager().createLocalDate(Integer.parseInt(year),
-                    Integer.parseInt(month), Integer.parseInt(day))));
+                            Integer.parseInt(month), Integer.parseInt(day))));
         };
     }
+
     private Command ViewAllDoctorAppointments(){
         return (x) -> {
             doctorView.viewAppointments(new AppointmentManager(getDatabase()).getDoctorAppointments(doctorData));
