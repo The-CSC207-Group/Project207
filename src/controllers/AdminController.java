@@ -5,6 +5,7 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
 import useCases.accessClasses.userType;
+import useCases.managers.AdminManager;
 
 import java.util.HashMap;
 
@@ -68,6 +69,7 @@ public class AdminController extends TerminalController{
     }
 
     private Command ChangePassword(){
+        AdminManager adminManager = new AdminManager(getDatabase());
         return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
