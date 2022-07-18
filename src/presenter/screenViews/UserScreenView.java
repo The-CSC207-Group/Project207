@@ -33,4 +33,28 @@ public abstract class UserScreenView extends ScreenView{
     public String enterDoctorUsernamePrompt() {
         return enterUsernamePrompt("doctor");
     }
+
+    public String enterYearPrompt(String event) {
+        return input("Enter the year of your " + event + " (YYYY): ");
+    }
+
+    public String enterMonthPrompt(String event) {
+        return input("Enter the month of your " + event + " (MM): ");
+    }
+
+    public String enterDayPrompt(String event) {
+        return input("Enter the day of your " + event + " (DD): ");
+    }
+
+    public String enterHourPrompt(String event) {
+        return input("Enter the hour of your " + event + " (HH): ");
+    }
+
+    public String enterMinutePrompt(String event) {
+        return input("Enter the minute of your " + event + " (MM): ");
+    }
+
+    public String enterLengthPrompt(String event) {
+        return input("Enter the length of your " + event + " in minutes: ");
+    }
 }
