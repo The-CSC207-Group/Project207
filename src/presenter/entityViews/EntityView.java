@@ -4,6 +4,16 @@ import java.util.List;
 
 public abstract class EntityView<T> {
 
+    protected String getDefaultString(String string, String defaultString) {
+        if (string == null) {
+            return defaultString;
+        } else if (string.isBlank()) {
+            return defaultString;
+        } else {
+            return string;
+        }
+    }
+
     public abstract String viewFull(T item);
 
     public String viewFullFromList(List<T> items) {
