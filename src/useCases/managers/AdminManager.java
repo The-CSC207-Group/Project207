@@ -11,9 +11,9 @@ public class AdminManager extends UserManager<Admin>{
     DataMapperGateway<Admin> adminDatabase;
     DataMapperGateway<Contact> contactDatabase;
 
-    /**
+    /***
      * Initialize the admin and contact databases.
-     * @param database Database
+     * @param database The entire database.
      */
     public AdminManager(Database database){
         super(database.getAdminDatabase());

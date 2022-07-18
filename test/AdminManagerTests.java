@@ -26,7 +26,6 @@ public class AdminManagerTests {
     public void testCreateAdmin() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         String username = "jeff";
         String password = "123";
@@ -36,7 +35,7 @@ public class AdminManagerTests {
                 "jim@gmail.com", "87654321",
                 "father");
 
-        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+        AdminManager adminManager = new AdminManager(originalDatabase);
 
         AdminData adminDataBundle = adminManager.createAdmin(username, password);
 
@@ -59,12 +58,11 @@ public class AdminManagerTests {
     public void testDeleteAdmin() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         Admin admin = new
                 Admin("jeff", "123", 123456789);
 
-        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+        AdminManager adminManager = new AdminManager(originalDatabase);
 
         Integer adminID = adminDatabase.add(admin);
 
@@ -81,12 +79,11 @@ public class AdminManagerTests {
     public void testChangeUserPassword() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         Admin admin = new
                 Admin("jeff", "123", 123456789);
 
-        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+        AdminManager adminManager = new AdminManager(originalDatabase);
 
         Integer adminID = adminDatabase.add(admin);
         AdminData adminData = new AdminData(admin);
@@ -105,7 +102,6 @@ public class AdminManagerTests {
     public void testGetAdmin() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         Admin originalAdmin = new
                 Admin("jeff", "123", 123456789);
@@ -114,7 +110,7 @@ public class AdminManagerTests {
             originalAdmin.addLogId(i);
         }
 
-        AdminManager adminManager = new AdminManager(adminDatabase, contactDatabase);
+        AdminManager adminManager = new AdminManager(originalDatabase);
 
         Integer adminID = adminDatabase.add(originalAdmin);
 
