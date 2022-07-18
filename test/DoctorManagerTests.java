@@ -26,7 +26,6 @@ public class DoctorManagerTests {
     public void testCreateDoctor() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         String username = "jeff";
         String password = "123";
@@ -36,7 +35,7 @@ public class DoctorManagerTests {
                 "jim@gmail.com", "87654321",
                 "father");
 
-        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+        DoctorManager doctorManager = new DoctorManager(originalDatabase);
 
         DoctorData AppointmentData = doctorManager.createDoctor(username, password);
 
@@ -59,12 +58,11 @@ public class DoctorManagerTests {
     public void testDeleteDoctor() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         Doctor doctor = new
                 Doctor("jeff", "123", 123456789);
 
-        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+        DoctorManager doctorManager = new DoctorManager(originalDatabase);
 
         Integer doctorID = doctorDatabase.add(doctor);
 
@@ -81,12 +79,11 @@ public class DoctorManagerTests {
     public void testChangeUserPassword() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         Doctor doctor = new
                 Doctor("jeff", "123", 123456789);
 
-        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+        DoctorManager doctorManager = new DoctorManager(originalDatabase);
 
         DoctorData doctorData = new DoctorData(doctor);
 
@@ -106,7 +103,6 @@ public class DoctorManagerTests {
     public void testGetDoctor() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Doctor> doctorDatabase = originalDatabase.getDoctorDatabase();
-        DataMapperGateway<Contact> contactDatabase = originalDatabase.getContactDatabase();
 
         Doctor originalDoctor = new
                 Doctor("jeff", "123", 123456789);
@@ -115,7 +111,7 @@ public class DoctorManagerTests {
             originalDoctor.addLogId(i);
         }
 
-        DoctorManager doctorManager = new DoctorManager(doctorDatabase, contactDatabase);
+        DoctorManager doctorManager = new DoctorManager(originalDatabase);
 
         Integer doctorID = doctorDatabase.add(originalDoctor);
 
