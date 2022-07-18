@@ -66,6 +66,12 @@ abstract public class TerminalController {
             changeCurrentController(new SignInController(context));
         };
     }
+    Command notImplemented(){
+        return (x) -> {
+          throw new RuntimeException();
+        };
+    }
+
 
     class Help implements Command {
 

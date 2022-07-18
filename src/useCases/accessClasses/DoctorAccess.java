@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class  DoctorAccess implements AccessMixin{
+public class  DoctorAccess {
 
 
     private DataMapperGateway<Doctor> doctorDatabase;
@@ -167,8 +167,4 @@ public class  DoctorAccess implements AccessMixin{
     }
 
 
-    @Override
-    public Database getDatabase() {
-        return database;
-    }
 }
