@@ -1,18 +1,16 @@
 package controllers;
 
-import dataBundles.AppointmentData;
+import dataBundles.AdminData;
 import dataBundles.DoctorData;
-import dataBundles.LogData;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
+import useCases.managers.AdminManager;
 import useCases.managers.AppointmentManager;
 import useCases.managers.LogManager;
 import useCases.managers.TimeManager;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DoctorController extends TerminalController{
     private DoctorAccess doctorAccess;
@@ -65,6 +63,7 @@ public class DoctorController extends TerminalController{
     }
     private Command ViewSchedule(){
         return (x) -> {
+            AdminData a = new AdminManager(getDatabase()).s
             String year = presenter.promptPopup("Enter the year:");
             String month = presenter.promptPopup("Enter the month:");
             String day = presenter.promptPopup("Enter the day of month:");

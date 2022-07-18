@@ -1,10 +1,9 @@
 package useCases.managers;
 
-import dataBundles.ContactData;
 import dataBundles.SecretaryData;
 import database.DataMapperGateway;
-import database.Database;
-import entities.*;
+import entities.Contact;
+import entities.Secretary;
 
 public class SecretaryManager extends UserManager<Secretary> {
 
@@ -15,13 +14,14 @@ public class SecretaryManager extends UserManager<Secretary> {
     /**
      * Stores the databases.
      *
-     * @param database DataMapperGateway<Secretary>
+     * @param secretaryDatabase DataMapperGateway<Secretary>
+     * @param contactDatabase   DataMapperGateway<Contact>
      */
 
-    public SecretaryManager(Database database) {
-        super(database.getSecretaryDatabase());
-        this.secretaryDatabase = database.getSecretaryDatabase();
-        this.contactDatabase = database.getContactDatabase();
+    public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact> contactDatabase) {
+        super(secretaryDatabase);
+        this.secretaryDatabase = secretaryDatabase;
+        this.contactDatabase = contactDatabase;
     }
 
     /**
@@ -36,5 +36,18 @@ public class SecretaryManager extends UserManager<Secretary> {
         secretaryDatabase.add(secretary);
         return new SecretaryData(secretary);
     }
+    public SecretaryData toSecretaryData(Secretary secretary){
+        if (secretary == null){
+            return null;
+        } else {
+            return new SecretaryData(secretary);
+        }
+    }
 
-}
+    @Override
+    public SecretaryData signIn(String userName, String password) {
+        return toSecretaryData(signInHelper(userName, password));
+
+    }
+
+    }
