@@ -51,11 +51,8 @@ public class AdminAccess {
      * @param username          String new username
      * @param password          String new password
      */
-    public PatientData createPatient(String username, String password) {
-        return patientManager.createPatient(username, password);
 
-    }
-    public UserData createAcount(String username, String password, userType type){
+    public UserData createAccount(String username, String password, userType type){
         switch (type){
             case Admin: {
                 return createAdmin(username, password);
@@ -72,21 +69,14 @@ public class AdminAccess {
         }
         throw new NoSuchElementException();
     }
+    public PatientData createPatient(String username, String password) {
+        return patientManager.createPatient(username, password);}
+
     public DoctorData createDoctor (String username, String password){
         return doctorManager.createDoctor(username, password);
     }
     public SecretaryData createSecretary (String username, String password){
         return secretaryManager.createSecretary(username, password);
-    }
-    public boolean doesPatientExist(String patient_username){
-        return patientManager.doesPatientExist(patient_username);
-    }
-    public boolean doesDoctorExist (String doctor_username){
-
-        return doctorManager.doesUserExist(doctor_username);
-    }
-    public boolean doesSecretaryExist (String secretary_username){
-        return secretaryManager.doesUserExist(secretary_username);
     }
 
     /**

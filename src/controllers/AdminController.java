@@ -4,6 +4,8 @@ import dataBundles.*;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
+import useCases.accessClasses.userType;
+import useCases.managers.AdminManager;
 
 import java.util.HashMap;
 
@@ -47,7 +49,7 @@ public class AdminController extends TerminalController{
     private Command CreateAdmin(){
         return (x) -> {
             UserCredentials c = adminScreenView.registerAdminPrompt();
-            DoctorData secretary = adminAccess.createDoctor(c.username(), c.password());
+            AdminData secretary = adminAccess.createAdmin(c.username(), c.password());
             displaySuccessOnCreateAcount(secretary);
         };
     }
@@ -67,6 +69,7 @@ public class AdminController extends TerminalController{
     }
 
     private Command ChangePassword(){
+        AdminManager adminManager = new AdminManager(getDatabase());
         return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
