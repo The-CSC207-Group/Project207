@@ -40,12 +40,12 @@ public class SecretaryController extends TerminalController {
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("change password", new ChangePassword());
-        commands.put("create patient", new CreatePatientAccount());
-        commands.put("create doctor", new CreateDoctorAccount());
-        commands.put("get logs", new GetLogs());
+        commands.put("change password", ChangePassword());
+        commands.put("create patient", CreatePatientAccount());
+        commands.put("create doctor", CreateDoctorAccount());
+        commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
-        commands.put("book", new BookAppointment());
+        commands.put("book", BookAppointment());
         return commands;
     }
 
@@ -61,10 +61,8 @@ public class SecretaryController extends TerminalController {
         }
     }
 
-    class CreatePatientAccount implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command CreatePatientAccount() {
+        return (x) -> {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
             if (!secretaryAccess.doesPatientExist(userCredentials.username())) {
                 secretaryAccess.createPatient(userCredentials.username(), userCredentials.password());
@@ -72,14 +70,12 @@ public class SecretaryController extends TerminalController {
             } else {
                 adminScreenVIew.failedCreateAccount();
             }
-        }
+
+        };
     }
 
-    class CreateDoctorAccount implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-
+    private Command CreateDoctorAccount() {
+        return (x) -> {
             UserCredentials userCredentials = secretaryScreenView.registerDoctorAccount();
             if (!secretaryAccess.doesDoctorExist(userCredentials.username())) {
                 secretaryAccess.createDoctor(userCredentials.username(), userCredentials.password());
@@ -87,13 +83,11 @@ public class SecretaryController extends TerminalController {
                 // need warning message
                 adminScreenVIew.failedCreateAccount();
             }
-        }
+        };
     }
 
-    class ChangePassword implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ChangePassword() {
+        return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
                 secretaryAccess.changeSecretaryPassword(secretaryData, passwordResetDetails.password());
@@ -101,21 +95,18 @@ public class SecretaryController extends TerminalController {
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
             }
-        }
+        };
     }
 
-    class GetLogs implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command GetLogs() {
+        return (x) -> {
             ArrayList<LogData> logs = secretaryAccess.getLogs(secretaryData);
             secretaryScreenView.viewUserLogs(logs);
-        }
+        };
     }
 
-    class BookAppointment implements Command {
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command BookAppointment() {
+        return (x) -> {
             AppointmentDayDetails appointmentDayDetails = secretaryScreenView.bookAppointmentDayPrompt();
 
             int day = appointmentDayDetails.day();
@@ -145,30 +136,23 @@ public class SecretaryController extends TerminalController {
                 presenter.errorMessage("Patient or Doctor does not exist");
 
             }
-
-        }
-
+        };
     }
 
-    class PatientAppointments implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command PatientAppointments() {
+        return (x) -> {
             String username = secretaryScreenView.enterPatientUsernamePrompt();
-            if (secretaryAccess.getPatient(username).isPresent()){
+            if (secretaryAccess.getPatient(username).isPresent()) {
                 PatientData patientData = secretaryAccess.getPatient(username).get();
                 ArrayList<AppointmentData> patientAppointment =
                         secretaryAccess.getPatientAppointmentDataBundles(patientData);
                 appointmentView.viewFullFromList(patientAppointment);
             }
-        }
-
+        };
     }
 
-    class CancelAppointment implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command CancelAppointment() {
+        return (x) -> {
             String username = secretaryScreenView.enterPatientUsernamePrompt();
             if (secretaryAccess.getPatient(username).isPresent()) {
                 PatientData patientData = secretaryAccess.getPatient(username).get();
@@ -178,21 +162,8 @@ public class SecretaryController extends TerminalController {
                 int index = Integer.parseInt(presenter.promptPopup("Enter id"));
                 secretaryAccess.removeAppointment(data.get(index));
             }
-
-
-        }
+        };
     }
-
-    class RescheduleAppointment implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            new PatientAppointments();
-
-            }
-
-        }
-
 
 
 }
