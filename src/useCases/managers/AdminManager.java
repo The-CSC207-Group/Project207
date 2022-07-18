@@ -8,7 +8,6 @@ import entities.Contact;
 
 public class AdminManager extends UserManager<Admin>{
     DataMapperGateway<Admin> adminDatabase;
-    GenericUserManagerMethods<Admin> adminMethods;
     DataMapperGateway<Contact> contactDatabase;
 
     /**
@@ -19,7 +18,6 @@ public class AdminManager extends UserManager<Admin>{
     public AdminManager(DataMapperGateway<Admin> adminDatabase, DataMapperGateway<Contact> contactDatabase){
         super(adminDatabase);
         this.adminDatabase = adminDatabase;
-        this.adminMethods = new GenericUserManagerMethods<>(adminDatabase);
         this.contactDatabase = contactDatabase;
     }
     public AdminData createAdmin(String username, String password){

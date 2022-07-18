@@ -10,7 +10,6 @@ public class SecretaryManager extends UserManager<Secretary> {
     DataMapperGateway<Secretary> secretaryDatabase;
     DataMapperGateway<Contact> contactDatabase;
 
-    GenericUserManagerMethods<Secretary> secretaryMethods;
 
     /**
      * Stores the databases.
@@ -22,7 +21,6 @@ public class SecretaryManager extends UserManager<Secretary> {
     public SecretaryManager(DataMapperGateway<Secretary> secretaryDatabase, DataMapperGateway<Contact> contactDatabase) {
         super(secretaryDatabase);
         this.secretaryDatabase = secretaryDatabase;
-        this.secretaryMethods = new GenericUserManagerMethods<>(secretaryDatabase);
         this.contactDatabase = contactDatabase;
     }
 

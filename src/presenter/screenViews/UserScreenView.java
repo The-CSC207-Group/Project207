@@ -19,7 +19,7 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Cannot reset password: new password and confirmed new password do not match.");
     }
 
-    public void viewLogs(List<LogData> items) {
+    public void viewUserLogs(List<LogData> items) {
         LogView logView = new LogView();
         String output = logView.viewFullFromList(items);
         infoMessage("Logs:");
