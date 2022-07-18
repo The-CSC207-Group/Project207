@@ -13,7 +13,7 @@ public class AdminManager extends UserManager<Admin>{
 
     /***
      * Initialize the admin and contact databases.
-     * @param database the entire database.
+     * @param database The entire database.
      */
     public AdminManager(Database database){
         super(database.getAdminDatabase());
