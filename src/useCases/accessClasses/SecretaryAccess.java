@@ -40,7 +40,7 @@ public class SecretaryAccess {
         this.prescriptionManager = new PrescriptionManager(database);
         this.patientManager = new PatientManager(database);
         this.doctorManager = new DoctorManager(database);
-        this.secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+        this.secretaryManager = new SecretaryManager(database);
         this.logManager = new LogManager(database);
         this.appointmentManager = new AppointmentManager(database);
     }
