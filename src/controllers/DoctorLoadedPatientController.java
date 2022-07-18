@@ -9,7 +9,7 @@ import useCases.managers.TimeManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DoctorLoadedPatientController extends TerminalController{
+public class DoctorLoadedPatientController extends TerminalController {
     PatientData patientData;
     DoctorData doctorData;
     DoctorAccess doctorAccess;
@@ -20,11 +20,12 @@ public class DoctorLoadedPatientController extends TerminalController{
 
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> c  = super.AllCommands();
+        HashMap<String, Command> c = super.AllCommands();
         c.put("unload patient", back(prev));
         c.put("view patient appointments", ViewPatientAppointments());
         c.put("get reports", getReport());
         c.put("create report", createReport());
+        c.put("delete report", deleteReport());
         return c;
     }
 
@@ -35,21 +36,30 @@ public class DoctorLoadedPatientController extends TerminalController{
         doctorAccess = new DoctorAccess(getDatabase());
         this.prev = prev;
     }
-    private Command ViewPatientAppointments(){
+
+    private Command ViewPatientAppointments() {
         return (x) -> {
             doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData));
         };
     }
-    private Command getReport(){
+
+    private Command getReport() {
         return (x) -> {
             doctorAccess.getPatientReports(patientData);
         };
     }
-    private Command createReport(){
+
+    private Command createReport() {
         return (x) -> {
             doctorAccess.addPatientReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
                     doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
         };
     }
 
+    private Command deleteReport() {
+        return (x) -> {
+            doctorAccess.removePatientReport(doctorAccess.getPatientReports(patientData)
+                    .get(doctorView.deleteReportPrompt(doctorAccess.getPatientReports(patientData))));
+        };
+    }
 }
