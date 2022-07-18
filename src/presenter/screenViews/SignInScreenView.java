@@ -1,7 +1,6 @@
 package presenter.screenViews;
 
 import dataBundles.ClinicData;
-import entities.Clinic;
 import presenter.entityViews.ClinicView;
 import presenter.response.UserCredentials;
 
