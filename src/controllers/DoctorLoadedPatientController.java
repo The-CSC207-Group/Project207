@@ -22,10 +22,9 @@ public class DoctorLoadedPatientController extends TerminalController{
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> c  = super.AllCommands();
         c.put("unload patient", back(prev));
-        c.put("prescription", prescription());
-        c.put("appointments", appointments());
-        c.put("get reports", new getReport());
-        c.put("add report", new newReport());
+        c.put("view patient appointments", ViewPatientAppointments());
+        c.put("get reports", getReport());
+        c.put("create report", createReport());
         return c;
     }
 
@@ -36,34 +35,21 @@ public class DoctorLoadedPatientController extends TerminalController{
         doctorAccess = new DoctorAccess(getDatabase());
         this.prev = prev;
     }
-    private Command prescription(){
-        return (x) -> {
-        };
-    }
-    private Command appointments(){
+    private Command ViewPatientAppointments(){
         return (x) -> {
             doctorView.viewAppointments(doctorAccess.getAllPatientAppointments(patientData));
         };
     }
-
-    class getReport implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            doctorAccess.getPatientReports(patientData);
-        }
-    }
-    class newReport implements Command {
-        @Override
-        public void execute(ArrayList<String> args) {
-
-            doctorAccess.addPatientReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
-                    doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
-        }
-    }
-
-    private Command createAppointment(){
+    private Command getReport(){
         return (x) -> {
+            doctorAccess.getPatientReports(patientData);
         };
     }
+    private Command createReport(){
+        return (x) -> {
+            doctorAccess.addPatientReport(patientData, doctorData, new TimeManager().getCurrentZonedDateTime(),
+                    doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
+        };
+    }
+
 }

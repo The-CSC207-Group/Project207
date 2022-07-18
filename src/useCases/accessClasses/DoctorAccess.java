@@ -140,7 +140,6 @@ public class  DoctorAccess implements AccessMixin{
     public ArrayList<AppointmentData> getAllPatientAppointments(PatientData patientData){
         return appointmentManager.getPatientAppointments(patientData);
     }
-
     public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, Integer year, Integer month, Integer dayOfMonth){
         return appointmentManager.getScheduleData(doctorData, new TimeManager().createLocalDate(year, month, dayOfMonth));
     }
