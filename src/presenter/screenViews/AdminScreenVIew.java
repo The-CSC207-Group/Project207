@@ -1,6 +1,10 @@
 package presenter.screenViews;
 
+import dataBundles.LogData;
+import presenter.entityViews.LogView;
 import presenter.response.UserCredentials;
+
+import java.util.List;
 
 public class AdminScreenVIew extends UserScreenView {
     public UserCredentials registerSecretaryPrompt() {
@@ -24,4 +28,10 @@ public class AdminScreenVIew extends UserScreenView {
         System.out.println("succeeded needs work on this method");
     }
 
+    public void viewAllLogs(List<LogData> items) {
+        LogView logView = new LogView();
+        String output = logView.viewFullFromList(items);
+        infoMessage("All Logs:");
+        infoMessage(output);
+    }
 }
