@@ -77,7 +77,7 @@ public class DoctorController extends TerminalController{
     }
     private Command GetLogs(){
         return (x) -> {
-            doctorView.viewLogs(doctorAccess.getLogs(doctorData));
+            doctorView.viewUserLogs(doctorAccess.getLogs(doctorData));
         };
     }
     private Command ViewAllAppointments(){
