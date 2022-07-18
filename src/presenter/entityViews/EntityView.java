@@ -14,6 +14,10 @@ public abstract class EntityView<T> {
         }
     }
 
+    protected String getDefaultStringNA(String string) {
+        return getDefaultString(string, "N/A");
+    }
+
     public abstract String viewFull(T item);
 
     public String viewFullFromList(List<T> items) {

@@ -7,14 +7,14 @@ public class ContactView extends EntityView<ContactData> {
 
     @Override
     public String viewFull(ContactData item) {
-        return viewName(item) + "\n"
-                + viewEmail(item) + "\n"
-                + viewPhoneNumber(item) + "\n"
-                + viewAddress(item) + "\n"
-                + viewBirthday(item) + "\n"
-                + viewEmergencyContactName(item) + "\n"
-                + viewEmergencyContactEmail(item) + "\n"
-                + viewEmergencyContactPhoneNumber(item) + "\n"
+        return viewName(item) + ", "
+                + viewEmail(item) + ", "
+                + viewPhoneNumber(item) + ", "
+                + viewAddress(item) + ", "
+                + viewBirthday(item) + ", "
+                + viewEmergencyContactName(item) + ", "
+                + viewEmergencyContactEmail(item) + ", "
+                + viewEmergencyContactPhoneNumber(item) + ", "
                 + viewEmergencyRelationship(item);
     }
 
@@ -23,35 +23,35 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     public String viewEmail(ContactData item) {
-        return item.getEmail();
+        return "Email: " + getDefaultStringNA(item.getEmail());
     }
 
     public String viewPhoneNumber(ContactData item) {
-        return "Your phone number is " + item.getPhoneNumber() + ".";
+        return "Phone Number: " + getDefaultStringNA("N/A");
     }
 
     public String viewAddress(ContactData item) {
-        return "Your address is " + item.getAddress() + ".";
+        return "Address: " + getDefaultStringNA(item.getAddress());
     }
 
     public String viewBirthday(ContactData item) {
-        return "Your date of birth is " + item.getBirthday().toString() + ".";
+        return "Date of Birth: " + getDefaultStringNA(item.getBirthday().toString());
     }
 
     public String viewEmergencyContactName(ContactData item) {
-        return "Your emergency contact name is " + item.getEmergencyContactName() + ".";
+        return "Emergency Contact Name: " + getDefaultStringNA(item.getEmergencyContactName());
     }
 
     public String viewEmergencyContactEmail(ContactData item) {
-        return "Your emergency contact email is " + item.getEmergencyContactEmail() + ".";
+        return "Emergency Contact Email: " + getDefaultStringNA(item.getEmergencyContactEmail());
     }
 
     public String viewEmergencyContactPhoneNumber(ContactData item) {
-        return "Your emergency contact phone number is " + item.getEmergencyContactPhoneNumber() + ".";
+        return "Emergency Contact Phone Number: " + getDefaultStringNA(item.getEmergencyContactPhoneNumber());
     }
 
     public String viewEmergencyRelationship(ContactData item) {
-        return "Your emergency contact is your " + item.getEmergencyRelationship() + ".";
+        return "Emergency Contact Relationship: " + getDefaultStringNA(item.getEmergencyRelationship());
     }
 
 }
