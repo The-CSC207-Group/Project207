@@ -1,11 +1,11 @@
 package controllers;
 
+import controllers.common.PrescriptionListCommands;
 import dataBundles.AppointmentData;
 import dataBundles.LogData;
 import dataBundles.PatientData;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.PatientScreenView;
-import useCases.accessClasses.PatientAccess;
 import useCases.managers.AppointmentManager;
 import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
@@ -29,9 +29,14 @@ public class PatientController extends TerminalController {
         commands.put("change password", ChangePassword());
         commands.put("logs", GetLogs());
         commands.put("appointments", ViewAppointments());
-        commands.put("prescriptions", ViewPrescriptions());
         commands.put("sign out", signOut());
         commands.put("cancel appointment", notImplemented());
+
+        PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
+        HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
+        for (String key : prescriptionCommands.keySet()) {
+            commands.put("view " + key, prescriptionCommands.get(key));
+        }
 
         return commands;
     }
@@ -53,13 +58,6 @@ public class PatientController extends TerminalController {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             patientScreenView.viewAppointments(appointments);
-        };
-    }
-
-    private Command ViewPrescriptions() {
-        return (x) -> {
-            PrescriptionController prescriptionController = new PrescriptionController(context, patientData, self);
-            changeCurrentController(prescriptionController);
         };
     }
 
