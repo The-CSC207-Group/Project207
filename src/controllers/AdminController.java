@@ -6,6 +6,7 @@ import presenter.screenViews.AdminScreenView;
 import useCases.accessClasses.AdminAccess;
 import useCases.accessClasses.userType;
 import useCases.managers.AdminManager;
+import useCases.managers.LogManager;
 
 import java.util.HashMap;
 
@@ -73,7 +74,7 @@ public class AdminController extends TerminalController{
         return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
             String p2 = presenter.promptPopup("Re-enter new password");
             if (p1.equals(p2)){
-                adminAccess.changePassword(adminData.getUsername(), p1);
+                adminManager.changeUserPassword(adminData, p1);
                 presenter.successMessage("Successfully changed password");
             }
             else {
@@ -81,8 +82,9 @@ public class AdminController extends TerminalController{
             }};
     }
     private Command getLogs (){
+        LogManager logManager = new LogManager(getDatabase().getLogDatabase());
         return (x) -> {
-            adminScreenView.viewAllLogs(adminAccess.getLogs(adminData));
+            adminScreenView.viewAllLogs(logManager.getUserLogs(adminData));
         };
     }
     private Command deletePatient (){
