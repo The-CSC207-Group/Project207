@@ -23,6 +23,9 @@ public class TimeManager {
     public LocalDate createLocalDate(Integer year, Integer month, Integer dayOfMonth){
         return LocalDate.of(year, month, dayOfMonth);
     }
+    public LocalTime createLocalTime(Integer hour, Integer minute, Integer second){
+        return LocalTime.of(hour, minute, second);
+    }
     public ZonedDateTime createZonedDataTime(Integer year, Integer month, Integer dayOfMonth, Integer hour,
                                              Integer minute){
         return ZonedDateTime.of(year, month, dayOfMonth, hour,

@@ -4,10 +4,7 @@ import dataBundles.AdminData;
 import dataBundles.DoctorData;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
-import useCases.managers.AdminManager;
-import useCases.managers.AppointmentManager;
-import useCases.managers.LogManager;
-import useCases.managers.TimeManager;
+import useCases.managers.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +52,7 @@ public class DoctorController extends TerminalController{
             String newPassword1 = presenter.promptPopup("Enter a new password");
             String newPassword2 = presenter.promptPopup("Re-enter the new password");
             if (newPassword1.equals(newPassword2)){
-                doctorAccess.changePassword(doctorData, newPassword1);
+                new DoctorManager(getDatabase()).changeUserPassword(doctorData, newPassword1);
             } else {
                 presenter.errorMessage("These do not match");
             }
@@ -63,7 +60,6 @@ public class DoctorController extends TerminalController{
     }
     private Command ViewSchedule(){
         return (x) -> {
-            AdminData a = new AdminManager(getDatabase()).s
             String year = presenter.promptPopup("Enter the year:");
             String month = presenter.promptPopup("Enter the month:");
             String day = presenter.promptPopup("Enter the day of month:");
