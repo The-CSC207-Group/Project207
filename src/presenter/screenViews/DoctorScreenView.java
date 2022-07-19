@@ -109,7 +109,12 @@ public class DoctorScreenView extends UserScreenView {
         return new ReportDetails(header, body);
     }
 
-    public String enterPatientUsernamePrompt() {
+    public LocalDate viewSchedulePrompt() {
+        infoMessage("What day's schedule would you like to view?");
+        return showLocalDatePrompt();
+    }
+
+    public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
 }
