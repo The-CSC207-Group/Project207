@@ -6,11 +6,19 @@ import presenter.response.UserCredentials;
 
 public class SignInScreenView extends ScreenView {
 
+    /**
+     * Welcome message displayed before the user logs in.
+     */
     public void welcomeMessage() {
         infoMessage("Welcome to the program! Please sign in to continue.\n" +
                     "Type 'help' to see a list of all possible commands.");
     }
 
+    /**
+     * Ask user for his username and password.
+     * Used for lgin.
+     * @return UserCredentials containing username and password.
+     */
     public UserCredentials userLoginPrompt() {
         String username = enterUsernamePrompt("your");
         String password = enterPasswordPrompt("your");
