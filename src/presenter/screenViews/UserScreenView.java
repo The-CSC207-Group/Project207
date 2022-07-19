@@ -1,6 +1,8 @@
 package presenter.screenViews;
 
+import dataBundles.ContactData;
 import dataBundles.LogData;
+import presenter.entityViews.ContactView;
 import presenter.entityViews.LogView;
 import presenter.response.PasswordResetDetails;
 
@@ -65,11 +67,40 @@ public abstract class UserScreenView extends ScreenView{
         }
     }
 
+    public String displayContactInfo(ContactData contactData) {
+        ContactView contactView = new ContactView();
+        return contactView.viewFull(contactData);
+    }
+
+    public String showNamePrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter the name of your emergency contact: ");
+        } else {
+            return input("Enter your name: ");
+        }
+    }
+
+    public void showNameFormatError() {
+        errorMessage("Name is not in valid format.");
+    }
+
+    public String showEmailPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter the email of your emergency contact: ");
+        } else {
+            return input("Enter your email: ");
+        }
+    }
+
+    public void showEmailFormatError() {
+        errorMessage("Email is not in valid format.");
+    }
+
     public String showPhoneNumberPrompt(boolean emergencyContact) {
         if (emergencyContact) {
-            return input("Enter your phone number: ");
-        } else {
             return input("Enter the phone number of your emergency contact: ");
+        } else {
+            return input("Enter your phone number: ");
         }
     }
 
@@ -77,23 +108,40 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Phone number is not in valid format: ^([0-9])+$");
     }
 
-    public String showEmailPrompt(boolean emergencyContact) {
+    public String showAddressPrompt(boolean emergencyContact) {
         if (emergencyContact) {
-            return input("Enter your email: ");
+            return input("Enter the address of your emergency contact: ");
         } else {
-            return input("Enter the email of your emergency contact: ");
+            return input("Enter your address: ");
         }
     }
 
-    public void showEmailFormatError() {
-        errorMessage("Email is not in correct format");
+    public void showAddressFormatError() {
+        errorMessage("Address is not in valid format.");
+    }
+
+    public LocalDate showBirthdayPrompt() {
+        infoMessage("Enter your date of birth: ");
+        return showLocalDatePrompt();
+    }
+
+    public void showBirthdayFormatError() {
+        errorMessage("Birthday is not in valid format");
+    }
+
+    public String showEmergencyRelationship() {
+        return input("Enter your emergency contact's relationship to you: ");
+    }
+
+    public void showEmergencyRelationshipError() {
+        errorMessage("Emergency contact relationship not in valid format");
     }
 
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
         Integer index = inputInt("Input " + itemType + " number to delete: ");
         if (index != null) {
-            return index - 1;
+            return index - 1; // -1 to be the index of the list, not numbeer inputted.
         } else {
             return null;
         }
