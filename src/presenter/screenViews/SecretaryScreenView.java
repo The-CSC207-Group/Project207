@@ -50,7 +50,7 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Show error when cannot delete due to username not existing in patient database.
      */
-    public void showFailedToDeleteUserByUsernameError() {
+    public void showFailedToDeletePatientError() {
         errorMessage("Failed to delete account: patient of that username does not exist");
     }
 
