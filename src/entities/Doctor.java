@@ -69,10 +69,10 @@ public class Doctor extends User {
 
     /**
      * Removes a time the doctor was available in.
-     * @param availability The time the doctor was available in.
+     * @param Availability The time the doctor was available in.
      */
-    public void removeAvailability(Availability availability) {
-        availability.remove(availability);
+    public void removeAvailability(Availability Availability) {
+        availability.remove(Availability);
     }
 
 }

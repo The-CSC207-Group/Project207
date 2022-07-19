@@ -11,10 +11,7 @@ import entities.Availability;
 import entities.Doctor;
 import entities.TimeBlock;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -314,6 +311,11 @@ public class AppointmentManager {
                 .forEach(this::removeAppointment);
         //send notification to patient that their appointment was removed
     }
+    public void adjustAvailability(Availability availability, LocalTime newStart, LocalTime newEnd){
+        availability.setDoctorStartTime(newStart);
+        availability.setDoctorEndTime(newEnd);
+        }
+
     private boolean overlapDay(AppointmentData appointmentData, Availability availability){
         return appointmentData.getTimeBlock().getStartTime().getDayOfWeek().equals(availability.getDayOfWeek());
     }
