@@ -92,7 +92,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             String doctor = secretaryScreenView.bookAppointmentPatientDoctorPrompt().doctorUsername();
 
 
-            if (doctorManager.getUserData(doctor).isPresent()) {
+            if (doctorManager.getDoctor(doctor).isPresent()) {
                 DoctorData doctorData = doctorManager.getDoctor(doctor).get();
                 appointmentView.viewFullFromList(appointmentManager.getScheduleData(doctorData,
                         LocalDate.of(year, month, day)));

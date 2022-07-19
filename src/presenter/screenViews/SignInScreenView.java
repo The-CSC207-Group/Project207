@@ -33,6 +33,9 @@ public class SignInScreenView extends ScreenView {
         infoMessage(new ClinicView().viewFull(clinic));
     }
 
+    /**
+     * View login error on incorrect username and password.
+     */
     public void showLoginError() {
         errorMessage("Incorrect username or password, please try again...");
     }
