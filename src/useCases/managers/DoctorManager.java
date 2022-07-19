@@ -50,16 +50,5 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorData getUserData(String username) {
         return getUserHelper(username).map(x -> new DoctorData(x)).orElse(null);
     }
-
-    public Optional<PatientData> getPatient(String username){
-        return Optional.ofNullable(patientManager.getUser(username))
-                .map(PatientData::new);
-    }
-
-    public Optional<DoctorData> getDoctor(String username){
-        return doctorDatabase.stream().filter(x -> x.getUsername().equals(username))
-                .findFirst()
-                .map(DoctorData::new);
-    }
 }
 

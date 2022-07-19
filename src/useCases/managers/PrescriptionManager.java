@@ -1,5 +1,6 @@
 package useCases.managers;
 
+import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import dataBundles.UserData;
@@ -50,15 +51,15 @@ public class PrescriptionManager {
      * exists in their associated database if applicable.
      * @param header header of the prescription, info such as title
      * @param body body of the prescription, all notes relating to the prescription
-     * @param patientId id of the patient the prescription was assigned to.
-     * @param doctorId id of the doctor who gave out the prescription.
+     * @param patientData id of the patient the prescription was assigned to.
+     * @param doctorData id of the doctor who gave out the prescription.
      * @param expiryDate date the prescription expires
      * @return PrescriptionDataBundle object corresponding to the prescription.
      */
-    public PrescriptionData createPrescription(String header, String body, int patientId, int doctorId,
+    public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
                                                ZonedDateTime expiryDate){
         ZonedDateTime dateNoted = ZonedDateTime.now();
-        Prescription prescription = new Prescription(header, body, patientId, doctorId, expiryDate);
+        Prescription prescription = new Prescription(header, body, patientData.getId(), doctorData.getId(), expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionData(prescription);
     }
