@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.*;
+import entities.Patient;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
@@ -36,7 +37,7 @@ public class AdminController extends TerminalController{
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
         commands.put("change password", ChangePassword());
-        commands.put("change user password", ChangePassword());
+        commands.put("change user password", changeUserPassword());
         commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
         commands.put("delete user", deleteUser());
@@ -129,21 +130,21 @@ public class AdminController extends TerminalController{
     private Command getUserInfo(){
         return (x) -> {};
     }
-    boolean getAdmin(String userName){
-        if (adminManager.getUserData(userName) != null){
-            adminScreenView.showAdminData(adminManager.getUserData(userName));
-            return true;
-        } else {
-            return false;
-        }
-    }
-    Optional<PatientData> getPatient(String userName){
-        patientMan
-    }
     private Command changeUserPassword(){
         return (x) -> {
-            patientManager.g
-            if (patientManager.changeUserPassword())
+            String name = adminScreenView.getUserName(); // note this is can be any user not just the one using it so cant use reset password promvpt
+            String password = adminScreenView.getNewUserPassword();
+            if (patientManager.changeUserPassword(name, password)){
+                adminScreenView.showResetPasswordSuccessMessage();
+            } else if (secretaryManager.changeUserPassword(name, password)){
+                adminScreenView.showResetPasswordSuccessMessage();
+            } else if (adminManager.changeUserPassword(name, password)){
+                adminScreenView.showResetPasswordSuccessMessage();
+            } else if (doctorManager.changeUserPassword(name, password)){
+                adminScreenView.showResetPasswordSuccessMessage();
+            } else {
+                adminScreenView.showResetPasswordFaildBecauseOfUserDoesNotExist();
+            }
         };
     }
 }
