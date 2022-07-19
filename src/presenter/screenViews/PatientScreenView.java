@@ -37,11 +37,20 @@ public class PatientScreenView extends UserScreenView {
         viewPrescriptions(items, details);
     }
 
+    /**
+     * View prescription history of patient. i.e. all prescriptions prescribed to the patient.
+     * @param items list of prescriptions.
+     * @param details whether to show the prescription in full (body, expiration ...)
+     */
     public void viewPrescriptionHistory(List<PrescriptionData> items, boolean details) {
         infoMessage("Prescription History:");
         viewPrescriptions(items, details);
     }
 
+    /**
+     * View all appointments of a patient.
+     * @param items list of appointments.
+     */
     public void viewAppointments(List<AppointmentData> items) {
         String output = appointmentView.viewFullFromList(items);
         infoMessage("Booked Appointments:");
