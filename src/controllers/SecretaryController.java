@@ -2,6 +2,7 @@ package controllers;
 
 
 import dataBundles.*;
+import entities.Patient;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
@@ -50,11 +51,10 @@ public class SecretaryController extends TerminalController {
         @Override
         public void execute(ArrayList<String> args) {
             String username = secretaryScreenView.enterPatientUsernamePrompt();
-            doctorManager.getPatient(username).ifPresent(
-                    (patientData) -> {
-                        changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
-                    }
-            );
+            PatientData patientData = patientManager.getUserData(username);
+            if (patientData != null){
+                changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
+            }
             secretaryScreenView.showPatientDoesNotExistError();
         }
     }

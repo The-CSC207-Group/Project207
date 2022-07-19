@@ -35,7 +35,7 @@ public class SecretaryManager extends UserManager<Secretary> {
         secretaryDatabase.add(secretary);
         return new SecretaryData(secretary);
     }
-    public SecretaryData toSecretaryData(Secretary secretary){
+    private SecretaryData toSecretaryData(Secretary secretary){
         if (secretary == null){
             return null;
         } else {

@@ -91,9 +91,9 @@ public class SecretaryLoadedPatientController extends TerminalController {
             int year = appointmentDayDetails.getYear();
             String doctor = secretaryScreenView.bookAppointmentPatientDoctorPrompt().doctorUsername();
 
+            DoctorData doctorData = doctorManager.getUserData(doctor);;
 
-            if (doctorManager.getDoctor(doctor).isPresent()) {
-                DoctorData doctorData = doctorManager.getDoctor(doctor).get();
+            if (doctorData != null) {
                 appointmentView.viewFullFromList(appointmentManager.getScheduleData(doctorData,
                         LocalDate.of(year, month, day)));
 
@@ -104,7 +104,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                         appointmentTimeDetails.time().getMinute(),
                         appointmentTimeDetails.length());
             } else {
-
                 secretaryScreenView.showDoctorDoesNotExistError();
             }
         };

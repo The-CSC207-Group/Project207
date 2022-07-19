@@ -121,4 +121,12 @@ public class DoctorScreenView extends UserScreenView {
     public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
+
+    public void showErrorLoadingPatient() {
+        errorMessage("Error loading patient: a patient with that username does not exist");
+    }
+
+    public void showSuccessLoadingPatient(ContactData patientContact) {
+        infoMessage("Success loading patient: " + contactView.viewName(patientContact));
+    }
 }
