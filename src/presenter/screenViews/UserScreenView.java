@@ -104,8 +104,12 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Email is not in valid format.");
     }
 
-    public void showSuccessfullyChangedEmail() {
-        successMessage("Successfully changed email.");
+    public String showSuccessfullyChangedEmail(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Successfully changed emergency contact email.");
+        } else {
+            return input("Successfully changed email.");
+        }
     }
 
     public String showPhoneNumberPrompt(boolean emergencyContact) {
