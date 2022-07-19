@@ -17,6 +17,10 @@ public class SignInScreenView extends ScreenView {
         return new UserCredentials(username, password);
     }
 
+    /**
+     * View information about the clinic without login in.
+     * @param clinic clinic data bundle.
+     */
     public void viewClinicInfo(ClinicData clinic) {
         infoMessage(new ClinicView().viewFull(clinic));
     }
