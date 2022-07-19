@@ -65,16 +65,24 @@ public abstract class UserScreenView extends ScreenView{
         }
     }
 
-    public String showPhoneNumberPrompt() {
-        return input("Enter you phone number: ");
+    public String showPhoneNumberPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter your phone number: ");
+        } else {
+            return input("Enter the phone number of your emergency contact: ");
+        }
     }
 
     public void showPhoneNumberFormatError() {
         errorMessage("Phone number is not in valid format: ^([0-9])+$");
     }
 
-    public String showEmailPrompt() {
-        return input("Enter you email: ");
+    public String showEmailPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter your email: ");
+        } else {
+            return input("Enter the email of your emergency contact: ");
+        }
     }
 
     public void showEmailFormatError() {
