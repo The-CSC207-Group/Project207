@@ -112,7 +112,15 @@ public class SecretaryScreenView extends UserScreenView {
         return inputInt("Input appointment number to reschedule: ");
     }
 
-    public String enterPatientUsernamePrompt() {
+    public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
+    }
+
+    public void showErrorLoadingPatient() {
+        errorMessage("Error loading patient: a patient with that username does not exist");
+    }
+
+    public void showSuccessLoadingPatient(ContactData patientContact) {
+        infoMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 }
