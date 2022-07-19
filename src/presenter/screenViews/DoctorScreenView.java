@@ -70,6 +70,10 @@ public class DoctorScreenView extends UserScreenView {
         return new PrescriptionDetails(header, body, expiryDate.atStartOfDay(ZoneId.of("US/Eastern")));
     }
 
+    public void showSuccessfullyCreatedPrescription() {
+        successMessage("Successfully created prescription.");
+    }
+
     /**
      * View used to delete reports relating to a patient. Show an enumeration of all reports and ask user for
      * integer input corresponding to a selection.
