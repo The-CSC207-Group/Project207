@@ -153,10 +153,11 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     *
-     * @param patientContact
-     * @param appointmentData
-     * @return
+     * Reschedule an existing appointment enumeration
+     * @param patientContact the patient contact information
+     * @param appointmentData the list of appointments of that patient
+     * @return an index corresponding to the selected appointment
+     *         or null, if index is malformed/typed incorrectly by user.
      */
     public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
@@ -182,7 +183,7 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 
-    public void viewPatientAppointments(ContactData patientContact, List<AppointmentData> appointments) {
+    public void viewAppointments(ContactData patientContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for " + contactView.viewName(patientContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
