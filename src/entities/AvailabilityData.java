@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/***
+/**
  * Represents a doctor's availability days and times.
  */
 public class AvailabilityData {
@@ -14,7 +14,7 @@ public class AvailabilityData {
     private LocalTime doctorStartTime;
     private LocalTime doctorEndTime;
 
-    /***
+    /**
      * Creates an instance of AvailabilityData
      * @param dayOfWeek The day of the week the doctor is available.
      * @param doctorStartTime The start time of the doctor's availability on day dayOfWeek.
@@ -26,21 +26,21 @@ public class AvailabilityData {
         this.doctorEndTime = doctorEndTime;
     }
 
-    /***
+    /**
      * @return Returns the day of the week of this instance of AvailabilityData.
      */
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 
-    /***
+    /**
      * @return Returns the start time of this instance of AvailabilityData.
      */
     public LocalTime getDoctorStartTime() {
         return doctorStartTime;
     }
 
-    /***
+    /**
      * Sets the start time of this instance of AvailabilityData.
      * @param startTime The new start time of this instance of AvailabilityData.
      */
@@ -48,14 +48,14 @@ public class AvailabilityData {
         this.doctorStartTime = startTime;
     }
 
-    /***
+    /**
      * @return Returns the end time of this instance of AvailabilityData.
      */
     public LocalTime getDoctorEndTime() {
         return doctorEndTime;
     }
 
-    /***
+    /**
      * Sets the end time of this instance of AvailabilityData.
      * @param endTime The new end time of this instance of AvailabilityData.
      */

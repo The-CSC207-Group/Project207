@@ -31,9 +31,10 @@ public abstract class UserScreenView extends ScreenView{
     /**
      * Show success message when password is reset.
      */
-    public void ResetPasswordSuccessMessage() {
+    public void showResetPasswordSuccessMessage() {
         successMessage("Password reset successfully");
     }
+
     /**
      * View logs specific to the current user.
      */
@@ -49,12 +50,12 @@ public abstract class UserScreenView extends ScreenView{
      * @return LocalDate if inputted date is valid.
      *         null if inputted date is invalid.
      */
-    protected LocalDate showLocalDatePrompt() {
-        Integer year = inputInt("Enter your desired year (YYYY): ");
+    public LocalDate showLocalDatePrompt() {
+        Integer year = inputInt("Enter year (YYYY): ");
         if (year == null) {return null;}
-        Integer month = inputInt("Enter your desired month (MM): ");
+        Integer month = inputInt("Enter month (MM): ");
         if (month == null) {return null;}
-        Integer day = inputInt("Enter your desired day (DD): ");
+        Integer day = inputInt("Enter day (DD): ");
         if (day == null) {return null;}
 
         try {
@@ -62,6 +63,30 @@ public abstract class UserScreenView extends ScreenView{
         } catch (DateTimeException ignored) {
             return null;
         }
+    }
+
+    public String showPhoneNumberPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter your phone number: ");
+        } else {
+            return input("Enter the phone number of your emergency contact: ");
+        }
+    }
+
+    public void showPhoneNumberFormatError() {
+        errorMessage("Phone number is not in valid format: ^([0-9])+$");
+    }
+
+    public String showEmailPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter your email: ");
+        } else {
+            return input("Enter the email of your emergency contact: ");
+        }
+    }
+
+    public void showEmailFormatError() {
+        errorMessage("Email is not in correct format");
     }
 
 }
