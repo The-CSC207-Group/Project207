@@ -17,7 +17,7 @@ public class Doctor extends User {
      * Creates an instance of Doctor with contact info.
      * @param username The doctor's username.
      * @param password The doctor's password.
-     * @param contactInfoId The id of the Contact object corresponding to this doctor.
+     * @param contactInfoId The id of the doctor's Contact object.
      */
     public Doctor(String username, String password, Integer contactInfoId) {
         super(username, password, contactInfoId);
