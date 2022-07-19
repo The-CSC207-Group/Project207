@@ -1,21 +1,24 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
+import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
+import dataBundles.PrescriptionData;
+import presenter.response.PrescriptionDetails;
 import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
-import useCases.managers.AppointmentManager;
-import useCases.managers.ReportManager;
-import useCases.managers.TimeManager;
+import useCases.managers.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DoctorLoadedPatientController extends TerminalController {
     PatientData patientData;
     DoctorData doctorData;
     DoctorAccess doctorAccess;
-
+    PrescriptionManager prescriptionManager;
     DoctorScreenView doctorView = new DoctorScreenView();
 
     DoctorController prev;
@@ -35,6 +38,9 @@ public class DoctorLoadedPatientController extends TerminalController {
         for (String key : commands.keySet()) {
             commands.put("patient " + key, prescriptionCommands.get(key));
         }
+
+        commands.put("create prescription", CreatePatientPrescription());
+        commands.put("delete prescription", DeletePatientPrescription());
         return commands;
     }
 
@@ -43,7 +49,32 @@ public class DoctorLoadedPatientController extends TerminalController {
         this.patientData = patientData;
         this.doctorData = doctorData;
         doctorAccess = new DoctorAccess(getDatabase());
+        this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.prev = prev;
+    }
+
+    private Command CreatePatientPrescription() {
+        return (x) -> {
+            PrescriptionDetails prescriptionDetails = doctorView.prescriptionDetailsPrompt();
+            prescriptionManager.createPrescription(prescriptionDetails.header(), prescriptionDetails.body(),
+                    patientData, doctorData, prescriptionDetails.expiryDate());
+            doctorView.showSuccessfullyCreatedPrescription();
+        };
+    }
+
+    private Command DeletePatientPrescription() {
+        ContactManager contactManager = new ContactManager(getDatabase());
+        ContactData patientContactData = contactManager.getContactData(patientData);
+        ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
+        return (x) -> {
+            Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
+            if (0 <= deleteIndex && deleteIndex < prescriptionDataList.size()) {
+                prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
+                doctorView.showSuccessfullyDeletedPrescription();
+            } else {
+                doctorView.showDeletePrescriptionOutOfRangeError();
+            }
+        };
     }
 
     private Command ViewPatientAppointments() {
