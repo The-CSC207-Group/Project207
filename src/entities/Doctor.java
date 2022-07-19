@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Doctor extends User {
 
-    //availability should represent an arrayList of 7 AvailabilityData objects, 1 for each day of the week with the
+    //availability should represent an arrayList of 7 Availability objects, 1 for each day of the week with the
     //doctor's personalized hours
-    private ArrayList<AvailabilityData> availability = new ArrayList<>();
+    private ArrayList<Availability> availability = new ArrayList<>();
     //absence represents time off booked by the doctor
     private ArrayList<TimeBlock> absence = new ArrayList<>();
 
@@ -18,7 +18,7 @@ public class Doctor extends User {
         super(username, password, new Contact().getId());
     }
 
-    public ArrayList<AvailabilityData> getAvailability() {
+    public ArrayList<Availability> getAvailability() {
         return availability;
     }
     public ArrayList<TimeBlock> getAbsence() {
@@ -33,11 +33,11 @@ public class Doctor extends User {
         this.absence.remove(timeBlock);
     }
 
-    public void removeAvailability(AvailabilityData availabilityData) {
-        availability.remove(availabilityData);
+    public void removeAvailability(Availability Availability) {
+        availability.remove(Availability);
     }
-    public void addAvailability(AvailabilityData availabilityData) {
-        availability.add(availabilityData);
+    public void addAvailability(Availability Availability) {
+        availability.add(Availability);
     }
 
 }

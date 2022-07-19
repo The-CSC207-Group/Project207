@@ -32,7 +32,7 @@ public class TimeManager {
                 minute, 0, 0, ZoneId.of("US/Eastern"));
     }
     public ZonedDateTime getCurrentZonedDateTime(){
-        return ZonedDateTime.now();
+        return ZonedDateTime.now(ZoneId.of("US/Eastern"));
     }
     public LocalTime getCurrentLocalTime(){
         return LocalTime.now();

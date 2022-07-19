@@ -1,6 +1,6 @@
 package dataBundles;
 
-import entities.AvailabilityData;
+import entities.Availability;
 import entities.Doctor;
 import entities.TimeBlock;
 
@@ -14,7 +14,7 @@ public class DoctorData extends UserData<Doctor> {
         this.doctor = doctor;
     }
 
-    public ArrayList<AvailabilityData> getAvailability(){
+    public ArrayList<Availability> getAvailability(){
         return doctor.getAvailability();
     }
 

@@ -9,55 +9,55 @@ import java.util.Calendar;
 /***
  * Represents a doctor's availability days and times.
  */
-public class AvailabilityData {
+public class Availability {
     private final DayOfWeek dayOfWeek;
     private LocalTime doctorStartTime;
     private LocalTime doctorEndTime;
 
     /***
-     * Creates an instance of AvailabilityData
+     * Creates an instance of Availability
      * @param dayOfWeek The day of the week the doctor is available.
      * @param doctorStartTime The start time of the doctor's availability on day dayOfWeek.
      * @param doctorEndTime The end time of the doctor's availability on day dayOfWeek.
      */
-    public AvailabilityData(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime){
+    public Availability(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime){
         this.dayOfWeek = dayOfWeek;
         this.doctorStartTime = doctorStartTime;
         this.doctorEndTime = doctorEndTime;
     }
 
     /***
-     * @return Returns the day of the week of this instance of AvailabilityData.
+     * @return Returns the day of the week of this instance of Availability.
      */
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 
     /***
-     * @return Returns the start time of this instance of AvailabilityData.
+     * @return Returns the start time of this instance of Availability.
      */
     public LocalTime getDoctorStartTime() {
         return doctorStartTime;
     }
 
     /***
-     * Sets the start time of this instance of AvailabilityData.
-     * @param startTime The new start time of this instance of AvailabilityData.
+     * Sets the start time of this instance of Availability.
+     * @param startTime The new start time of this instance of Availability.
      */
     public void setDoctorStartTime(LocalTime startTime) {
         this.doctorStartTime = startTime;
     }
 
     /***
-     * @return Returns the end time of this instance of AvailabilityData.
+     * @return Returns the end time of this instance of Availability.
      */
     public LocalTime getDoctorEndTime() {
         return doctorEndTime;
     }
 
     /***
-     * Sets the end time of this instance of AvailabilityData.
-     * @param endTime The new end time of this instance of AvailabilityData.
+     * Sets the end time of this instance of Availability.
+     * @param endTime The new end time of this instance of Availability.
      */
     public void setDoctorEndTime(LocalTime endTime) {
         this.doctorEndTime = endTime;
