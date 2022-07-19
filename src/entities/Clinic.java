@@ -27,7 +27,7 @@ public class Clinic extends JsonSerializable {
      */
     public Clinic(String name, String phoneNumber, String address, ZoneId timeZone, TimeBlock clinicHours) {
         this.name = name;
-        setPhoneNumber(phoneNumber);
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.timeZone = timeZone;
         this.clinicHours = clinicHours;
@@ -60,11 +60,7 @@ public class Clinic extends JsonSerializable {
      * @param phoneNumber The new phone number of the clinic.
      */
     public void setPhoneNumber(String phoneNumber) {
-        if (Pattern.matches("^([0-9])+$", phoneNumber)) {
-            this.phoneNumber = phoneNumber;
-        } else {
-            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
-        }
+        this.phoneNumber = phoneNumber;
     }
 
     /**

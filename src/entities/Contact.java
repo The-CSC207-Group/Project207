@@ -37,7 +37,7 @@ public class Contact extends JsonSerializable {
                    String emergencyContactPhoneNumber, String emergencyRelationship) {
         this.name = name;
         this.email = email;
-        setPhoneNumber(phoneNumber);
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.birthday = birthday;
         this.emergencyContactName = emergencyContactName;
@@ -95,11 +95,7 @@ public class Contact extends JsonSerializable {
      * @param phoneNumber The new phone number of the contact.
      */
     public void setPhoneNumber(String phoneNumber) {
-        if (Pattern.matches("^([0-9])+$", phoneNumber)) {
-            this.phoneNumber = phoneNumber;
-        } else {
-            throw new RuntimeException("Phone number should contain only digits from 0 to 9.");
-        }
+        this.phoneNumber = phoneNumber;
     }
 
     /**
