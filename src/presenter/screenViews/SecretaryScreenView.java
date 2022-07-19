@@ -181,4 +181,9 @@ public class SecretaryScreenView extends UserScreenView {
     public void showSuccessLoadingPatient(ContactData patientContact) {
         infoMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
+
+    public void viewPatientAppointments(ContactData patientContact, List<AppointmentData> appointments) {
+        infoMessage("Viewing appointments for " + contactView.viewName(patientContact) + ":");
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
 }
