@@ -9,9 +9,11 @@ import java.util.List;
 
 public class PatientScreenView extends UserScreenView {
 
+    PrescriptionView prescriptionView = new PrescriptionView();
+    AppointmentView appointmentView = new AppointmentView();
+
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
         String output;
-        PrescriptionView prescriptionView = new PrescriptionView();
         if (details) {
             output = prescriptionView.viewFullFromList(items);
         } else {
@@ -31,7 +33,6 @@ public class PatientScreenView extends UserScreenView {
     }
 
     public void viewAppointments(List<AppointmentData> items) {
-        AppointmentView appointmentView = new AppointmentView();
         String output = appointmentView.viewFullFromList(items);
         infoMessage("Booked Appointments:");
         infoMessage(output);
