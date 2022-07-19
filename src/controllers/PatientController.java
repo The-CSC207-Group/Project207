@@ -47,6 +47,7 @@ public class PatientController extends TerminalController {
             PasswordResetDetails passwordResetDetails = patientScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
                 patientManager.changeUserPassword(patientData, passwordResetDetails.password());
+                patientScreenView.showResetPasswordSuccessMessage();
             } else {
                 patientScreenView.showResetPasswordMismatchError();
             }
