@@ -52,8 +52,7 @@ public class SecretaryScreenView extends UserScreenView {
      * @return string representing the doctors username.
      */
     public String bookAppointmentDoctorPrompt() {
-        String doctorUsername = enterUsernamePrompt("doctor");
-        return doctorUsername;
+        return enterUsernamePrompt("doctor");
     }
 
     public void showPatientDoesNotExistError() {
