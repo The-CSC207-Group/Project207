@@ -24,18 +24,18 @@ public class DoctorLoadedPatientController extends TerminalController {
     public HashMap<String, Command> AllCommands() {
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
 
-        HashMap<String, Command> c = super.AllCommands();
-        c.put("unload patient", back(prev));
-        c.put("view patient appointments", ViewPatientAppointments());
-        c.put("get reports", getReport());
-        c.put("create report", createReport());
-        c.put("delete report", deleteReport());
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("unload patient", back(prev));
+        commands.put("view patient appointments", ViewPatientAppointments());
+        commands.put("get reports", getReport());
+        commands.put("create report", createReport());
+        commands.put("delete report", deleteReport());
 
-        HashMap<String, Command> commands = prescriptionController.AllCommands();
+        HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
         for (String key : commands.keySet()) {
-            c.put("patient " + key, commands.get(key));
+            commands.put("patient " + key, prescriptionCommands.get(key));
         }
-        return c;
+        return commands;
     }
 
     public DoctorLoadedPatientController(Context parent, DoctorController prev, DoctorData doctorData, PatientData patientData) {

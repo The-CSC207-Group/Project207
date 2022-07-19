@@ -26,15 +26,15 @@ public class DoctorController extends TerminalController{
 
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> h = super.AllCommands();
-        h.put("load patient", LoadPatient());
-        h.put("change password", ChangePassword());
-        h.put("show schedule", ViewSchedule());
-        h.put("show logs", GetLogs());
-        h.put("sign out", signOut());
-        h.put("show assigned appointments", ViewAllDoctorAppointments());
-        h.put("show all appointments", ViewAllAppointments());
-        return h;
+        HashMap<String, Command> commands = super.AllCommands();
+        commands.put("load patient", LoadPatient());
+        commands.put("change password", ChangePassword());
+        commands.put("show schedule", ViewSchedule());
+        commands.put("show logs", GetLogs());
+        commands.put("sign out", signOut());
+        commands.put("show assigned appointments", ViewAllDoctorAppointments());
+        commands.put("show all appointments", ViewAllAppointments());
+        return commands;
     }
 
     private Command LoadPatient() {
@@ -57,7 +57,7 @@ public class DoctorController extends TerminalController{
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
                 doctorManager.changeUserPassword(doctorData, passwordResetDetails.password());
             } else {
-                doctorView.showResetPasswordMismatchError();;
+                doctorView.showResetPasswordMismatchError();
             }
         };
     }
