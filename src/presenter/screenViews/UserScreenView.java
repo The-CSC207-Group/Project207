@@ -91,7 +91,12 @@ public abstract class UserScreenView extends ScreenView{
 
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
-        return inputInt("Input " + itemType + " number to delete: ");
+        Integer index = inputInt("Input " + itemType + " number to delete: ");
+        if (index != null) {
+            return index - 1;
+        } else {
+            return null;
+        }
     }
 
 }
