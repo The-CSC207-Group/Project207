@@ -33,6 +33,7 @@ public class SecretaryController extends TerminalController {
         commands.put("create patient", createPatientAccount());
         commands.put("get logs", getLogs());
         commands.put("load patient", new LoadPatient());
+        commands.put("delete patient", deletePatient());
 
         return commands;
     }
@@ -81,5 +82,18 @@ public class SecretaryController extends TerminalController {
             secretaryScreenView.viewUserLogs(logs);
         };
     }
+
+    private Command deletePatient() {
+        return (x) -> {
+            String patient = secretaryScreenView.showDeletePatientPrompt();
+            if (patientManager.deleteUser(patient)) {
+                secretaryScreenView.showDeletePatientSuccess();
+            } else {
+                secretaryScreenView.showFailedToDeletePatientError();
+            }
+
+        };
+    }
+
 
 }
