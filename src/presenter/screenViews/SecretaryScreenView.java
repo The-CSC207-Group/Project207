@@ -4,7 +4,6 @@ import dataBundles.AppointmentData;
 import dataBundles.ContactData;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.ContactView;
-import presenter.response.AppointmentPatientDoctorDetails;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.UserCredentials;
 
@@ -14,6 +13,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class SecretaryScreenView extends UserScreenView {
+
     public ContactView contactView = new ContactView();
 
     /**
@@ -22,6 +22,20 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public UserCredentials registerPatientAccount() {
         return registerAccountPrompt("patient");
+    }
+
+    /**
+     * Show success message when patient is created successfully.
+     */
+    public void showRegisterPatientSuccess() {
+        successMessage("Patient create successfully!");
+    }
+
+    /**
+     * Show error message when patient cannot be created due to non-unique username.
+     */
+    public void showRegisterPatientError() {
+        errorMessage("Could not create patient: a user with this username already exists");
     }
 
     /**
@@ -55,10 +69,18 @@ public class SecretaryScreenView extends UserScreenView {
         return enterUsernamePrompt("doctor");
     }
 
+    /**
+     * Show doctor does not exist error when booking appointment.
+     */
     public void showDoctorDoesNotExistError() {
         errorMessage("Appointment booking error: a doctor with that username does not exist.");
     }
 
+    /**
+     * Show book appointment day prompt
+     * @return LocalDate if inputted date is valid
+     *         null if inputted date is invalid
+     */
     public LocalDate bookAppointmentDayPrompt() {
         LocalDate appointmentDate = showLocalDatePrompt();
         if (appointmentDate == null) {
@@ -67,10 +89,17 @@ public class SecretaryScreenView extends UserScreenView {
         return appointmentDate;
     }
 
+    /**
+     * Show error when they are no available appointments on that day.
+     */
     public void showNoAvailableAppointmentDayError() {
         errorMessage("Appointment booking error: there are no available appointments on that day.");
     }
 
+    /**
+     * Ask user for the appointment time and duration.
+     * @return AppointmentTimeDetails containing time and length of appointment.
+     */
     public AppointmentTimeDetails bookAppointmentTimePrompt() {
         Integer hour = inputInt("Enter your desired hour (HH): ");
         if (hour == null) {return null;}
@@ -87,10 +116,16 @@ public class SecretaryScreenView extends UserScreenView {
         }
     }
 
+    /**
+     * Show error when appointment overlaps with absence or unavailability or another appointment.
+     */
     public void showAppointmentConflictError() {
         errorMessage("Appointment booking error: time period unavailability.");
     }
 
+    /**
+     * Show invalid date error when user inputs the wrong date
+     */
     public void showInvalidDateError() {
         errorMessage("Appointment booking error: invalid date.");
     }
