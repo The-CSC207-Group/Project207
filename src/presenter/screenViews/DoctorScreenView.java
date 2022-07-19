@@ -45,6 +45,13 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
+     * Success message when doctor successfully deletes a prescription.
+     */
+    public void showSuccessfullyDeletedPrescription() {
+        successMessage("Successfully deleted prescription.");
+    }
+
+    /**
      * Error raised when the user inputted integer is outside the size of the given data bundle list
      */
     public void showDeletePrescriptionOutOfRangeError() {
@@ -70,6 +77,9 @@ public class DoctorScreenView extends UserScreenView {
         return new PrescriptionDetails(header, body, expiryDate.atStartOfDay(ZoneId.of("US/Eastern")));
     }
 
+    /**
+     * Success message when doctor successfully creates a prescription.
+     */
     public void showSuccessfullyCreatedPrescription() {
         successMessage("Successfully created prescription.");
     }
@@ -113,12 +123,16 @@ public class DoctorScreenView extends UserScreenView {
         return new ReportDetails(header, body);
     }
 
+    /**
+     * View doctor's schedule on a specific day.
+     * @return Return the day inputted.
+     */
     public LocalDate viewSchedulePrompt() {
         infoMessage("What day's schedule would you like to view?");
         return showLocalDatePrompt();
     }
 
-    public String LoadPatientPrompt() {
+    public String loadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
 
