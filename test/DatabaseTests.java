@@ -139,7 +139,7 @@ public class DatabaseTests {
         ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
 
         Prescription originalPrescription = new
-                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                Prescription("medicine", "healthy", 123,
                 456, zonedExpiryDate);
 
         Integer prescriptionID = originalPrescriptionDatabase.add(originalPrescription);
@@ -178,7 +178,7 @@ public class DatabaseTests {
         ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
 
         Report originalReport = new
-                Report(zonedDateNoted, "medicine", "healthy", 123,
+                Report("medicine", "healthy", 123,
                 456);
 
         Integer reportID = originalReportDatabase.add(originalReport);

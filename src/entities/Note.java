@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
  */
 public abstract class Note extends JsonSerializable {
 
-    private final ZonedDateTime dateNoted = ZonedDateTime.now(ZoneId.of("US/Eastern"));
+    private final ZonedDateTime dateNoted = ZonedDateTime.now();
     private String header;
     private String body;
     private Integer patientId;

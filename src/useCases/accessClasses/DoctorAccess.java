@@ -92,7 +92,6 @@ public class  DoctorAccess {
     /**
      * a method that creates a prescription for a specific patient assigned by a doctor, stored in the prescription
      * database
-     * @param dateNoted date the prescription was created.
      * @param header Prescription name.
      * @param body Additional info about the prescription.
      * @param patientData the username associated with the patient in the database. Should not be null.
@@ -101,9 +100,9 @@ public class  DoctorAccess {
      * @return The prescriptionDataBundle representing the prescription if both the doctor and patient exist in their
      * respective databases, otherwise return null.
      */
-    public PrescriptionData createPrescription(ZonedDateTime dateNoted, String header, String body, PatientData patientData, DoctorData doctorData,
+    public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
                                                ZonedDateTime expiryDate){
-        return prescriptionManager.createPrescription(dateNoted, header, body, patientData.getId(), doctorData.getId(), expiryDate);
+        return prescriptionManager.createPrescription(header, body, patientData.getId(), doctorData.getId(), expiryDate);
     }
 
     /**
