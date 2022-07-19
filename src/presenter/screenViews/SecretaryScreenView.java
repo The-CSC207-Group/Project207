@@ -166,9 +166,30 @@ public class SecretaryScreenView extends UserScreenView {
         return rescheduleItemFromEnumerationPrompt();
     }
 
+    /**
+     * Helper method to reschedule appointment from enumeration.
+     * @return an index corresponding to the selected appointment
+     *         or null, if index is malformed/typed incorrectly by user.
+     */
     private Integer rescheduleItemFromEnumerationPrompt() {
         warningMessage("This action cannot be undone!");
         return inputInt("Input appointment number to reschedule: ");
+    }
+
+    public void showRescheduleOutOfRangeError() {
+        errorMessage("Could not reschedule appointment: index out of range.");
+    }
+
+    public void showRescheduleNotAnIntegerError(String itemType) {
+        errorMessage("Could not reschedule appointment: please input a valid integer.");
+    }
+
+    public void showDeleteOutOfRangeError() {
+        errorMessage("Could not delete appointment: index out of range.");
+    }
+
+    public void showDeleteNotAnIntegerError(String itemType) {
+        errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
     public String LoadPatientPrompt() {
