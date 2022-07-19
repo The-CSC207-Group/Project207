@@ -10,7 +10,7 @@ public class Patient extends User {
     private String healthNumber;
 
     /**
-     * Creates an instance of a patient with contact info.
+     * Creates an instance of Patient with contact info.
      * @param username The patient's username.
      * @param password The patient's password.
      * @param contactInfoId The id of the patient's Contact object.
@@ -22,7 +22,7 @@ public class Patient extends User {
     }
 
     /**
-     * Creates an instance of a patient without contact info.
+     * Creates an instance of Patient without contact info.
      * @param username The patient's username.
      * @param password The patient's password.
      */
