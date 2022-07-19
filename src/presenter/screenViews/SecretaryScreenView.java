@@ -48,7 +48,7 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Ask for doctor and patient username to book appointment.
+     * Ask for doctor username to book appointment.
      * @return string representing the doctors username.
      */
     public String bookAppointmentDoctorPrompt() {
