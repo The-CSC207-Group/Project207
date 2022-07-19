@@ -28,7 +28,12 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Cannot reset password: new password and confirmed new password do not match.");
     }
 
-
+    /**
+     * Show success message when password is reset.
+     */
+    public void ResetPasswordSuccessMessage() {
+        successMessage("Password reset successfully");
+    }
     /**
      * View logs specific to the current user.
      */
