@@ -9,7 +9,7 @@ import java.util.List;
 public class AdminScreenView extends UserScreenView {
 
     /**
-     * Registers a secretary account.
+     * Register a secretary account.
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerSecretaryPrompt() {
@@ -17,7 +17,7 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Registers a doctor account.
+     * Register a doctor account.
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerDoctorPrompt() {
@@ -25,7 +25,7 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Registers a patient account.
+     * Register a patient account.
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerPatientPrompt() {
@@ -33,7 +33,7 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Registers an admin account.
+     * Register an admin account.
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerAdminPrompt() {
@@ -41,21 +41,21 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Shows a failed to create user error that is thrown when username is already used.
+     * Show a failed to create user error that is thrown when username is already used.
      */
     public void showFailedToRegisterUserError() {
         errorMessage("Failed to register user account: username already in use");
     }
 
     /**
-     * Shows success message when admin successfully creates another user.
+     * Show success message when admin successfully creates another user.
      */
     public void showRegisterUserSuccess() {
         successMessage("Created user account successfully!");
     }
 
     /**
-     * Asks admin for a user to delete
+     * Ask admin for a user to delete
      * @return String username to delete
      */
     public String deleteUserPrompt() {
@@ -64,14 +64,14 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Shows a failed to delete user error that is thrown when username is not present in database.
+     * Show a failed to delete user error that is thrown when username is not present in database.
      */
     public void showFailedToDeleteUserError() {
         errorMessage("Failed to delete account: username does not exist");
     }
 
     /**
-     * Shows a success message when a user is successfully deleted.
+     * Show a success message when a user is successfully deleted.
      */
     public void showDeleteUserSuccess() {
         successMessage("Successfully deleted user account!");
