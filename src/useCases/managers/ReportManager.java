@@ -23,11 +23,11 @@ public class ReportManager {
         this.reportDatabase = database.getReportDatabase();
     }
 
-    public boolean deleteReport(Integer reportId){
-        return reportDatabase.remove(reportId);
+    public boolean deleteReport(ReportData reportData){
+        return reportDatabase.remove(reportData.getReportId());
     }
 
-    public ReportData addReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
+    public ReportData addReport(PatientData patientData, DoctorData doctorData, String header, String body){
         Report report = new Report(header, body, patientData.getId(), doctorData.getId());
         reportDatabase.add(report);
         return new ReportData(report);
