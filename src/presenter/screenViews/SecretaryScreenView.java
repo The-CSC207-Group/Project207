@@ -16,6 +16,10 @@ import java.util.List;
 public class SecretaryScreenView extends UserScreenView {
     public ContactView contactView = new ContactView();
 
+    /**
+     * Create a new patient prompt.
+     * @return UserCredentials containing username and password.
+     */
     public UserCredentials registerPatientAccount() {
         return registerAccountPrompt("patient");
     }
@@ -112,7 +116,15 @@ public class SecretaryScreenView extends UserScreenView {
         return inputInt("Input appointment number to reschedule: ");
     }
 
-    public String enterPatientUsernamePrompt() {
+    public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
+    }
+
+    public void showErrorLoadingPatient() {
+        errorMessage("Error loading patient: a patient with that username does not exist");
+    }
+
+    public void showSuccessLoadingPatient(ContactData patientContact) {
+        infoMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 }

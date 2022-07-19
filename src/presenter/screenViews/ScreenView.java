@@ -16,7 +16,7 @@ public abstract class ScreenView {
     protected Integer inputInt(String prompt) {
         System.out.println(prompt);
         String string = input(prompt);
-        return Integer.getInteger(string);
+        return Integer.getInteger(string) - 1; // -1 since Integer is one more than index, and we want to return index.
     }
 
     protected void infoMessage(String message) {
