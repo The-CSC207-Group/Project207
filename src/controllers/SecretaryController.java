@@ -50,7 +50,7 @@ public class SecretaryController extends TerminalController {
     class LoadPatient implements Command {
         @Override
         public void execute(ArrayList<String> args) {
-            String username = secretaryScreenView.LoadPatientPrompt();
+            String username = secretaryScreenView.loadPatientPrompt();
             PatientData patientData = patientManager.getUserData(username);
             if (patientData != null){
                 changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));

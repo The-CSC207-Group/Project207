@@ -192,7 +192,7 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
-    public String LoadPatientPrompt() {
+    public String loadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
 
