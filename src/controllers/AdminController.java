@@ -90,7 +90,7 @@ public class AdminController extends TerminalController{
             PasswordResetDetails passwordResetDetails = adminScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
                 adminManager.changeUserPassword(adminData, passwordResetDetails.password());
-                adminScreenView.changePasswordSuccess();
+                adminScreenView.showResetPasswordSuccessMessage();
             }
             else {
                 adminScreenView.showResetPasswordMismatchError();
@@ -127,9 +127,7 @@ public class AdminController extends TerminalController{
             }
         };
     }
-    private Command getUserInfo(){
-        return (x) -> {};
-    }
+
     private Command changeUserPassword(){
         return (x) -> {
             String name = adminScreenView.getUserName(); // note this is can be any user not just the one using it so cant use reset password promvpt
