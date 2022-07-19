@@ -2,10 +2,8 @@ package controllers;
 
 
 import dataBundles.*;
-import entities.Patient;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
-import presenter.screenViews.AdminScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
@@ -15,21 +13,13 @@ import java.util.HashMap;
 
 
 public class SecretaryController extends TerminalController {
-
-
     private final SecretaryData secretaryData;
-
     private final SecretaryController self = this;
-
-
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     PatientManager patientManager;
-    DoctorManager doctorManager;
     SecretaryManager secretaryManager;
     LogManager logManager;
-
     ContactManager contactManager;
-
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -39,9 +29,9 @@ public class SecretaryController extends TerminalController {
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("change password", ChangePassword());
-        commands.put("create patient", CreatePatientAccount());
-        commands.put("get logs", GetLogs());
+        commands.put("change password", changePassword());
+        commands.put("create patient", createPatientAccount());
+        commands.put("get logs", getLogs());
         commands.put("load patient", new LoadPatient());
 
         return commands;
@@ -52,7 +42,7 @@ public class SecretaryController extends TerminalController {
         public void execute(ArrayList<String> args) {
             String username = secretaryScreenView.LoadPatientPrompt();
             PatientData patientData = patientManager.getUserData(username);
-            if (patientData != null){
+            if (patientData != null) {
                 changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
                 secretaryScreenView.showSuccessLoadingPatient(contactManager.getContactData(patientData));
             }
@@ -60,7 +50,7 @@ public class SecretaryController extends TerminalController {
         }
     }
 
-    private Command CreatePatientAccount() {
+    private Command createPatientAccount() {
         return (x) -> {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
             if (!patientManager.doesUserExist(userCredentials.username())) {
@@ -73,7 +63,7 @@ public class SecretaryController extends TerminalController {
         };
     }
 
-    private Command ChangePassword() {
+    private Command changePassword() {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
@@ -85,12 +75,11 @@ public class SecretaryController extends TerminalController {
         };
     }
 
-    private Command GetLogs() {
+    private Command getLogs() {
         return (x) -> {
             ArrayList<LogData> logs = logManager.getUserLogs(secretaryData);
             secretaryScreenView.viewUserLogs(logs);
         };
     }
-
 
 }
