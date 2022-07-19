@@ -50,7 +50,7 @@ public abstract class UserScreenView extends ScreenView{
      * @return LocalDate if inputted date is valid.
      *         null if inputted date is invalid.
      */
-    protected LocalDate showLocalDatePrompt() {
+    public LocalDate showLocalDatePrompt() {
         Integer year = inputInt("Enter your desired year (YYYY): ");
         if (year == null) {return null;}
         Integer month = inputInt("Enter your desired month (MM): ");

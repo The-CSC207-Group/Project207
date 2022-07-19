@@ -40,7 +40,6 @@ public class SecretaryController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
         commands.put("create patient", CreatePatientAccount());
-        commands.put("create doctor", CreateDoctorAccount());
         commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
         return commands;
@@ -68,18 +67,6 @@ public class SecretaryController extends TerminalController {
                 adminScreenView.showFailedToRegisterUserError();
             }
 
-        };
-    }
-
-    private Command CreateDoctorAccount() {
-        return (x) -> {
-            UserCredentials userCredentials = secretaryScreenView.registerDoctorAccount();
-            if (!doctorManager.doesUserExist(userCredentials.username())) {
-                doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
-            } else {
-                // need warning message
-                adminScreenView.showFailedToRegisterUserError();
-            }
         };
     }
 
