@@ -27,7 +27,7 @@ public class PrescriptionManager {
 
     private Stream<Prescription> getAll(PatientData patient){
        return prescriptionsDatabase.stream()
-                        .filter(p -> p.getPatientId() == patient.getId());
+                        .filter(p -> p.getPatientId().equals(patient.getId()));
     }
     public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patient){
         return databaseUtilities.toArrayList(
@@ -47,7 +47,6 @@ public class PrescriptionManager {
     /**
      * Adds a prescription to the prescription database given the info provided. Assumes all info given is valid and
      * exists in their associated database if applicable.
-     * @param dateNoted date the prescription was created
      * @param header header of the prescription, info such as title
      * @param body body of the prescription, all notes relating to the prescription
      * @param patientId id of the patient the prescription was assigned to.
@@ -55,8 +54,9 @@ public class PrescriptionManager {
      * @param expiryDate date the prescription expires
      * @return PrescriptionDataBundle object corresponding to the prescription.
      */
-    public PrescriptionData createPrescription(ZonedDateTime dateNoted, String header, String body, int patientId, int doctorId,
+    public PrescriptionData createPrescription(String header, String body, int patientId, int doctorId,
                                                ZonedDateTime expiryDate){
+        ZonedDateTime dateNoted = ZonedDateTime.now();
         Prescription prescription = new Prescription(dateNoted, header, body, patientId, doctorId, expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionData(prescription);

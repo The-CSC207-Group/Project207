@@ -75,7 +75,7 @@ public class SecretaryController extends TerminalController {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
                 secretaryManager.changeUserPassword(secretaryData, passwordResetDetails.password());
-                // need success message
+                secretaryScreenView.showResetPasswordSuccessMessage();
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
             }
