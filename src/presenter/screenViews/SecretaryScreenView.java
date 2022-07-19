@@ -55,10 +55,6 @@ public class SecretaryScreenView extends UserScreenView {
         return enterUsernamePrompt("doctor");
     }
 
-    public void showPatientDoesNotExistError() {
-        errorMessage("Appointment booking error: a patient with that username does not exist.");
-    }
-
     public void showDoctorDoesNotExistError() {
         errorMessage("Appointment booking error: a doctor with that username does not exist.");
     }
