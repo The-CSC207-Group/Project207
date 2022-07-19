@@ -89,4 +89,9 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Email is not in correct format");
     }
 
+    protected Integer deleteItemFromEnumerationPrompt(String itemType) {
+        warningMessage("This action cannot be undone!");
+        return inputInt("Input " + itemType + " number to delete: ");
+    }
+
 }

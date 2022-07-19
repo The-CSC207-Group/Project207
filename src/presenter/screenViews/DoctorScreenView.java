@@ -17,11 +17,6 @@ public class DoctorScreenView extends UserScreenView {
 
     ContactView contactView = new ContactView();
 
-    private Integer deleteItemFromEnumerationPrompt(String itemType) {
-        warningMessage("This action cannot be undone!");
-        return inputInt("Input " + itemType + " number to delete: ");
-    }
-
     private void showDeleteOutOfRangeError(String itemType) {
         errorMessage("Could not delete " + itemType + ": index out of range.");
     }
