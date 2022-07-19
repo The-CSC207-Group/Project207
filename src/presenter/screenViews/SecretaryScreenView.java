@@ -8,6 +8,7 @@ import presenter.response.AppointmentTimeDetails;
 import presenter.response.UserCredentials;
 
 import java.time.DateTimeException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -236,4 +237,29 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
+
+    public String getTargetDoctor() {
+        return input("Enter doctor username: ");
+    }
+
+    public LocalTime addDoctorAvailabilityTime() {
+        return LocalTime.of(inputInt("Hour: "), inputInt("Minute: "));
+    }
+
+    public DayOfWeek addDoctorAvailabilityDay() {
+        return DayOfWeek.of(inputInt("Day (int): "));
+    }
+
+    public Integer addDoctorAvailableLength() {
+        return inputInt("Length of Available time: ");
+    }
+
+    public Integer getIndexToRemove() {
+        return inputInt("Select an index to remove: ");
+    }
+
+
+
+
+
 }

@@ -8,6 +8,7 @@ import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,6 +21,8 @@ public class SecretaryController extends TerminalController {
     SecretaryManager secretaryManager;
     LogManager logManager;
     ContactManager contactManager;
+    DoctorManager doctorManager;
+    AppointmentManager appointmentManager;
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -34,6 +37,8 @@ public class SecretaryController extends TerminalController {
         commands.put("get logs", getLogs());
         commands.put("load patient", new LoadPatient());
         commands.put("delete patient", deletePatient());
+        commands.put("add availability", addDoctorAvailability());
+        commands.put("delete availability", removeDoctorAvailability());
 
         return commands;
     }
@@ -94,6 +99,39 @@ public class SecretaryController extends TerminalController {
 
         };
     }
+
+    private Command addDoctorAvailability() {
+        return (x) -> {
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+            appointmentManager.newAvailability(
+                    doctorData,
+                    secretaryScreenView.addDoctorAvailabilityDay(),
+                    secretaryScreenView.addDoctorAvailabilityTime().getHour(),
+                    secretaryScreenView.addDoctorAvailabilityTime().getMinute(),
+                    secretaryScreenView.addDoctorAvailableLength());
+        };
+
+    }
+
+    private Command removeDoctorAvailability() {
+        return (x) -> {
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+
+            ArrayList<AppointmentData> appointmentData = appointmentManager.getDoctorAppointments(doctorData);
+            secretaryScreenView.viewAppointments(contactManager.getContactData(doctorData), appointmentData);
+            appointmentManager.removeAppointment(appointmentData.get(secretaryScreenView.getIndexToRemove()));
+        };
+    }
+
+
+
+
+
+
+
+
 
 
 }
