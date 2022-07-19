@@ -1,9 +1,10 @@
 package controllers;
 
 import dataBundles.*;
+import entities.Appointment;
+import entities.TimeBlock;
 import useCases.accessClasses.SecretaryAccess;
 import presenter.entityViews.AppointmentView;
-import presenter.response.AppointmentDayDetails;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.AdminScreenView;
@@ -87,12 +88,13 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private Command BookAppointment() {
         return (x) -> {
-            AppointmentDayDetails appointmentDayDetails = secretaryScreenView.bookAppointmentDayPrompt();
+            LocalDate appointmentDayDetails = secretaryScreenView.bookAppointmentDayPrompt();
 
-            int day = appointmentDayDetails.day();
-            int month = appointmentDayDetails.month();
-            int year = appointmentDayDetails.year();
-            String doctor = appointmentDayDetails.doctorUsername();
+            int day = appointmentDayDetails.getDayOfMonth();
+            int month = appointmentDayDetails.getMonthValue();
+            int year = appointmentDayDetails.getYear();
+            String doctor = secretaryScreenView.bookAppointmentPatientDoctorPrompt().doctorUsername();
+
 
             if (doctorManager.getDoctor(doctor).isPresent()) {
                 // need a method that returns DoctorData
@@ -103,12 +105,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
                 appointmentManager.bookAppointment(
                         patientData, doctorData, year, month, day,
-                        appointmentTimeDetails.hour(),
-                        appointmentTimeDetails.minute(),
+                        appointmentTimeDetails.time().getHour(),
+                        appointmentTimeDetails.time().getMinute(),
                         appointmentTimeDetails.length());
             } else {
-                // need error message
-                presenter.errorMessage("Doctor does not exist");
+
+                secretaryScreenView.showDoctorDoesNotExistError();
             }
         };
     }
@@ -126,7 +128,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
             appointmentView.viewFullFromList(data);
             // need something to prompt which one to remove
-            int index = Integer.parseInt(presenter.promptPopup("Enter id"));
+            int index = 0;
             appointmentManager.removeAppointment(data.get(index));
         };
     }
@@ -137,11 +139,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             appointmentView.viewFullFromList(appointments);
             // need something to prompt which one to change
-            int index = Integer.parseInt(presenter.promptPopup("Enter id"));
-            AppointmentDayDetails day = secretaryScreenView.bookAppointmentDayPrompt();
+            int index = Integer.parseInt("0");
+            LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
             AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
-            appointmentManager.rescheduleAppointment(appointments.get(index), day.year(), day.month(), day.day(),
-                    time.hour(), time.minute(), time.length());
+            appointmentManager.rescheduleAppointment(appointments.get(index), day.getYear(), day.getMonthValue(),
+                    day.getDayOfMonth(),
+                    time.time().getHour(), time.time().getMinute(), time.length());
 
         };
 
