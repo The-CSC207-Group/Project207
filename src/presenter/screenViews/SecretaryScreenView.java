@@ -16,15 +16,26 @@ import java.util.List;
 public class SecretaryScreenView extends UserScreenView {
     public ContactView contactView = new ContactView();
 
+    /**
+     * Create a new patient prompt.
+     * @return UserCredentials containing username and password.
+     */
     public UserCredentials registerPatientAccount() {
         return registerAccountPrompt("patient");
     }
 
-    public String deletePatientPrompt() {
+    /**
+     * Ask to delete patient by username.
+     * @return username of patient.
+     */
+    public String showDeletePatientPrompt() {
         showIrreversibleActionWarning();
         return input("Enter patient username to delete: ");
     }
 
+    /**
+     * Show error when cannot delete due to username not existing.
+     */
     public void showFailedToDeleteUserByUsernameError() {
         errorMessage("Failed to delete account: username does not exist");
     }
@@ -112,7 +123,15 @@ public class SecretaryScreenView extends UserScreenView {
         return inputInt("Input appointment number to reschedule: ");
     }
 
-    public String enterPatientUsernamePrompt() {
+    public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
+    }
+
+    public void showErrorLoadingPatient() {
+        errorMessage("Error loading patient: a patient with that username does not exist");
+    }
+
+    public void showSuccessLoadingPatient(ContactData patientContact) {
+        infoMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 }
