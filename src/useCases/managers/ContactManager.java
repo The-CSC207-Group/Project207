@@ -6,6 +6,7 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
 import entities.User;
+import java.util.regex.Pattern;
 
 import java.time.LocalDate;
 
@@ -43,15 +44,18 @@ public class ContactManager {
         contact.setName(newName);
         return true;
     }
+    //got regex from https://regexlib.com/Search.aspx?k=email
     public boolean changeEmail(ContactData contactData, String newEmail){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null){return false;}
+        if (contact == null ||
+                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", newEmail)){
+            return false;}
         contact.setEmail(newEmail);
         return true;
     }
     public boolean changePhoneNumber(ContactData contactData, String phoneNumber){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null){return false;}
+        if (contact == null || !Pattern.matches("^([0-9])+$", phoneNumber)){return false;}
         contact.setPhoneNumber(phoneNumber);
         return true;
     }
@@ -67,9 +71,13 @@ public class ContactManager {
         contact.setBirthday(birthday);
         return true;
     }
+
+    //got regex from https://regexlib.com/Search.aspx?k=email
     public boolean changeEmergencyContactEmail(ContactData contactData, String emergencyContactEmail){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null){return false;}
+        if (contact == null ||
+                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", emergencyContactEmail)){
+            return false;}
         contact.setEmergencyContactEmail(emergencyContactEmail);
         return true;
     }
@@ -81,7 +89,7 @@ public class ContactManager {
     }
     public boolean changeEmergencyContactPhoneNumber(ContactData contactData, String emergencyContactPhoneNumber){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null){return false;}
+        if (contact == null || !Pattern.matches("^([0-9])+$", emergencyContactPhoneNumber)){return false;}
         contact.setEmergencyContactPhoneNumber(emergencyContactPhoneNumber);
         return true;
     }
