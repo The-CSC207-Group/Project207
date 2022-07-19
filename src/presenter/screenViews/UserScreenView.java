@@ -31,9 +31,10 @@ public abstract class UserScreenView extends ScreenView{
     /**
      * Show success message when password is reset.
      */
-    public void ResetPasswordSuccessMessage() {
+    public void showResetPasswordSuccessMessage() {
         successMessage("Password reset successfully");
     }
+
     /**
      * View logs specific to the current user.
      */

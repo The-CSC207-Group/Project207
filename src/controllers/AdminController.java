@@ -79,7 +79,7 @@ public class AdminController extends TerminalController{
             PasswordResetDetails passwordResetDetails = adminScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
                 adminManager.changeUserPassword(adminData, passwordResetDetails.password());
-                adminScreenView.ResetPasswordSuccessMessage();
+                adminScreenView.showResetPasswordSuccessMessage();
             }
             else {
                 adminScreenView.showResetPasswordMismatchError();
