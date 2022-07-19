@@ -8,15 +8,24 @@ import presenter.screenViews.AdminScreenView;
 import useCases.managers.*;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class AdminController extends TerminalController{
 
     private AdminData adminData;
-    private AdminScreenView adminScreenView = new AdminScreenView();
-    AdminManager adminManager = new AdminManager(getDatabase());
+    PatientManager patientManager;
+    DoctorManager doctorManager;
+    SecretaryManager secretaryManager;
+    AdminManager adminManager;
+    AdminScreenView adminScreenView = new AdminScreenView();
+
     public AdminController(Context parent, AdminData adminData) {
         super(parent);
         this.adminData = adminData;
+        this.patientManager = new PatientManager(getDatabase());
+        secretaryManager = new SecretaryManager(getDatabase());
+        doctorManager = new DoctorManager(getDatabase());
+        adminManager = new AdminManager(getDatabase());
 
     }
     @Override
@@ -27,10 +36,10 @@ public class AdminController extends TerminalController{
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
         commands.put("change password", ChangePassword());
+        commands.put("change user password", ChangePassword());
         commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
-        commands.put("Delete patient/secretary/doctor", deleteUser());
-
+        commands.put("delete user", deleteUser());
         return commands;
     }
 
@@ -39,7 +48,7 @@ public class AdminController extends TerminalController{
         return (x) -> {
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
-            displaySuccessOnCreateAccount(secretary);
+            displaySuccessOnCreateAcount(secretary);
         };
     }
     Command CreateDoctor(){
@@ -47,7 +56,7 @@ public class AdminController extends TerminalController{
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
             DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
-            displaySuccessOnCreateAccount(doctor);
+            displaySuccessOnCreateAcount(doctor);
         };
     }
     private Command CreateAdmin(){
@@ -55,7 +64,7 @@ public class AdminController extends TerminalController{
 
             UserCredentials userCred = adminScreenView.registerAdminPrompt();
             AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
-            displaySuccessOnCreateAccount(admin);
+            displaySuccessOnCreateAcount(admin);
         };
     }
     private Command CreatePatient(){
@@ -63,10 +72,10 @@ public class AdminController extends TerminalController{
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerPatientPrompt();
             PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
-            displaySuccessOnCreateAccount(patient);
+            displaySuccessOnCreateAcount(patient);
         };
     }
-    private void displaySuccessOnCreateAccount(UserData user){
+    private void displaySuccessOnCreateAcount(UserData user){
         if (user == null){
             adminScreenView.showFailedToRegisterUserError();
         } else {
@@ -80,7 +89,7 @@ public class AdminController extends TerminalController{
             PasswordResetDetails passwordResetDetails = adminScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
                 adminManager.changeUserPassword(adminData, passwordResetDetails.password());
-                adminScreenView.showResetPasswordSuccessMessage();
+                adminScreenView.changePasswordSuccess();
             }
             else {
                 adminScreenView.showResetPasswordMismatchError();
@@ -92,11 +101,49 @@ public class AdminController extends TerminalController{
             adminScreenView.viewAllLogs(logManager.getUserLogs(adminData));
         };
     }
+    private boolean deleteUserHelper(String username){
+
+        if (patientManager.deleteUser(username)){
+            return true;
+        } else if (doctorManager.deleteUser(username)){
+            return true;
+        } else if (secretaryManager.deleteUser(username)) {
+            return true;
+        } else if (adminManager.deleteUser(username)){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     private Command deleteUser (){
         return (x) -> {
-            String username = adminScreenView.deleteUserPrompt();
-            adminManager.deleteUser(username);
+            String user = adminScreenView.deleteUserPrompt();
+            if (deleteUserHelper(user)){
+                adminScreenView.showDeleteUserSuccess();
+            } else {
+                adminScreenView.showFailedToDeleteUserError();
+            }
         };
     }
-
+    private Command getUserInfo(){
+        return (x) -> {};
+    }
+    boolean getAdmin(String userName){
+        if (adminManager.getUserData(userName) != null){
+            adminScreenView.showAdminData(adminManager.getUserData(userName));
+            return true;
+        } else {
+            return false;
+        }
+    }
+    Optional<PatientData> getPatient(String userName){
+        patientMan
+    }
+    private Command changeUserPassword(){
+        return (x) -> {
+            patientManager.g
+            if (patientManager.changeUserPassword())
+        };
+    }
 }

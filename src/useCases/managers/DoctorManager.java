@@ -46,6 +46,11 @@ public class DoctorManager extends UserManager<Doctor> {
         return toDoctorData(signInHelper(userName, password));
     }
 
+    @Override
+    public DoctorData getUserData(String username) {
+        return getUserHelper(username).map(x -> new DoctorData(x)).orElse(null);
+    }
+
     public Optional<PatientData> getPatient(String username){
         return Optional.ofNullable(patientManager.getUser(username))
                 .map(PatientData::new);

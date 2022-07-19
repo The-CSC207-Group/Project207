@@ -36,4 +36,9 @@ public class AdminManager extends UserManager<Admin>{
     public AdminData signIn(String userName, String password) {
         return toAdminData(signInHelper(userName, password));
     }
+
+    @Override
+    public AdminData getUserData(String username) {
+       return getUserHelper(username).map(x -> new AdminData(x)).orElse(null);
+    }
 }
