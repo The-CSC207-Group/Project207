@@ -132,6 +132,10 @@ public class DoctorScreenView extends UserScreenView {
         return showLocalDatePrompt();
     }
 
+    /**
+     * Load an existing patient.
+     * @return patient username inputted by doctor.
+     */
     public String loadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
