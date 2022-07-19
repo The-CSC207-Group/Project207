@@ -4,16 +4,27 @@ import presenter.response.AppointmentDayDetails;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.UserCredentials;
 
-import java.time.LocalDate;
-
 public class SecretaryScreenView extends UserScreenView {
 
     public UserCredentials registerPatientAccount() {
         return registerAccountPrompt("patient");
     }
 
-    public UserCredentials registerDoctorAccount() {
-        return registerAccountPrompt("doctor");
+    public String deletePatientPrompt() {
+        showIrreversibleActionWarning();
+        return input("Enter patient username to delete: ");
+    }
+
+    public void showFailedToDeleteUserByUsernameError() {
+        errorMessage("Failed to delete account: username does not exist");
+    }
+
+    public void showFailedToDeleteUserByAuthorityError() {
+        errorMessage("Failed to delete account: can only delete users of type patient");
+    }
+
+    public void showDeletePatientSuccess() {
+        successMessage("Successfully deleted patient account!");
     }
 
     public AppointmentDayDetails bookAppointmentDayPrompt() {

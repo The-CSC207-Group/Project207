@@ -32,28 +32,17 @@ public class AdminScreenView extends UserScreenView {
         successMessage("Created user account successfully!");
     }
 
-    public void deleteAdminPrompt() {
-        deleteAccountPrompt("admin");
-    }
-
-    public void deleteSecretaryPrompt() {
-        deleteAccountPrompt("secretary");
-    }
-
-    public void deleteDoctorPrompt() {
-        deleteAccountPrompt("doctor");
-    }
-
-    public void deletePatientPrompt() {
-        deleteAccountPrompt("patient");
+    public String deleteUserPrompt() {
+        showIrreversibleActionWarning();
+        return input("Enter username to delete: ");
     }
 
     public void showFailedToDeleteUserError() {
-        errorMessage("Failed to register user account: username already in use");
+        errorMessage("Failed to delete account: username does not exist");
     }
 
     public void showDeleteUserSuccess() {
-        successMessage("Successfully deleted user!");
+        successMessage("Successfully deleted user account!");
     }
 
     public void viewAllLogs(List<LogData> items) {

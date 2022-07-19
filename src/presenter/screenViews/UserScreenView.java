@@ -10,8 +10,8 @@ public abstract class UserScreenView extends ScreenView{
 
     public PasswordResetDetails resetPasswordPrompt() {
         infoMessage("You are about to reset your password.");
-        String username = input("Enter new password: ");
-        String password = input("Confirm new password: ");
+        String username = input("Enter your new password: ");
+        String password = input("Confirm your new password: ");
         return new PasswordResetDetails(username, password);
     }
 
@@ -24,11 +24,6 @@ public abstract class UserScreenView extends ScreenView{
         String output = logView.viewFullFromList(items);
         infoMessage("Logs:");
         infoMessage(output);
-    }
-
-    protected String deleteAccountPrompt(String accountType) {
-        showIrreversibleActionWarning();
-        return enterUsernamePrompt(accountType);
     }
 
     protected String enterYearPrompt() {
