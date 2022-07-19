@@ -60,6 +60,9 @@ public class AppointmentManager {
 
     private boolean isNoTimeBlockConflictAppointment(ArrayList<TimeBlock> timeBlockList,
                                                     TimeBlock proposedTime){
+        return timeConflictList(timeBlockList, proposedTime).isEmpty();
+    }
+    private ArrayList<TimeBlock> timeConflictList(ArrayList<TimeBlock> timeBlockList, TimeBlock proposedTime){
         return timeBlockList.stream()
                 .filter(x -> x.getStartTime().getDayOfYear()
                         == proposedTime.getStartTime().getDayOfYear())
@@ -67,19 +70,12 @@ public class AppointmentManager {
                         x.getEndTime().isAfter(proposedTime.getStartTime()))
                 .filter(x -> x.getStartTime().isAfter(proposedTime.getStartTime()) &
                         x.getStartTime().isBefore(proposedTime.getEndTime()))
-                .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private boolean isNoTimeBlockConflictAbsence(Integer doctorId,
                                                      TimeBlock proposedTime){
-        return doctorDatabase.get(doctorId).getAbsence().stream()
-                .filter(x -> x.getStartTime().getDayOfYear()
-                        == proposedTime.getStartTime().getDayOfYear())
-                .filter(x -> x.getStartTime().isBefore(proposedTime.getStartTime()) &
-                        x.getEndTime().isAfter(proposedTime.getStartTime()))
-                .filter(x -> x.getStartTime().isAfter(proposedTime.getStartTime()) &
-                        x.getStartTime().isBefore(proposedTime.getEndTime()))
-                .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
+        return timeConflictList(doctorDatabase.get(doctorId).getAbsence(), proposedTime).isEmpty();
     }
 
     /**
@@ -292,7 +288,6 @@ public class AppointmentManager {
     public void newAvailability(DoctorData doctorData, DayOfWeek dayOfWeek, Integer hour, Integer minute,
                                       Integer lenOfAvailability){
         TimeManager timeManager = new TimeManager();
-        // add verification
         doctorDatabase.get(doctorData.getId()).addAvailability(new Availability(dayOfWeek,
                 timeManager.createLocalTime(hour, minute, 0), timeManager.createLocalTime(hour, minute,
                 0).plusMinutes(lenOfAvailability)));
@@ -324,5 +319,20 @@ public class AppointmentManager {
                 appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorStartTime())) |
                 (appointmentData.getTimeBlock().startTimeToLocal().isBefore(availability.getDoctorEndTime()) &
                         appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorEndTime()));
+    }
+    public void deleteAbsence(DoctorData doctorData, TimeBlock absence){
+        doctorDatabase.get(doctorData.getId()).removeAbsence(absence);
+    }
+    public void addAbsence(DoctorData doctorData, ZonedDateTime startTime, ZonedDateTime endTime){
+        TimeBlock proposedTime = new TimeBlock(startTime, endTime);
+        doctorDatabase.get(doctorData.getId()).addAbsence(new TimeBlock(startTime, endTime));
+        getAllAppointments().stream()
+                .filter(x -> x.getTimeBlock().getStartTime().getDayOfYear()
+                        == proposedTime.getStartTime().getDayOfYear())
+                .filter(x -> x.getTimeBlock().getStartTime().isBefore(proposedTime.getStartTime()) &
+                        x.getTimeBlock().getEndTime().isAfter(proposedTime.getStartTime()))
+                .filter(x -> x.getTimeBlock().getStartTime().isAfter(proposedTime.getStartTime()) &
+                        x.getTimeBlock().getStartTime().isBefore(proposedTime.getEndTime()))
+                .forEach(this::removeAppointment);
     }
 }
