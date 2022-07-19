@@ -15,7 +15,7 @@ public class PatientScreenView extends UserScreenView {
     /**
      * Shows a list of prescriptions relating to patients.
      * @param items list of prescriptions.
-     * @param details whether to full the prescription in full (body, expiration ...)
+     * @param details whether to show the prescription in full (body, expiration ...)
      */
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
         String output;
@@ -27,6 +27,11 @@ public class PatientScreenView extends UserScreenView {
         infoMessage(output);
     }
 
+    /**
+     * View active prescriptions of patient. i.e. unexpired prescriptions.
+     * @param items list of prescriptions.
+     * @param details whether to show the prescription in full (body, expiration ...)
+     */
     public void viewActivePrescriptions(List<PrescriptionData> items, boolean details) {
         infoMessage("List of active prescriptions:");
         viewPrescriptions(items, details);
