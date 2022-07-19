@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.*;
+import entities.Appointment;
 import presenter.entityViews.AppointmentView;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
@@ -8,6 +9,7 @@ import presenter.screenViews.SecretaryScreenView;
 import presenter.entityViews.PrescriptionView;
 import useCases.managers.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +26,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-    private final AppointmentView appointmentView = new AppointmentView();
+
 
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
@@ -70,7 +72,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            appointmentView.viewFullFromList(appointments);
+            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), appointments);
 
         };
     }
@@ -78,33 +80,51 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command ChangePatientPassword() {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
-            patientManager.changeUserPassword(patientData, passwordResetDetails.password());
+            if (patientManager.changeUserPassword(patientData, passwordResetDetails.password())) {
+                secretaryScreenView.showResetPasswordSuccessMessage();
+            } else {
+                secretaryScreenView.showResetPasswordMismatchError();
+                ;
+            }
         };
     }
 
     private Command BookAppointment() {
         return (x) -> {
-            LocalDate appointmentDayDetails = secretaryScreenView.bookAppointmentDayPrompt();
 
-            int day = appointmentDayDetails.getDayOfMonth();
-            int month = appointmentDayDetails.getMonthValue();
-            int year = appointmentDayDetails.getYear();
-            String doctor = secretaryScreenView.bookAppointmentPatientDoctorPrompt().doctorUsername();
-
-            DoctorData doctorData = doctorManager.getUserData(doctor);;
-
-            if (doctorData != null) {
-                appointmentView.viewFullFromList(appointmentManager.getScheduleData(doctorData,
-                        LocalDate.of(year, month, day)));
-
-                AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
-                appointmentManager.bookAppointment(
-                        patientData, doctorData, year, month, day,
-                        appointmentTimeDetails.time().getHour(),
-                        appointmentTimeDetails.time().getMinute(),
-                        appointmentTimeDetails.length());
+            LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
+            if (date == null) {
+                secretaryScreenView.showInvalidDateError();
             } else {
-                secretaryScreenView.showDoctorDoesNotExistError();
+                String doctor = secretaryScreenView.bookAppointmentDoctorPrompt();
+                DoctorData doctorData = doctorManager.getUserData(doctor);
+
+                if (doctorData != null) {
+                    ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
+                            LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+                    if (appointments == null) {
+                        secretaryScreenView.showNoAvailableAppointmentDayError();
+
+                    } else {
+                        secretaryScreenView.viewAppointments(
+                                contactManager.getContactData(doctorData),
+                                appointmentManager.getScheduleData(doctorData,
+                                        LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth())));
+
+                        AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
+                        appointmentManager.bookAppointment(
+                                patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
+                                appointmentTimeDetails.time().getHour(),
+                                appointmentTimeDetails.time().getMinute(),
+                                appointmentTimeDetails.length());
+
+                        secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
+                                contactManager.getContactData(doctorData));
+                    }
+
+                } else {
+                    secretaryScreenView.showDoctorDoesNotExistError();
+                }
             }
         };
     }
@@ -113,7 +133,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
         return (x) -> {
             ArrayList<AppointmentData> patientAppointment =
                     appointmentManager.getPatientAppointments(patientData);
-            appointmentView.viewFullFromList(patientAppointment);
+            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), patientAppointment);
+
         };
     }
 

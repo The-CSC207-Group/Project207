@@ -23,11 +23,12 @@ public class SecretaryController extends TerminalController {
 
 
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-    private final AdminScreenView adminScreenView = new AdminScreenView();
     PatientManager patientManager;
     DoctorManager doctorManager;
     SecretaryManager secretaryManager;
     LogManager logManager;
+
+    ContactManager contactManager;
 
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
@@ -40,7 +41,6 @@ public class SecretaryController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
         commands.put("create patient", CreatePatientAccount());
-        commands.put("create doctor", CreateDoctorAccount());
         commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
 
@@ -50,12 +50,13 @@ public class SecretaryController extends TerminalController {
     class LoadPatient implements Command {
         @Override
         public void execute(ArrayList<String> args) {
-            String username = secretaryScreenView.enterPatientUsernamePrompt();
+            String username = secretaryScreenView.LoadPatientPrompt();
             PatientData patientData = patientManager.getUserData(username);
             if (patientData != null){
                 changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
+                secretaryScreenView.showSuccessLoadingPatient(contactManager.getContactData(patientData));
             }
-            secretaryScreenView.showPatientDoesNotExistError();
+            secretaryScreenView.showErrorLoadingPatient();
         }
     }
 
@@ -64,24 +65,11 @@ public class SecretaryController extends TerminalController {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
             if (!patientManager.doesUserExist(userCredentials.username())) {
                 patientManager.createPatient(userCredentials.username(), userCredentials.password());
-                adminScreenView.showRegisterUserSuccess();
+                secretaryScreenView.showRegisterPatientSuccess();
             } else {
-                adminScreenView.showFailedToRegisterUserError();
+                secretaryScreenView.showRegisterPatientError();
             }
 
-        };
-    }
-
-    private Command CreateDoctorAccount() {
-        return (x) -> {
-            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
-            if (!doctorManager.doesUserExist(userCredentials.username())) {
-                doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
-                adminScreenView.showRegisterUserSuccess();
-                ;
-            } else {
-                adminScreenView.showFailedToRegisterUserError();
-            }
         };
     }
 
