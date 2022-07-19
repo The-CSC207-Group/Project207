@@ -47,10 +47,12 @@ public class SecretaryScreenView extends UserScreenView {
         successMessage("Successfully deleted patient account!");
     }
 
-    public AppointmentPatientDoctorDetails bookAppointmentPatientDoctorPrompt() {
-        String patientUsername = enterUsernamePrompt("patient");
-        String doctorUsername = enterUsernamePrompt("doctor");
-        return new AppointmentPatientDoctorDetails(patientUsername, doctorUsername);
+    /**
+     * Ask for doctor and patient username to book appointment.
+     * @return string representing the doctors username.
+     */
+    public String bookAppointmentDoctorPrompt() {
+        return enterUsernamePrompt("doctor");
     }
 
     public void showPatientDoesNotExistError() {
