@@ -24,18 +24,41 @@ public class AdminScreenView extends UserScreenView {
         return registerAccountPrompt("admin");
     }
 
-    public void showFailedToRegisterUserError(){
-        errorMessage("Failed to register user account");
+    public void showFailedToRegisterUserError() {
+        errorMessage("Failed to register user account: username already in use");
     }
 
-    public void showRegisterAccountSuccess(){
-        successMessage("Created user account successfully");
+    public void showRegisterUserSuccess() {
+        successMessage("Created user account successfully!");
+    }
+
+    public void deleteAdminPrompt() {
+        deleteAccountPrompt("admin");
+    }
+
+    public void deleteSecretaryPrompt() {
+        deleteAccountPrompt("secretary");
+    }
+
+    public void deleteDoctorPrompt() {
+        deleteAccountPrompt("doctor");
+    }
+
+    public void deletePatientPrompt() {
+        deleteAccountPrompt("patient");
+    }
+
+    public void showFailedToDeleteUserError() {
+        errorMessage("Failed to register user account: username already in use");
+    }
+
+    public void showDeleteUserSuccess() {
+        successMessage("Successfully deleted user!");
     }
 
     public void viewAllLogs(List<LogData> items) {
         LogView logView = new LogView();
-        String output = logView.viewFullFromList(items);
         infoMessage("All Logs:");
-        infoMessage(output);
+        infoMessage(logView.viewFullFromList(items));
     }
 }

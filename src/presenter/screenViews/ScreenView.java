@@ -40,6 +40,10 @@ public abstract class ScreenView {
         return new UserCredentials(username, password);
     }
 
+    protected void showIrreversibleActionWarning() {
+        warningMessage("This action cannot be undone!");
+    }
+
     protected String enterUsernamePrompt(String accountType) {
         return input("Enter " + accountType + " username: ");
     }

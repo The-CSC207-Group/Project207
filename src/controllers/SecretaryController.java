@@ -63,7 +63,7 @@ public class SecretaryController extends TerminalController {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
             if (!patientManager.doesUserExist(userCredentials.username())) {
                 patientManager.createPatient(userCredentials.username(), userCredentials.password());
-                adminScreenView.showRegisterAccountSuccess();
+                adminScreenView.showRegisterUserSuccess();
             } else {
                 adminScreenView.showFailedToRegisterUserError();
             }

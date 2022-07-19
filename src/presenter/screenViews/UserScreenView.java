@@ -26,6 +26,11 @@ public abstract class UserScreenView extends ScreenView{
         infoMessage(output);
     }
 
+    protected String deleteAccountPrompt(String accountType) {
+        showIrreversibleActionWarning();
+        return enterUsernamePrompt(accountType);
+    }
+
     protected String enterYearPrompt() {
         return input("Enter your desired year (YYYY): ");
     }

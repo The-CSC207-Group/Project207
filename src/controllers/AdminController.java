@@ -68,7 +68,7 @@ public class AdminController extends TerminalController{
         if (user == null){
             adminScreenView.showFailedToRegisterUserError();
         } else {
-            adminScreenView.showRegisterAccountSuccess();
+            adminScreenView.showRegisterUserSuccess();
         }
     }
 
