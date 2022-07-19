@@ -36,10 +36,10 @@ public class PrescriptionManagerTests {
         ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
 
         Prescription originalPrescription1 = new
-                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                Prescription("medicine", "healthy", 123,
                 456, zonedExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription(zonedDateNoted, "bad", "very unhealthy", 789,
+                Prescription("bad", "very unhealthy", 789,
                 1011, zonedExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
@@ -85,10 +85,10 @@ public class PrescriptionManagerTests {
         ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
 
         Prescription originalPrescription1 = new
-                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                Prescription("medicine", "healthy", 123,
                 456, zonedExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription(zonedDateNoted, "bad", "very unhealthy", 789,
+                Prescription("bad", "very unhealthy", 789,
                 1011, zonedExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
@@ -116,10 +116,10 @@ public class PrescriptionManagerTests {
         ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
 
         Prescription originalPrescription1 = new
-                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                Prescription("medicine", "healthy", 123,
                 456, inactiveZonedExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription(zonedDateNoted, "bad", "very unhealthy", 123,
+                Prescription("bad", "very unhealthy", 123,
                 1011, activeZonedExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
@@ -151,8 +151,8 @@ public class PrescriptionManagerTests {
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
-        PrescriptionData prescriptionData = prescriptionManager.createPrescription(zonedDateNoted,
-                header, body, patientID, doctorID, zonedExpiryDate);
+        PrescriptionData prescriptionData = prescriptionManager.createPrescription(header, body, patientID,
+                doctorID, zonedExpiryDate);
 
         /* testing if the created prescription data bundle is valid by testing if its fields match with the parameters
         * of the createPrescription method */
@@ -204,10 +204,10 @@ public class PrescriptionManagerTests {
         ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
 
         Prescription originalPrescription1 = new
-                Prescription(zonedDateNoted, "medicine", "healthy", 123,
+                Prescription("medicine", "healthy", 123,
                 456, inactiveZonedExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription(zonedDateNoted, "bad", "very unhealthy", 123,
+                Prescription("bad", "very unhealthy", 123,
                 1011, activeZonedExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);

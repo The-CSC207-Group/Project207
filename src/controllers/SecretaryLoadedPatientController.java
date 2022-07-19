@@ -24,7 +24,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
     PrescriptionView prescriptionView;
     AppointmentManager appointmentManager;
     PrescriptionManager prescriptionManager;
-    SecretaryManager secretaryManager;
     DoctorManager doctorManager;
     PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();

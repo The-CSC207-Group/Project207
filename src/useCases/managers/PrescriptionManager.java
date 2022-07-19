@@ -57,7 +57,7 @@ public class PrescriptionManager {
     public PrescriptionData createPrescription(String header, String body, int patientId, int doctorId,
                                                ZonedDateTime expiryDate){
         ZonedDateTime dateNoted = ZonedDateTime.now();
-        Prescription prescription = new Prescription(dateNoted, header, body, patientId, doctorId, expiryDate);
+        Prescription prescription = new Prescription(header, body, patientId, doctorId, expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionData(prescription);
     }
