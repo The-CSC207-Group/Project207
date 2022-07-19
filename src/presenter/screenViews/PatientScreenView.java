@@ -1,17 +1,13 @@
 package presenter.screenViews;
 
 import dataBundles.AppointmentData;
-import dataBundles.LogData;
 import dataBundles.PrescriptionData;
 import presenter.entityViews.AppointmentView;
-import presenter.entityViews.LogView;
 import presenter.entityViews.PrescriptionView;
 
 import java.util.List;
 
 public class PatientScreenView extends UserScreenView {
-
-//    public  bookAppointmentPrompt {}
 
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
         String output;

@@ -7,6 +7,7 @@ import presenter.response.UserCredentials;
 import java.util.List;
 
 public class AdminScreenView extends UserScreenView {
+
     public UserCredentials registerSecretaryPrompt() {
         return registerAccountPrompt("secretary");
     }
@@ -14,21 +15,21 @@ public class AdminScreenView extends UserScreenView {
     public UserCredentials registerDoctorPrompt() {
         return registerAccountPrompt("doctor");
     }
+
     public UserCredentials registerPatientPrompt() {
         return registerAccountPrompt("patient");
     }
+
     public UserCredentials registerAdminPrompt() {
         return registerAccountPrompt("admin");
     }
-    public void failedCreateAccount(){
-        System.out.println("failed needs work on this method");
 
+    public void showFailedToRegisterUserError(){
+        errorMessage("Failed to register user account");
     }
-    public void successCreateAccount(){
-        System.out.println("succeeded needs work on this method");
-    }
-    public String patientUsernamePrompt(){
-        return enterUsernamePrompt("patient");
+
+    public void showRegisterAccountSuccess(){
+        successMessage("Created user account successfully");
     }
 
     public void viewAllLogs(List<LogData> items) {

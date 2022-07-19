@@ -3,7 +3,6 @@ package controllers;
 import dataBundles.*;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
-import useCases.accessClasses.AdminAccess;
 
 import useCases.managers.*;
 
@@ -67,9 +66,9 @@ public class AdminController extends TerminalController{
     }
     private void displaySuccessOnCreateAcount(UserData user){
         if (user == null){
-            adminScreenView.failedCreateAccount();
+            adminScreenView.showFailedToRegisterUserError();
         } else {
-            adminScreenView.successCreateAccount();
+            adminScreenView.showRegisterAccountSuccess();
         }
     }
 
@@ -93,7 +92,7 @@ public class AdminController extends TerminalController{
     }
     private Command deletePatient (){
         return (x) -> {
-            String username = adminScreenView.patientUsernamePrompt();
+            String username = adminScreenView.enterPatientUsernamePrompt();
             adminManager.deleteUser(username);
         };
     }

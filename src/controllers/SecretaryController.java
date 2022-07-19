@@ -2,12 +2,10 @@ package controllers;
 
 
 import dataBundles.*;
-import presenter.entityViews.AppointmentView;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import presenter.screenViews.SecretaryScreenView;
-import useCases.accessClasses.SecretaryAccess;
 import useCases.managers.*;
 
 
@@ -65,9 +63,9 @@ public class SecretaryController extends TerminalController {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
             if (!patientManager.doesUserExist(userCredentials.username())) {
                 patientManager.createPatient(userCredentials.username(), userCredentials.password());
-                adminScreenView.successCreateAccount();
+                adminScreenView.showRegisterAccountSuccess();
             } else {
-                adminScreenView.failedCreateAccount();
+                adminScreenView.showFailedToRegisterUserError();
             }
 
         };
@@ -80,7 +78,7 @@ public class SecretaryController extends TerminalController {
                 doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
             } else {
                 // need warning message
-                adminScreenView.failedCreateAccount();
+                adminScreenView.showFailedToRegisterUserError();
             }
         };
     }
