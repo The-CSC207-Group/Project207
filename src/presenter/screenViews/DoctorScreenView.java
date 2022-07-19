@@ -8,17 +8,14 @@ import presenter.entityViews.ReportView;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 
 public class DoctorScreenView extends UserScreenView {
 
     ContactView contactView = new ContactView();
-
-    private Integer deleteItemFromEnumerationPrompt(String itemType) {
-        warningMessage("This action cannot be undone!");
-        return inputInt("Input " + itemType + " number to delete: ");
-    }
 
     private void showDeleteOutOfRangeError(String itemType) {
         errorMessage("Could not delete " + itemType + ": index out of range.");
@@ -42,7 +39,7 @@ public class DoctorScreenView extends UserScreenView {
      */
     public Integer deletePrescriptionPrompt(ContactData patientContact, List<PrescriptionData> prescriptionData) {
         String patientName = contactView.viewName(patientContact);
-        infoMessage("Viewing patient " + patientName + " reports to delete:");
+        infoMessage("Viewing patient " + patientName + " prescriptions to delete:");
         new PrescriptionView().viewFullAsEnumerationFromList(prescriptionData);
         return deleteItemFromEnumerationPrompt("prescription");
     }
@@ -63,12 +60,14 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Ask doctors for prescription details. Used when creating prescriptions.
-     * @return ReportDetails containing header and body of report.
+     * @return PrescriptionDetails containing header, body and expiry date of prescription.
      */
     public PrescriptionDetails prescriptionDetailsPrompt() {
         String header = input("Enter your prescription header: ");
         String body = input("Enter your prescription body: ");
-        return new PrescriptionDetails(header, body);
+        infoMessage("Enter the expiry date:");
+        LocalDate expiryDate = showLocalDatePrompt();
+        return new PrescriptionDetails(header, body, expiryDate.atStartOfDay(ZoneId.of("US/Eastern")));
     }
 
     /**
@@ -110,7 +109,12 @@ public class DoctorScreenView extends UserScreenView {
         return new ReportDetails(header, body);
     }
 
-    public String enterPatientUsernamePrompt() {
+    public LocalDate viewSchedulePrompt() {
+        infoMessage("What day's schedule would you like to view?");
+        return showLocalDatePrompt();
+    }
+
+    public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
 }

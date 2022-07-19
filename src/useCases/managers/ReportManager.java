@@ -28,7 +28,7 @@ public class ReportManager {
     }
 
     public ReportData addReport(PatientData patientData, DoctorData doctorData, ZonedDateTime dateNoted, String header, String body){
-        Report report = new Report(dateNoted, header, body, patientData.getId(), doctorData.getId());
+        Report report = new Report(header, body, patientData.getId(), doctorData.getId());
         reportDatabase.add(report);
         return new ReportData(report);
     }

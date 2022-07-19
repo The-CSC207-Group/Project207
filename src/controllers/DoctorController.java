@@ -41,13 +41,11 @@ public class DoctorController extends TerminalController{
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
             String patientUsername = doctorView.enterPatientUsernamePrompt();
-            Optional <PatientData> loadedPatientData = Optional.ofNullable(patientManager.getUser(patientUsername))
-                    .map(PatientData::new);
-            loadedPatientData.ifPresent(
-                    (patientData) -> {
-                        changeCurrentController(new DoctorLoadedPatientController(
-                                getContext(), self, doctorData, patientData));
-                    });
+            PatientData loadedPatientData = patientManager.getUserData(patientUsername);
+            if (loadedPatientData != null){
+                changeCurrentController(new DoctorLoadedPatientController(
+                        getContext(), self, doctorData, loadedPatientData));
+            }
         };
     }
 
@@ -56,6 +54,7 @@ public class DoctorController extends TerminalController{
             PasswordResetDetails passwordResetDetails = doctorView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
                 doctorManager.changeUserPassword(doctorData, passwordResetDetails.password());
+                doctorView.showResetPasswordSuccessMessage();
             } else {
                 doctorView.showResetPasswordMismatchError();
             }

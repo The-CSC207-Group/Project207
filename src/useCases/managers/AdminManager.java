@@ -24,7 +24,7 @@ public class AdminManager extends UserManager<Admin>{
         adminDatabase.add(admin);
         return new AdminData(admin);
     }
-    public AdminData toAdminData(Admin admin){
+    private AdminData toAdminData(Admin admin){
         if (admin == null){
             return null;
         } else {
@@ -35,5 +35,10 @@ public class AdminManager extends UserManager<Admin>{
     @Override
     public AdminData signIn(String userName, String password) {
         return toAdminData(signInHelper(userName, password));
+    }
+
+    @Override
+    public AdminData getUserData(String username) {
+       return getUserHelper(username).map(x -> new AdminData(x)).orElse(null);
     }
 }

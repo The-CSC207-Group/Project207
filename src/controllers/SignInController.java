@@ -5,6 +5,7 @@ import entities.Clinic;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
 import useCases.accessClasses.SignInAccess;
+import useCases.managers.ClinicManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class SignInController extends TerminalController {
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("sign in", SignInCommand());
+        commands.put("view clinic info", ViewClinicInformation());
         return commands;
     }
 
@@ -60,6 +62,12 @@ public class SignInController extends TerminalController {
         };
     }
 
+    private Command ViewClinicInformation() {
+        ClinicManager clinicManager = new ClinicManager(getDatabase());
+        return (x) -> {
+            signInScreenView.viewClinicInfo(clinicManager.clinicData());
+        };
+    }
 
     class BackCommand implements Command{
 

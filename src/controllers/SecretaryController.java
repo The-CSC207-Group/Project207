@@ -2,6 +2,7 @@ package controllers;
 
 
 import dataBundles.*;
+import entities.Patient;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
@@ -14,7 +15,6 @@ import java.util.HashMap;
 
 
 public class SecretaryController extends TerminalController {
-
 
 
     private final SecretaryData secretaryData;
@@ -40,8 +40,10 @@ public class SecretaryController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
         commands.put("create patient", CreatePatientAccount());
+        commands.put("create doctor", CreateDoctorAccount());
         commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
+
         return commands;
     }
 
@@ -49,11 +51,11 @@ public class SecretaryController extends TerminalController {
         @Override
         public void execute(ArrayList<String> args) {
             String username = secretaryScreenView.enterPatientUsernamePrompt();
-            doctorManager.getPatient(username).ifPresent(
-                    (patientData) -> {
-                        changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
-                    }
-            );
+            PatientData patientData = patientManager.getUserData(username);
+            if (patientData != null){
+                changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
+            }
+            secretaryScreenView.showPatientDoesNotExistError();
         }
     }
 
@@ -70,12 +72,25 @@ public class SecretaryController extends TerminalController {
         };
     }
 
+    private Command CreateDoctorAccount() {
+        return (x) -> {
+            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
+            if (!doctorManager.doesUserExist(userCredentials.username())) {
+                doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
+                adminScreenView.showRegisterUserSuccess();
+                ;
+            } else {
+                adminScreenView.showFailedToRegisterUserError();
+            }
+        };
+    }
+
     private Command ChangePassword() {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
                 secretaryManager.changeUserPassword(secretaryData, passwordResetDetails.password());
-                // need success message
+                secretaryScreenView.showResetPasswordSuccessMessage();
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
             }

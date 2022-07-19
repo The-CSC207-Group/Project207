@@ -1,6 +1,8 @@
 package presenter.screenViews;
 
+import dataBundles.AppointmentData;
 import dataBundles.ContactData;
+import presenter.entityViews.AppointmentView;
 import presenter.entityViews.ContactView;
 import presenter.response.AppointmentPatientDoctorDetails;
 import presenter.response.AppointmentTimeDetails;
@@ -9,6 +11,7 @@ import presenter.response.UserCredentials;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class SecretaryScreenView extends UserScreenView {
     public ContactView contactView = new ContactView();
@@ -88,6 +91,25 @@ public class SecretaryScreenView extends UserScreenView {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
         successMessage("Successfully booked appointment for " + patientName + "with " + doctorName);
+    }
+
+    public Integer deleteAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
+        String patientName = contactView.viewName(patientContact);
+        infoMessage("Viewing patient " + patientName + "appointments to delete:");
+        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        return deleteItemFromEnumerationPrompt("appointment");
+    }
+
+    public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
+        String patientName = contactView.viewName(patientContact);
+        infoMessage("Viewing patient " + patientName + "appointments to reschedule:");
+        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        return rescheduleItemFromEnumerationPrompt();
+    }
+
+    private Integer rescheduleItemFromEnumerationPrompt() {
+        warningMessage("This action cannot be undone!");
+        return inputInt("Input appointment number to reschedule: ");
     }
 
     public String enterPatientUsernamePrompt() {
