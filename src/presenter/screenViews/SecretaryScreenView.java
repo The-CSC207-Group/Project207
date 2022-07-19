@@ -34,16 +34,15 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Show error when cannot delete due to username not existing.
+     * Show error when cannot delete due to username not existing in patient database.
      */
     public void showFailedToDeleteUserByUsernameError() {
-        errorMessage("Failed to delete account: username does not exist");
+        errorMessage("Failed to delete account: patient of that username does not exist");
     }
 
-    public void showFailedToDeleteUserByAuthorityError() {
-        errorMessage("Failed to delete account: can only delete users of type patient");
-    }
-
+    /**
+     * Show successfully deleted patient message.
+     */
     public void showDeletePatientSuccess() {
         successMessage("Successfully deleted patient account!");
     }
