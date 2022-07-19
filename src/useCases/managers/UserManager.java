@@ -45,6 +45,9 @@ public abstract class UserManager<T extends User> {
         }
         return false;
     }
+    public Boolean deleteUserByData(UserData<T> user){
+        return deleteUser(user.getUsername());
+    }
 
 
 

@@ -41,7 +41,14 @@ public class AdminController extends TerminalController{
         commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
         commands.put("delete user", deleteUser());
+        commands.put("delete self", deleteSelf());
         return commands;
+    }
+    Command deleteSelf(){
+        return (x) -> {
+            adminManager.deleteUserByData(adminData);
+            changeCurrentController(new SignInController(context));
+        };
     }
 
     Command CreateSecretary(){
