@@ -56,6 +56,7 @@ public class DoctorController extends TerminalController{
             PasswordResetDetails passwordResetDetails = doctorView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
                 doctorManager.changeUserPassword(doctorData, passwordResetDetails.password());
+                doctorView.showResetPasswordSuccessMessage();
             } else {
                 doctorView.showResetPasswordMismatchError();
             }
