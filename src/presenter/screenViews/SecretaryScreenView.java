@@ -40,6 +40,9 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("Failed to delete account: patient of that username does not exist");
     }
 
+    /**
+     * Show successfully deleted patient message.
+     */
     public void showDeletePatientSuccess() {
         successMessage("Successfully deleted patient account!");
     }
