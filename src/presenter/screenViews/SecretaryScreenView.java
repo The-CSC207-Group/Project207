@@ -208,7 +208,7 @@ public class SecretaryScreenView extends UserScreenView {
      * Load a patient from secretary.
      * @return username of patient.
      */
-    public String LoadPatientPrompt() {
+    public String loadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
 
