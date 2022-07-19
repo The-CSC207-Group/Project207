@@ -33,6 +33,9 @@ public class SecretaryScreenView extends UserScreenView {
         return input("Enter patient username to delete: ");
     }
 
+    /**
+     * Show error when cannot delete due to username not existing.
+     */
     public void showFailedToDeleteUserByUsernameError() {
         errorMessage("Failed to delete account: username does not exist");
     }
