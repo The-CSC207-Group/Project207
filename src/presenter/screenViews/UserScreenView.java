@@ -67,9 +67,9 @@ public abstract class UserScreenView extends ScreenView{
         }
     }
 
-    public String displayContactInfo(ContactData contactData) {
+    public void displayContactInfo(ContactData contactData) {
         ContactView contactView = new ContactView();
-        return contactView.viewFull(contactData);
+        infoMessage(contactView.viewFull(contactData));
     }
 
     public String showNamePrompt(boolean emergencyContact) {
@@ -84,6 +84,14 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Name is not in valid format.");
     }
 
+    public void showSuccessfullyChangedName(boolean emergencyContact) {
+        if (emergencyContact) {
+            successMessage("Successfully changed emergency contact name.");
+        } else {
+            successMessage("Successfully changed name.");
+        }
+    }
+
     public String showEmailPrompt(boolean emergencyContact) {
         if (emergencyContact) {
             return input("Enter the email of your emergency contact: ");
@@ -94,6 +102,10 @@ public abstract class UserScreenView extends ScreenView{
 
     public void showEmailFormatError() {
         errorMessage("Email is not in valid format.");
+    }
+
+    public void showSuccessfullyChangedEmail() {
+        successMessage("Successfully changed email.");
     }
 
     public String showPhoneNumberPrompt(boolean emergencyContact) {
@@ -108,6 +120,14 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Phone number is not in valid format: ^([0-9])+$");
     }
 
+    public void showSuccessfullyChangedPhoneNumber(boolean emergencyContact) {
+        if (emergencyContact) {
+            successMessage("Successfully changed emergency contact phone number.");
+        } else {
+            successMessage("Successfully changed phone number.");
+        }
+    }
+
     public String showAddressPrompt(boolean emergencyContact) {
         if (emergencyContact) {
             return input("Enter the address of your emergency contact: ");
@@ -120,6 +140,10 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Address is not in valid format.");
     }
 
+    public void showSuccessfullyChangedAddress() {
+        errorMessage("Successfully changed address.");
+    }
+
     public LocalDate showBirthdayPrompt() {
         infoMessage("Enter your date of birth: ");
         return showLocalDatePrompt();
@@ -127,6 +151,10 @@ public abstract class UserScreenView extends ScreenView{
 
     public void showBirthdayFormatError() {
         errorMessage("Birthday is not in valid format");
+    }
+
+    public void showSuccessfullyChangedBirthday() {
+        successMessage("Successfully changed birthday.");
     }
 
     public String showEmergencyRelationship() {
@@ -137,11 +165,15 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Emergency contact relationship not in valid format");
     }
 
+    public void showSuccessfullyChangedEmergencyRelationship() {
+        successMessage("Successfully changed emergency contact relationship.");
+    }
+
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
         Integer index = inputInt("Input " + itemType + " number to delete: ");
         if (index != null) {
-            return index - 1; // -1 to be the index of the list, not numbeer inputted.
+            return index - 1; // -1 to be the index of the list, not number inputted.
         } else {
             return null;
         }
