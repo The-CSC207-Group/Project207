@@ -51,11 +51,11 @@ public abstract class UserScreenView extends ScreenView{
      *         null if inputted date is invalid.
      */
     public LocalDate showLocalDatePrompt() {
-        Integer year = inputInt("Enter your desired year (YYYY): ");
+        Integer year = inputInt("Enter year (YYYY): ");
         if (year == null) {return null;}
-        Integer month = inputInt("Enter your desired month (MM): ");
+        Integer month = inputInt("Enter month (MM): ");
         if (month == null) {return null;}
-        Integer day = inputInt("Enter your desired day (DD): ");
+        Integer day = inputInt("Enter day (DD): ");
         if (day == null) {return null;}
 
         try {
@@ -63,6 +63,30 @@ public abstract class UserScreenView extends ScreenView{
         } catch (DateTimeException ignored) {
             return null;
         }
+    }
+
+    public String showPhoneNumberPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter your phone number: ");
+        } else {
+            return input("Enter the phone number of your emergency contact: ");
+        }
+    }
+
+    public void showPhoneNumberFormatError() {
+        errorMessage("Phone number is not in valid format: ^([0-9])+$");
+    }
+
+    public String showEmailPrompt(boolean emergencyContact) {
+        if (emergencyContact) {
+            return input("Enter your email: ");
+        } else {
+            return input("Enter the email of your emergency contact: ");
+        }
+    }
+
+    public void showEmailFormatError() {
+        errorMessage("Email is not in correct format");
     }
 
 }
