@@ -176,35 +176,63 @@ public class SecretaryScreenView extends UserScreenView {
         return inputInt("Input appointment number to reschedule: ");
     }
 
+    /**
+     * Error displayed when user inputs integer that is out of range of appointment list
+     */
     public void showRescheduleOutOfRangeError() {
         errorMessage("Could not reschedule appointment: index out of range.");
     }
 
+    /**
+     * Error displayed when user does not input a valid integer when rescheduling an appointment
+     */
     public void showRescheduleNotAnIntegerError(String itemType) {
         errorMessage("Could not reschedule appointment: please input a valid integer.");
     }
 
+    /**
+     * Error displayed when user inputs integer that is out of range of appointment list
+     */
     public void showDeleteOutOfRangeError() {
         errorMessage("Could not delete appointment: index out of range.");
     }
 
+    /**
+     * Error displayed when user does not input a valid integer when deleting an appointment
+     */
     public void showDeleteNotAnIntegerError(String itemType) {
         errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
+    /**
+     * Load a patient from secretary.
+     * @return username of patient.
+     */
     public String LoadPatientPrompt() {
         return enterUsernamePrompt("patient");
     }
 
+    /**
+     * Error displayed when patient cannot be loaded due to username not existing.
+     */
     public void showErrorLoadingPatient() {
         errorMessage("Error loading patient: a patient with that username does not exist");
     }
 
+    /**
+     * Show success message if loaded patient.
+     * @param patientContact Contact information of loaded patient.
+     */
     public void showSuccessLoadingPatient(ContactData patientContact) {
         infoMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 
-    public void viewAppointments(ContactData patientContact, List<AppointmentData> appointments) {
+    /**
+     * View appointments relating to doctor or patient.
+     * @param userContact Contacting info of patient.
+     * @param appointments list of appointments.
+     */
+    public void viewAppointments(ContactData userContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for " + contactView.viewName(patientContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
