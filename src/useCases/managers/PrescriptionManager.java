@@ -2,6 +2,7 @@ package useCases.managers;
 
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
+import dataBundles.UserData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Prescription;
@@ -64,17 +65,17 @@ public class PrescriptionManager {
 
     /**
      * Removes prescription with given id from the prescription database. If it does not exist, nothing happens
-     * @param prescriptionId id of the prescription to be removed.
+     * @param prescriptionData id of the prescription to be removed.
      */
-    public void removePrescription(Integer prescriptionId){
-        prescriptionsDatabase.remove(prescriptionId);
+    public void removePrescription(PrescriptionData prescriptionData){
+        prescriptionsDatabase.remove(prescriptionData.getPrescriptionId());
     }
 
     private boolean isExpiredPrescription(Prescription prescription){
         return prescription.getExpiryDate().toLocalDateTime().isBefore(LocalDateTime.now());
     }
-    private boolean isPatientsPrescription(Prescription prescription, Integer idUser){
-        return prescription.getPatientId().equals(idUser);
+    private boolean isPatientsPrescription(Prescription prescription, PatientData patientData){
+        return prescription.getPatientId().equals(patientData.getId());
     }
 
 }
