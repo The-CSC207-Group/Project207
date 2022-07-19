@@ -14,4 +14,8 @@ public class TerminalScreenView extends ScreenView {
     public String showCommandPrompt() {
         return input(">>> ");
     }
+
+    public void showInvalidCommandError(String command) {
+        errorMessage("Invalid command: " + command);
+    }
 }
