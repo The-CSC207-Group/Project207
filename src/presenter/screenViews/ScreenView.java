@@ -54,10 +54,4 @@ public abstract class ScreenView {
         return input("Enter " + accountType + " password: ");
     }
 
-    public void showHelpView(List<String> helpCommands) {
-        infoMessage("Available Commands:");
-        for (String command : helpCommands) {
-            infoMessage(command);
-        }
-    }
 }
