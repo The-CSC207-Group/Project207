@@ -124,18 +124,30 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Show invalid date error when user inputs the wrong date
+     * Show invalid date error when user inputs the wrong date format.
      */
     public void showInvalidDateError() {
         errorMessage("Appointment booking error: invalid date.");
     }
 
+    /**
+     * Show success message when appointment is booked successfully.
+     * @param patientContact Contact information of patient.
+     * @param doctorContact Contact information of doctor.
+     */
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
         successMessage("Successfully booked appointment for " + patientName + "with " + doctorName);
     }
 
+    /**
+     * Delete appointment from a patient.
+     * @param patientContact Contact information of patient.
+     * @param appointmentData List of appointments the patient has.
+     * @return the index of the appointment to delete.
+     *         or null, if the index user inputs is malformed.
+     */
     public Integer deleteAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + "appointments to delete:");
