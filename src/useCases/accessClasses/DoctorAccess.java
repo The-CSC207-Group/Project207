@@ -121,9 +121,9 @@ public class  DoctorAccess {
      * Remove a prescription from the prescription database if it exists, otherwise do nothing.
      * @param prescriptionId id of the prescription to be removed.
      */
-    public void deletePrescription(Integer prescriptionId){
-        prescriptionManager.removePrescription(prescriptionId);
-    }
+//    public void deletePrescription(Integer prescriptionId){
+//        prescriptionManager.removePrescription(prescriptionId);
+//    }
     /**
      * a function that gets all appointments independent of a specific patient or doctor.
      * @return an arrayList of AppointmentData. if there is no appointments in the database, returns empty arrayList
