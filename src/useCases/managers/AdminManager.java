@@ -24,7 +24,7 @@ public class AdminManager extends UserManager<Admin>{
         adminDatabase.add(admin);
         return new AdminData(admin);
     }
-    public AdminData toAdminData(Admin admin){
+    private AdminData toAdminData(Admin admin){
         if (admin == null){
             return null;
         } else {
