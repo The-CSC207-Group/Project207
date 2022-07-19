@@ -9,6 +9,7 @@ import presenter.screenViews.DoctorScreenView;
 import useCases.accessClasses.DoctorAccess;
 import useCases.managers.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class DoctorController extends TerminalController{
     private Command LoadPatient() {
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            String patientUsername = doctorView.enterPatientUsernamePrompt();
+            String patientUsername = doctorView.loadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null){
                 changeCurrentController(new DoctorLoadedPatientController(
@@ -63,12 +64,8 @@ public class DoctorController extends TerminalController{
 
     private Command ViewSchedule(){
         return (x) -> {
-            String year = doctorView.enterYearPrompt();
-            String month = doctorView.enterMonthPrompt();
-            String day = doctorView.enterDayPrompt();
-            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getScheduleData(doctorData,
-                    new TimeManager().createLocalDate(Integer.parseInt(year),
-                            Integer.parseInt(month), Integer.parseInt(day))));
+            LocalDate viewDate = doctorView.viewSchedulePrompt();
+            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getScheduleData(doctorData, viewDate));
         };
     }
 
