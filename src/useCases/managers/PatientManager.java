@@ -62,4 +62,9 @@ public class PatientManager extends UserManager<Patient> {
         return toPatientData(signInHelper(userName, password));
 
     }
+
+    @Override
+    public PatientData getUserData(String username) {
+        return getUserHelper(username).map(x -> new PatientData(x)).orElse(null);
+    }
 }

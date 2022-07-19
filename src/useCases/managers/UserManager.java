@@ -4,8 +4,9 @@ import dataBundles.UserData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Contact;
-import entities.Log;
 import entities.User;
+
+import java.util.Optional;
 
 public abstract class UserManager<T extends User> {
     DataMapperGateway<T> typeTDatabase;
@@ -20,6 +21,14 @@ public abstract class UserManager<T extends User> {
 
     public boolean changeUserPassword(UserData<T> dataBundle, String password){
         T user = typeTDatabase.get(dataBundle.getId());
+        if (user != null) {
+            user.setPassword(password);
+            return true;
+        }
+        return false;
+    }
+    public boolean changeUserPassword(String name, String password){
+        T user = getUser(name);
         if (user != null) {
             user.setPassword(password);
             return true;
@@ -53,4 +62,8 @@ public abstract class UserManager<T extends User> {
         return null;
     }
     public abstract UserData<T> signIn(String username, String password);
+    public abstract UserData<T> getUserData(String username);
+    protected Optional<T> getUserHelper(String username){
+        return Optional.ofNullable(getUser(username));
+    }
 }

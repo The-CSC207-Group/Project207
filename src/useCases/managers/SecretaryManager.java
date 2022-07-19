@@ -6,8 +6,6 @@ import database.Database;
 import entities.Contact;
 import entities.Secretary;
 
-import java.time.LocalDateTime;
-
 public class SecretaryManager extends UserManager<Secretary> {
 
     DataMapperGateway<Secretary> secretaryDatabase;
@@ -51,4 +49,9 @@ public class SecretaryManager extends UserManager<Secretary> {
 
     }
 
+    @Override
+    public SecretaryData getUserData(String username) {
+        return getUserHelper(username).map(x -> new SecretaryData(x)).orElse(null);
     }
+
+}

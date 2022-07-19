@@ -8,6 +8,7 @@ import presenter.screenViews.AdminScreenView;
 import useCases.managers.*;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class AdminController extends TerminalController{
 
@@ -128,12 +129,21 @@ public class AdminController extends TerminalController{
     private Command getUserInfo(){
         return (x) -> {};
     }
-    boolean changeUserPasswordHelper(String userName){
-        return true;
+    boolean getAdmin(String userName){
+        if (adminManager.getUserData(userName) != null){
+            adminScreenView.showAdminData(adminManager.getUserData(userName));
+            return true;
+        } else {
+            return false;
+        }
+    }
+    Optional<PatientData> getPatient(String userName){
+        patientMan
     }
     private Command changeUserPassword(){
         return (x) -> {
-          String adminScreenView.getName();
+            patientManager.g
+            if (patientManager.changeUserPassword())
         };
     }
 }
