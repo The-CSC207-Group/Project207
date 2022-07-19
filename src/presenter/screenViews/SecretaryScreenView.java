@@ -82,11 +82,8 @@ public class SecretaryScreenView extends UserScreenView {
      *         null if inputted date is invalid
      */
     public LocalDate bookAppointmentDayPrompt() {
-        LocalDate appointmentDate = showLocalDatePrompt();
-        if (appointmentDate == null) {
-            return null;  // Invalid date
-        }
-        return appointmentDate;
+        infoMessage("Booking appointment day:");
+        return showLocalDatePrompt();
     }
 
     /**
@@ -155,6 +152,12 @@ public class SecretaryScreenView extends UserScreenView {
         return deleteItemFromEnumerationPrompt("appointment");
     }
 
+    /**
+     *
+     * @param patientContact
+     * @param appointmentData
+     * @return
+     */
     public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + "appointments to reschedule:");
