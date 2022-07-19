@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.*;
+import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 
@@ -74,14 +75,14 @@ public class AdminController extends TerminalController{
 
     private Command ChangePassword(){
 
-        return (x) -> { String p1 = presenter.promptPopup("Enter New Password");
-            String p2 = presenter.promptPopup("Re-enter new password");
-            if (p1.equals(p2)){
-                adminManager.changeUserPassword(adminData, p1);
-                presenter.successMessage("Successfully changed password");
+        return (x) -> {
+            PasswordResetDetails passwordResetDetails = adminScreenView.resetPasswordPrompt();
+            if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())){
+                adminManager.changeUserPassword(adminData, passwordResetDetails.password());
+               // presenter.successMessage("Successfully changed password");
             }
             else {
-                presenter.errorMessage("Invalid! Please ensure both passwords match");
+                adminScreenView.showResetPasswordMismatchError();
             }};
     }
     private Command getLogs (){
@@ -92,8 +93,8 @@ public class AdminController extends TerminalController{
     }
     private Command deletePatient (){
         return (x) -> {
-            String username = adminScreenView.enterPatientUsernamePrompt();
-            adminManager.deleteUser(username);
+            //String username = adminScreenView.enterPatientUsernamePrompt();
+            //adminManager.deleteUser(username);
         };
     }
 }
