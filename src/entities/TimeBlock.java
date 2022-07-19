@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
 public class TimeBlock {
@@ -31,4 +32,11 @@ public class TimeBlock {
     public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
+    public LocalTime startTimeToLocal(){
+        return startTime.toLocalTime();
+    }
+    public LocalTime endTimeToLocal(){
+        return startTime.toLocalTime();
+    }
 }
+

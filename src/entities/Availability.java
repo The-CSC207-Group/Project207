@@ -9,7 +9,7 @@ import java.util.Calendar;
 /**
  * Represents a doctor's availability days and times.
  */
-public class AvailabilityData {
+public class Availability {
     private final DayOfWeek dayOfWeek;
     private LocalTime doctorStartTime;
     private LocalTime doctorEndTime;
@@ -20,7 +20,7 @@ public class AvailabilityData {
      * @param doctorStartTime The start time of the doctor's availability on day dayOfWeek.
      * @param doctorEndTime The end time of the doctor's availability on day dayOfWeek.
      */
-    public AvailabilityData(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime){
+    public Availability(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime){
         this.dayOfWeek = dayOfWeek;
         this.doctorStartTime = doctorStartTime;
         this.doctorEndTime = doctorEndTime;
