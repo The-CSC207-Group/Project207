@@ -1,17 +1,12 @@
 package controllers;
 
-import dataBundles.AdminData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import presenter.response.PasswordResetDetails;
-import presenter.response.UserCredentials;
 import presenter.screenViews.DoctorScreenView;
-import useCases.accessClasses.DoctorAccess;
 import useCases.managers.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class DoctorController extends TerminalController{
     private DoctorScreenView doctorView = new DoctorScreenView();
@@ -40,7 +35,7 @@ public class DoctorController extends TerminalController{
     private Command LoadPatient() {
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            String patientUsername = doctorView.enterPatientUsernamePrompt();
+            String patientUsername = doctorView.LoadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null){
                 changeCurrentController(new DoctorLoadedPatientController(
