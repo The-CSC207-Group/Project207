@@ -30,7 +30,7 @@ public class AdminController extends TerminalController{
         commands.put("get logs", getLogs());
         commands.put("sign out", signOut());
         commands.put("Delete patient/secretary/doctor", deleteUser());
-        commands.put("Delete secretary", deleteSecretary());
+
         return commands;
     }
 
@@ -98,9 +98,5 @@ public class AdminController extends TerminalController{
             adminManager.deleteUser(username);
         };
     }
-    private Command deleteSecretary() {
-        return (x) -> {
-            String username = adminScreenView.deleteUserPrompt();
-            adminManager.deleteUser(username);};
-    }
+
 }
