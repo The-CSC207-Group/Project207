@@ -39,6 +39,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("reschedule", rescheduleAppointment());
         commands.put("book", bookAppointment());
         commands.put("cancel", cancelAppointment());
+        commands.put("get appointments", patientAppointments());
         return commands;
     }
 
@@ -76,7 +77,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 secretaryScreenView.showResetPasswordSuccessMessage();
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
-                ;
             }
         };
     }
@@ -111,28 +111,48 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
+    private Command patientAppointments() {
+        return (x) -> {
+            ArrayList<AppointmentData> patientAppointment = appointmentManager.getPatientAppointments(patientData);
+            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), patientAppointment);
+
+        };
+    }
+
     private Command cancelAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
             ContactData contactData = contactManager.getContactData(patientData);
-            int index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
-            appointmentManager.removeAppointment(data.get(index));
+            Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
+            if (index == null) {
+                secretaryScreenView.showDeleteNotAnIntegerError("null");
+            } else if (index >= data.size()) {
+                secretaryScreenView.showDeleteOutOfRangeError();
+            } else {
+                appointmentManager.removeAppointment(data.get(index));
+            }
+
         };
     }
 
     private Command rescheduleAppointment() {
-
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             ContactData contactData = contactManager.getContactData(patientData);
-            int index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
-            LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
-            AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
-            appointmentManager.rescheduleAppointment(
-                    appointments.get(index), day.getYear(), day.getMonthValue(),
-                    day.getDayOfMonth(), time.time().getHour(), time.time().getMinute(), time.length());
-        };
+            Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
+            if (index == null) {
+                secretaryScreenView.showRescheduleNotAnIntegerError("null");
+            } else if (index >= appointments.size()) {
+                secretaryScreenView.showRescheduleOutOfRangeError();
+            } else {
+                LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
+                AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
+                appointmentManager.rescheduleAppointment(
+                        appointments.get(index), day.getYear(), day.getMonthValue(),
+                        day.getDayOfMonth(), time.time().getHour(), time.time().getMinute(), time.length());
 
+            }
+        };
     }
 
     private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
