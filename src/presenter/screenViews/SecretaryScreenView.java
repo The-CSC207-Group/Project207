@@ -24,7 +24,11 @@ public class SecretaryScreenView extends UserScreenView {
         return registerAccountPrompt("patient");
     }
 
-    public String deletePatientPrompt() {
+    /**
+     * Ask to delete patient by username.
+     * @return username of patient.
+     */
+    public String showDeletePatientPrompt() {
         showIrreversibleActionWarning();
         return input("Enter patient username to delete: ");
     }
