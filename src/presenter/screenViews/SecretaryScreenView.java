@@ -233,7 +233,7 @@ public class SecretaryScreenView extends UserScreenView {
      * @param appointments list of appointments.
      */
     public void viewAppointments(ContactData userContact, List<AppointmentData> appointments) {
-        infoMessage("Viewing appointments for " + contactView.viewName(patientContact) + ":");
+        infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 }
