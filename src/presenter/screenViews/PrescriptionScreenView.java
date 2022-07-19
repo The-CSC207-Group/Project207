@@ -1,8 +1,7 @@
-package presenter.screenViews.common;
+package presenter.screenViews;
 
 import dataBundles.PrescriptionData;
 import presenter.entityViews.PrescriptionView;
-import presenter.screenViews.ScreenView;
 
 import java.util.InputMismatchException;
 import java.util.List;

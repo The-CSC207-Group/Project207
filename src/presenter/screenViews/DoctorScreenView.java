@@ -6,7 +6,6 @@ import presenter.entityViews.ContactView;
 import presenter.entityViews.ReportView;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
-import presenter.screenViews.common.PrescriptionScreenView;
 
 import java.util.InputMismatchException;
 import java.util.List;
