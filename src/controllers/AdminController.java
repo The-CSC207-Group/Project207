@@ -38,7 +38,7 @@ public class AdminController extends TerminalController{
         commands.put("create patient", CreatePatient());
         commands.put("change password", ChangePassword());
         commands.put("change user password", changeUserPassword());
-        commands.put("get logs", getLogs());
+        commands.put("view logs", getLogs());
         commands.put("sign out", signOut());
         commands.put("delete user", deleteUser());
         commands.put("delete self", deleteSelf());

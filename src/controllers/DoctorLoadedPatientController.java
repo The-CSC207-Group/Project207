@@ -29,14 +29,14 @@ public class DoctorLoadedPatientController extends TerminalController {
 
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("unload patient", back(prev));
-        commands.put("view patient appointments", ViewPatientAppointments());
-        commands.put("get reports", getReport());
+        commands.put("view appointments", ViewPatientAppointments());
+        commands.put("view reports", getReport());
         commands.put("create report", createReport());
         commands.put("delete report", deleteReport());
 
         HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
         for (String key : commands.keySet()) {
-            commands.put("patient " + key, prescriptionCommands.get(key));
+            commands.put("view " + key, prescriptionCommands.get(key));
         }
 
         commands.put("create prescription", CreatePatientPrescription());
