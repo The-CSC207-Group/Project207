@@ -1,13 +1,9 @@
 package controllers;
 
 import dataBundles.*;
-import entities.Appointment;
-import entities.TimeBlock;
-import useCases.accessClasses.SecretaryAccess;
 import presenter.entityViews.AppointmentView;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
-import presenter.screenViews.AdminScreenView;
 import presenter.screenViews.SecretaryScreenView;
 import presenter.entityViews.PrescriptionView;
 import useCases.managers.*;
@@ -15,7 +11,6 @@ import useCases.managers.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class SecretaryLoadedPatientController extends TerminalController {
     PatientData patientData;
@@ -26,6 +21,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
     PrescriptionManager prescriptionManager;
     DoctorManager doctorManager;
     PatientManager patientManager;
+
+    ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final AppointmentView appointmentView = new AppointmentView();
 
@@ -96,7 +93,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
 
             if (doctorManager.getDoctor(doctor).isPresent()) {
-                // need a method that returns DoctorData
                 DoctorData doctorData = doctorManager.getDoctor(doctor).get();
                 appointmentView.viewFullFromList(appointmentManager.getScheduleData(doctorData,
                         LocalDate.of(year, month, day)));
@@ -125,9 +121,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command CancelAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
-            appointmentView.viewFullFromList(data);
-            // need something to prompt which one to remove
-            int index = 0;
+            ContactData contactData = contactManager.getContactData(patientData);
+            int index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
             appointmentManager.removeAppointment(data.get(index));
         };
     }
@@ -136,9 +131,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            appointmentView.viewFullFromList(appointments);
-            // need something to prompt which one to change
-            int index = Integer.parseInt("0");
+            ContactData contactData = contactManager.getContactData(patientData);
+            int index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
             LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
             AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
             appointmentManager.rescheduleAppointment(appointments.get(index), day.getYear(), day.getMonthValue(),

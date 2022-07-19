@@ -55,6 +55,7 @@ public class SecretaryController extends TerminalController {
                         changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
                     }
             );
+            secretaryScreenView.showPatientDoesNotExistError();
         }
     }
 
