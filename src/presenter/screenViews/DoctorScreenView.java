@@ -109,4 +109,8 @@ public class DoctorScreenView extends UserScreenView {
         String body = input("Enter your report body: ");
         return new ReportDetails(header, body);
     }
+
+    public String enterPatientUsernamePrompt() {
+        return enterUsernamePrompt("patient");
+    }
 }
