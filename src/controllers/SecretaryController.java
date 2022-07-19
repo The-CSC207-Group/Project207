@@ -16,7 +16,6 @@ import java.util.HashMap;
 public class SecretaryController extends TerminalController {
 
 
-
     private final SecretaryData secretaryData;
 
     private final SecretaryController self = this;
@@ -40,8 +39,10 @@ public class SecretaryController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
         commands.put("create patient", CreatePatientAccount());
+        commands.put("create doctor", CreateDoctorAccount());
         commands.put("get logs", GetLogs());
         commands.put("load patient", new LoadPatient());
+
         return commands;
     }
 
@@ -67,6 +68,19 @@ public class SecretaryController extends TerminalController {
                 adminScreenView.showFailedToRegisterUserError();
             }
 
+        };
+    }
+
+    private Command CreateDoctorAccount() {
+        return (x) -> {
+            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
+            if (!doctorManager.doesUserExist(userCredentials.username())) {
+                doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
+                adminScreenView.showRegisterUserSuccess();
+                ;
+            } else {
+                adminScreenView.showFailedToRegisterUserError();
+            }
         };
     }
 
