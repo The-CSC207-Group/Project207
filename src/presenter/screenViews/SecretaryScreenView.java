@@ -89,4 +89,8 @@ public class SecretaryScreenView extends UserScreenView {
         String doctorName = contactView.viewName(doctorContact);
         successMessage("Successfully booked appointment for " + patientName + "with " + doctorName);
     }
+
+    public String enterPatientUsernamePrompt() {
+        return enterUsernamePrompt("patient");
+    }
 }
