@@ -17,7 +17,7 @@ public abstract class Note extends JsonSerializable {
     private Integer doctorId;
 
     /**
-     * Creates an instance of a note.
+     * Creates an instance of Note.
      * @param header The header of the note.
      * @param body The body of the note.
      * @param patientId The id of the patient who the note was created for.

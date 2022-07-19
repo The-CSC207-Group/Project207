@@ -35,20 +35,6 @@ public class PatientManager extends UserManager<Patient> {
         return new PatientData(patient);
     }
 
-    public boolean doesPatientExist(String name) {
-        return patientDatabase.getAllIds().stream()
-                .map(x -> patientDatabase.get(x))
-                .anyMatch(x -> x.getUsername().equals(name));
-    }
-
-    public Optional<Integer> getPatientId(String name) {
-        return patientDatabase.getAllIds().stream()
-                .map(x -> patientDatabase.get(x))
-                .filter(x -> x.getUsername().equals(name))
-                .findFirst()
-                .map(x -> x.getId());
-    }
-
     private PatientData toPatientData(Patient patient) {
         if (patient == null) {
             return null;

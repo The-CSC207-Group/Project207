@@ -34,7 +34,7 @@ public class SecretaryController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", changePassword());
         commands.put("create patient", createPatientAccount());
-        commands.put("get logs", getLogs());
+        commands.put("view logs", getLogs());
         commands.put("load patient", new LoadPatient());
         commands.put("delete patient", deletePatient());
         commands.put("add availability", addDoctorAvailability());

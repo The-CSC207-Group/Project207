@@ -13,7 +13,7 @@ public class Log extends JsonSerializable {
     private final String message;
 
     /**
-     * Creates an instance of a user's log.
+     * Creates an instance of Log.
      * @param userId The id of the user that the log corresponds to.
      * @param message The message to be displayed by the log.
      */

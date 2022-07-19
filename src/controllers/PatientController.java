@@ -27,10 +27,9 @@ public class PatientController extends TerminalController {
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
-        commands.put("logs", GetLogs());
-        commands.put("appointments", ViewAppointments());
+        commands.put("view logs", GetLogs());
+        commands.put("view appointments", ViewAppointments());
         commands.put("sign out", signOut());
-        commands.put("cancel appointment", notImplemented());
 
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
         HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
