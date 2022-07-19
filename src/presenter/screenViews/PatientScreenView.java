@@ -12,6 +12,11 @@ public class PatientScreenView extends UserScreenView {
     PrescriptionView prescriptionView = new PrescriptionView();
     AppointmentView appointmentView = new AppointmentView();
 
+    /**
+     * Shows a list of prescriptions relating to patients.
+     * @param items list of prescriptions.
+     * @param details whether to full the prescription in full (body, expiration ...)
+     */
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
         String output;
         if (details) {
