@@ -16,6 +16,10 @@ import java.util.List;
 public class SecretaryScreenView extends UserScreenView {
     public ContactView contactView = new ContactView();
 
+    /**
+     * Create a new patient prompt.
+     * @return UserCredentials containing username and password.
+     */
     public UserCredentials registerPatientAccount() {
         return registerAccountPrompt("patient");
     }
