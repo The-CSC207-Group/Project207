@@ -1,6 +1,7 @@
 package controllers;
 
 import database.Database;
+import presenter.screenViews.TerminalScreenView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.List;
 
 abstract public class TerminalController {
 
-    ApplicationPresenter presenter = new TerminalPresenter();
+    TerminalScreenView terminalScreenView = new TerminalScreenView();
     Context context;
 
     public TerminalController(Context parent) {
@@ -33,16 +34,16 @@ abstract public class TerminalController {
 
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> x = new HashMap<>();
-        x.put("help", new Help());
-        x.put("exit", new Exit());
+        x.put("help", Help());
+        x.put("exit", Exit());
         return x;
     }
 
     void ProcessCommands() {
         getDatabase().save();
-        String command = presenter.promptPopup(">>> ");
+        String command = terminalScreenView.showCommandPrompt();
         if (!AllCommands().containsKey(command)) {
-            presenter.errorMessage("Invalid command: " + command);
+            terminalScreenView.showInvalidCommandError(command);
         } else {
             AllCommands().get(command).execute(new ArrayList<>());
             getDatabase().save();
@@ -70,24 +71,16 @@ abstract public class TerminalController {
         };
     }
 
-
-    class Help implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            List<String> helpList = new ArrayList<>(AllCommands().keySet());
-            presenter.infoMessage("List of available commands:");
-            for (String i : helpList) {
-                presenter.infoMessage(i);
-            }
-        }
+    protected Command Help() {
+        return (x) -> {
+            List<String> helpCommands = new ArrayList<>(AllCommands().keySet());
+            terminalScreenView.showHelpView(helpCommands);
+        };
     }
 
-    class Exit implements Command {
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    protected Command Exit() {
+        return (x) -> {
             exit();
-        }
+        };
     }
 }
