@@ -22,12 +22,12 @@ public class PrescriptionListCommands {
     }
 
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> h = new HashMap<>();
-        h.put("active prescriptions", new ViewPrescriptions(true, false));
-        h.put("all prescriptions", new ViewPrescriptions(false, false));
-        h.put("active prescriptions detailed", new ViewPrescriptions(true, true));
-        h.put("all prescriptions detailed", new ViewPrescriptions(false, true));
-        return h;
+        HashMap<String, Command> commands = new HashMap<>();
+        commands.put("active prescriptions", new ViewPrescriptions(true, false));
+        commands.put("all prescriptions", new ViewPrescriptions(false, false));
+        commands.put("active prescriptions detailed", new ViewPrescriptions(true, true));
+        commands.put("all prescriptions detailed", new ViewPrescriptions(false, true));
+        return commands;
     }
 
     class ViewPrescriptions implements Command {
