@@ -39,7 +39,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("reschedule", rescheduleAppointment());
         commands.put("book", bookAppointment());
         commands.put("cancel", cancelAppointment());
-        commands.put("get appointments", patientAppointments());
         return commands;
     }
 
@@ -109,15 +108,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                     }
                 }
             }
-        };
-    }
-
-    private Command patientAppointments() {
-        return (x) -> {
-            ArrayList<AppointmentData> patientAppointment =
-                    appointmentManager.getPatientAppointments(patientData);
-            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), patientAppointment);
-
         };
     }
 
