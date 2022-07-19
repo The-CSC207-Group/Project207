@@ -2,6 +2,7 @@ package presenter.screenViews;
 
 import presenter.response.UserCredentials;
 
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class ScreenView {
@@ -51,5 +52,12 @@ public abstract class ScreenView {
 
     protected String enterPasswordPrompt(String accountType) {
         return input("Enter " + accountType + " password: ");
+    }
+
+    public void showHelpView(List<String> helpCommands) {
+        infoMessage("Available Commands:");
+        for (String command : helpCommands) {
+            infoMessage(command);
+        }
     }
 }
