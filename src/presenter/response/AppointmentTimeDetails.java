@@ -1,24 +1,19 @@
 package presenter.response;
 
+import java.time.LocalTime;
 import java.util.Objects;
 
 public final class AppointmentTimeDetails {
-    private final Integer hour;
-    private final Integer minute;
+    private final LocalTime time;
     private final Integer length;
 
-    public AppointmentTimeDetails(Integer hour, Integer minute, Integer length) {
-        this.hour = hour;
-        this.minute = minute;
+    public AppointmentTimeDetails(LocalTime time, Integer length) {
+        this.time = time;
         this.length = length;
     }
 
-    public Integer hour() {
-        return hour;
-    }
-
-    public Integer minute() {
-        return minute;
+    public LocalTime time() {
+        return time;
     }
 
     public Integer length() {
@@ -30,21 +25,19 @@ public final class AppointmentTimeDetails {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (AppointmentTimeDetails) obj;
-        return Objects.equals(this.hour, that.hour) &&
-                Objects.equals(this.minute, that.minute) &&
+        return Objects.equals(this.time, that.time) &&
                 Objects.equals(this.length, that.length);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hour, minute, length);
+        return Objects.hash(time, length);
     }
 
     @Override
     public String toString() {
         return "AppointmentTimeDetails[" +
-                "hour=" + hour + ", " +
-                "minute=" + minute + ", " +
+                "time=" + time + ", " +
                 "length=" + length + ']';
     }
 

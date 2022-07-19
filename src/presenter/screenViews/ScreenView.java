@@ -9,12 +9,13 @@ public abstract class ScreenView {
 
     protected String input(String prompt) {
         System.out.println(prompt);
-        return input.nextLine();
+        return input.nextLine().strip();
     }
 
-    protected int inputInt(String prompt) {
+    protected Integer inputInt(String prompt) {
         System.out.println(prompt);
-        return input.nextInt();
+        String string = input(prompt);
+        return Integer.getInteger(string);
     }
 
     protected void infoMessage(String message) {

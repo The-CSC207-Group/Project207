@@ -17,11 +17,7 @@ public class DoctorScreenView extends UserScreenView {
 
     private Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
-        try {
-            return inputInt("Input " + itemType + " number to delete: ");
-        } catch (Exception ignored) {
-            return null;
-        }
+        return inputInt("Input " + itemType + " number to delete: ");
     }
 
     private void showDeleteOutOfRangeError(String itemType) {

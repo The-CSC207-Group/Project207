@@ -1,8 +1,6 @@
 package controllers;
 
 import database.Database;
-import presenter.ApplicationPresenter;
-import presenter.TerminalPresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
