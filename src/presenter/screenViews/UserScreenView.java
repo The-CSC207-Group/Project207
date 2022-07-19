@@ -104,11 +104,11 @@ public abstract class UserScreenView extends ScreenView{
         errorMessage("Email is not in valid format.");
     }
 
-    public String showSuccessfullyChangedEmail(boolean emergencyContact) {
+    public void showSuccessfullyChangedEmail(boolean emergencyContact) {
         if (emergencyContact) {
-            return input("Successfully changed emergency contact email.");
+            successMessage("Successfully changed emergency contact email.");
         } else {
-            return input("Successfully changed email.");
+            successMessage("Successfully changed email.");
         }
     }
 
@@ -132,13 +132,9 @@ public abstract class UserScreenView extends ScreenView{
         }
     }
 
-    public String showAddressPrompt(boolean emergencyContact) {
-        if (emergencyContact) {
-            return input("Enter the address of your emergency contact: ");
-        } else {
+    public String showAddressPrompt() {
             return input("Enter your address: ");
         }
-    }
 
     public void showAddressFormatError() {
         errorMessage("Address is not in valid format.");
