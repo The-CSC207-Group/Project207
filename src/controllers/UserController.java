@@ -46,7 +46,7 @@ public abstract class UserController<T extends User> extends TerminalController 
      */
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = new HashMap<>();
+        HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
         commands.put("get logs", GetLogs());
         commands.put("contact details", ContactDetails());
