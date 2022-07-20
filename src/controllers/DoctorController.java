@@ -1,14 +1,18 @@
 package controllers;
 
+import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import entities.Doctor;
 import presenter.screenViews.DoctorScreenView;
 import useCases.managers.AppointmentManager;
+import useCases.managers.ContactManager;
 import useCases.managers.DoctorManager;
 import useCases.managers.PatientManager;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -81,15 +85,20 @@ public class DoctorController extends UserController<Doctor> {
     }
     private Command newAvailability() {
         return (x) -> {
-            //pending presenter implementation for (get dayofweek, hour, minute)
-            //doctorView.
-            //new AppointmentManager(getDatabase()).newAvailability(doctorData, );
+            ArrayList<Integer> availabilityInfo = doctorView.addAvailabilityPrompt();
+            new AppointmentManager(getDatabase()).newAvailability(doctorData, DayOfWeek.of(availabilityInfo.get(0)),
+                    availabilityInfo.get(1), availabilityInfo.get(2), availabilityInfo.get(3));
         };
     }
     private Command deleteAvailability() {
         return (x) -> {
             //pending presenter implementation for (
-            //new AppointmentManager(getDatabase()).removeAvailability(doctorData);
+            Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
+                            .getContactData(doctorData), new AppointmentManager(getDatabase())
+                    .getAvailabilityData(doctorData));
+
+            new AppointmentManager(getDatabase()).removeAvailability(doctorData,
+                    doctorData.getAvailability().get(deleteInteger));
         };
     }
     private Command rescheduleAvailability() {
@@ -101,14 +110,14 @@ public class DoctorController extends UserController<Doctor> {
     private Command deleteAbsence() {
         return (x) -> {
             //pending presenter implementation for absence TimeBlock
-            //doctorView.
+            //doctorView.del
             //new AppointmentManager(getDatabase()).deleteAbsence(doctorData, );
         };
     }
     private Command newAbsence() {
         return (x) -> {
             //pending presenter implementation for absence TimeBlock
-            //doctorView.
+            doctorView.addAbsencePrompt();
             //new AppointmentManager(getDatabase()).addAbsence(doctorData, );
         };
     }

@@ -139,7 +139,7 @@ public class DoctorScreenView extends UserScreenView {
         Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
         Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
         Integer length = inputInt("Enter the length in minute that you are available: ");
-        return new ArrayList<Integer>(Arrays.asList(day, hour, minute, length));
+        return new ArrayList<>(Arrays.asList(day, hour, minute, length));
     }
 
     public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
@@ -149,18 +149,18 @@ public class DoctorScreenView extends UserScreenView {
         return deleteItemFromEnumerationPrompt("availability");
     }
 
-    public HashMap<ZonedDateTime, Integer> addAbsencePrompt() {
-        infoMessage("When would you like to add your absence?");
+    public ArrayList<Integer> addAbsencePrompt() {
+        infoMessage("When is the first day of your absence?");
         LocalDate date = showLocalDatePrompt();
-        infoMessage("What time would you like to add your absence?");
-        Integer hour = inputInt("Enter start hour of absence (HH): ");
-        Integer minute = inputInt("Enter start minute of absence (MM): ");
-        LocalTime time = LocalTime.of(hour, minute);
-        ZonedDateTime zdt = ZonedDateTime.of(date, time, ZoneId.of("US/Eastern"));
-        Integer length = inputInt("Enter length of absence in minutes: ");
-        HashMap<ZonedDateTime, Integer> h = new HashMap<>();
-        h.put(zdt, length);
-        return h;
+        Integer length = inputInt("How many days will you be absent?: ");
+        return new ArrayList<>(Arrays.asList(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), length));
+    }
+
+    public Integer deleteAbsencePrompt(ContactData doctorData, List<TimeBlockData> timeBlockData) {
+        String doctorName = contactView.viewName(doctorData);
+        infoMessage("Viewing doctor " + doctorName + " absences to delete:");
+        new TimeBlockView().viewFullAsEnumerationFromList(timeBlockData);
+        return deleteItemFromEnumerationPrompt("absence");
     }
 
     /**

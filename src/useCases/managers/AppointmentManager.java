@@ -1,9 +1,6 @@
 package useCases.managers;
 
-import dataBundles.AppointmentData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.TimeBlockData;
+import dataBundles.*;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Appointment;
@@ -371,7 +368,9 @@ public class AppointmentManager {
                         x.getTimeBlock().getStartTime().isBefore(proposedTime.getEndTime()))
                 .forEach(this::removeAppointment);
     }
-    public ArrayList<Availability> showAvailability(DoctorData doctorData){
-        return database.getDoctorDatabase().get(doctorData.getId()).getAvailability();
+    public ArrayList<AvailabilityData> getAvailabilityData(DoctorData doctorData){
+        return database.getDoctorDatabase().get(doctorData.getId()).getAvailability().stream()
+                .map(AvailabilityData::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
