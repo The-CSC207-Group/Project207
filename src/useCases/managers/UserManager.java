@@ -39,7 +39,6 @@ public abstract class UserManager<T extends User> {
         T user = getUser(username);
         if (user != null){
             typeTDatabase.remove(user.getId());
-            logManager.removeUserLogs(user.getId());
             contactDatabase.remove(user.getContactInfoId());
             return true;
         }

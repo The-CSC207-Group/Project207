@@ -2,11 +2,11 @@ package controllers;
 
 
 import dataBundles.*;
+import entities.Availability;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +20,8 @@ public class SecretaryController extends TerminalController {
     SecretaryManager secretaryManager;
     LogManager logManager;
     ContactManager contactManager;
+    DoctorManager doctorManager;
+    AppointmentManager appointmentManager;
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context);
@@ -31,9 +33,12 @@ public class SecretaryController extends TerminalController {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", changePassword());
         commands.put("create patient", createPatientAccount());
-        commands.put("get logs", getLogs());
+        commands.put("view logs", getLogs());
         commands.put("load patient", new LoadPatient());
         commands.put("delete patient", deletePatient());
+        commands.put("add availability", addDoctorAvailability());
+        commands.put("delete availability", removeDoctorAvailability());
+        commands.put("add absence", addDoctorAbsence());
 
         return commands;
     }
@@ -95,5 +100,41 @@ public class SecretaryController extends TerminalController {
         };
     }
 
+    private Command addDoctorAvailability() {
+        return (x) -> {
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+            appointmentManager.newAvailability(doctorData,
+                    secretaryScreenView.getDay(),
+                    secretaryScreenView.addDoctorAvailabilityTime().getHour(),
+                    secretaryScreenView.addDoctorAvailabilityTime().getMinute(),
+                    secretaryScreenView.addDoctorAvailableLength());
+        };
+
+    }
+
+    private Command removeDoctorAvailability() {
+        return (x) -> {
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+
+            ArrayList<Availability> availableTimes =
+                    appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
+            secretaryScreenView.viewAvailabilityFull(availableTimes);
+
+            appointmentManager.removeAvailability(doctorData,
+                    availableTimes.get(secretaryScreenView.getIndexToRemove()));
+        };
+    }
+
+    private Command addDoctorAbsence() {
+        return (x) -> {
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+
+            appointmentManager.addAbsence(doctorData, secretaryScreenView.addZoneDateTimeStart(),
+                    secretaryScreenView.addZoneDateTimeEnd());
+        };
+    }
 
 }

@@ -9,14 +9,17 @@ public abstract class ScreenView {
     Scanner input = new Scanner(System.in);
 
     protected String input(String prompt) {
-        System.out.println(prompt);
+        System.out.print(prompt);
         return input.nextLine().strip();
     }
 
     protected Integer inputInt(String prompt) {
-        System.out.println(prompt);
-        String string = input(prompt);
-        return Integer.getInteger(string);
+        System.out.print(prompt);
+        try {
+            return input.nextInt();
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     protected void infoMessage(String message) {

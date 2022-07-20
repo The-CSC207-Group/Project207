@@ -14,23 +14,28 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     public String viewClinicName(ClinicData item) {
-        return "This clinic's name is " + item.getClinicName() + ".";
+        String clinicName = getDefaultStringNA(item.getClinicName());
+        return "This clinic's name is " + clinicName + ".";
     }
 
     public String viewAddress(ClinicData item) {
-        return "This clinic's address is " + item.getAddress() + ".";
+        String address = getDefaultStringNA(item.getAddress());
+        return "This clinic's address is " + address + ".";
     }
 
     public String viewTimeZone(ClinicData item) {
-        return "This clinic's time zone is " + item.getTimeZone() + ".";
+        String timeZone = getDefaultStringNA(item.getTimeZone().toString());
+        return "This clinic's time zone is " + timeZone + ".";
     }
 
     public String viewClinicHours(ClinicData item) {
-        return "This clinic is open from " + item.getClinicHours().getStartTime() + "to"
-                + item.getClinicHours().getEndTime() + ".";
+        String startTime = getDefaultStringNA(item.getClinicHours().getStartTime().toString());
+        String endTime = getDefaultStringNA(item.getClinicHours().getEndTime().toString());
+        return "This clinic is open from " + startTime + "to" + endTime + ".";
     }
 
     public String viewPhoneNumber(ClinicData item) {
-        return "This clinic's phone number is " + item.getPhoneNumber() + ".";
+        String phoneNumber = getDefaultStringNA(item.getPhoneNumber().toString());
+        return "This clinic's phone number is " + phoneNumber + ".";
     }
 }

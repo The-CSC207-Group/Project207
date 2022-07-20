@@ -34,12 +34,13 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("view active prescription", viewActivePrescription());
         commands.put("view all prescriptions", viewPrescriptionHistory());
         commands.put("view appointments", viewAppointments());
-        commands.put("change patient password", changePatientPassword());
+        commands.put("change password", changePatientPassword());
         commands.put("unload patient", back(secretaryController));
-        commands.put("reschedule", rescheduleAppointment());
-        commands.put("book", bookAppointment());
-        commands.put("cancel", cancelAppointment());
-        commands.put("get appointments", patientAppointments());
+        commands.put("reschedule appointment", rescheduleAppointment());
+        commands.put("book appointment", bookAppointment());
+        commands.put("cancel appointment", cancelAppointment());
+        commands.put("active prescription detail", viewActivePrescriptionsDetailed());
+        commands.put("all prescription detail", viewAllPrescriptionsDetailed());
         return commands;
     }
 
@@ -111,14 +112,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
-    private Command patientAppointments() {
-        return (x) -> {
-            ArrayList<AppointmentData> patientAppointment = appointmentManager.getPatientAppointments(patientData);
-            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), patientAppointment);
-
-        };
-    }
-
     private Command cancelAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
@@ -172,5 +165,19 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 appointmentTimeDetails.length());
     }
 
+
+    private Command viewActivePrescriptionsDetailed() {
+        return (x) -> {
+            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllActivePrescriptions(patientData));
+        };
+
+    }
+
+    private Command viewAllPrescriptionsDetailed() {
+        return (x) -> {
+            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllPrescriptions(patientData));
+        };
+
+    }
 
 }
