@@ -39,6 +39,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("reschedule appointment", rescheduleAppointment());
         commands.put("book appointment", bookAppointment());
         commands.put("cancel appointment", cancelAppointment());
+        commands.put("active prescription detail", viewActivePrescriptionsDetailed());
+        commands.put("all prescription detail", viewAllPrescriptionsDetailed());
         return commands;
     }
 
@@ -163,5 +165,19 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 appointmentTimeDetails.length());
     }
 
+
+    private Command viewActivePrescriptionsDetailed() {
+        return (x) -> {
+            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllActivePrescriptions(patientData));
+        };
+
+    }
+
+    private Command viewAllPrescriptionsDetailed() {
+        return (x) -> {
+            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllPrescriptions(patientData));
+        };
+
+    }
 
 }

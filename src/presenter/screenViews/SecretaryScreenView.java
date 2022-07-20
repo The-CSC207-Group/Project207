@@ -1,21 +1,26 @@
 package presenter.screenViews;
 
+import com.fatboyindustrial.gsonjavatime.ZoneIdConverter;
 import dataBundles.AppointmentData;
 import dataBundles.ContactData;
+import dataBundles.PrescriptionData;
+import dataBundles.TimeBlockData;
+import entities.Availability;
+import entities.TimeBlock;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.ContactView;
+import presenter.entityViews.PrescriptionView;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.UserCredentials;
 
-import java.time.DateTimeException;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SecretaryScreenView extends UserScreenView {
 
     public ContactView contactView = new ContactView();
+    public PrescriptionView prescriptionView = new PrescriptionView();
 
     /**
      * Create a new patient prompt.
@@ -246,9 +251,6 @@ public class SecretaryScreenView extends UserScreenView {
         return LocalTime.of(inputInt("Hour: "), inputInt("Minute: "));
     }
 
-    public DayOfWeek addDoctorAvailabilityDay() {
-        return DayOfWeek.of(inputInt("Day (int): "));
-    }
 
     public Integer addDoctorAvailableLength() {
         return inputInt("Length of Available time: ");
@@ -258,6 +260,39 @@ public class SecretaryScreenView extends UserScreenView {
         return inputInt("Select an index to remove: ");
     }
 
+    public void viewPrescriptionsDetailed(ArrayList<PrescriptionData> prescriptionData) {
+        for (PrescriptionData data : prescriptionData) {
+            prescriptionView.viewFull(data);
+        }
+    }
+
+    public DayOfWeek getDay() {
+        return DayOfWeek.of(inputInt("Enter Day of the week (int): "));
+    }
+
+    public void viewAvailabilityFull(ArrayList<Availability> availabilities) {
+        for (int i=0; i<availabilities.size(); i++){
+            infoMessage(i + ": " + availabilities.get(i));
+        }
+    }
+
+    public ZonedDateTime addZoneDateTimeStart() {
+        infoMessage("You are about to add the START time: ");
+        LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
+                inputInt("day: "));
+        LocalTime localTime = LocalTime.MIDNIGHT;
+        ZoneId zoneId = ZoneId.of(input("Zone ID: "));
+        return ZonedDateTime.of(localDate, localTime, zoneId);
+    }
+
+    public ZonedDateTime addZoneDateTimeEnd() {
+        infoMessage("You are about to add the END time: ");
+        LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
+                inputInt("day: "));
+        LocalTime localTime = LocalTime.MIDNIGHT;
+        ZoneId zoneId = ZoneId.of(input("Zone ID: "));
+        return ZonedDateTime.of(localDate, localTime, zoneId);
+    }
 
 
 

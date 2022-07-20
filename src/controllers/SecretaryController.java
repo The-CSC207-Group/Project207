@@ -2,6 +2,7 @@ package controllers;
 
 
 import dataBundles.*;
+import entities.Availability;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
@@ -39,6 +40,7 @@ public class SecretaryController extends TerminalController {
         commands.put("delete patient", deletePatient());
         commands.put("add availability", addDoctorAvailability());
         commands.put("delete availability", removeDoctorAvailability());
+        commands.put("add absence", addDoctorAbsence());
 
         return commands;
     }
@@ -104,12 +106,7 @@ public class SecretaryController extends TerminalController {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
-            appointmentManager.newAvailability(
-                    doctorData,
-                    secretaryScreenView.addDoctorAvailabilityDay(),
-                    secretaryScreenView.addDoctorAvailabilityTime().getHour(),
-                    secretaryScreenView.addDoctorAvailabilityTime().getMinute(),
-                    secretaryScreenView.addDoctorAvailableLength());
+            appointmentManager.newAvailability(doctorData, secretaryScreenView.getDay(), secretaryScreenView.addDoctorAvailabilityTime().getHour(), secretaryScreenView.addDoctorAvailabilityTime().getMinute(), secretaryScreenView.addDoctorAvailableLength());
         };
 
     }
@@ -119,19 +116,20 @@ public class SecretaryController extends TerminalController {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
 
-            ArrayList<AppointmentData> appointmentData = appointmentManager.getDoctorAppointments(doctorData);
-            secretaryScreenView.viewAppointments(contactManager.getContactData(doctorData), appointmentData);
-            appointmentManager.removeAppointment(appointmentData.get(secretaryScreenView.getIndexToRemove()));
+            ArrayList<Availability> availableTimes = appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
+            secretaryScreenView.viewAvailabilityFull(availableTimes);
+
+            appointmentManager.removeAvailability(doctorData, availableTimes.get(secretaryScreenView.getIndexToRemove()));
         };
     }
 
+    private Command addDoctorAbsence() {
+        return (x) -> {
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
 
-
-
-
-
-
-
-
+            appointmentManager.addAbsence(doctorData, secretaryScreenView.addZoneDateTimeStart(), secretaryScreenView.addZoneDateTimeEnd());
+        };
+    }
 
 }
