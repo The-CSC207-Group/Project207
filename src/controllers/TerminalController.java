@@ -45,7 +45,7 @@ abstract public class TerminalController {
      * @return Database of the program.
      */
     public Database getDatabase() {
-        return context.database;
+        return context.getDatabase();
     }
 
     /**
