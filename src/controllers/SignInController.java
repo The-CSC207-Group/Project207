@@ -52,21 +52,25 @@ public class SignInController extends TerminalController {
             if (adminManager.signIn(username, password) != null) {
                 AdminData adminData = adminManager.signIn(username, password);
                 AdminController adminController = new AdminController(getContext(), adminData);
+                signInScreenView.showSuccessLogin(adminData.getUsername());
                 changeCurrentController(adminController);
 
             } else if (patientManager.signIn(username, password) != null) {
                 PatientData patientData = patientManager.signIn(username, password);
                 PatientController patientController = new PatientController(getContext(), patientData);
+                signInScreenView.showSuccessLogin(patientData.getUsername());
                 changeCurrentController(patientController);
 
             } else if (doctorManager.signIn(username, password) != null) {
                 DoctorData doctorData = doctorManager.signIn(username, password);
                 DoctorController doctorController = new DoctorController(getContext(), doctorData);
+                signInScreenView.showSuccessLogin(doctorData.getUsername());
                 changeCurrentController(doctorController);
 
             } else if (secretaryManager.signIn(username, password) != null) {
                 SecretaryData secretaryData = secretaryManager.signIn(username, password);
                 SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
+                signInScreenView.showSuccessLogin(secretaryData.getUsername());
                 changeCurrentController(secretaryController);
 
             } else {
