@@ -18,6 +18,13 @@ public abstract class UserController<T extends User> extends TerminalController 
     private final UserManager<T> userManager;
     private final UserScreenView userScreenView;
 
+    /**
+     * creates a generic user controller
+     * @param context the context (necessary for the state pattern)
+     * @param userData the current users info
+     * @param userManager a manager for handling  the user data (is generic depending on user type)
+     * @param userScreenView the current scrren view
+     */
     public UserController(Context context, UserData<T> userData, UserManager<T> userManager,
                           UserScreenView userScreenView) {
         super(context);
@@ -26,6 +33,11 @@ public abstract class UserController<T extends User> extends TerminalController 
         this.userScreenView = userScreenView;
     }
 
+
+    @Override
+    /**
+     * adds the commands associated with user
+     */
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = new HashMap<>();
         commands.put("change password", ChangePassword());
@@ -59,7 +71,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         UserController<?> currentController = this;
         ContactManager contactManager = new ContactManager(getDatabase());
         ContactData contactData = contactManager.getContactData(userData);
-        ContactController contactController = new ContactController(context, currentController, contactData,
+        ContactController contactController = new ContactController(getContext(), currentController, contactData,
                 userScreenView);
         return (x) -> {
             changeCurrentController(contactController);
@@ -68,7 +80,7 @@ public abstract class UserController<T extends User> extends TerminalController 
 
     private Command SignOut(){
         return (x) -> {
-            changeCurrentController(new SignInController(context));
+            changeCurrentController(new SignInController(getContext()));
         };
     }
 }

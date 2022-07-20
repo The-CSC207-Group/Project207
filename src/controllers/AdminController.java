@@ -13,12 +13,17 @@ import java.util.HashMap;
 public class AdminController extends UserController<Admin> {
 
     private AdminData adminData;
-    PatientManager patientManager;
-    DoctorManager doctorManager;
-    SecretaryManager secretaryManager;
-    AdminManager adminManager;
-    AdminScreenView adminScreenView = new AdminScreenView();
+    private PatientManager patientManager;
+    private DoctorManager doctorManager;
+    private SecretaryManager secretaryManager;
+    private AdminManager adminManager;
+    private AdminScreenView adminScreenView = new AdminScreenView();
 
+    /**
+     * create a new controller for state of program when admin is logged in
+     * @param context the context related to state pattern
+     * @param adminData data for the current logged in admin
+     */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
         this.adminData = adminData;
@@ -47,14 +52,14 @@ public class AdminController extends UserController<Admin> {
         return commands;
     }
 
-    Command deleteSelf() {
+    private Command deleteSelf() {
         return (x) -> {
             adminManager.deleteUserByData(adminData);
-            changeCurrentController(new SignInController(context));
+            changeCurrentController(new SignInController(getContext()));
         };
     }
 
-    Command CreateSecretary() {
+    private Command CreateSecretary() {
         SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
@@ -63,7 +68,7 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
-    Command CreateDoctor() {
+    private Command CreateDoctor() {
         DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
@@ -125,6 +130,7 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
+
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
         UserData<T> user = manager.getUserData(name);
         if (user == null) {
@@ -136,6 +142,7 @@ public class AdminController extends UserController<Admin> {
         } else manager.changeUserPassword(user, password.password());
         return true;
     }
+
 
 
     private Command changeUserPassword() {

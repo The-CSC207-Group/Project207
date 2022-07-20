@@ -14,7 +14,7 @@ public class Context {
     }
     public void run(){
         while (!exit){
-            currentController.ProcessCommands();
+            currentController.run();
         }
     }
     void changeController(TerminalController new_controller){
