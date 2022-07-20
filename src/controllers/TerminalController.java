@@ -82,9 +82,7 @@ abstract public class TerminalController {
     }
 
     protected Command back(TerminalController previousController){
-        return (x) -> {
-            changeCurrentController(previousController);
-        };
+        return (x) -> changeCurrentController(previousController);
     }
 
 
@@ -96,8 +94,6 @@ abstract public class TerminalController {
     }
 
     protected Command Exit() {
-        return (x) -> {
-            exit();
-        };
+        return (x) -> exit();
     }
 }

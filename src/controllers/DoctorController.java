@@ -73,14 +73,11 @@ public class DoctorController extends UserController<Doctor> {
     }
 
     private Command ViewAllDoctorAppointments(){
-        return (x) -> {
-            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getDoctorAppointments(doctorData));
-        };
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
+                .getDoctorAppointments(doctorData));
     }
     private Command ViewAllAppointments(){
-        return (x) -> {
-            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
-        };
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
 
     }
     private Command newAvailability() {
