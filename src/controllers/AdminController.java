@@ -13,12 +13,17 @@ import java.util.HashMap;
 public class AdminController extends UserController<Admin> {
 
     private AdminData adminData;
-    PatientManager patientManager;
-    DoctorManager doctorManager;
-    SecretaryManager secretaryManager;
-    AdminManager adminManager;
-    AdminScreenView adminScreenView = new AdminScreenView();
+    private PatientManager patientManager;
+    private DoctorManager doctorManager;
+    private SecretaryManager secretaryManager;
+    private AdminManager adminManager;
+    private AdminScreenView adminScreenView = new AdminScreenView();
 
+    /**
+     *
+     * @param context the context
+     * @param adminData
+     */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
         this.adminData = adminData;
@@ -28,6 +33,11 @@ public class AdminController extends UserController<Admin> {
         adminManager = new AdminManager(getDatabase());
 
     }
+
+    /**
+     * hashmap of all commands a user can call from the string for that command
+     * @return strings along with their commands
+     */
 
     @Override
     public HashMap<String, Command> AllCommands() {
@@ -42,14 +52,14 @@ public class AdminController extends UserController<Admin> {
         return commands;
     }
 
-    Command deleteSelf() {
+    private Command deleteSelf() {
         return (x) -> {
             adminManager.deleteUserByData(adminData);
-            changeCurrentController(new SignInController(context));
+            changeCurrentController(new SignInController(getContext()));
         };
     }
 
-    Command CreateSecretary() {
+    private Command CreateSecretary() {
         SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
@@ -58,7 +68,7 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
-    Command CreateDoctor() {
+    private Command CreateDoctor() {
         DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
@@ -120,6 +130,7 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
+
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
         UserData<T> user = manager.getUserData(name);
         if (user == null) {
@@ -133,9 +144,11 @@ public class AdminController extends UserController<Admin> {
     }
 
 
+
     private Command changeUserPassword() {
         return (x) -> {
-            String name = adminScreenView.getUsersName(); // note this is can be any user not just the one using it so cant use reset password promvpt
+            // NOTE this is can be any user not just the one using it so can't use reset password prompt
+            String name = adminScreenView.getUsersName();
             if (!(changePassword(patientManager, name) |
                     (changePassword(adminManager, name)) |
                     (changePassword(secretaryManager, name)) |
