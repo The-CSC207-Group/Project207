@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class SignInController extends TerminalController {
 
-    private SignInScreenView signInScreenView = new SignInScreenView();
+    private final SignInScreenView signInScreenView = new SignInScreenView();
 
     /**
      * Creates a new controller for handling the state of the program when a user is signing in.

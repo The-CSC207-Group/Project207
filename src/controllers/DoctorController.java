@@ -11,16 +11,30 @@ import useCases.managers.PatientManager;
 import java.time.LocalDate;
 import java.util.HashMap;
 
+/**
+ * Controller class that processes the commands that a patient passes in.
+ */
 public class DoctorController extends UserController<Doctor> {
-    private DoctorScreenView doctorView = new DoctorScreenView();
-    private DoctorData doctorData;
-    private DoctorController self = this;
+    private final DoctorScreenView doctorView = new DoctorScreenView();
+    private final DoctorData doctorData;
+    private final DoctorController currentController = this;
 
+    /**
+     * Creates a new controller for handling the state of the program when a doctor is signed in.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
+     * @param doctorData a data bundle containing the ID and attributes of the current doctor user.
+     */
     public DoctorController(Context context, DoctorData doctorData){
         super(context, doctorData, new DoctorManager(context.getDatabase()), new DoctorScreenView());
         this.doctorData = doctorData;
     }
 
+    /**
+     * Creates a hashmap of all string representations of doctor commands mapped to the method that each
+     * command calls.
+     * @return HashMap of strings mapped to their respective doctor commands.
+     */
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
@@ -42,7 +56,7 @@ public class DoctorController extends UserController<Doctor> {
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null){
                 changeCurrentController(new DoctorLoadedPatientController(
-                        getContext(), self, doctorData, loadedPatientData));
+                        getContext(), currentController, doctorData, loadedPatientData));
             }
         };
     }
