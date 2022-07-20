@@ -81,5 +81,33 @@ public class DoctorController extends TerminalController{
         return (x) -> {
             doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
         };
+
+    }
+    private Command newAvailability() {
+        return (x) -> {
+            //pending presenter implementation for (get dayofweek, hour, minute)
+            //doctorView.
+            //new AppointmentManager(getDatabase()).newAvailability(doctorData, );
+        };
+    }
+    private Command deleteAvailability() {
+        return (x) -> {
+            //pending presenter implementation for (
+            //new AppointmentManager(getDatabase()).removeAvailability(doctorData);
+        };
+    }
+    private Command deleteAbsence() {
+        return (x) -> {
+            //pending presenter implementation for absence TimeBlock
+            //doctorView.
+            //new AppointmentManager(getDatabase()).deleteAbsence(doctorData, );
+        };
+    }
+    private Command newAbsence() {
+        return (x) -> {
+            //pending presenter implementation for absence TimeBlock
+            //doctorView.
+            //new AppointmentManager(getDatabase()).addAbsence(doctorData, );
+        };
     }
 }
