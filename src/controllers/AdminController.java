@@ -45,7 +45,7 @@ public class AdminController extends UserController<Admin> {
     Command deleteSelf() {
         return (x) -> {
             adminManager.deleteUserByData(adminData);
-            changeCurrentController(new SignInController(context));
+            changeCurrentController(new SignInController(getContext()));
         };
     }
 

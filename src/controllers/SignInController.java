@@ -14,8 +14,12 @@ import java.util.HashMap;
 
 public class SignInController extends TerminalController {
 
-    SignInScreenView signInScreenView = new SignInScreenView();
+    private SignInScreenView signInScreenView = new SignInScreenView();
 
+    /**
+     * creates a sign in controller for allowing users to sign in
+     * @param context
+     */
     public SignInController(Context context) {
         super(context);
         signInScreenView.welcomeMessage();
