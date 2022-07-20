@@ -125,6 +125,13 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
+    /**
+     * allows the admin user to change their password
+     * @param manager
+     * @param name
+     * @return
+     * @param <T>
+     */
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
         UserData<T> user = manager.getUserData(name);
         if (user == null) {
@@ -138,6 +145,10 @@ public class AdminController extends UserController<Admin> {
     }
 
 
+    /**
+     *  Allows the current admin to change the password of any kind of user.
+     * @return change user password command
+     */
     private Command changeUserPassword() {
         return (x) -> {
             String name = adminScreenView.getUsersName(); // note this is can be any user not just the one using it so cant use reset password promvpt
