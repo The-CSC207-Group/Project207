@@ -20,9 +20,10 @@ public class AdminController extends UserController<Admin> {
     private AdminScreenView adminScreenView = new AdminScreenView();
 
     /**
-     * creates an admin controller object that manages the commands used by an admin user.
-     * @param context the class object that manages the process of switching between controllers.
-     * @param adminData a data bundle containing the ID and attributes of the associated admin user.
+     * creates an admin controller object that manages the commands used by the current admin user.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
+     * @param adminData a data bundle containing the ID and attributes of the current admin user.
      */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
@@ -35,8 +36,8 @@ public class AdminController extends UserController<Admin> {
     }
 
     /**
-     * creates a hashmap of all string representations of admin commands mapped to the method that each command calls
-     * @return HashMap of strings mapped to their respective admin commands
+     * creates a hashmap of all string representations of admin commands mapped to the method that each command calls.
+     * @return HashMap of strings mapped to their respective admin commands.
      */
     @Override
     public HashMap<String, Command> AllCommands() {

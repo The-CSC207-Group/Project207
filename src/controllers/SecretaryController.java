@@ -11,25 +11,35 @@ import useCases.managers.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * Controller class that processes the commands that a secretary passes in.
+ */
 public class SecretaryController extends UserController<Secretary> {
-    private final SecretaryData secretaryData;
-    private final SecretaryController self = this;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-    private PatientManager patientManager;
-    private ContactManager contactManager;
-    private DoctorManager doctorManager;
-    private AppointmentManager appointmentManager;
+    private final PatientManager patientManager;
+    private final ContactManager contactManager;
+    private final DoctorManager doctorManager;
+    private final AppointmentManager appointmentManager;
 
+    /**
+     * Creates a new controller for handling the state of the program when a secretary is signed in.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
+     * @param secretaryData a data bundle containing the ID and attributes of the current secretary user.
+     */
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
-        this.secretaryData = secretaryData;
         this.appointmentManager = new AppointmentManager(getDatabase());
         this.doctorManager = new DoctorManager(getDatabase());
         this.contactManager = new ContactManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
     }
 
+    /**
+     * Creates a hashmap of all string representations of secretary commands mapped to the method that each
+     * command calls.
+     * @return HashMap of strings mapped to their respective secretary commands.
+     */
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
@@ -47,8 +57,10 @@ public class SecretaryController extends UserController<Secretary> {
         return (x) -> {
             String username = secretaryScreenView.loadPatientPrompt();
             PatientData patientData = patientManager.getUserData(username);
+            SecretaryController currentController = this;
             if (patientData != null) {
-                changeCurrentController(new SecretaryLoadedPatientController(getContext(), self, patientData));
+                changeCurrentController(new SecretaryLoadedPatientController(getContext(), currentController,
+                        patientData));
                 secretaryScreenView.showSuccessLoadingPatient(contactManager.getContactData(patientData));
             }
             secretaryScreenView.showErrorLoadingPatient();

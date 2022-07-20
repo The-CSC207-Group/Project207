@@ -10,20 +10,27 @@ import useCases.managers.*;
 
 import java.util.HashMap;
 
-
+/**
+ * Controller class that processes the commands that users pass in before signing in to their accounts.
+ */
 public class SignInController extends TerminalController {
 
     private SignInScreenView signInScreenView = new SignInScreenView();
 
     /**
-     * creates a sign in controller for allowing users to sign in
-     * @param context
+     * Creates a new controller for handling the state of the program when a user is signing in.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
      */
     public SignInController(Context context) {
         super(context);
         signInScreenView.welcomeMessage();
     }
 
+    /**
+     * Creates a hashmap of all string representations of sign in commands mapped to the method that each command calls.
+     * @return HashMap of strings mapped to their respective sign in commands.
+     */
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
