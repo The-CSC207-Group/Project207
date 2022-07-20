@@ -104,7 +104,11 @@ public class SecretaryController extends TerminalController {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
-            appointmentManager.newAvailability(doctorData, secretaryScreenView.getDay(), secretaryScreenView.addDoctorAvailabilityTime().getHour(), secretaryScreenView.addDoctorAvailabilityTime().getMinute(), secretaryScreenView.addDoctorAvailableLength());
+            appointmentManager.newAvailability(doctorData,
+                    secretaryScreenView.getDay(),
+                    secretaryScreenView.addDoctorAvailabilityTime().getHour(),
+                    secretaryScreenView.addDoctorAvailabilityTime().getMinute(),
+                    secretaryScreenView.addDoctorAvailableLength());
         };
 
     }
@@ -114,10 +118,12 @@ public class SecretaryController extends TerminalController {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
 
-            ArrayList<Availability> availableTimes = appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
+            ArrayList<Availability> availableTimes =
+                    appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
             secretaryScreenView.viewAvailabilityFull(availableTimes);
 
-            appointmentManager.removeAvailability(doctorData, availableTimes.get(secretaryScreenView.getIndexToRemove()));
+            appointmentManager.removeAvailability(doctorData,
+                    availableTimes.get(secretaryScreenView.getIndexToRemove()));
         };
     }
 
@@ -126,7 +132,8 @@ public class SecretaryController extends TerminalController {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
 
-            appointmentManager.addAbsence(doctorData, secretaryScreenView.addZoneDateTimeStart(), secretaryScreenView.addZoneDateTimeEnd());
+            appointmentManager.addAbsence(doctorData, secretaryScreenView.addZoneDateTimeStart(),
+                    secretaryScreenView.addZoneDateTimeEnd());
         };
     }
 
