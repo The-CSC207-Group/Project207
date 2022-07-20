@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.*;
+import entities.Admin;
 import entities.User;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
@@ -9,7 +10,7 @@ import useCases.managers.*;
 
 import java.util.HashMap;
 
-public class AdminController extends TerminalController {
+public class AdminController extends UserController<Admin> {
 
     private AdminData adminData;
     PatientManager patientManager;
@@ -18,8 +19,8 @@ public class AdminController extends TerminalController {
     AdminManager adminManager;
     AdminScreenView adminScreenView = new AdminScreenView();
 
-    public AdminController(Context parent, AdminData adminData) {
-        super(parent);
+    public AdminController(Context context, AdminData adminData) {
+        super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
         this.adminData = adminData;
         this.patientManager = new PatientManager(getDatabase());
         secretaryManager = new SecretaryManager(getDatabase());
@@ -35,10 +36,7 @@ public class AdminController extends TerminalController {
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
-        commands.put("change password", changePassword());
         commands.put("change user password", changeUserPassword());
-        commands.put("view logs", getLogs());
-        commands.put("sign out", signOut());
         commands.put("delete user", deleteUser());
         commands.put("delete self", deleteSelf());
         return commands;
@@ -93,26 +91,6 @@ public class AdminController extends TerminalController {
         } else {
             adminScreenView.showRegisterUserSuccess();
         }
-    }
-
-    private Command changePassword() {
-
-        return (x) -> {
-            PasswordResetDetails passwordResetDetails = adminScreenView.resetPasswordPrompt();
-            if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
-                adminManager.changeUserPassword(adminData, passwordResetDetails.password());
-                adminScreenView.showResetPasswordSuccessMessage();
-            } else {
-                adminScreenView.showResetPasswordMismatchError();
-            }
-        };
-    }
-
-    private Command getLogs() {
-        LogManager logManager = new LogManager(getDatabase());
-        return (x) -> {
-            adminScreenView.viewAllLogs(logManager.getUserLogs(adminData));
-        };
     }
 
     private boolean deleteUserHelper(String username) {
