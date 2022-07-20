@@ -14,14 +14,17 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+/**
+ * Use case class meant for handling prescriptions.
+ */
 public class PrescriptionManager {
-    DataMapperGateway<Prescription> prescriptionsDatabase;
+    private final DataMapperGateway<Prescription> prescriptionsDatabase;
 
-    DatabaseQueryUtility databaseUtilities = new DatabaseQueryUtility();
+    private final DatabaseQueryUtility databaseUtilities = new DatabaseQueryUtility();
 
     /***
      * Initializes Prescription Manager with the prescription database.
-     * @param database The entire database.
+     * @param database The collection of databases.
      */
     public PrescriptionManager(Database database){
         this.prescriptionsDatabase = database.getPrescriptionDatabase();
@@ -31,12 +34,24 @@ public class PrescriptionManager {
        return prescriptionsDatabase.stream()
                         .filter(p -> p.getPatientId().equals(patient.getId()));
     }
+
+    /**
+     * Get all PrescriptionData associated with a Patient.
+     * @param patient PatientData - data associated with a patient in the database.
+     * @return Arraylist of all patient's PrescriptionData, whether the prescription is active or not.
+     */
     public ArrayList<PrescriptionData> getAllPrescriptions(PatientData patient){
         return databaseUtilities.toArrayList(
                 getAll(patient)
                         .map(PrescriptionData::new)
         );
     }
+
+    /**
+     * Get all PrescriptionData associated with a Patient.
+     * @param patientData PatientData - data associated with a patient in the database.
+     * @return ArrayList of PrescriptionData - list of user's prescriptions.
+     */
     public ArrayList<PrescriptionData> getAllActivePrescriptions(PatientData patientData){
         return databaseUtilities.toArrayList(
                 getAll(patientData)
@@ -49,24 +64,23 @@ public class PrescriptionManager {
     /**
      * Adds a prescription to the prescription database given the info provided. Assumes all info given is valid and
      * exists in their associated database if applicable.
-     * @param header header of the prescription, info such as title
-     * @param body body of the prescription, all notes relating to the prescription
-     * @param patientData id of the patient the prescription was assigned to.
-     * @param doctorData id of the doctor who gave out the prescription.
-     * @param expiryDate date the prescription expires
-     * @return PrescriptionDataBundle object corresponding to the prescription.
+     * @param header String - header of the prescription, info such as name of prescription.
+     * @param body String - body of the prescription, all notes relating to the prescription.
+     * @param patientData PatientData - data pertaining to a specific patient in the database.
+     * @param doctorData DoctorData - data pertaining to a specific doctor in the database.
+     * @param expiryDate ZonedDateTime - date the prescription expires.
+     * @return PrescriptionData object corresponding to the prescription.
      */
     public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
                                                ZonedDateTime expiryDate){
-        ZonedDateTime dateNoted = ZonedDateTime.now();
         Prescription prescription = new Prescription(header, body, patientData.getId(), doctorData.getId(), expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionData(prescription);
     }
 
     /**
-     * Removes prescription with given id from the prescription database. If it does not exist, nothing happens
-     * @param prescriptionData id of the prescription to be removed.
+     * Removes prescription from the prescription database. If it does not exist, nothing happens
+     * @param prescriptionData PrescriptionData - data pertaining to a prescription in the prescription database.
      */
     public void removePrescription(PrescriptionData prescriptionData){
         prescriptionsDatabase.remove(prescriptionData.getPrescriptionId());

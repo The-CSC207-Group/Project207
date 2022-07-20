@@ -8,16 +8,19 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
 import useCases.managers.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class SignInController extends TerminalController {
 
-    SignInScreenView signInScreenView = new SignInScreenView();
+    private SignInScreenView signInScreenView = new SignInScreenView();
 
-    public SignInController(Context parent) {
-        super(parent);
+    /**
+     * creates a sign in controller for allowing users to sign in
+     * @param context
+     */
+    public SignInController(Context context) {
+        super(context);
         signInScreenView.welcomeMessage();
     }
 
@@ -71,15 +74,4 @@ public class SignInController extends TerminalController {
             signInScreenView.viewClinicInfo(clinicManager.clinicData());
         };
     }
-
-    class BackCommand implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            changeCurrentController(new SignInController(getContext()));
-        }
-    }
-
-
-
 }

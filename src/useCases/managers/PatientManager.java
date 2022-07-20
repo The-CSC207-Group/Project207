@@ -23,7 +23,7 @@ public class PatientManager extends UserManager<Patient> {
     }
 
     /**
-     * Creates a new Patient object and stores it in the database, returns PatientDataBundle.
+     * Creates a new Patient object and stores it in the database, returns PatientData.
      *
      * @param username String new username
      * @param password String new password

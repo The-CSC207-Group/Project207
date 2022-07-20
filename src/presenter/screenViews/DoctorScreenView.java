@@ -1,15 +1,16 @@
 package presenter.screenViews;
 
 import dataBundles.*;
-import presenter.entityViews.AppointmentView;
-import presenter.entityViews.ContactView;
-import presenter.entityViews.PrescriptionView;
-import presenter.entityViews.ReportView;
+import entities.Availability;
+import presenter.entityViews.*;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.lang.reflect.Array;
+import java.time.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -130,6 +131,36 @@ public class DoctorScreenView extends UserScreenView {
     public LocalDate viewSchedulePrompt() {
         infoMessage("What day's schedule would you like to view?");
         return showLocalDatePrompt();
+    }
+
+    public ArrayList<Integer> addAvailabilityPrompt() {
+        Integer day = inputInt("Enter the day of the week you would like to add your availability " +
+                "time as an integer with 1 being Monday and 7 being Sunday: ");
+        Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
+        Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
+        Integer length = inputInt("Enter the length in minute that you are available: ");
+        return new ArrayList<Integer>(Arrays.asList(day, hour, minute, length));
+    }
+
+    public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
+        String doctorName = contactView.viewName(doctorData);
+        infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
+        new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
+        return deleteItemFromEnumerationPrompt("availability");
+    }
+
+    public HashMap<ZonedDateTime, Integer> addAbsencePrompt() {
+        infoMessage("When would you like to add your absence?");
+        LocalDate date = showLocalDatePrompt();
+        infoMessage("What time would you like to add your absence?");
+        Integer hour = inputInt("Enter start hour of absence (HH): ");
+        Integer minute = inputInt("Enter start minute of absence (MM): ");
+        LocalTime time = LocalTime.of(hour, minute);
+        ZonedDateTime zdt = ZonedDateTime.of(date, time, ZoneId.of("US/Eastern"));
+        Integer length = inputInt("Enter length of absence in minutes: ");
+        HashMap<ZonedDateTime, Integer> h = new HashMap<>();
+        h.put(zdt, length);
+        return h;
     }
 
     /**

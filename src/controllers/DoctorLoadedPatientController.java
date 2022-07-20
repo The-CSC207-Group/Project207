@@ -17,6 +17,7 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     DoctorController prev;
 
+
     @Override
     public HashMap<String, Command> AllCommands() {
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
@@ -38,8 +39,15 @@ public class DoctorLoadedPatientController extends TerminalController {
         return commands;
     }
 
-    public DoctorLoadedPatientController(Context parent, DoctorController prev, DoctorData doctorData, PatientData patientData) {
-        super(parent);
+    /**
+     * creates a new doctor loaded patientController to be used when a doctor is dealing with a specific patient
+     * @param context reference to the context (to be used in the state pattern)
+     * @param prev previous controller. allows you to easily go back to it via the back command
+     * @param doctorData the current doctors data
+     * @param patientData the current patients data
+     */
+    public DoctorLoadedPatientController(Context context, DoctorController prev, DoctorData doctorData, PatientData patientData) {
+        super(context);
         this.patientData = patientData;
         this.doctorData = doctorData;
         this.prescriptionManager = new PrescriptionManager(getDatabase());
@@ -78,7 +86,7 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command getReport() {
         return (x) -> {
-            new ReportManager(getDatabase()).getReportDataBundlesFromPatientDataBundle(patientData);
+            new ReportManager(getDatabase()).getReportData(patientData);
         };
     }
 
@@ -92,7 +100,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     private Command deleteReport() {
         return (x) -> {
             Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase()).getContactData(patientData), new
-                    ReportManager(getDatabase()).getReportDataBundlesFromPatientDataBundle(patientData));
+                    ReportManager(getDatabase()).getReportData(patientData));
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
     }

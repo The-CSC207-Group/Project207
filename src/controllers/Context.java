@@ -14,12 +14,13 @@ public class Context {
     }
     public void run(){
         while (!exit){
-            currentController.ProcessCommands();
+            currentController.run();
         }
     }
     void changeController(TerminalController new_controller){
         currentController = new_controller;
     }
+    Database getDatabase() {return this.database;}
     void exit(){
         exit = true;
     }
