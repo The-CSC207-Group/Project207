@@ -371,4 +371,7 @@ public class AppointmentManager {
                         x.getTimeBlock().getStartTime().isBefore(proposedTime.getEndTime()))
                 .forEach(this::removeAppointment);
     }
+    public ArrayList<Availability> showAvailability(DoctorData doctorData){
+        return database.getDoctorDatabase().get(doctorData.getId()).getAvailability();
+    }
 }
