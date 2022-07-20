@@ -29,6 +29,11 @@ public class AdminController extends UserController<Admin> {
 
     }
 
+    /**
+     * hashmap of all commands a user can call from the string for that command
+     * @return strings along with their commands
+     */
+
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
@@ -135,7 +140,8 @@ public class AdminController extends UserController<Admin> {
 
     private Command changeUserPassword() {
         return (x) -> {
-            String name = adminScreenView.getUsersName(); // note this is can be any user not just the one using it so cant use reset password promvpt
+            // NOTE this is can be any user not just the one using it so can't use reset password prompt
+            String name = adminScreenView.getUsersName();
             if (!(changePassword(patientManager, name) |
                     (changePassword(adminManager, name)) |
                     (changePassword(secretaryManager, name)) |
