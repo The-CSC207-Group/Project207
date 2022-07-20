@@ -2,13 +2,10 @@ package controllers;
 
 import controllers.common.PrescriptionListCommands;
 import dataBundles.AppointmentData;
-import dataBundles.LogData;
 import dataBundles.PatientData;
 import entities.Patient;
-import presenter.response.PasswordResetDetails;
 import presenter.screenViews.PatientScreenView;
 import useCases.managers.AppointmentManager;
-import useCases.managers.LogManager;
 import useCases.managers.PatientManager;
 
 import java.util.ArrayList;
@@ -19,6 +16,11 @@ public class PatientController extends UserController<Patient> {
     private PatientData patientData;
     private PatientController self = this;
 
+    /**
+     * creates a new patient controller responsible for taking in commands from a patient
+     * @param context the context that stores the current controller (state pattern)
+     * @param patientData the current patient
+     */
     public PatientController(Context context, PatientData patientData) {
         super(context, patientData, new PatientManager(context.getDatabase()), new PatientScreenView());
         this.patientData = patientData;
