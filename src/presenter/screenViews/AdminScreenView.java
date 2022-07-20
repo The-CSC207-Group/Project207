@@ -104,7 +104,7 @@ public class AdminScreenView extends UserScreenView {
 
     public void passwordMismatchError(ContactData userContact) {
         String name = contactView.viewName(userContact);
-        errorMessage("Cannot change " + name + " new password ");
+        errorMessage("Cannot change " + name + " password: new password and confirmed password do not match!");
     }
 
     public void userDoesNotExistError(String user){

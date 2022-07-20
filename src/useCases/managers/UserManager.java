@@ -60,7 +60,9 @@ public abstract class UserManager<T extends User> {
     protected T signInHelper(String username, String password){
         T user = getUser(username);
         if (user == null){return null;}
-        if (user.comparePassword(password)){return user;}
+        if (user.comparePassword(password)){
+            logManager.addLog("signed in", user.getId());
+            return user;}
         return null;
     }
     public abstract UserData<T> signIn(String username, String password);
