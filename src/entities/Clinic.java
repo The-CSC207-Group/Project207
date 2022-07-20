@@ -18,11 +18,11 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Creates an instance of Clinic
-     * @param name The name of the clinic.
-     * @param phoneNumber The phone number of the clinic.
-     * @param address The address of the clinic.
-     * @param timeZone The time zone of the clinic.
-     * @param clinicHours The clinic's hours of operation.
+     * @param name String representing the name of the clinic.
+     * @param phoneNumber String representing the phone number of the clinic.
+     * @param address String representing the address of the clinic.
+     * @param timeZone ZoneId representing the time zone of the clinic.
+     * @param clinicHours TimeBlock representing the clinic's hours of operation.
      */
     public Clinic(String name, String phoneNumber, String address, ZoneId timeZone, TimeBlock clinicHours) {
         this.name = name;
@@ -33,7 +33,7 @@ public class Clinic extends JsonSerializable {
     }
 
     /**
-     * @return Returns the name of the clinic.
+     * @return String representing the name of the clinic.
      */
     public String getName() {
         return name;
@@ -41,14 +41,14 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the name of the clinic.
-     * @param name The new name of the clinic.
+     * @param name The new name of the clinic as String.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * @return Returns the clinic's phone number.
+     * @return String representing the clinic's phone number.
      */
     public String getPhoneNumber() {
         return phoneNumber;
@@ -56,14 +56,14 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the phone number of the clinic.
-     * @param phoneNumber The new phone number of the clinic.
+     * @param phoneNumber The new phone number of the clinic as String.
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
     /**
-     * @return Returns the clinic's address.
+     * @return String representing the clinic's address.
      */
     public String getAddress() {
         return address;
@@ -71,14 +71,14 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the address of the clinic.
-     * @param address The new address of the clinic.
+     * @param address The new address of the clinic as String.
      */
     public void setAddress(String address) {
         this.address = address;
     }
 
     /**
-     * @return Returns the time zone of the clinic.
+     * @return ZoneId representing the time zone of the clinic.
      */
     public ZoneId getTimeZone() {
         return timeZone;
@@ -86,14 +86,14 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the time zone of the clinic.
-     * @param timeZone The new time zone of the clinic.
+     * @param timeZone The new time zone of the clinic as ZoneId.
      */
     public void setTimeZone(ZoneId timeZone) {
         this.timeZone = timeZone;
     }
 
     /**
-     * @return Returns the clinic's hours of operation.
+     * @return TimeBlock representing the clinic's hours of operation.
      */
     public TimeBlock getClinicHours() {
         return clinicHours;
@@ -101,7 +101,7 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the clinic's hours of operation.
-     * @param clinicHours The clinic's new hours of operation
+     * @param clinicHours TimeBlock representing the clinic's new hours of operation.
      */
     public void setClinicHours(TimeBlock clinicHours) {
         this.clinicHours = clinicHours;

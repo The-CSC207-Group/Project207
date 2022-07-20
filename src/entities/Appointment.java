@@ -13,9 +13,9 @@ public class Appointment extends JsonSerializable {
 
     /**
      * Creates an instance of Appointment.
-     * @param timeBlock The time block corresponding to the appointment.
-     * @param doctorId The id of the appointment's doctor.
-     * @param patientId The id of the appointment's patient.
+     * @param timeBlock TimeBlock corresponding to the appointment.
+     * @param doctorId Integer representing the id of the appointment's doctor.
+     * @param patientId Integer representing the id of the appointment's patient.
      */
     public Appointment(TimeBlock timeBlock, Integer doctorId, Integer patientId) {
         this.timeBlock = timeBlock;
@@ -32,14 +32,14 @@ public class Appointment extends JsonSerializable {
 
     /**
      * Sets the appointment's time block.
-     * @param timeBlock The new time block for the appointment.
+     * @param timeBlock The new TimeBlock for the appointment.
      */
     public void setTimeBlock(TimeBlock timeBlock) {
         this.timeBlock = timeBlock;
     }
 
     /**
-     * @return Returns the id of the appointment's doctor.
+     * @return Returns the Integer representing the id of the appointment's doctor.
      */
     public Integer getDoctorId() {
         return doctorId;
@@ -47,14 +47,14 @@ public class Appointment extends JsonSerializable {
 
     /**
      * Sets the appointment's doctor id.
-     * @param doctorId The id of the appointment's new doctor.
+     * @param doctorId The Integer representing the id of the appointment's new doctor.
      */
     public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
     }
 
     /**
-     * @return Returns the id of the appointment's patient.
+     * @return Returns the Integer representing the id of the appointment's patient.
      */
     public Integer getPatientId() {
         return patientId;
@@ -62,7 +62,7 @@ public class Appointment extends JsonSerializable {
 
     /**
      * Sets the appointment's patient id.
-     * @param patientId The id of the appointment's new patient.
+     * @param patientId The Integer representing the id of the appointment's new patient.
      */
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;

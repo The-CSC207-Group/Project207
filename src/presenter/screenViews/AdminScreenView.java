@@ -9,8 +9,14 @@ import presenter.response.UserCredentials;
 
 import java.util.List;
 
+/**
+ * The Admin's presenter class.
+ */
 public class AdminScreenView extends UserScreenView {
 
+    /**
+     * The Contact entity's view.
+     */
     ContactView contactView = new ContactView();
 
     /**
@@ -60,8 +66,8 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Ask admin for a user to delete
-     * @return String username to delete
+     * Ask admin for a user to delete.
+     * @return String username to delete.
      */
     public String deleteUserPrompt() {
         showIrreversibleActionWarning();
@@ -91,22 +97,38 @@ public class AdminScreenView extends UserScreenView {
         infoMessage(logView.viewFullFromList(items));
     }
 
+    /**
+     * Asks admin for a user to change password.
+     * @return String username of user to change password.
+     */
     public String getUsersName(){
         infoMessage("You are about to change another user's password!");
         return input("Enter username: ");
     }
 
+    /**
+     * Asks admin for the new password and confirmed new password.
+     * @return PasswordResetDetails containing password and confirmedPassword as String.
+     */
     public PasswordResetDetails getNewPasswordPrompt() {
         String password = input("Enter new password: ");
-        String confirmedPassword = input("Enter confirmed password");
+        String confirmedPassword = input("Enter confirmed password: ");
         return new PasswordResetDetails(password, confirmedPassword);
     }
 
+    /**
+     * Show a failed to change password method that is thrown when new password and confirmed password do not match.
+     * @param userContact The contact data of the user changing their password.
+     */
     public void passwordMismatchError(ContactData userContact) {
         String name = contactView.viewName(userContact);
         errorMessage("Cannot change " + name + " password: new password and confirmed password do not match!");
     }
 
+    /**
+     * Show a user does not exist error when the user is not present in database.
+     * @param user The inputted username of the user that does not exist.
+     */
     public void userDoesNotExistError(String user){
         errorMessage(user + " is not a valid user");
     }

@@ -16,8 +16,8 @@ public class TimeBlock {
 
     /**
      * Creates an instance of TimeBlock.
-     * @param startTime The time block's start time.
-     * @param endTime The time block's end time.
+     * @param startTime ZonedDateTime representing the time block's start time.
+     * @param endTime ZonedDateTime representing the time block's end time.
      */
     public TimeBlock(ZonedDateTime startTime, ZonedDateTime endTime) {
         this.startTime = startTime;
@@ -25,7 +25,7 @@ public class TimeBlock {
     }
 
     /**
-     * @return Returns the time block's start time.
+     * @return ZonedDateTime representing the time block's start time.
      */
     public ZonedDateTime getStartTime() {
         return startTime;
@@ -33,14 +33,14 @@ public class TimeBlock {
 
     /**
      * Sets the time block's start time.
-     * @param startTime The time block's new start time.
+     * @param startTime ZonedDateTime representing the time block's new start time.
      */
     public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
     /**
-     * @return Returns the time block's end time.
+     * @return ZonedDateTime representing the time block's end time.
      */
     public ZonedDateTime getEndTime() {
         return endTime;
@@ -48,7 +48,7 @@ public class TimeBlock {
 
     /**
      * Sets the time block's end time.
-     * @param endTime The time block's new end time.
+     * @param endTime ZonedDateTime representing the time block's new end time.
      */
     public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
@@ -56,7 +56,7 @@ public class TimeBlock {
 
     /**
      * Converts the ZonedDateTime start time to LocalTime.
-     * @return Returns the time block's start time in LocalTime.
+     * @return LocalTime representing the time block's start time in LocalTime.
      */
     public LocalTime startTimeToLocal(){
         return startTime.toLocalTime();
@@ -64,7 +64,7 @@ public class TimeBlock {
 
     /**
      * Converts the ZonedDateTime end time to LocalTime.
-     * @return Returns the time block's end time in LocalTime.
+     * @return LocalTime representing the time block's end time in LocalTime.
      */
     public LocalTime endTimeToLocal(){
         return startTime.toLocalTime();
