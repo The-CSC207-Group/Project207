@@ -1,16 +1,14 @@
 package presenter.screenViews;
 
-import dataBundles.ContactData;
-import dataBundles.LogData;
-import presenter.entityViews.ContactView;
-import presenter.entityViews.LogView;
+import dataBundles.*;
+import presenter.entityViews.*;
 import presenter.response.PasswordResetDetails;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
-public abstract class UserScreenView extends ScreenView{
+public abstract class UserScreenView extends ScreenView {
 
     /**
      * Show user a password reset prompt with a confirmation.
@@ -65,6 +63,26 @@ public abstract class UserScreenView extends ScreenView{
         } catch (DateTimeException ignored) {
             return null;
         }
+    }
+
+    public void displayAdminInfo(AdminData adminData) {
+        AdminView adminView = new AdminView();
+        infoMessage(adminView.viewFull(adminData));
+    }
+
+    public void displayDoctorInfo(DoctorData doctorData) {
+        DoctorView doctorView = new DoctorView();
+        infoMessage(doctorView.viewFull(doctorData));
+    }
+
+    public void displayPatientInfo(PatientData patientData) {
+        PatientView patientView = new PatientView();
+        infoMessage(patientView.viewFull(patientData));
+    }
+
+    public void displaySecretaryInfo(SecretaryData secretaryData) {
+        SecretaryView secretaryView = new SecretaryView();
+        infoMessage(secretaryView.viewFull(secretaryData));
     }
 
     public void displayContactInfo(ContactData contactData) {
