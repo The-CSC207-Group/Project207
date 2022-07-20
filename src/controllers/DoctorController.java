@@ -28,6 +28,10 @@ public class DoctorController extends UserController<Doctor> {
         commands.put("show schedule", ViewSchedule());
         commands.put("show assigned appointments", ViewAllDoctorAppointments());
         commands.put("show all appointments", ViewAllAppointments());
+        commands.put("create new absence", newAbsence());
+        commands.put("delete absence", deleteAbsence());
+        commands.put("create new availability", newAvailability());
+        commands.put("delete availability", deleteAvailability());
         return commands;
     }
 
@@ -69,6 +73,12 @@ public class DoctorController extends UserController<Doctor> {
         };
     }
     private Command deleteAvailability() {
+        return (x) -> {
+            //pending presenter implementation for (
+            //new AppointmentManager(getDatabase()).removeAvailability(doctorData);
+        };
+    }
+    private Command rescheduleAvailability() {
         return (x) -> {
             //pending presenter implementation for (
             //new AppointmentManager(getDatabase()).removeAvailability(doctorData);
