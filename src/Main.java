@@ -1,5 +1,6 @@
 import controllers.Context;
 import database.Database;
+import entities.Admin;
 
 public class Main {
     public static void main(String[] args) {
