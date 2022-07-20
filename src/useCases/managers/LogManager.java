@@ -27,13 +27,13 @@ public class LogManager {
     }
 
 
-    protected LogData addLog(String message, UserData userData){
-        Log log = new Log(userData.getId(), message);
+    protected LogData addLog(String message, Integer userId){
+        Log log = new Log(userId, message);
         logDatabase.add(log);
         return new LogData(log);
     }
-    protected LogData addLog(String message, User user){
-        Log log = new Log(user.getId(), message);
+    protected LogData addLog(String message, UserData userData){
+        Log log = new Log(userData.getId(), message);
         logDatabase.add(log);
         return new LogData(log);
     }
