@@ -20,9 +20,9 @@ public class AdminController extends UserController<Admin> {
     private AdminScreenView adminScreenView = new AdminScreenView();
 
     /**
-     *
-     * @param context the context
-     * @param adminData
+     * create a new controller for state of program when admin is logged in
+     * @param context the context related to state pattern
+     * @param adminData data for the current logged in admin
      */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
