@@ -89,7 +89,6 @@ public class DoctorController extends UserController<Doctor> {
     }
     private Command deleteAvailability() {
         return (x) -> {
-            //pending presenter implementation for (
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
                             .getContactData(doctorData), new AppointmentManager(getDatabase())
                     .getAvailabilityData(doctorData));
