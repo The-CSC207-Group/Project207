@@ -8,8 +8,6 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -1,12 +1,9 @@
 package presenter.screenViews;
 
-import com.fatboyindustrial.gsonjavatime.ZoneIdConverter;
 import dataBundles.AppointmentData;
 import dataBundles.ContactData;
 import dataBundles.PrescriptionData;
-import dataBundles.TimeBlockData;
 import entities.Availability;
-import entities.TimeBlock;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.ContactView;
 import presenter.entityViews.PrescriptionView;
