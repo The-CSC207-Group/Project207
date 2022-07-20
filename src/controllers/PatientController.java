@@ -15,9 +15,8 @@ import java.util.HashMap;
  * Controller class that processes the commands that a patient passes in.
  */
 public class PatientController extends UserController<Patient> {
-    private PatientScreenView patientScreenView = new PatientScreenView();
-    private PatientData patientData;
-    private PatientController self = this;
+    private final PatientScreenView patientScreenView = new PatientScreenView();
+    private final PatientData patientData;
 
     /**
      * Creates a new controller for handling the state of the program when a patient is signed in.

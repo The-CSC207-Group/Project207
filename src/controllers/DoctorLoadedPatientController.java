@@ -9,21 +9,44 @@ import useCases.managers.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Controller class that process the commands a doctor would use on a specific patient that they loaded.
+ */
 public class DoctorLoadedPatientController extends TerminalController {
-    PatientData patientData;
-    DoctorData doctorData;
-    PrescriptionManager prescriptionManager;
-    DoctorScreenView doctorView = new DoctorScreenView();
+    private final PatientData patientData;
+    private final DoctorData doctorData;
+    private final PrescriptionManager prescriptionManager;
+    private final DoctorScreenView doctorView = new DoctorScreenView();
+    private final DoctorController previousController;
 
-    DoctorController prev;
+    /**
+     * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
+     * @param previousController stores the previous controller, allows you to easily go back to it via the back command.
+     * @param doctorData a data bundle containing the ID and attributes of the current doctor user.
+     * @param patientData a data bundle containing the ID and attributes of the current loaded patient user.
+     */
+    public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
+                                         PatientData patientData) {
+        super(context);
+        this.patientData = patientData;
+        this.doctorData = doctorData;
+        this.prescriptionManager = new PrescriptionManager(getDatabase());
+        this.previousController = previousController;
+    }
 
-
+    /**
+     * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
+     * command calls.
+     * @return HashMap of strings mapped to their respective doctor loaded patient commands.
+     */
     @Override
     public HashMap<String, Command> AllCommands() {
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
 
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("unload patient", back(prev));
+        commands.put("unload patient", back(previousController));
         commands.put("view appointments", ViewPatientAppointments());
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
@@ -37,21 +60,6 @@ public class DoctorLoadedPatientController extends TerminalController {
         commands.put("create prescription", CreatePatientPrescription());
         commands.put("delete prescription", DeletePatientPrescription());
         return commands;
-    }
-
-    /**
-     * creates a new doctor loaded patientController to be used when a doctor is dealing with a specific patient
-     * @param context reference to the context (to be used in the state pattern)
-     * @param prev previous controller. allows you to easily go back to it via the back command
-     * @param doctorData the current doctors data
-     * @param patientData the current patients data
-     */
-    public DoctorLoadedPatientController(Context context, DoctorController prev, DoctorData doctorData, PatientData patientData) {
-        super(context);
-        this.patientData = patientData;
-        this.doctorData = doctorData;
-        this.prescriptionManager = new PrescriptionManager(getDatabase());
-        this.prev = prev;
     }
 
     private Command CreatePatientPrescription() {
