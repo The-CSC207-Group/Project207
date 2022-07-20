@@ -32,6 +32,11 @@ public class LogManager {
         logDatabase.add(log);
         return new LogData(log);
     }
+    protected LogData addLog(String message, User user){
+        Log log = new Log(user.getId(), message);
+        logDatabase.add(log);
+        return new LogData(log);
+    }
 
     protected void removeUserLogs(Integer userId){
         ArrayList<Integer> logsToBeRemoved = logDatabase.stream().
