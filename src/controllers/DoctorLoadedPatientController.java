@@ -87,22 +87,16 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command ViewPatientAppointments() {
-        return (x) -> {
-            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getPatientAppointments(patientData));
-        };
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase()).getPatientAppointments(patientData));
     }
 
     private Command getReport() {
-        return (x) -> {
-            new ReportManager(getDatabase()).getReportData(patientData);
-        };
+        return (x) -> new ReportManager(getDatabase()).getReportData(patientData);
     }
 
     private Command createReport() {
-        return (x) -> {
-            new ReportManager(getDatabase()).addReport(patientData, doctorData,
-                    doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
-        };
+        return (x) -> new ReportManager(getDatabase()).addReport(patientData, doctorData,
+                doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
     }
 
     private Command deleteReport() {
