@@ -2,7 +2,6 @@ package presenter.screenViews;
 
 import presenter.response.UserCredentials;
 
-import java.util.List;
 import java.util.Scanner;
 
 public abstract class ScreenView {
