@@ -8,7 +8,7 @@ public class Main {
         Database database = new Database();
         Context c = new Context(database);
         c.run();
-//        database.getAdminDatabase().add(new Admin("root", "root"));
-//        database.save();
+        database.getAdminDatabase().add(new Admin("root", "root"));
+        database.save();
     }
 }
