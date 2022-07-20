@@ -1,5 +1,6 @@
 package entities;
 
+import dataBundles.AvailabilityData;
 import utilities.JsonSerializable;
 
 import java.time.ZoneId;

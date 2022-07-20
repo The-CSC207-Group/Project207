@@ -3,17 +3,17 @@ package controllers;
 import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
+import dataBundles.TimeBlockData;
 import entities.Doctor;
 import presenter.screenViews.DoctorScreenView;
-import useCases.managers.AppointmentManager;
-import useCases.managers.ContactManager;
-import useCases.managers.DoctorManager;
-import useCases.managers.PatientManager;
+import useCases.managers.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * Controller class that processes the commands that a patient passes in.
@@ -73,14 +73,11 @@ public class DoctorController extends UserController<Doctor> {
     }
 
     private Command ViewAllDoctorAppointments(){
-        return (x) -> {
-            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getDoctorAppointments(doctorData));
-        };
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
+                .getDoctorAppointments(doctorData));
     }
     private Command ViewAllAppointments(){
-        return (x) -> {
-            doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
-        };
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
 
     }
     private Command newAvailability() {
@@ -92,7 +89,6 @@ public class DoctorController extends UserController<Doctor> {
     }
     private Command deleteAvailability() {
         return (x) -> {
-            //pending presenter implementation for (
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
                             .getContactData(doctorData), new AppointmentManager(getDatabase())
                     .getAvailabilityData(doctorData));
@@ -101,24 +97,22 @@ public class DoctorController extends UserController<Doctor> {
                     doctorData.getAvailability().get(deleteInteger));
         };
     }
-    private Command rescheduleAvailability() {
-        return (x) -> {
-            //pending presenter implementation for (
-            //new AppointmentManager(getDatabase()).removeAvailability(doctorData);
-        };
-    }
     private Command deleteAbsence() {
         return (x) -> {
-            //pending presenter implementation for absence TimeBlock
-            //doctorView.del
-            //new AppointmentManager(getDatabase()).deleteAbsence(doctorData, );
+            Integer deleteInteger = doctorView.deleteAbsencePrompt(new ContactManager(getDatabase())
+                    .getContactData(doctorData), doctorData.getAbsence().stream()
+                    .map(TimeBlockData::new)
+                    .collect(Collectors.toCollection(ArrayList::new)));
+            new AppointmentManager(getDatabase()).deleteAbsence(doctorData, doctorData.getAbsence().get(deleteInteger));
         };
     }
     private Command newAbsence() {
         return (x) -> {
-            //pending presenter implementation for absence TimeBlock
-            doctorView.addAbsencePrompt();
-            //new AppointmentManager(getDatabase()).addAbsence(doctorData, );
+            ArrayList<Integer> absenceData = doctorView.addAbsencePrompt();
+            new AppointmentManager(getDatabase()).addAbsence(doctorData, new TimeManager()
+                    .createZonedDataTime(absenceData.get(0), absenceData.get(1),
+                    absenceData.get(2), 0, 0), new TimeManager().createZonedDataTime(absenceData.get(0),
+                    absenceData.get(1), absenceData.get(2) + absenceData.get(3), 0, 0));
         };
     }
 }

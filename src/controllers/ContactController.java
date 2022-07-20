@@ -55,9 +55,7 @@ public class ContactController extends TerminalController {
     }
 
     public Command ViewContactInformation() {
-        return (x) -> {
-            userScreenView.displayContactInfo(contactData);
-        };
+        return (x) -> userScreenView.displayContactInfo(contactData);
     }
 
     public Command ChangeName() {
