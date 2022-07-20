@@ -8,8 +8,12 @@ import presenter.entityViews.ReportView;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -131,6 +135,17 @@ public class DoctorScreenView extends UserScreenView {
         infoMessage("What day's schedule would you like to view?");
         return showLocalDatePrompt();
     }
+
+    public ArrayList<Integer> addAvailabilityPrompt() {
+        Integer day = inputInt("Enter the day of the week you would like to add your availability " +
+                "time as an integer with 1 being Monday and 7 being Sunday: ");
+        Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
+        Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
+        Integer length = inputInt("Enter the length in minute that you are available: ");
+        return new ArrayList<Integer>(Arrays.asList(day, hour, minute, length));
+    }
+
+
 
     /**
      * Load an existing patient.

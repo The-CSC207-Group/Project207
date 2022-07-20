@@ -86,7 +86,7 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command getReport() {
         return (x) -> {
-            new ReportManager(getDatabase()).getReportDataBundlesFromPatientDataBundle(patientData);
+            new ReportManager(getDatabase()).getReportData(patientData);
         };
     }
 
@@ -100,7 +100,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     private Command deleteReport() {
         return (x) -> {
             Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase()).getContactData(patientData), new
-                    ReportManager(getDatabase()).getReportDataBundlesFromPatientDataBundle(patientData));
+                    ReportManager(getDatabase()).getReportData(patientData));
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
     }
