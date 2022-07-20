@@ -85,4 +85,13 @@ public class AdminScreenView extends UserScreenView {
         infoMessage("All Logs:");
         infoMessage(logView.viewFullFromList(items));
     }
+    public String getUsersName(){
+        return input("enter users Name");
+    }
+    public String getNewPassword(){
+        return input("get new password");
+    }
+    public void userDoesNotExist(String user){
+        errorMessage(user + " is not a valid user");
+    }
 }
