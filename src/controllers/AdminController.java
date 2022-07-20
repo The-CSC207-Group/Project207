@@ -53,7 +53,7 @@ public class AdminController extends TerminalController{
         return (x) -> {
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
-            displaySuccessOnCreateAcount(secretary);
+            displaySuccessOnCreateAccount(secretary);
         };
     }
     Command CreateDoctor(){
@@ -61,7 +61,7 @@ public class AdminController extends TerminalController{
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
             DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
-            displaySuccessOnCreateAcount(doctor);
+            displaySuccessOnCreateAccount(doctor);
         };
     }
     private Command CreateAdmin(){
@@ -69,7 +69,7 @@ public class AdminController extends TerminalController{
 
             UserCredentials userCred = adminScreenView.registerAdminPrompt();
             AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
-            displaySuccessOnCreateAcount(admin);
+            displaySuccessOnCreateAccount(admin);
         };
     }
     private Command CreatePatient(){
@@ -77,10 +77,10 @@ public class AdminController extends TerminalController{
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerPatientPrompt();
             PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
-            displaySuccessOnCreateAcount(patient);
+            displaySuccessOnCreateAccount(patient);
         };
     }
-    private void displaySuccessOnCreateAcount(UserData user){
+    private void displaySuccessOnCreateAccount(UserData user){
         if (user == null){
             adminScreenView.showFailedToRegisterUserError();
         } else {
