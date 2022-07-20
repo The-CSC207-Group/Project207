@@ -2,8 +2,15 @@ package presenter.entityViews;
 
 import dataBundles.PrescriptionData;
 
+/**
+ * The Prescription entity's view.
+ */
 public class PrescriptionView extends EntityView<PrescriptionData> {
 
+    /**
+     * @param item The prescription data bundle to view.
+     * @return Returns item's full prescription view.
+     */
     @Override
     public String viewFull(PrescriptionData item) {
         return viewDateNoted(item) + "\n"

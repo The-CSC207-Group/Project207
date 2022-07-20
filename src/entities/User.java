@@ -2,8 +2,6 @@ package entities;
 
 import utilities.JsonSerializable;
 
-import java.util.ArrayList;
-
 /**
  * Represents a user.
  */

@@ -2,7 +2,6 @@ package entities;
 
 import utilities.JsonSerializable;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**

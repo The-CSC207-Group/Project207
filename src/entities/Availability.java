@@ -2,9 +2,6 @@ package entities;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Represents a doctor's availability days and times.

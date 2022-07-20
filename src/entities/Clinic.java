@@ -3,7 +3,6 @@ package entities;
 import utilities.JsonSerializable;
 
 import java.time.ZoneId;
-import java.util.regex.Pattern;
 
 /**
  * Represents a clinic.
