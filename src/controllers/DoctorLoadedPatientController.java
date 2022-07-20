@@ -87,7 +87,8 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command ViewPatientAppointments() {
-        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase()).getPatientAppointments(patientData));
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
+                .getPatientAppointments(patientData));
     }
 
     private Command getReport() {
@@ -101,8 +102,8 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command deleteReport() {
         return (x) -> {
-            Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase()).getContactData(patientData), new
-                    ReportManager(getDatabase()).getReportData(patientData));
+            Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
+                    .getContactData(patientData), new ReportManager(getDatabase()).getReportData(patientData));
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
     }

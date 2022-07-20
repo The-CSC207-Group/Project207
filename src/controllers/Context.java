@@ -8,8 +8,7 @@ import database.Database;
 public class Context {
     private TerminalController currentController;
     private boolean exit = false;
-
-    Database database;
+    private final Database database;
 
     /**
      * Initializes the context object, which initially stores the sign in controller.

@@ -31,8 +31,8 @@ public class PrescriptionListCommands {
     }
 
     class ViewPrescriptions implements Command {
-        private boolean active;
-        private boolean detail;
+        private final boolean active;
+        private final boolean detail;
 
         public ViewPrescriptions(boolean active, boolean detail) {
             this.active = active;

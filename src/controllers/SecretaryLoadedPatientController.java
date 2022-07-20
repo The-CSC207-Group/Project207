@@ -190,15 +190,13 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
 
     private Command viewActivePrescriptionsDetailed() {
-        return (x) -> {
-            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllActivePrescriptions(patientData));
-        };
+        return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
+                .getAllActivePrescriptions(patientData));
 
     }
 
     private Command viewAllPrescriptionsDetailed() {
-        return (x) -> {
-            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllPrescriptions(patientData));
-        };
+        return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
+                .getAllPrescriptions(patientData));
     }
 }
