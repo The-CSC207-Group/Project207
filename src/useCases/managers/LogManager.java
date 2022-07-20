@@ -27,8 +27,8 @@ public class LogManager {
     }
 
 
-    protected LogData addLog(String message, Integer userId){
-        Log log = new Log(userId, message);
+    protected LogData addLog(String message, UserData userData){
+        Log log = new Log(userData.getId(), message);
         logDatabase.add(log);
         return new LogData(log);
     }
