@@ -29,6 +29,11 @@ public class AdminController extends UserController<Admin> {
 
     }
 
+    /**
+     * hashmap of all commands a user can call from the string for that command
+     * @return strings along with their commands
+     */
+
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
