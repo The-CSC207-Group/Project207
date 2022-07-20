@@ -28,7 +28,7 @@ public class SecretaryManager extends UserManager<Secretary> {
      *
      * @param username String username of the new secretary, cannot exist in the database yet.
      * @param password String password for the user.
-     * @return Secretary Data consisting all information for this secretary.
+     * @return Secretary Data consisting all information for this secretary, null if username exists in database.
      */
     public SecretaryData createSecretary(String username, String password) {
         Secretary secretary = new Secretary(username, password);
