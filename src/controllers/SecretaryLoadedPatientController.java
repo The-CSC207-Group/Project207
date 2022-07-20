@@ -12,23 +12,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SecretaryLoadedPatientController extends TerminalController {
-    PatientData patientData;
-    SecretaryController secretaryController;
-    PrescriptionView prescriptionView;
-    AppointmentManager appointmentManager;
-    PrescriptionManager prescriptionManager;
-    DoctorManager doctorManager;
-    PatientManager patientManager;
-    ContactManager contactManager;
+    private PatientData patientData;
+    private SecretaryController secretaryController;
+    private PrescriptionView prescriptionView = new PrescriptionView();
+    private AppointmentManager appointmentManager;
+    private PrescriptionManager prescriptionManager;
+    private DoctorManager doctorManager;
+    private PatientManager patientManager;
+    private ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
+    /**
+     * creates a new controller for handling the state of the program when a secretary is dealing with a specific user
+     *
+     * @param context             the context of the program that stores the current controller
+     * @param secretaryController the previous controller allows you to easily go back
+     * @param patientData         the current patient
+     */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
-                                            PatientData patientData) {
+                                            PatientData patientData){
         super(context);
         this.secretaryController = secretaryController;
         this.patientData = patientData;
+
+
+        this.appointmentManager = new AppointmentManager(getDatabase());
+        this.prescriptionManager = new PrescriptionManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
+        this.patientManager = new PatientManager(getDatabase());
+        this.contactManager = new ContactManager(getDatabase());
     }
 
+    @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("view active prescription", viewActivePrescription());
@@ -155,7 +170,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
                         doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth())));
     }
 
-    public AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
+    private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
         AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
 
         return appointmentManager.bookAppointment(
@@ -177,7 +192,5 @@ public class SecretaryLoadedPatientController extends TerminalController {
         return (x) -> {
             secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllPrescriptions(patientData));
         };
-
     }
-
 }

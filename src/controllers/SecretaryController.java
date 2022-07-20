@@ -16,14 +16,18 @@ public class SecretaryController extends UserController<Secretary> {
     private final SecretaryData secretaryData;
     private final SecretaryController self = this;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-    PatientManager patientManager;
-    ContactManager contactManager;
-    DoctorManager doctorManager;
-    AppointmentManager appointmentManager;
+    private PatientManager patientManager;
+    private ContactManager contactManager;
+    private DoctorManager doctorManager;
+    private AppointmentManager appointmentManager;
 
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
         this.secretaryData = secretaryData;
+        this.appointmentManager = new AppointmentManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
+        this.contactManager = new ContactManager(getDatabase());
+        this.patientManager = new PatientManager(getDatabase());
     }
 
     @Override
