@@ -3,7 +3,6 @@ package entities;
 import utilities.JsonSerializable;
 
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 
 /**
  * Represents a contact.

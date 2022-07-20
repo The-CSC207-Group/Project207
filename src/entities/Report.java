@@ -1,7 +1,5 @@
 package entities;
 
-import java.time.ZonedDateTime;
-
 /**
  * Represents a report.
  */

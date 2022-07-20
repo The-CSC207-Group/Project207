@@ -1,16 +1,10 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
-import dataBundles.ContactData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
+import dataBundles.*;
 import presenter.response.PrescriptionDetails;
 import presenter.screenViews.DoctorScreenView;
-import useCases.managers.AppointmentManager;
-import useCases.managers.ContactManager;
-import useCases.managers.PrescriptionManager;
-import useCases.managers.ReportManager;
+import useCases.managers.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,8 +91,9 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command deleteReport() {
         return (x) -> {
-            //doctorAccess.removePatientReport(doctorAccess.getPatientReports(patientData)
-                    //.get(doctorView.deletePatientReportPrompt(patientData., doctorAccess.getPatientReports(patientData))));
+            Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase()).getContactData(patientData), new
+                    ReportManager(getDatabase()).getReportDataBundlesFromPatientDataBundle(patientData));
+            getDatabase().getReportDatabase().remove(deleteIndex);
         };
     }
 }
