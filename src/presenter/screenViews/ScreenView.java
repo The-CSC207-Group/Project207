@@ -14,8 +14,12 @@ public abstract class ScreenView {
     }
 
     protected Integer inputInt(String prompt) {
-        String string = input(prompt);
-        return Integer.getInteger(string);
+        System.out.print(prompt);
+        try {
+            return input.nextInt();
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     protected void infoMessage(String message) {

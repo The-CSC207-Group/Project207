@@ -1,12 +1,17 @@
 package presenter.screenViews;
 
+import dataBundles.ContactData;
 import dataBundles.LogData;
+import presenter.entityViews.ContactView;
 import presenter.entityViews.LogView;
+import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 
 import java.util.List;
 
 public class AdminScreenView extends UserScreenView {
+
+    ContactView contactView = new ContactView();
 
     /**
      * Register a secretary account.
@@ -85,13 +90,24 @@ public class AdminScreenView extends UserScreenView {
         infoMessage("All Logs:");
         infoMessage(logView.viewFullFromList(items));
     }
+
     public String getUsersName(){
-        return input("enter users Name");
+        infoMessage("You are about to change another user's password!");
+        return input("Enter username: ");
     }
-    public String getNewPassword(){
-        return input("get new password");
+
+    public PasswordResetDetails getNewPasswordPrompt() {
+        String password = input("Enter new password: ");
+        String confirmedPassword = input("Enter confirmed password");
+        return new PasswordResetDetails(password, confirmedPassword);
     }
-    public void userDoesNotExist(String user){
+
+    public void passwordMismatchError(ContactData userContact) {
+        String name = contactView.viewName(userContact);
+        errorMessage("Cannot change " + name + " new password ");
+    }
+
+    public void userDoesNotExistError(String user){
         errorMessage(user + " is not a valid user");
     }
 }

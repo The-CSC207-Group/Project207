@@ -135,7 +135,7 @@ public class AdminController extends TerminalController{
     private Command changeUserPassword(){
         return (x) -> {
             String name = adminScreenView.getUsersName(); // note this is can be any user not just the one using it so cant use reset password promvpt
-            String password = adminScreenView.getNewPassword();
+            String password = adminScreenView.getNewPasswordPrompt();
             if (patientManager.changeUserPassword(name, password)){
                 adminScreenView.showResetPasswordSuccessMessage();
             } else if (secretaryManager.changeUserPassword(name, password)){
@@ -145,7 +145,7 @@ public class AdminController extends TerminalController{
             } else if (doctorManager.changeUserPassword(name, password)){
                 adminScreenView.showResetPasswordSuccessMessage();
             } else {
-                adminScreenView.userDoesNotExist(name);
+                adminScreenView.userDoesNotExistError(name);
             }
         };
     }
