@@ -33,10 +33,10 @@ abstract public class TerminalController {
     }
 
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> x = new HashMap<>();
-        x.put("help", Help());
-        x.put("exit", Exit());
-        return x;
+        HashMap<String, Command> commands = new HashMap<>();
+        commands.put("help", Help());
+        commands.put("exit", Exit());
+        return commands;
     }
 
     void ProcessCommands() {
@@ -60,11 +60,6 @@ abstract public class TerminalController {
         };
     }
 
-    protected Command signOut(){
-        return (x) -> {
-            changeCurrentController(new SignInController(context));
-        };
-    }
     Command notImplemented(){
         return (x) -> {
           throw new RuntimeException();

@@ -16,8 +16,8 @@ public class SignInController extends TerminalController {
 
     SignInScreenView signInScreenView = new SignInScreenView();
 
-    public SignInController(Context parent) {
-        super(parent);
+    public SignInController(Context context) {
+        super(context);
         signInScreenView.welcomeMessage();
     }
 

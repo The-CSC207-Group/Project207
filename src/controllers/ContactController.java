@@ -1,32 +1,35 @@
-package controllers.common;
+package controllers;
 
 import controllers.Command;
+import controllers.Context;
+import controllers.TerminalController;
+import controllers.UserController;
 import dataBundles.ContactData;
-import dataBundles.UserData;
 import database.Database;
-import entities.Contact;
-import entities.User;
 import presenter.screenViews.UserScreenView;
 import useCases.managers.ContactManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ContactCommands {
+public class ContactController extends TerminalController {
 
     private final ContactData contactData;
     private final UserScreenView userScreenView;
     private final ContactManager contactManager;
+    private final UserController<?> previousController;
 
-    public ContactCommands(Database database, ContactData contactData, UserScreenView userScreenView) {
+    public ContactController(Context context, UserController<?> previousController,
+                             ContactData contactData, UserScreenView userScreenView) {
+        super(context);
+        this.previousController = previousController;
         this.contactData = contactData;
         this.userScreenView = userScreenView;
-        this.contactManager = new ContactManager(database);
+        this.contactManager = new ContactManager(getDatabase());
     }
 
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = new HashMap<>();
+        HashMap<String, Command> commands = super.AllCommands();
         commands.put("view contact information", ViewContactInformation());
         commands.put("change name", ChangeName());
         commands.put("change email", ChangeEmail());
@@ -37,6 +40,7 @@ public class ContactCommands {
         commands.put("change emergency contact email", ChangeEmergencyContactEmail());
         commands.put("change emergency contact phone number", ChangeEmergencyContactPhoneNumber());
         commands.put("change emergency contact relationship", ChangeEmergencyContactRelationship());
+        commands.put("back", back(previousController));
         return commands;
     }
 

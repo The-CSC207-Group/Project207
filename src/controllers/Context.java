@@ -20,6 +20,7 @@ public class Context {
     void changeController(TerminalController new_controller){
         currentController = new_controller;
     }
+    Database getDatabase() {return this.database;}
     void exit(){
         exit = true;
     }

@@ -300,15 +300,32 @@ public class AppointmentManager {
      */
     public void removeAvailability(DoctorData doctorData, Availability availability) {
         doctorDatabase.get(doctorData.getId()).removeAvailability(availability);
-        getDoctorAppointments(doctorData).stream()
-                .filter(x-> overlapDay(x, availability))
-                .filter(x -> overlapTime(x, availability))
-                .forEach(this::removeAppointment);
+        removeAppointmentConflictAvailability(doctorData, availability);
         //send notification to patient that their appointment was removed
     }
+
+    /**
+     *
+     * @param availability
+     * @param newStart
+     * @param newEnd
+     */
     public void adjustAvailability(Availability availability, LocalTime newStart, LocalTime newEnd){
+        if (newStart.isAfter(availability.getDoctorStartTime())){
+            getAllAppointments().stream()
+                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
+                    .filter(x ->x.getTimeBlock().startTimeToLocal().isBefore(newStart))
+                    .forEach(this::removeAppointment);
+        }
+        else if (newEnd.isBefore(availability.getDoctorEndTime())){
+            getAllAppointments().stream()
+                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
+                    .filter(x ->x.getTimeBlock().endTimeToLocal().isAfter(newEnd))
+                    .forEach(this::removeAppointment);
+        }
         availability.setDoctorStartTime(newStart);
         availability.setDoctorEndTime(newEnd);
+;
         }
 
     private boolean overlapDay(AppointmentData appointmentData, Availability availability){
@@ -320,9 +337,28 @@ public class AppointmentManager {
                 (appointmentData.getTimeBlock().startTimeToLocal().isBefore(availability.getDoctorEndTime()) &
                         appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorEndTime()));
     }
+    private void removeAppointmentConflictAvailability(DoctorData doctorData, Availability availability){
+        getDoctorAppointments(doctorData).stream()
+                .filter(x-> overlapDay(x, availability))
+                .filter(x -> overlapTime(x, availability))
+                .forEach(this::removeAppointment);
+    }
+
+    /**
+     *
+     * @param doctorData
+     * @param absence
+     */
     public void deleteAbsence(DoctorData doctorData, TimeBlock absence){
         doctorDatabase.get(doctorData.getId()).removeAbsence(absence);
     }
+
+    /**
+     *
+     * @param doctorData
+     * @param startTime
+     * @param endTime
+     */
     public void addAbsence(DoctorData doctorData, ZonedDateTime startTime, ZonedDateTime endTime){
         TimeBlock proposedTime = new TimeBlock(startTime, endTime);
         doctorDatabase.get(doctorData.getId()).addAbsence(new TimeBlock(startTime, endTime));
