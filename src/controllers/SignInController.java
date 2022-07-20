@@ -8,7 +8,6 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
 import useCases.managers.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -75,15 +74,4 @@ public class SignInController extends TerminalController {
             signInScreenView.viewClinicInfo(clinicManager.clinicData());
         };
     }
-
-    class BackCommand implements Command{
-
-        @Override
-        public void execute(ArrayList<String> args) {
-            changeCurrentController(new SignInController(getContext()));
-        }
-    }
-
-
-
 }
