@@ -39,4 +39,8 @@ public class SignInScreenView extends ScreenView {
     public void showLoginError() {
         errorMessage("Incorrect username or password, please try again...");
     }
+
+    public void showSuccessLogin(String user) {
+        successMessage("Logged in to " + user + " successfully!");
+    }
 }

@@ -13,8 +13,8 @@ public class Prescription extends Note {
      * Creates an instance of Prescription.
      * @param header The header of the prescription.
      * @param body The body of the prescription.
-     * @param patientId The id of the patient who this prescription belongs to.
-     * @param doctorId The id of the doctor who created this prescription.
+     * @param patientId The id of the patient who the prescription was created for.
+     * @param doctorId The id of the doctor who created the prescription.
      * @param expiryDate The prescription's expiry date.
      */
     public Prescription(String header, String body, Integer patientId, Integer doctorId,
