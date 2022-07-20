@@ -1,18 +1,16 @@
 package controllers;
 
-import dataBundles.AdminData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import presenter.response.PasswordResetDetails;
-import presenter.response.UserCredentials;
 import presenter.screenViews.DoctorScreenView;
-import useCases.accessClasses.DoctorAccess;
-import useCases.managers.*;
+import useCases.managers.AppointmentManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.LogManager;
+import useCases.managers.PatientManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class DoctorController extends TerminalController{
     private DoctorScreenView doctorView = new DoctorScreenView();

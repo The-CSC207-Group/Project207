@@ -7,17 +7,17 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import presenter.response.PrescriptionDetails;
 import presenter.screenViews.DoctorScreenView;
-import useCases.accessClasses.DoctorAccess;
-import useCases.managers.*;
+import useCases.managers.AppointmentManager;
+import useCases.managers.ContactManager;
+import useCases.managers.PrescriptionManager;
+import useCases.managers.ReportManager;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DoctorLoadedPatientController extends TerminalController {
     PatientData patientData;
     DoctorData doctorData;
-    DoctorAccess doctorAccess;
     PrescriptionManager prescriptionManager;
     DoctorScreenView doctorView = new DoctorScreenView();
 
@@ -48,7 +48,6 @@ public class DoctorLoadedPatientController extends TerminalController {
         super(parent);
         this.patientData = patientData;
         this.doctorData = doctorData;
-        doctorAccess = new DoctorAccess(getDatabase());
         this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.prev = prev;
     }
