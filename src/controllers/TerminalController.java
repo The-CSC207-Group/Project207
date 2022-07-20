@@ -7,51 +7,57 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Controller class for processing the commands passed in to the terminal.
+ */
 abstract public class TerminalController {
 
     private TerminalScreenView terminalScreenView = new TerminalScreenView();
     private Context context;
 
     /**
-     * creates a new controller
-     * @param parent the backreference to the context (neccessary for the state command)
+     * Creates a new controller for handling the state of the program where commands are being passed into the terminal.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
      */
-    public TerminalController(Context parent) {
-        this.context = parent;
+    public TerminalController(Context context) {
+        this.context = context;
     }
 
     /**
-     * gets the context (neccesary for the state command)
-     * @return context
+     * Gets the context (necessary for the state command).
+     * @return Context of the current program.
      */
     Context getContext() {
         return context;
     }
 
     /**
-     * changes the current controller in the context to new controller
-     * @param newController the controller we are switching to
+     * Changes the current controller in the context to new controller.
+     * @param newController the controller we are switching to.
      */
     void changeCurrentController(TerminalController newController){
         context.changeController(newController);
     }
 
     /**
-     * returns the database
-     * @return database of the program
+     * Returns the database.
+     * @return Database of the program.
      */
     Database getDatabase() {
         return context.database;
     }
 
+    /**
+     * Exits the program.
+     */
     private void exit() {
         context.exit();
     }
 
     /**
-     * a Hashmap of commands that can be invoked through their equivalent strings.
-     * @return HashMap from strings to Commands
+     * Creates a hashmap of the string representations of commands mapped to the method that each command calls.
+     * @return HashMap of strings mapped to their respective commands.
      */
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = new HashMap<>();
@@ -61,7 +67,7 @@ abstract public class TerminalController {
     }
 
     /**
-     * processes a single command
+     * Prompts the user to enter a single command and processes that command.
      */
     private void ProcessCommands() {
         getDatabase().save();
@@ -75,27 +81,27 @@ abstract public class TerminalController {
     }
 
     /**
-     * runs the related controller
+     * Runs the process of the related controller.
      */
     public void run() {
         ProcessCommands();
     }
 
     /**
-     * hands control of the program to prev
-     * @param prev previus controller
-     * @return Command that goes back
+     * Hands control of the program to the previous controller.
+     * @param previousController the object of the previous controller.
+     * @return Command that goes back to the previous controller.
      */
-    protected Command back(TerminalController prev){
+    protected Command back(TerminalController previousController){
         return (x) -> {
-            changeCurrentController(prev);
+            changeCurrentController(previousController);
         };
     }
 
 
     /**
-     * returns the command that displays a list of options that the user can use
-     * @return help command
+     * Returns the command that displays a list of options that the user can use.
+     * @return presenter output of help commands.
      */
     private Command Help() {
         return (x) -> {
@@ -105,8 +111,8 @@ abstract public class TerminalController {
     }
 
     /**
-     * returns the exit a Command which allows you to exit the program
-     * @return
+     * Returns the exit command which allows you to exit the program.
+     * @return exit method call.
      */
     protected Command Exit() {
         return (x) -> {

@@ -19,6 +19,13 @@ public class ContactController extends TerminalController {
     private final ContactManager contactManager;
     private final UserController<?> previousController;
 
+    /**
+     * creates a contact controller object that manages the commands a user performs on their contact information
+     * @param context the class object that manages the process of switching between controllers.
+     * @param previousController the object of the controller that switched into this contact controller object.
+     * @param contactData a data bundle storing the ID and attributes of the contact object associated with the current user
+     * @param userScreenView the presenter object of the user that this controller's contact data is associated with
+     */
     public ContactController(Context context, UserController<?> previousController,
                              ContactData contactData, UserScreenView userScreenView) {
         super(context);
@@ -28,6 +35,10 @@ public class ContactController extends TerminalController {
         this.contactManager = new ContactManager(getDatabase());
     }
 
+    /**
+     * creates a hashmap of all string representations of contact commands mapped to the method that each command calls
+     * @return HashMap of strings mapped to their respective contact commands
+     */
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("view contact information", ViewContactInformation());

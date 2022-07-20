@@ -20,9 +20,10 @@ public class AdminController extends UserController<Admin> {
     private AdminScreenView adminScreenView = new AdminScreenView();
 
     /**
-     * create a new controller for state of program when admin is logged in
-     * @param context the context related to state pattern
-     * @param adminData data for the current logged in admin
+     * creates an admin controller object that manages the commands used by the current admin user.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
+     * @param adminData a data bundle containing the ID and attributes of the current admin user.
      */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
@@ -35,10 +36,9 @@ public class AdminController extends UserController<Admin> {
     }
 
     /**
-     * hashmap of all commands a user can call from the string for that command
-     * @return strings along with their commands
+     * creates a hashmap of all string representations of admin commands mapped to the method that each command calls.
+     * @return HashMap of strings mapped to their respective admin commands.
      */
-
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();

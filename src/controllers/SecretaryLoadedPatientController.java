@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Controller class that process the commands a secretary would use on a specific patient that they loaded.
+ */
 public class SecretaryLoadedPatientController extends TerminalController {
     private PatientData patientData;
     private SecretaryController secretaryController;
@@ -23,11 +26,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     /**
-     * creates a new controller for handling the state of the program when a secretary is dealing with a specific user
-     *
-     * @param context             the context of the program that stores the current controller
-     * @param secretaryController the previous controller allows you to easily go back
-     * @param patientData         the current patient
+     * Creates a new controller for handling the state of the program when a secretary is dealing with a specific user.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
+     * @param secretaryController the previous controller object, allowing you to easily go back.
+     * @param patientData a data bundle containing the ID and attributes of the current loaded patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData){
@@ -43,6 +46,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
         this.contactManager = new ContactManager(getDatabase());
     }
 
+    /**
+     * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that each
+     * command calls.
+     * @return HashMap of strings mapped to their respective secretary loaded patient commands.
+     */
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
