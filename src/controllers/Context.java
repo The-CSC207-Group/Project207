@@ -37,7 +37,7 @@ public class Context {
      * @param new_controller the new controller that the context will store.
      */
     public void changeController(TerminalController new_controller){
-        terminalScreenView.showHelpPrompt();
+        //terminalScreenView.showHelpPrompt();
         currentController = new_controller;
     }
 
