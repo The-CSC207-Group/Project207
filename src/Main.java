@@ -1,7 +1,5 @@
 import controllers.Context;
 import database.Database;
-import entities.Admin;
-import entities.Availability;
 import entities.Clinic;
 import entities.TimeBlock;
 import useCases.managers.AdminManager;
