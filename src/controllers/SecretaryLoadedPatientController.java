@@ -66,6 +66,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("cancel appointment", cancelAppointment());
         commands.put("active prescription detail", viewActivePrescriptionsDetailed());
         commands.put("all prescription detail", viewAllPrescriptionsDetailed());
+        commands.put("back", back(secretaryController));
         return commands;
     }
 
@@ -203,4 +204,5 @@ public class SecretaryLoadedPatientController extends TerminalController {
         return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
                 .getAllPrescriptions(patientData));
     }
+
 }
