@@ -14,15 +14,12 @@ public class Database {
     private final DataMapperGateway<Doctor> doctorDatabase;
     private final DataMapperGateway<Secretary> secretaryDatabase;
     private final DataMapperGateway<Admin> adminDatabase;
-
     private final DataMapperGateway<Prescription> prescriptionDatabase;
     private final DataMapperGateway<Report> reportDatabase;
-
     private final DataMapperGateway<Appointment> appointmentDatabase;
     private final DataMapperGateway<Log> logDatabase;
     private final DataMapperGateway<Contact> contactDatabase;
     private final DataMapperGateway<Clinic> clinicDatabase;
-
     private final List<DataMapperGateway<?>> databaseList;
 
     public Database() {

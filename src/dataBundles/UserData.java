@@ -7,10 +7,11 @@ import entities.User;
  * @param <T> extends User - to be specified within each end user data class.
  */
 public abstract class UserData<T extends User> extends DataBundle {
+
     /**
      * User being stored
      */
-    T user;
+    private final T user;
 
     /**
      * Constructor. Calls the DataBundle constructor which stores the user in the parent class and

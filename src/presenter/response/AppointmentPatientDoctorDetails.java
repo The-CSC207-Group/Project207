@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public final class AppointmentPatientDoctorDetails {
+
     private final String patientUsername;
     private final String doctorUsername;
 

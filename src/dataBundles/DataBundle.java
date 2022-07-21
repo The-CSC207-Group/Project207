@@ -23,4 +23,5 @@ public abstract class DataBundle {
     public Integer getId() {
         return entity.getId();
     }
+
 }

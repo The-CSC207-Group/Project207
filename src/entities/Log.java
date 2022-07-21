@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
  * Represents a user's log.
  */
 public class Log extends JsonSerializable {
+
     private final Integer userId;
     private final LocalDateTime time;
     private final String message;
@@ -43,4 +44,5 @@ public class Log extends JsonSerializable {
     public Integer getUserId() {
         return userId;
     }
+
 }

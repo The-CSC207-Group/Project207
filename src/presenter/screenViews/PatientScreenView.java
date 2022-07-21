@@ -56,4 +56,5 @@ public class PatientScreenView extends UserScreenView {
         infoMessage("Booked Appointments:");
         infoMessage(output);
     }
+
 }

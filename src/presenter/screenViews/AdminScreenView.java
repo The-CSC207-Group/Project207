@@ -132,4 +132,5 @@ public class AdminScreenView extends UserScreenView {
     public void userDoesNotExistError(String user){
         errorMessage(user + " is not a valid user");
     }
+
 }

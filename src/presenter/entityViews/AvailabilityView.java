@@ -41,4 +41,5 @@ public class AvailabilityView extends EntityView<AvailabilityData> {
     public String viewDoctorEndTime(AvailabilityData item) {
         return "Doctor end time is " + item.getDoctorEndTime() + ".";
     }
+
 }

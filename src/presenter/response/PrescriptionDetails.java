@@ -5,6 +5,7 @@ import java.util.Objects;
 
 
 public final class PrescriptionDetails {
+
     private final String header;
     private final String body;
     private final ZonedDateTime expiryDate;
@@ -49,6 +50,5 @@ public final class PrescriptionDetails {
                 "body=" + body + ", " +
                 "expiryDate=" + expiryDate + ']';
     }
-
 
 }

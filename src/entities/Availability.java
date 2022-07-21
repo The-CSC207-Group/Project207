@@ -7,6 +7,7 @@ import java.time.LocalTime;
  * Represents a doctor's availability days and times.
  */
 public class Availability {
+
     private final DayOfWeek dayOfWeek;
     private LocalTime doctorStartTime;
     private LocalTime doctorEndTime;
@@ -59,4 +60,5 @@ public class Availability {
     public void setDoctorEndTime(LocalTime endTime) {
         this.doctorEndTime = endTime;
     }
+
 }

@@ -17,7 +17,7 @@ abstract public class TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program where commands are being passed into the terminal.
-     * @param context Context a reference to the context object, which stores the current controller and allows for
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
      */
     public TerminalController(Context context) {

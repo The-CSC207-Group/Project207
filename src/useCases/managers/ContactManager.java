@@ -163,6 +163,9 @@ public class ContactManager {
         return true;
     }
 
+    /**
+     * @return Integer - id of the new empty contact in the database.
+     */
     protected Integer addEmptyContactToDatabase(){
         return contactDatabase.add(new Contact());
     }

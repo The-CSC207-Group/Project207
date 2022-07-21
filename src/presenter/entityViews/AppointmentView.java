@@ -17,4 +17,5 @@ public class AppointmentView extends EntityView<AppointmentData> {
         TimeBlockData timeBlock = item.getTimeBlock();
         return "Appointment starting at " + timeBlock.getStartTime() + " and ending at " + timeBlock.getEndTime() + ".";
     }
+
 }

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  * Wrapper class for Clinic entity.
  */
 public class ClinicData {
+
     private final Clinic clinic;
 
     /**
@@ -64,9 +65,5 @@ public class ClinicData {
     public Integer getClinicId() {
         return clinic.getId();
     }
-
-
-
-
 
 }

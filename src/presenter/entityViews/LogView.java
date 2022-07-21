@@ -15,4 +15,5 @@ public class LogView extends EntityView<LogData> {
     public String viewFull(LogData item) {
         return "Time: " + item.getTime() + ", Message: " + item.getMessage();
     }
+
 }

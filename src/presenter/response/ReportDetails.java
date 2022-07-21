@@ -3,6 +3,7 @@ package presenter.response;
 import java.util.Objects;
 
 public final class ReportDetails {
+
     private final String header;
     private final String body;
 
@@ -39,4 +40,5 @@ public final class ReportDetails {
                 "header=" + header + ", " +
                 "body=" + body + ']';
     }
+
 }
