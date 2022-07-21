@@ -151,7 +151,7 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public Integer deleteAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
-        infoMessage("Viewing patient " + patientName + "appointments to delete:");
+        infoMessage("Viewing patient " + patientName + " appointments to delete:");
         new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
         return deleteItemFromEnumerationPrompt("appointment");
     }
@@ -165,9 +165,9 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
-        infoMessage("Viewing patient " + patientName + "appointments to reschedule:");
+        infoMessage("Viewing patient " + patientName + " appointments to reschedule:");
         new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
-        return rescheduleItemFromEnumerationPrompt();
+        return rescheduleAppointmentFromEnumerationPrompt();
     }
 
     /**
@@ -175,7 +175,7 @@ public class SecretaryScreenView extends UserScreenView {
      * @return an index corresponding to the selected appointment
      *         or null, if index is malformed/typed incorrectly by user.
      */
-    private Integer rescheduleItemFromEnumerationPrompt() {
+    private Integer rescheduleAppointmentFromEnumerationPrompt() {
         warningMessage("This action cannot be undone!");
         return inputInt("Input appointment number to reschedule: ");
     }
