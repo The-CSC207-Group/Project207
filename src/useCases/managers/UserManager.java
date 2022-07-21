@@ -78,12 +78,13 @@ public abstract class UserManager<T extends User> {
         return typeTDatabase.getByCondition(x -> x.getUsername().equals(username)) != null;
     }
     protected T signInHelper(String username, String password){
-        T user = getUser(username);
-        if (user == null){return null;}
-        if (user.comparePassword(password)){
+        if (canSignIn(username, password)) {
+            T user = getUser(username);
             logManager.addLog("signed in", user.getId());
-            return user;}
-        return null;
+            return user;
+        } else  {
+            return null;
+        }
     }
     public boolean canSignIn(String username, String password) {
         T user = getUser(username);
