@@ -3,6 +3,7 @@ package controllers;
 import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
 import presenter.response.PrescriptionDetails;
+import presenter.response.ReportDetails;
 import presenter.screenViews.DoctorScreenView;
 import useCases.managers.*;
 
@@ -97,8 +98,10 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command createReport() {
-        return (x) -> new ReportManager(getDatabase()).addReport(patientData, doctorData,
-                doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
+        return (x) -> {
+            new ReportManager(getDatabase()).addReport(patientData, doctorData,
+                    doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
+        };
     }
 
     private Command deleteReport() {

@@ -4,6 +4,7 @@ import dataBundles.AvailabilityData;
 import utilities.JsonSerializable;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 /**
  * Represents a clinic.
@@ -15,7 +16,7 @@ public class Clinic extends JsonSerializable {
     private String address;
     private ZoneId timeZone;
     //used to store the operating hours of the clinic for availability calculations
-    private TimeBlock clinicHours;
+    private ArrayList<Availability> clinicHours;
 
     /**
      * Creates an instance of Clinic
@@ -25,7 +26,7 @@ public class Clinic extends JsonSerializable {
      * @param timeZone ZoneId representing the time zone of the clinic.
      * @param clinicHours TimeBlock representing the clinic's hours of operation.
      */
-    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone, TimeBlock clinicHours) {
+    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone, ArrayList<Availability> clinicHours) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -96,7 +97,7 @@ public class Clinic extends JsonSerializable {
     /**
      * @return TimeBlock representing the clinic's hours of operation.
      */
-    public TimeBlock getClinicHours() {
+    public ArrayList<Availability> getClinicHours() {
         return clinicHours;
     }
 
@@ -104,7 +105,7 @@ public class Clinic extends JsonSerializable {
      * Sets the clinic's hours of operation.
      * @param clinicHours TimeBlock representing the clinic's new hours of operation.
      */
-    public void setClinicHours(TimeBlock clinicHours) {
-        this.clinicHours = clinicHours;
+    public void addClinicHours(Availability clinicHours) {
+        this.clinicHours.add(clinicHours);
     }
 }
