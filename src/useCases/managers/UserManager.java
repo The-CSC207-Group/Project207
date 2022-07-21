@@ -8,13 +8,22 @@ import entities.User;
 
 import java.util.Optional;
 
+/**
+ * Abstract use case class for handling operations and data of users of all types.
+ * @param <T> User - the entity class of the type of user that a specific manager class manages.
+ */
 public abstract class UserManager<T extends User> {
+
     private final DataMapperGateway<T> typeTDatabase;
     private final DataMapperGateway<Contact> contactDatabase;
-
     private final ContactManager contactManager;
-
     private final LogManager logManager;
+
+    /**
+     * Initializes the user manager.
+     * @param typeTDatabase DataMapperGateway<T> where T extends User - the database of the specified T user type.
+     * @param database Database - the collection of all entity databases in the program.
+     */
     public UserManager(DataMapperGateway<T> typeTDatabase, Database database){
         this.typeTDatabase = typeTDatabase;
         this.contactDatabase = database.getContactDatabase();
@@ -37,14 +46,6 @@ public abstract class UserManager<T extends User> {
         }
         return false;
     }
-    public boolean changeUserPassword(String name, String password){
-        T user = getUser(name);
-        if (user != null) {
-            user.setPassword(password);
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Delete a user from their respective database. Their contact info is also removed from the database.
@@ -61,8 +62,13 @@ public abstract class UserManager<T extends User> {
         }
         return false;
     }
-    public Boolean deleteUserByData(UserData<T> user){
-        return deleteUser(user.getUsername());
+
+    /**
+     * Deletes a user passed into the parameters
+     * @param user UserData<T> where T extends User - the data bundle representing the user that is to be deleted.
+     */
+    public void deleteUserByData(UserData<T> user){
+        deleteUser(user.getUsername());
     }
 
     private T getUser(String username){
@@ -77,6 +83,22 @@ public abstract class UserManager<T extends User> {
     public Boolean doesUserExist(String username){
         return typeTDatabase.getByCondition(x -> x.getUsername().equals(username)) != null;
     }
+
+    /**
+     * Returns the data bundle representing the user associated with the passed in username is the password is correct.
+     * @param username String - username of the user that wants to sign in.
+     * @param password String - password of the user that wants to sign in.
+     * @return UserData<T> where T extends User - the data bundle representing the user that wants to sign in.
+     */
+    public abstract UserData<T> signIn(String username, String password);
+
+    /**
+     * Returns the data bundle representing the user associated with the passed in username.
+     * @param username String - username of the specified user.
+     * @return UserData<T> where T extends User - the data bundle representing the specified user.
+     */
+    public abstract UserData<T> getUserData(String username);
+
     protected T signInHelper(String username, String password){
         T user = getUser(username);
         if (user == null){return null;}
@@ -85,8 +107,7 @@ public abstract class UserManager<T extends User> {
             return user;}
         return null;
     }
-    public abstract UserData<T> signIn(String username, String password);
-    public abstract UserData<T> getUserData(String username);
+
     protected Optional<T> getUserHelper(String username){
         return Optional.ofNullable(getUser(username));
     }
