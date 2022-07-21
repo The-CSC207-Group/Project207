@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Stream;
@@ -30,11 +31,12 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     }
 
     public JsonDatabase(Class<T> type, KeyDelegator keyDelegator, File folder) {
+        this.type = type;
+
         if (keyDelegator.getUniqueFieldMethodName() != null) {
             keyDelegator.setUniqueFieldMethod(getMethodByName(keyDelegator.getUniqueFieldMethodName()));
         }
 
-        this.type = type;
         GsonBuilder builder = Converters.registerAll(new GsonBuilder());
         builder.registerTypeAdapter(getClassByName("java.time.ZoneRegion"), new ZoneIdConverter());
         this.gson = builder.create();
@@ -47,7 +49,7 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     private Method getMethodByName(String name) {
         try {
             return type.getMethod(name);
-        } catch (Exception ignored) {
+        } catch (NoSuchMethodException ignored) {
             return null;
         }
     }
