@@ -305,6 +305,7 @@ public class AppointmentManager {
 
     private boolean isNoTimeBlockConflictAbsence(Integer doctorId,
                                                  TimeBlock proposedTime){
+
         return timeConflictList(doctorDatabase.get(doctorId).getAbsence(), proposedTime).isEmpty();
     }
 
@@ -367,11 +368,12 @@ public class AppointmentManager {
         return true;
     }
     private boolean isWithinAvailability(TimeBlock proposedTime, DoctorData doctorData){
-        return !doctorData.getAvailability().stream()
+        ArrayList<AvailabilityData> s = doctorData.getAvailability().stream()
                 .filter(x-> proposedTime.getStartTime().getDayOfWeek().equals(x.getDayOfWeek()))
                 .filter(x -> x.getDoctorStartTime().isBefore(proposedTime.startTimeToLocal()) & x.getDoctorEndTime()
                         .isAfter(proposedTime.endTimeToLocal()))
-                .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
+                .collect(Collectors.toCollection(ArrayList::new));
+        return s.isEmpty();
 
     }
     private ArrayList<Appointment> getAppointments(){
