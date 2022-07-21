@@ -23,6 +23,7 @@ public class Context {
 
     /**
      * Starts the program loop, running the controller stored in the context until the program is exited.
+     * Context.run() should only be called once at the start of the program.
      */
     public void run(){
         currentController.welcomeMessage();
