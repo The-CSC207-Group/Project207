@@ -33,7 +33,7 @@ public class SecretaryManager extends UserManager<Secretary> {
      */
     public SecretaryData createSecretary(String username, String password) {
         Secretary secretary = new Secretary(username, password, newContactInDatabase());
-        secretaryDatabase.add(secretary);
+        if (secretaryDatabase.add(secretary) == null){return null;}
         return new SecretaryData(secretary);
     }
 
