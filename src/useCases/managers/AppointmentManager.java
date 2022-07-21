@@ -64,8 +64,7 @@ public class AppointmentManager {
                 .filter(x -> x.getStartTime().getDayOfYear()
                         == proposedTime.getStartTime().getDayOfYear())
                 .filter(x -> x.getStartTime().isBefore(proposedTime.getStartTime()) &
-                        x.getEndTime().isAfter(proposedTime.getStartTime()))
-                .filter(x -> x.getStartTime().isAfter(proposedTime.getStartTime()) &
+                        x.getEndTime().isAfter(proposedTime.getStartTime()) | x.getStartTime().isAfter(proposedTime.getStartTime()) &
                         x.getStartTime().isBefore(proposedTime.getEndTime()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -323,19 +322,19 @@ public class AppointmentManager {
 //;
 //        }
 
-    private boolean overlapDay(AppointmentData appointmentData, Availability availability){
-        return appointmentData.getTimeBlock().getStartTime().getDayOfWeek().equals(availability.getDayOfWeek());
+    private boolean overlapDay(TimeBlockData timeBlock, Availability availability){
+        return timeBlock.getStartTime().getDayOfWeek().equals(availability.getDayOfWeek());
     }
-    private boolean overlapTime (AppointmentData appointmentData, Availability availability){
-        return (appointmentData.getTimeBlock().startTimeToLocal().isBefore(availability.getDoctorStartTime()) &
-                appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorStartTime())) |
-                (appointmentData.getTimeBlock().startTimeToLocal().isBefore(availability.getDoctorEndTime()) &
-                        appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorEndTime()));
+    private boolean overlapTime (TimeBlockData timeBlock, Availability availability){
+        return (timeBlock.startTimeToLocal().isBefore(availability.getDoctorStartTime()) &
+                timeBlock.endTimeToLocal().isAfter(availability.getDoctorStartTime())) |
+                (timeBlock.startTimeToLocal().isBefore(availability.getDoctorEndTime()) &
+                        timeBlock.endTimeToLocal().isAfter(availability.getDoctorEndTime()));
     }
     private void removeAppointmentConflictAvailability(DoctorData doctorData, Availability availability){
         getDoctorAppointments(doctorData).stream()
-                .filter(x-> overlapDay(x, availability))
-                .filter(x -> overlapTime(x, availability))
+                .filter(x-> overlapDay(x.getTimeBlock(), availability))
+                .filter(x -> overlapTime(x.getTimeBlock(), availability))
                 .forEach(this::removeAppointment);
     }
 
@@ -361,8 +360,8 @@ public class AppointmentManager {
                 .filter(x -> x.getTimeBlock().getStartTime().getDayOfYear()
                         == proposedTime.getStartTime().getDayOfYear())
                 .filter(x -> x.getTimeBlock().getStartTime().isBefore(proposedTime.getStartTime()) &
-                        x.getTimeBlock().getEndTime().isAfter(proposedTime.getStartTime()))
-                .filter(x -> x.getTimeBlock().getStartTime().isAfter(proposedTime.getStartTime()) &
+                        x.getTimeBlock().getEndTime().isAfter(proposedTime.getStartTime()) | x.getTimeBlock().
+                        getStartTime().isAfter(proposedTime.getStartTime()) &
                         x.getTimeBlock().getStartTime().isBefore(proposedTime.getEndTime()))
                 .forEach(this::removeAppointment);
     }
