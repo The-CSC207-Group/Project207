@@ -36,7 +36,7 @@ public class SecretaryManagerTests {
                 "jim@gmail.com", "87654321",
                 "father");
 
-        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+        SecretaryManager secretaryManager = new SecretaryManager(originalDatabase);
 
         SecretaryData secretaryData = secretaryManager.createSecretary(username, password);
 
@@ -64,7 +64,7 @@ public class SecretaryManagerTests {
         Secretary secretary = new
                 Secretary("jeff", "123", 123456789);
 
-        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+        SecretaryManager secretaryManager = new SecretaryManager(originalDatabase);
 
         Integer secretaryID = secretaryDatabase.add(secretary);
 
@@ -86,7 +86,7 @@ public class SecretaryManagerTests {
         Secretary secretary = new
                 Secretary("jeff", "123", 123456789);
 
-        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+        SecretaryManager secretaryManager = new SecretaryManager(originalDatabase);
 
         SecretaryData secretaryData = new SecretaryData(secretary);
 
@@ -111,18 +111,14 @@ public class SecretaryManagerTests {
         Secretary originalSecretary = new
                 Secretary("jeff", "123", 123456789);
 
-        for (int i = 1; i <= 3; i++) {
-            originalSecretary.addLogId(i);
-        }
-
-        SecretaryManager secretaryManager = new SecretaryManager(secretaryDatabase, contactDatabase);
+        SecretaryManager secretaryManager = new SecretaryManager(originalDatabase);
 
         Integer secretaryID = secretaryDatabase.add(originalSecretary);
 
         assertEquals("Original secretary should share the same ID from the database",
                 originalSecretary.getId(), secretaryID);
 
-        Secretary loadedSecretary = secretaryManager.getUser(originalSecretary.getUsername());
+        Secretary loadedSecretary = secretaryDatabase.get(originalSecretary.getId());
 
         /* Testing if the loaded secretary and the original secretary are equal by testing whether all the fields of both
         objects are equal */
@@ -130,8 +126,6 @@ public class SecretaryManagerTests {
                 originalSecretary.getId(), loadedSecretary.getId());
         assertEquals("Original secretary and loaded secretary should share the same unique username",
                 originalSecretary.getUsername(), loadedSecretary.getUsername());
-        assertEquals("Original secretary and loaded secretary should share the same logs",
-                originalSecretary.getLogIds(), loadedSecretary.getLogIds());
         assertEquals("Original secretary and loaded secretary should share the same contact information",
                 originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
         assertTrue("Original secretary and loaded secretary should share the same password",

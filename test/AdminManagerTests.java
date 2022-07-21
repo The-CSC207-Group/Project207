@@ -106,10 +106,6 @@ public class AdminManagerTests {
         Admin originalAdmin = new
                 Admin("jeff", "123", 123456789);
 
-        for (int i = 1; i <= 3; i++) {
-            originalAdmin.addLogId(i);
-        }
-
         AdminManager adminManager = new AdminManager(originalDatabase);
 
         Integer adminID = adminDatabase.add(originalAdmin);
@@ -117,7 +113,7 @@ public class AdminManagerTests {
         assertEquals("Original admin should share the same ID from the database",
                 originalAdmin.getId(), adminID);
 
-        Admin loadedAdmin = adminManager.getUser(originalAdmin.getUsername());
+        Admin loadedAdmin = adminDatabase.get(originalAdmin.getId());
 
         /* Testing if the loaded admin and the original admin are equal by testing whether all the fields of both
         objects are equal */
@@ -125,8 +121,6 @@ public class AdminManagerTests {
                 originalAdmin.getId(), loadedAdmin.getId());
         assertEquals("Original admin and loaded admin should share the same unique username",
                 originalAdmin.getUsername(), loadedAdmin.getUsername());
-        assertEquals("Original admin and loaded admin should share the same logs",
-                originalAdmin.getLogIds(), loadedAdmin.getLogIds());
         assertEquals("Original admin and loaded admin should share the same contact information",
                 originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
         assertTrue("Original admin and loaded admin should share the same password",
