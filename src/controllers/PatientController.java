@@ -38,7 +38,8 @@ public class PatientController extends UserController<Patient> {
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("view appointments", ViewAppointments());
+        //pending implementation for phase 2
+        //commands.put("view appointments", ViewAppointments());
 
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
         HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
@@ -48,13 +49,13 @@ public class PatientController extends UserController<Patient> {
 
         return commands;
     }
-
-    private Command ViewAppointments() {
-        AppointmentManager appointmentManager = new AppointmentManager(getDatabase());
-        return (x) -> {
-            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            patientScreenView.viewAppointments(appointments);
-        };
-    }
+//pending implementation for phase 2
+//    private Command ViewAppointments() {
+//        AppointmentManager appointmentManager = new AppointmentManager(getDatabase());
+//        return (x) -> {
+//            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
+//            patientScreenView.viewAppointments(appointments);
+//        };
+//    }
 
 }

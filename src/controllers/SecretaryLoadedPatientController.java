@@ -71,19 +71,14 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command viewActivePrescription() {
         return (x) -> {
             ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
-            for (PrescriptionData prescriptionData : prescriptions) {
-                prescriptionView.viewFull(prescriptionData);
-            }
-
+            secretaryScreenView.viewPrescription(prescriptions);
         };
     }
 
     private Command viewPrescriptionHistory() {
         return (x) -> {
             ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllPrescriptions(patientData);
-            for (PrescriptionData prescriptionData : prescriptions) {
-                prescriptionView.viewFull(prescriptionData);
-            }
+            secretaryScreenView.viewPrescription(prescriptions);
         };
     }
 
@@ -105,7 +100,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-
     private Command bookAppointment() {
         return (x) -> {
             LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
@@ -189,14 +183,14 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
 
     private Command viewActivePrescriptionsDetailed() {
-        return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
+        return (x) -> secretaryScreenView.viewPrescriptionDetail(prescriptionManager
                 .getAllActivePrescriptions(patientData));
 
     }
 
     private Command viewAllPrescriptionsDetailed() {
-        return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
-                .getAllPrescriptions(patientData));
+        ArrayList<PrescriptionData> prescriptionData = prescriptionManager.getAllPrescriptions(patientData);
+        return (x) -> secretaryScreenView.viewPrescriptionDetail(prescriptionData);
     }
 
 }

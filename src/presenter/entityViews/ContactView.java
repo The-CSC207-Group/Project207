@@ -61,7 +61,15 @@ public class ContactView extends EntityView<ContactData> {
      * @return String representing the contact's birthday as a view.
      */
     public String viewBirthday(ContactData item) {
-        return "Date of Birth: " + getDefaultStringNA(item.getBirthday().toString());
+        String birthday;
+
+        if (item.getBirthday() != null) {
+            birthday = item.getBirthday().toString();
+        } else {
+            birthday = null;
+        }
+
+        return "Date of Birth: " + getDefaultStringNA(birthday);
     }
 
     /**

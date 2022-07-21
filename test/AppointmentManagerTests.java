@@ -50,7 +50,7 @@ public class AppointmentManagerTests {
                 .get(appointment.getAppointmentId()).getId());
 
         /* testing that the appointment object and apppointment in the database are equal by comparing their fields
-         and whether they are equal*/
+         and whether they are equal.*/
         assertEquals("appointment should share the same Id as the appointment in the database",
                 appointment.getAppointmentId(), originalDatabase.getAppointmentDatabase().get(appointment
                         .getAppointmentId()).getId());
@@ -83,7 +83,7 @@ public class AppointmentManagerTests {
         assertTrue("An appointment object should not exist in the database before booking one", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
 
-        /*test an invalid appointment booked at a start time before a doctors availability
+        /*test an invalid appointment booked at a start time before a doctors availability.
          */
         AppointmentData invalidAppointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 7, 0, 120);
@@ -92,7 +92,7 @@ public class AppointmentManagerTests {
         assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
 
-        /*test an invalid appointment booked at an end time before a doctors availability
+        /*test an invalid appointment booked at an end time before a doctors availability.
          */
         AppointmentData invalidAppointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 16, 0, 120);
@@ -101,7 +101,7 @@ public class AppointmentManagerTests {
         assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
 
-        /*test an invalid appointment booked at an end time and start time not in a doctors availability
+        /*test an invalid appointment booked at an end time and start time not in a doctors availability.
          */
         AppointmentData invalidAppointment3 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 20, 0, 120);
@@ -109,7 +109,53 @@ public class AppointmentManagerTests {
                 invalidAppointment3);
         assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
+
+        /*test an invalid appointment booked at the exact same time as another appointment.
+         */
+        AppointmentData validAppointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 12, 0, 120);
+
+        assertFalse("The valid appointment should exist in the database", originalDatabase
+                .getAppointmentDatabase().getAllIds().isEmpty());
+        assertEquals(validAppointment1.getAppointmentId(), originalDatabase.getAppointmentDatabase()
+                .get(validAppointment1.getAppointmentId()).getId());
+        AppointmentData invalidAppointment4 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 12, 0, 120);
+
+        assertNull("an appointment should be returning null when booking at an invalid time",
+                invalidAppointment4);
+
+        /*test an invalid appointment booked at an end time that conflicts with another appointment as another
+         appointment.*/
+        AppointmentData validAppointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 12, 0, 120);
+
+        assertFalse("The valid appointment should exist in the database", originalDatabase
+                .getAppointmentDatabase().getAllIds().isEmpty());
+        assertEquals(validAppointment2.getAppointmentId(), originalDatabase.getAppointmentDatabase()
+                .get(validAppointment2.getAppointmentId()).getId());
+        AppointmentData invalidAppointment5 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 11, 30, 60);
+
+        assertNull("an appointment should be returning null when booking at an invalid time",
+                invalidAppointment5);
+
+                /*test an invalid appointment booked at a start time that conflicts with another appointment as another
+         appointment.*/
+        AppointmentData validAppointment3 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 12, 0, 120);
+
+        assertFalse("The valid appointment should exist in the database", originalDatabase
+                .getAppointmentDatabase().getAllIds().isEmpty());
+        assertEquals(validAppointment3.getAppointmentId(), originalDatabase.getAppointmentDatabase()
+                .get(validAppointment3.getAppointmentId()).getId());
+        AppointmentData invalidAppointment6 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 1, 0, 120);
+
+        assertNull("an appointment should be returning null when booking at an invalid time",
+                invalidAppointment6);
     }
+
 
     @Test(timeout = 1000)
     public void testRemoveAppointment() {
