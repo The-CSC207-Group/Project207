@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
  * Wrapper class for Doctor entity. Inherits from UserData<Doctor>.
  */
 public class DoctorData extends UserData<Doctor> {
+
     private final Doctor doctor;
 
     /**

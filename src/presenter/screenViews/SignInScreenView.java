@@ -43,4 +43,5 @@ public class SignInScreenView extends ScreenView {
     public void showSuccessLogin(String user) {
         successMessage("Logged in to " + user + " successfully!");
     }
+
 }

@@ -8,7 +8,8 @@ import java.time.ZonedDateTime;
  * Wrapper class for Prescription entity.
  */
 public class PrescriptionData {
-    private Prescription prescription;
+
+    private final Prescription prescription;
 
     /**
      * Constructor.
@@ -66,4 +67,5 @@ public class PrescriptionData {
     public Integer getPrescriptionId() {
         return prescription.getId();
     }
+
 }

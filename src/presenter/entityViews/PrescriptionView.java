@@ -50,4 +50,5 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     public String viewBody(PrescriptionData item) {
         return "Prescription body reads: " + item.getBody();
     }
+
 }

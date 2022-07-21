@@ -143,7 +143,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
             if (index == null) {
-                secretaryScreenView.showDeleteNotAnIntegerError("null");
+                secretaryScreenView.showDeleteNotAnIntegerError();
             } else if (index >= data.size()) {
                 secretaryScreenView.showDeleteOutOfRangeError();
             } else {
@@ -158,7 +158,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
             if (index == null) {
-                secretaryScreenView.showRescheduleNotAnIntegerError("null");
+                secretaryScreenView.showRescheduleNotAnIntegerError();
             } else if (index >= appointments.size()) {
                 secretaryScreenView.showRescheduleOutOfRangeError();
             } else {

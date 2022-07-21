@@ -37,4 +37,5 @@ public class Prescription extends Note {
     public void setExpiryDate(ZonedDateTime expiryDate) {
         this.expiryDate = expiryDate;
     }
+
 }

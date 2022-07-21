@@ -99,8 +99,8 @@ public class DoctorController extends UserController<Doctor> {
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
                     .getContactData(doctorData), new AppointmentManager(getDatabase())
                     .getAvailabilityData(doctorData));
-            ArrayList<AvailabilityData> availabiltiy = doctorData.getAvailability();
-            if (deleteInteger >= 0 & deleteInteger < availabiltiy.size()) {
+            ArrayList<AvailabilityData> availability = doctorData.getAvailability();
+            if (deleteInteger >= 0 & deleteInteger < availability.size()) {
                 new AppointmentManager(getDatabase()).removeAvailability(doctorData,
                         doctorData.getAvailability().get(deleteInteger));
             }

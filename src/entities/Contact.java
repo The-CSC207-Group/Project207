@@ -194,4 +194,5 @@ public class Contact extends JsonSerializable {
     public void setEmergencyRelationship(String emergencyRelationship) {
         this.emergencyRelationship = emergencyRelationship;
     }
+
 }

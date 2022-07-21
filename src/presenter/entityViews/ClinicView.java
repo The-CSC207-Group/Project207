@@ -77,4 +77,5 @@ public class ClinicView extends EntityView<ClinicData> {
                 "\nSaturday: " + al.get(10) + " to " + al.get(11) +
                 "\nSunday: " + al.get(12) + " to " + al.get(13);
     }
+
 }

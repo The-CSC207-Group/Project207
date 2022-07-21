@@ -23,4 +23,5 @@ public class DoctorView extends EntityView<DoctorData> {
     public String viewUsername(DoctorData item) {
         return "Doctor username is " + item.getUsername() + ".";
     }
+
 }

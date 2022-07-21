@@ -190,7 +190,7 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Error displayed when user does not input a valid integer when rescheduling an appointment
      */
-    public void showRescheduleNotAnIntegerError(String itemType) {
+    public void showRescheduleNotAnIntegerError() {
         errorMessage("Could not reschedule appointment: please input a valid integer.");
     }
 
@@ -204,7 +204,7 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Error displayed when user does not input a valid integer when deleting an appointment
      */
-    public void showDeleteNotAnIntegerError(String itemType) {
+    public void showDeleteNotAnIntegerError() {
         errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
@@ -315,7 +315,5 @@ public class SecretaryScreenView extends UserScreenView {
         new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
         return deleteItemFromEnumerationPrompt("availability");
     }
-
-
 
 }
