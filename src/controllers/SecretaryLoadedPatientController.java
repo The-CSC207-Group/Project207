@@ -47,8 +47,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that each
-     * command calls.
+     * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that
+     * each command calls.
      * @return HashMap of strings mapped to their respective secretary loaded patient commands.
      */
     @Override
