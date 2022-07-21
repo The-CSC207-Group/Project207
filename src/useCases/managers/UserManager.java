@@ -121,6 +121,10 @@ public abstract class UserManager<T extends User> {
         return Optional.ofNullable(getUser(username));
     }
 
+    /**
+     * Used by subclasses to create a new contact in the database.
+     * @return Integer - id of the new empty contact added to the database.
+     */
     protected Integer newContactInDatabase(){return contactManager.addEmptyContactToDatabase();}
 
 }

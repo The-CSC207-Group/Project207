@@ -29,8 +29,8 @@ public class LogManager {
 
     /**
      * Method for adding a log with some message to the user. Assumes userId is valid.
-     * @param message String - Message attached with to the log.
-     * @param userId Integer - Id of the user that the log will be attached to.
+     * @param message String - message attached with to the log.
+     * @param userId Integer - id of the user that the log will be attached to.
      * @return LogData - data bundle representing a log with the information passed in.
      */
     public LogData addLog(String message, Integer userId){
@@ -42,27 +42,12 @@ public class LogManager {
     /**
      * Gets an arraylist of LogData associated with the user.
      * @param userData UserData<T extends User> The data associated with the user.
-     * @return ArrayList<LogData> List of LogData that belong to a user.
+     * @return ArrayList<LogData> - list of LogData that belong to a user.
      * @param <T> Extends User.
      */
     public <T extends User> ArrayList<LogData> getUserLogs(UserData<T> userData){
         return databaseUtils.toArrayList(logDatabase.stream().
                 filter(log -> log.getUserId().equals(userData.getId())).map(LogData::new));
-    }
-
-    protected LogData addLog(String message, UserData<? extends User> userData){
-        Log log = new Log(userData.getId(), message);
-        logDatabase.add(log);
-        return new LogData(log);
-    }
-
-    protected void removeUserLogs(Integer userId){
-        ArrayList<Integer> logsToBeRemoved = logDatabase.stream().
-                filter(log -> log.getUserId().equals(userId)).map(JsonSerializable::getId).
-                collect(Collectors.toCollection(ArrayList::new));
-        for (Integer id : logsToBeRemoved){
-            logDatabase.remove(id);
-        }
     }
 
 }
