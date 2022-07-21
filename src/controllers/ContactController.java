@@ -159,7 +159,7 @@ public class ContactController extends TerminalController {
 
     private Command ChangeEmergencyContactRelationship() {
         return (x) -> {
-            String newEmergencyContactRelationship = userScreenView.showAddressPrompt();
+            String newEmergencyContactRelationship = userScreenView.showEmergencyRelationshipPrompt();
             if (contactManager.changeEmergencyRelationship(contactData, newEmergencyContactRelationship)) {
                 userScreenView.showSuccessfullyChangedEmergencyRelationship();
             }

@@ -228,7 +228,7 @@ public class SecretaryScreenView extends UserScreenView {
      * @param patientData Data of the patient.
      */
     public void showSuccessLoadingPatient(PatientData patientData) {
-        infoMessage("Success loading patient: " + patientData.getUsername());
+        successMessage("Success loading patient: " + patientData.getUsername());
     }
 
     /**

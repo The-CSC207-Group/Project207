@@ -83,6 +83,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         ContactData contactData = contactManager.getContactData(userData);
         ContactController contactController = new ContactController(getContext(), currentController, contactData,
                 userScreenView);
+        userScreenView.showEnteredContactDetailsMenu();
         return (x) -> changeCurrentController(contactController);
     }
 

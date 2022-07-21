@@ -60,9 +60,9 @@ public class DoctorController extends UserController<Doctor> {
             String patientUsername = doctorView.loadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null){
+                doctorView.showSuccessLoadingPatient(new ContactManager(getDatabase()).getContactData(loadedPatientData));
                 changeCurrentController(new DoctorLoadedPatientController(
                         getContext(), currentController, doctorData, loadedPatientData));
-                doctorView.showSuccessLoadingPatient(new ContactManager(getDatabase()).getContactData(loadedPatientData));
             } else {
                 doctorView.showErrorLoadingPatient();
             }

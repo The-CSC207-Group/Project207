@@ -65,6 +65,10 @@ public abstract class UserScreenView extends ScreenView {
         }
     }
 
+    public void showEnteredContactDetailsMenu() {
+        successMessage("Entered contact details menu.");
+    }
+
     public void displayAdminInfo(AdminData adminData) {
         AdminView adminView = new AdminView();
         infoMessage(adminView.viewFull(adminData));
@@ -175,7 +179,7 @@ public abstract class UserScreenView extends ScreenView {
         successMessage("Successfully changed birthday.");
     }
 
-    public String showEmergencyRelationship() {
+    public String showEmergencyRelationshipPrompt() {
         return input("Enter your emergency contact's relationship to you: ");
     }
 

@@ -204,6 +204,6 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     public void showSuccessLoadingPatient(ContactData patientContact) {
-        infoMessage("Success loading patient: " + contactView.viewName(patientContact));
+        successMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 }
