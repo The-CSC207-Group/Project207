@@ -15,9 +15,9 @@ public class Doctor extends User {
 
     /**
      * Creates an instance of Doctor with contact info.
-     * @param username The doctor's username.
-     * @param password The doctor's password.
-     * @param contactInfoId The id of the doctor's Contact object.
+     * @param username String representing the doctor's username.
+     * @param password String representing the doctor's password.
+     * @param contactInfoId Integer representing the id of the doctor's Contact object.
      */
     public Doctor(String username, String password, Integer contactInfoId) {
         super(username, password, contactInfoId);
@@ -25,8 +25,8 @@ public class Doctor extends User {
 
     /**
      * Creates an instance of Doctor without contact info.
-     * @param username The doctor's username.
-     * @param password The doctor's password.
+     * @param username String representing the doctor's username.
+     * @param password String representing the doctor's password.
      */
     public Doctor(String username, String password){
         super(username, password, new Contact().getId());
@@ -37,7 +37,7 @@ public class Doctor extends User {
     }
 
     /**
-     * @return Returns the TimeBlocks that the doctor is absent.
+     * @return ArrayList containing the TimeBlocks that the doctor is absent.
      */
     public ArrayList<TimeBlock> getAbsence() {
         return absence;
@@ -45,7 +45,7 @@ public class Doctor extends User {
 
     /**
      * Adds a TimeBlock that the doctor is absent in.
-     * @param timeBlock The TimeBlock the doctor is absent in.
+     * @param timeBlock TimeBlock the doctor is absent in.
      */
     public void addAbsence(TimeBlock timeBlock) {
         this.absence.add(timeBlock);
@@ -53,23 +53,23 @@ public class Doctor extends User {
 
     /**
      * Removes a TimeBlock that the doctor was absent in.
-     * @param timeBlock The TimeBlock the doctor was absent in.
+     * @param timeBlock TimeBlock the doctor was absent in.
      */
     public void removeAbsence(TimeBlock timeBlock) {
         this.absence.remove(timeBlock);
     }
+
     /**
      * Adds a time the doctor is available in.
-     * @param Availability The time the doctor is available in.
+     * @param Availability Availability time the doctor is available in.
      */
-
     public void addAvailability(Availability Availability) {
         availability.add(Availability);
     }
 
     /**
      * Removes a time the doctor was available in.
-     * @param Availability The time the doctor was available in.
+     * @param Availability Availability time the doctor was available in.
      */
     public void removeAvailability(Availability Availability) {
         availability.remove(Availability);

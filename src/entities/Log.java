@@ -14,8 +14,8 @@ public class Log extends JsonSerializable {
 
     /**
      * Creates an instance of Log.
-     * @param userId The id of the user that the log corresponds to.
-     * @param message The message to be displayed by the log.
+     * @param userId Integer representing the id of the user that the log corresponds to.
+     * @param message String representing the message to be displayed by the log.
      */
     public Log(Integer userId, String message) {
         this.userId = userId;
@@ -24,21 +24,21 @@ public class Log extends JsonSerializable {
     }
 
     /**
-     * @return Returns the time that the log was created.
+     * @return LocalDateTime representing the time that the log was created.
      */
     public LocalDateTime getTime() {
         return this.time;
     }
 
     /**
-     * @return Returns the message that the log stores.
+     * @return String representing the message that the log stores.
      */
     public String getMessage() {
         return this.message;
     }
 
     /**
-     * @return Returns the id of the user that the log corresponds to.
+     * @return Integer representing the id of the user that the log corresponds to.
      */
     public Integer getUserId() {
         return userId;

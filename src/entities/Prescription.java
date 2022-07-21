@@ -11,11 +11,11 @@ public class Prescription extends Note {
 
     /**
      * Creates an instance of Prescription.
-     * @param header The header of the prescription.
-     * @param body The body of the prescription.
-     * @param patientId The id of the patient who the prescription was created for.
-     * @param doctorId The id of the doctor who created the prescription.
-     * @param expiryDate The prescription's expiry date.
+     * @param header String representing the header of the prescription.
+     * @param body String representing the body of the prescription.
+     * @param patientId Integer representing the id of the patient who the prescription was created for.
+     * @param doctorId Integer representing the id of the doctor who created the prescription.
+     * @param expiryDate ZonedDateTime representing the prescription's expiry date.
      */
     public Prescription(String header, String body, Integer patientId, Integer doctorId,
                         ZonedDateTime expiryDate) {
@@ -24,7 +24,7 @@ public class Prescription extends Note {
     }
 
     /**
-     * @return Returns the prescription's expiry date.
+     * @return ZonedDateTime representing the prescription's expiry date.
      */
     public ZonedDateTime getExpiryDate() {
         return expiryDate;
@@ -32,7 +32,7 @@ public class Prescription extends Note {
 
     /**
      * Sets the expiry date of the prescription.
-     * @param expiryDate The new expiry date of the prescription.
+     * @param expiryDate ZonedDateTime representing the new expiry date of the prescription.
      */
     public void setExpiryDate(ZonedDateTime expiryDate) {
         this.expiryDate = expiryDate;

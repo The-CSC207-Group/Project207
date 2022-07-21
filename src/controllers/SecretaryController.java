@@ -1,6 +1,5 @@
 package controllers;
 
-
 import dataBundles.*;
 import entities.Availability;
 import entities.Secretary;

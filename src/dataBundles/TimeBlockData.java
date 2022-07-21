@@ -3,6 +3,7 @@ package dataBundles;
 import entities.Secretary;
 import entities.TimeBlock;
 
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
@@ -32,6 +33,11 @@ public class TimeBlockData {
     public ZonedDateTime getEndTime(){
         return timeBlock.getEndTime();
     }
-
+    public LocalTime startTimeToLocal(){
+        return timeBlock.startTimeToLocal();
+    }
+    public LocalTime endTimeToLocal(){
+        return timeBlock.endTimeToLocal();
+    }
     }
 

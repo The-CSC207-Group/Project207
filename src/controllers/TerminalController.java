@@ -12,8 +12,8 @@ import java.util.List;
  */
 abstract public class TerminalController {
 
-    private TerminalScreenView terminalScreenView = new TerminalScreenView();
-    private Context context;
+    private final TerminalScreenView terminalScreenView = new TerminalScreenView();
+    private final Context context;
 
     /**
      * Creates a new controller for handling the state of the program where commands are being passed into the terminal.
@@ -28,7 +28,7 @@ abstract public class TerminalController {
      * Gets the context (necessary for the state command).
      * @return Context of the current program.
      */
-    Context getContext() {
+    public Context getContext() {
         return context;
     }
 
@@ -36,7 +36,7 @@ abstract public class TerminalController {
      * Changes the current controller in the context to new controller.
      * @param newController the controller we are switching to.
      */
-    void changeCurrentController(TerminalController newController){
+    public void changeCurrentController(TerminalController newController){
         context.changeController(newController);
     }
 
@@ -44,15 +44,8 @@ abstract public class TerminalController {
      * Returns the database.
      * @return Database of the program.
      */
-    Database getDatabase() {
-        return context.database;
-    }
-
-    /**
-     * Exits the program.
-     */
-    private void exit() {
-        context.exit();
+    public Database getDatabase() {
+        return context.getDatabase();
     }
 
     /**
@@ -67,8 +60,16 @@ abstract public class TerminalController {
     }
 
     /**
-     * Prompts the user to enter a single command and processes that command.
+     * Runs the process of the related controller.
      */
+    public void run() {
+        ProcessCommands();
+    }
+
+    private void exit() {
+        context.exit();
+    }
+
     private void ProcessCommands() {
         getDatabase().save();
         String command = terminalScreenView.showCommandPrompt();
@@ -80,29 +81,11 @@ abstract public class TerminalController {
         }
     }
 
-    /**
-     * Runs the process of the related controller.
-     */
-    public void run() {
-        ProcessCommands();
-    }
-
-    /**
-     * Hands control of the program to the previous controller.
-     * @param previousController the object of the previous controller.
-     * @return Command that goes back to the previous controller.
-     */
     protected Command back(TerminalController previousController){
-        return (x) -> {
-            changeCurrentController(previousController);
-        };
+        return (x) -> changeCurrentController(previousController);
     }
 
 
-    /**
-     * Returns the command that displays a list of options that the user can use.
-     * @return presenter output of help commands.
-     */
     private Command Help() {
         return (x) -> {
             List<String> helpCommands = new ArrayList<>(AllCommands().keySet());
@@ -110,13 +93,7 @@ abstract public class TerminalController {
         };
     }
 
-    /**
-     * Returns the exit command which allows you to exit the program.
-     * @return exit method call.
-     */
     protected Command Exit() {
-        return (x) -> {
-            exit();
-        };
+        return (x) -> exit();
     }
 }

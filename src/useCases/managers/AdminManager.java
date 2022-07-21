@@ -19,6 +19,13 @@ public class AdminManager extends UserManager<Admin>{
         this.adminDatabase = database.getAdminDatabase();
         this.contactDatabase = database.getContactDatabase();
     }
+
+    /***
+     * Creates and admin and adds to the database.
+     * @param username username of new account, should not exist in database.
+     * @param password password of new account.
+     * @return Admin data if sign in successful, if username exists in the database, return null.
+     */
     public AdminData createAdmin(String username, String password){
         Admin admin = new Admin(username, password);
         adminDatabase.add(admin);

@@ -10,17 +10,20 @@ import useCases.managers.*;
 
 import java.util.HashMap;
 
+/**
+ * Controller class that processes the commands that an admin passes in.
+ */
 public class AdminController extends UserController<Admin> {
 
-    private AdminData adminData;
-    private PatientManager patientManager;
-    private DoctorManager doctorManager;
-    private SecretaryManager secretaryManager;
-    private AdminManager adminManager;
-    private AdminScreenView adminScreenView = new AdminScreenView();
+    private final AdminData adminData;
+    private final PatientManager patientManager;
+    private final DoctorManager doctorManager;
+    private final SecretaryManager secretaryManager;
+    private final AdminManager adminManager;
+    private final AdminScreenView adminScreenView = new AdminScreenView();
 
     /**
-     * creates an admin controller object that manages the commands used by the current admin user.
+     * Creates an admin controller object that handles the commands used by the current admin user.
      * @param context a reference to the context object, which stores the current controller and allows for switching
      *                between controllers.
      * @param adminData a data bundle containing the ID and attributes of the current admin user.
@@ -36,7 +39,7 @@ public class AdminController extends UserController<Admin> {
     }
 
     /**
-     * creates a hashmap of all string representations of admin commands mapped to the method that each command calls.
+     * Creates a hashmap of all string representations of admin commands mapped to the method that each command calls.
      * @return HashMap of strings mapped to their respective admin commands.
      */
     @Override
@@ -111,12 +114,7 @@ public class AdminController extends UserController<Admin> {
             return true;
         } else if (secretaryManager.deleteUser(username)) {
             return true;
-        } else if (adminManager.deleteUser(username)) {
-            return true;
-        } else {
-            return false;
-        }
-
+        } else return adminManager.deleteUser(username);
     }
 
     private Command deleteUser() {

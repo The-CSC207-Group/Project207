@@ -15,18 +15,18 @@ import java.util.HashMap;
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
  */
 public class SecretaryLoadedPatientController extends TerminalController {
-    private PatientData patientData;
-    private SecretaryController secretaryController;
-    private PrescriptionView prescriptionView = new PrescriptionView();
-    private AppointmentManager appointmentManager;
-    private PrescriptionManager prescriptionManager;
-    private DoctorManager doctorManager;
-    private PatientManager patientManager;
-    private ContactManager contactManager;
+    private final PatientData patientData;
+    private final SecretaryController secretaryController;
+    private final PrescriptionView prescriptionView = new PrescriptionView();
+    private final AppointmentManager appointmentManager;
+    private final PrescriptionManager prescriptionManager;
+    private final DoctorManager doctorManager;
+    private final PatientManager patientManager;
+    private final ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     /**
-     * Creates a new controller for handling the state of the program when a secretary is dealing with a specific user.
+     * Creates a new controller for handling the state of the program when a secretary has loaded a specific patient.
      * @param context a reference to the context object, which stores the current controller and allows for switching
      *                between controllers.
      * @param secretaryController the previous controller object, allowing you to easily go back.
@@ -190,15 +190,13 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
 
     private Command viewActivePrescriptionsDetailed() {
-        return (x) -> {
-            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllActivePrescriptions(patientData));
-        };
+        return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
+                .getAllActivePrescriptions(patientData));
 
     }
 
     private Command viewAllPrescriptionsDetailed() {
-        return (x) -> {
-            secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager.getAllPrescriptions(patientData));
-        };
+        return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
+                .getAllPrescriptions(patientData));
     }
 }

@@ -46,7 +46,7 @@ public abstract class UserController<T extends User> extends TerminalController 
      */
     @Override
     public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = new HashMap<>();
+        HashMap<String, Command> commands = super.AllCommands();
         commands.put("change password", ChangePassword());
         commands.put("get logs", GetLogs());
         commands.put("contact details", ContactDetails());
@@ -80,14 +80,10 @@ public abstract class UserController<T extends User> extends TerminalController 
         ContactData contactData = contactManager.getContactData(userData);
         ContactController contactController = new ContactController(getContext(), currentController, contactData,
                 userScreenView);
-        return (x) -> {
-            changeCurrentController(contactController);
-        };
+        return (x) -> changeCurrentController(contactController);
     }
 
     private Command SignOut(){
-        return (x) -> {
-            changeCurrentController(new SignInController(getContext()));
-        };
+        return (x) -> changeCurrentController(new SignInController(getContext()));
     }
 }

@@ -26,6 +26,12 @@ public class DoctorManager extends UserManager<Doctor> {
         this.patientManager = new PatientManager(database);
     }
 
+    /***
+     * Creates and doctor and adds to the database.
+     * @param username username of new account, should not exist in database.
+     * @param password password of new account.
+     * @return doctor data if sign in successful, if username exists in the database, return null.
+     */
     public DoctorData createDoctor(String username, String password) {
         Doctor doctor = new Doctor(username, password);
         doctorDatabase.add(doctor);

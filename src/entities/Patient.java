@@ -9,10 +9,10 @@ public class Patient extends User {
 
     /**
      * Creates an instance of Patient with contact info.
-     * @param username The patient's username.
-     * @param password The patient's password.
-     * @param contactInfoId The id of the patient's Contact object.
-     * @param healthNumber The patient's health number.
+     * @param username String representing the patient's username.
+     * @param password String representing the patient's password.
+     * @param contactInfoId Integer representing the id of the patient's Contact object.
+     * @param healthNumber String representing the patient's health number.
      */
     public Patient(String username, String password, Integer contactInfoId, String healthNumber) {
         super(username, password, contactInfoId);
@@ -21,15 +21,15 @@ public class Patient extends User {
 
     /**
      * Creates an instance of Patient without contact info.
-     * @param username The patient's username.
-     * @param password The patient's password.
+     * @param username String representing the patient's username.
+     * @param password String representing the patient's password.
      */
     public Patient(String username, String password){
         super(username, password, new Contact().getId());
     }
 
     /**
-     * @return Returns the patient's health number.
+     * @return String representing the patient's health number.
      */
     public String getHealthNumber() {
         return healthNumber;
@@ -37,7 +37,7 @@ public class Patient extends User {
 
     /**
      * Sets the patient's health number.
-     * @param healthNumber The patient's new health number.
+     * @param healthNumber String representing the patient's new health number.
      */
     public void setHealthNumber(String healthNumber) {
         this.healthNumber = healthNumber;

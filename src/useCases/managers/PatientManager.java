@@ -27,7 +27,7 @@ public class PatientManager extends UserManager<Patient> {
      *
      * @param username String new username
      * @param password String new password
-     * @return PatientDataBundle which includes information of the patient.
+     * @return PatientDataBundle which includes information of the patient, null if username already exists in database.
      */
     public PatientData createPatient(String username, String password) {
         Patient patient = new Patient(username, password);

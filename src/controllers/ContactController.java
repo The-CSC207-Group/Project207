@@ -1,17 +1,15 @@
 package controllers;
 
-import controllers.Command;
-import controllers.Context;
-import controllers.TerminalController;
-import controllers.UserController;
 import dataBundles.ContactData;
-import database.Database;
 import presenter.screenViews.UserScreenView;
 import useCases.managers.ContactManager;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 
+/**
+ * Controller class that processes the commands that a user performs on their contact information.
+ */
 public class ContactController extends TerminalController {
 
     private final ContactData contactData;
@@ -20,11 +18,12 @@ public class ContactController extends TerminalController {
     private final UserController<?> previousController;
 
     /**
-     * creates a contact controller object that manages the commands a user performs on their contact information
-     * @param context the class object that manages the process of switching between controllers.
+     * Creates a contact controller object that handles the commands a user performs on their contact information.
+     * @param context a reference to the context object, which stores the current controller and allows for switching
+     *                between controllers.
      * @param previousController the object of the controller that switched into this contact controller object.
-     * @param contactData a data bundle storing the ID and attributes of the contact object associated with the current user
-     * @param userScreenView the presenter object of the user that this controller's contact data is associated with
+     * @param contactData a data bundle storing the ID and attributes of the contact object associated with the current user.
+     * @param userScreenView the presenter object of the user that this controller's contact data is associated with.
      */
     public ContactController(Context context, UserController<?> previousController,
                              ContactData contactData, UserScreenView userScreenView) {
@@ -36,8 +35,8 @@ public class ContactController extends TerminalController {
     }
 
     /**
-     * creates a hashmap of all string representations of contact commands mapped to the method that each command calls
-     * @return HashMap of strings mapped to their respective contact commands
+     * Creates a hashmap of all string representations of contact commands mapped to the method that each command calls.
+     * @return HashMap of strings mapped to their respective contact commands.
      */
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
@@ -56,9 +55,7 @@ public class ContactController extends TerminalController {
     }
 
     public Command ViewContactInformation() {
-        return (x) -> {
-            userScreenView.displayContactInfo(contactData);
-        };
+        return (x) -> userScreenView.displayContactInfo(contactData);
     }
 
     public Command ChangeName() {

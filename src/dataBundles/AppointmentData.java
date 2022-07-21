@@ -23,8 +23,8 @@ public class AppointmentData {
      * Get the TimeBlock associated with an appointment.
      * @return TimeBlock - the stored appointment's timeblock.
      */
-    public TimeBlock getTimeBlock() {
-        return appointment.getTimeBlock();
+    public TimeBlockData getTimeBlock() {
+        return new TimeBlockData(appointment.getTimeBlock());
     }
 
     /**
