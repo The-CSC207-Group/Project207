@@ -36,7 +36,7 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorData createDoctor(String username, String password) {
         Doctor doctor = new Doctor(username, password, newContactInDatabase());
         database.getClinic().getClinicHours().forEach(doctor::addAvailability);
-        doctorDatabase.add(doctor);
+        if (doctorDatabase.add(doctor) == null){return null;}
         return new DoctorData(doctor);
     }
 

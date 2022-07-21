@@ -29,7 +29,7 @@ public class AdminManager extends UserManager<Admin>{
      */
     public AdminData createAdmin(String username, String password){
         Admin admin = new Admin(username, password, newContactInDatabase());
-        adminDatabase.add(admin);
+        if (adminDatabase.add(admin) == null){return null;}
         return new AdminData(admin);
     }
 
