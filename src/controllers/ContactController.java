@@ -54,11 +54,11 @@ public class ContactController extends TerminalController {
         return commands;
     }
 
-    public Command ViewContactInformation() {
+    private Command ViewContactInformation() {
         return (x) -> userScreenView.displayContactInfo(contactData);
     }
 
-    public Command ChangeName() {
+    private Command ChangeName() {
         return (x) -> {
             String newName = userScreenView.showNamePrompt(false);
             if (contactManager.changeName(contactData, newName)) {
@@ -70,7 +70,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeEmail() {
+    private Command ChangeEmail() {
         return (x) -> {
             String newEmail = userScreenView.showEmailPrompt(false);
             if (contactManager.changeEmail(contactData, newEmail)) {
@@ -82,7 +82,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangePhoneNumber() {
+    private Command ChangePhoneNumber() {
         return (x) -> {
             String newPhoneNumber = userScreenView.showPhoneNumberPrompt(false);
             if (contactManager.changePhoneNumber(contactData, newPhoneNumber)) {
@@ -94,7 +94,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeAddress() {
+    private Command ChangeAddress() {
         return (x) -> {
             String newAddress = userScreenView.showAddressPrompt();
             if (contactManager.changeAddress(contactData, newAddress)) {
@@ -106,7 +106,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeBirthday() {
+    private Command ChangeBirthday() {
         return (x) -> {
             LocalDate newBirthday = userScreenView.showBirthdayPrompt();
             if (contactManager.changeBirthday(contactData, newBirthday)) {
@@ -118,7 +118,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeEmergencyContactName() {
+    private Command ChangeEmergencyContactName() {
         return (x) -> {
             String newEmergencyContactName = userScreenView.showNamePrompt(true);
             if (contactManager.changeEmergencyContactName(contactData, newEmergencyContactName)) {
@@ -130,7 +130,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeEmergencyContactEmail() {
+    private Command ChangeEmergencyContactEmail() {
         return (x) -> {
             String newEmergencyContactEmail = userScreenView.showEmailPrompt(true);
             if (contactManager.changeEmergencyContactEmail(contactData, newEmergencyContactEmail)) {
@@ -142,7 +142,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeEmergencyContactPhoneNumber() {
+    private Command ChangeEmergencyContactPhoneNumber() {
         return (x) -> {
             String newEmergencyContactPhoneNumber = userScreenView.showPhoneNumberPrompt(true);
             if (contactManager.changeEmergencyContactPhoneNumber(contactData, newEmergencyContactPhoneNumber)) {
@@ -154,7 +154,7 @@ public class ContactController extends TerminalController {
         };
     }
 
-    public Command ChangeEmergencyContactRelationship() {
+    private Command ChangeEmergencyContactRelationship() {
         return (x) -> {
             String newEmergencyContactRelationship = userScreenView.showAddressPrompt();
             if (contactManager.changeEmergencyRelationship(contactData, newEmergencyContactRelationship)) {
