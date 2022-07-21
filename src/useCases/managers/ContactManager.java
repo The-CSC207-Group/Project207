@@ -82,7 +82,7 @@ public class ContactManager {
      */
     public boolean changePhoneNumber(ContactData contactData, String phoneNumber){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null || !Pattern.matches("^([0-9])+$", phoneNumber)){return false;}
+        if (contact == null || !Pattern.matches("^(/d)+$", phoneNumber)){return false;}
         contact.setPhoneNumber(phoneNumber);
         return true;
     }
@@ -152,7 +152,7 @@ public class ContactManager {
      */
     public boolean changeEmergencyContactPhoneNumber(ContactData contactData, String emergencyContactPhoneNumber){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null || !Pattern.matches("^([0-9])+$", emergencyContactPhoneNumber)){return false;}
+        if (contact == null || !Pattern.matches("^(/d)+$", emergencyContactPhoneNumber)){return false;}
         contact.setEmergencyContactPhoneNumber(emergencyContactPhoneNumber);
         return true;
     }
