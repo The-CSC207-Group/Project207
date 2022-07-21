@@ -24,21 +24,20 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final PatientManager patientManager;
     private final ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-    private SecretaryController prev;
 
     /**
      * Creates a new controller for handling the state of the program when a secretary has loaded a specific patient.
-     * @param context a reference to the context object, which stores the current controller and allows for switching
-     *                between controllers.
+     *
+     * @param context             a reference to the context object, which stores the current controller and allows for switching
+     *                            between controllers.
      * @param secretaryController the previous controller object, allowing you to easily go back.
-     * @param patientData a data bundle containing the ID and attributes of the current loaded patient user.
+     * @param patientData         a data bundle containing the ID and attributes of the current loaded patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
-                                            PatientData patientData, SecretaryController prev){
+                                            PatientData patientData) {
         super(context);
         this.secretaryController = secretaryController;
         this.patientData = patientData;
-        this.prev = prev;
 
 
         this.appointmentManager = new AppointmentManager(getDatabase());
@@ -51,6 +50,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     /**
      * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that
      * each command calls.
+     *
      * @return HashMap of strings mapped to their respective secretary loaded patient commands.
      */
     @Override
@@ -66,7 +66,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("cancel appointment", cancelAppointment());
         commands.put("active prescription detail", viewActivePrescriptionsDetailed());
         commands.put("all prescription detail", viewAllPrescriptionsDetailed());
-        commands.put("back", back(prev));
+        commands.put("back", back(secretaryController));
         return commands;
     }
 
@@ -113,28 +113,30 @@ public class SecretaryLoadedPatientController extends TerminalController {
             LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
             if (date == null) {
                 secretaryScreenView.showInvalidDateError();
-            } else {
-                String doctor = secretaryScreenView.bookAppointmentDoctorPrompt();
-                DoctorData doctorData = doctorManager.getUserData(doctor);
-                if (doctorData == null) {
-                    secretaryScreenView.showDoctorDoesNotExistError();
-                } else {
-                    ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
-                            LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-                    if (appointments == null) {
-                        secretaryScreenView.showNoAvailableAppointmentDayError();
-                    } else {
-                        viewDoctorSchedule(doctorData, date);
-                        AppointmentData appointment = bookAppointmentTime(doctorData, date);
-                        if (appointment == null) {
-                            secretaryScreenView.showAppointmentConflictError();
-                        } else {
-                            secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
-                                    contactManager.getContactData(doctorData));
-                        }
-                    }
-                }
+                return;
             }
+            String doctor = secretaryScreenView.bookAppointmentDoctorPrompt();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+            if (doctorData == null) {
+                secretaryScreenView.showDoctorDoesNotExistError();
+                return;
+            }
+            ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
+                    LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+            if (appointments == null) {
+                secretaryScreenView.showNoAvailableAppointmentDayError();
+                return;
+            }
+            viewDoctorSchedule(doctorData, date);
+            AppointmentData appointment = bookAppointmentTime(doctorData, date);
+            if (appointment == null) {
+                secretaryScreenView.showAppointmentConflictError();
+                return;
+            }
+            secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
+                    contactManager.getContactData(doctorData));
+
+
         };
     }
 
@@ -202,4 +204,5 @@ public class SecretaryLoadedPatientController extends TerminalController {
         return (x) -> secretaryScreenView.viewPrescriptionsDetailed(prescriptionManager
                 .getAllPrescriptions(patientData));
     }
+
 }

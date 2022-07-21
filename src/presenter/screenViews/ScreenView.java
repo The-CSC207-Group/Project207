@@ -5,17 +5,18 @@ import presenter.response.UserCredentials;
 import java.util.Scanner;
 
 public abstract class ScreenView {
-    Scanner input = new Scanner(System.in);
 
     protected String input(String prompt) {
+        Scanner inputScanner = new Scanner(System.in);
         System.out.print(prompt);
-        return input.nextLine().strip();
+        return inputScanner.nextLine().strip();
     }
 
     protected Integer inputInt(String prompt) {
+        Scanner inputScanner = new Scanner(System.in);
         System.out.print(prompt);
         try {
-            return input.nextInt();
+            return inputScanner.nextInt();
         } catch (Exception ignored) {
             return null;
         }

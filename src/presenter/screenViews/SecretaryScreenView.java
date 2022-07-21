@@ -13,6 +13,7 @@ import presenter.response.UserCredentials;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SecretaryScreenView extends UserScreenView {
 

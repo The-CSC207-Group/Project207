@@ -19,6 +19,8 @@ public class Context {
     public Context(Database database){
         this.database = database;
         this.currentController = new SignInController(this);
+        terminalScreenView.showHelpPrompt();
+
     }
 
     /**

@@ -8,10 +8,8 @@ import database.DataMapperGateway;
 import utilities.DeleteUtils;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
+import java.util.ArrayList;
 
 public class DatabaseTests {
 
@@ -309,15 +307,11 @@ public class DatabaseTests {
     public void testSetGetClinic() {
         Database originalDatabase = new Database(databaseFolder.toString());
 
-        LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
-        LocalDateTime localEndTime = LocalDateTime.of(2022,7,1,6,3);
         ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedStartTime = ZonedDateTime.of(localStartTime, torontoID);
-        ZonedDateTime zonedEndTime = ZonedDateTime.of(localEndTime, torontoID);
-        TimeBlock timeBlock = new TimeBlock(zonedStartTime, zonedEndTime);
-
+        ArrayList<Availability> clinicHours = new ArrayList<>();
+        clinicHours.add(new Availability(DayOfWeek.of(1), LocalTime.of(8, 0), LocalTime.of(20, 0)));
         Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "21 jump street",
-                torontoID, timeBlock);
+                torontoID, clinicHours);
 
         originalDatabase.setClinic(originalClinic);
 
@@ -337,11 +331,11 @@ public class DatabaseTests {
         assertEquals("Original clinic and loaded clinic should share the same time zone",
                 originalClinic.getTimeZone().toString(), loadedClinic.getTimeZone().toString());
         assertEquals("Original clinic and loaded clinic should start at the same time",
-                originalClinic.getClinicHours().getStartTime().compareTo(loadedClinic.getClinicHours().
-                        getStartTime()), 0); // the compareTo function returns 0 when both dates are equal
+                originalClinic.getClinicHours().get(0).getDoctorStartTime().compareTo(loadedClinic.getClinicHours().get(0).
+                        getDoctorStartTime()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original clinic and loaded clinic should end at the same time",
-                originalClinic.getClinicHours().getEndTime().compareTo(loadedClinic.getClinicHours().
-                        getEndTime()), 0);
+                originalClinic.getClinicHours().get(0).getDoctorEndTime().compareTo(loadedClinic.getClinicHours().get(0).
+                        getDoctorEndTime()), 0);
     }
 
     @After
