@@ -7,6 +7,7 @@ import dataBundles.TimeBlockData;
 import entities.Doctor;
 import presenter.screenViews.DoctorScreenView;
 import useCases.managers.*;
+import utilities.TimeUtils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -92,16 +93,13 @@ public class DoctorController extends UserController<Doctor> {
     private Command deleteAvailability() {
         return (x) -> {
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
-                            .getContactData(doctorData), new AppointmentManager(getDatabase())
+                    .getContactData(doctorData), new AppointmentManager(getDatabase())
                     .getAvailabilityData(doctorData));
             ArrayList<AvailabilityData> availabiltiy = doctorData.getAvailability();
-            if (deleteInteger >= 0 & deleteInteger < availabiltiy.size()){
+            if (deleteInteger >= 0 & deleteInteger < availabiltiy.size()) {
                 new AppointmentManager(getDatabase()).removeAvailability(doctorData,
                         doctorData.getAvailability().get(deleteInteger));
-            } else {
-
             }
-
         };
     }
     private Command deleteAbsence() {
@@ -116,9 +114,9 @@ public class DoctorController extends UserController<Doctor> {
     private Command newAbsence() {
         return (x) -> {
             ArrayList<Integer> absenceData = doctorView.addAbsencePrompt();
-            new AppointmentManager(getDatabase()).addAbsence(doctorData, new TimeManager()
+            new AppointmentManager(getDatabase()).addAbsence(doctorData, new TimeUtils()
                     .createZonedDataTime(absenceData.get(0), absenceData.get(1),
-                    absenceData.get(2), 0, 0), new TimeManager().createZonedDataTime(absenceData.get(0),
+                    absenceData.get(2), 0, 0), new TimeUtils().createZonedDataTime(absenceData.get(0),
                     absenceData.get(1), absenceData.get(2) + absenceData.get(3), 0, 0));
         };
     }
