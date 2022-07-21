@@ -4,6 +4,8 @@ import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
+import entities.Availability;
+import entities.Clinic;
 import entities.Contact;
 import entities.Doctor;
 
@@ -13,6 +15,7 @@ public class DoctorManager extends UserManager<Doctor> {
 
     DataMapperGateway<Doctor> doctorDatabase;
     DataMapperGateway<Contact> contactDatabase;
+    Database database;
     PatientManager patientManager;
 
     /***
@@ -23,6 +26,7 @@ public class DoctorManager extends UserManager<Doctor> {
         super(database.getDoctorDatabase(), database);
         this.doctorDatabase = database.getDoctorDatabase();
         this.contactDatabase = database.getContactDatabase();
+        this.database = database;
         this.patientManager = new PatientManager(database);
     }
 
@@ -34,6 +38,7 @@ public class DoctorManager extends UserManager<Doctor> {
      */
     public DoctorData createDoctor(String username, String password) {
         Doctor doctor = new Doctor(username, password, newContactInDatabase());
+        database.getClinic().getClinicHours().forEach(doctor::addAvailability);
         doctorDatabase.add(doctor);
         return new DoctorData(doctor);
 

@@ -13,14 +13,14 @@ public class ContactView extends EntityView<ContactData> {
      */
     @Override
     public String viewFull(ContactData item) {
-        return viewName(item) + ", "
-                + viewEmail(item) + ", "
-                + viewPhoneNumber(item) + ", "
-                + viewAddress(item) + ", "
-                + viewBirthday(item) + ", "
-                + viewEmergencyContactName(item) + ", "
-                + viewEmergencyContactEmail(item) + ", "
-                + viewEmergencyContactPhoneNumber(item) + ", "
+        return viewName(item) + ",\n"
+                + viewEmail(item) + ",\n"
+                + viewPhoneNumber(item) + ",\n"
+                + viewAddress(item) + ",\n"
+                + viewBirthday(item) + ",\n"
+                + viewEmergencyContactName(item) + ",\n"
+                + viewEmergencyContactEmail(item) + ",\n"
+                + viewEmergencyContactPhoneNumber(item) + ",\n"
                 + viewEmergencyRelationship(item);
     }
 
@@ -29,7 +29,7 @@ public class ContactView extends EntityView<ContactData> {
      * @return String representing the contact's name as a view.
      */
     public String viewName(ContactData item) {
-        return getDefaultString(item.getName(), "unnamed");
+        return "Name: " + getDefaultString(item.getName(), "unnamed");
     }
 
     /**

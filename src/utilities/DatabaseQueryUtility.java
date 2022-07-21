@@ -1,14 +1,14 @@
 package utilities;
 
-import database.DataMapperGateway;
-import entities.User;
-
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Utility class that provides methods allowing one to query data from the database into the program.
+ */
 public class DatabaseQueryUtility {
+
     /**
      * Converts given stream of some type to arraylist of the same type with all the same items.
      * @param stream Stream<T> - some stream any type.
@@ -18,5 +18,6 @@ public class DatabaseQueryUtility {
     public <T> ArrayList<T> toArrayList(Stream<T> stream){
         return stream.collect(Collectors.toCollection(ArrayList::new));
     }
+
 }
 
