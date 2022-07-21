@@ -115,11 +115,6 @@ public class PatientManagerTests {
         Patient originalPatient = new
                 Patient("jeff", "123", 123456789, "5544");
 
-        for (int i = 1; i <= 3; i++) {
-            originalPatient.addLogId(i);
-            originalPatient.addReportId(i + 10);
-        }
-
         PatientManager patientManager = new PatientManager(originalDatabase);
 
         Integer patientID = patientDatabase.add(originalPatient);
@@ -127,7 +122,7 @@ public class PatientManagerTests {
         assertEquals("Original patient should share the same ID from the database",
                 originalPatient.getId(), patientID);
 
-        Patient loadedPatient = patientManager.getUser(originalPatient.getUsername());
+        Patient loadedPatient = patientDatabase.get(originalPatient.getId());
 
         /* Testing if the loaded patient and the original patient are equal by testing whether all the fields of both
         objects are equal */
@@ -135,10 +130,6 @@ public class PatientManagerTests {
                 originalPatient.getId(), loadedPatient.getId());
         assertEquals("Original patient and loaded patient should share the same unique username",
                 originalPatient.getUsername(), loadedPatient.getUsername());
-        assertEquals("Original patient and loaded patient should share the same reports",
-                originalPatient.getReportIds(), loadedPatient.getReportIds());
-        assertEquals("Original patient and loaded patient should share the same logs",
-                originalPatient.getLogIds(), loadedPatient.getLogIds());
         assertEquals("Original patient and loaded patient should share the same contact information",
                 originalPatient.getContactInfoId(), loadedPatient.getContactInfoId());
         assertEquals("Original patient and loaded patient should share the same health numbers",

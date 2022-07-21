@@ -107,9 +107,6 @@ public class DoctorManagerTests {
         Doctor originalDoctor = new
                 Doctor("jeff", "123", 123456789);
 
-        for (int i = 1; i <= 3; i++) {
-            originalDoctor.addLogId(i);
-        }
 
         DoctorManager doctorManager = new DoctorManager(originalDatabase);
 
@@ -118,7 +115,7 @@ public class DoctorManagerTests {
         assertEquals("Original doctor should share the same ID from the database",
                 originalDoctor.getId(), doctorID);
 
-        Doctor loadedDoctor = doctorManager.getUser(originalDoctor.getUsername());
+        Doctor loadedDoctor = doctorDatabase.get(originalDoctor.getId());
 
         /* Testing if the loaded doctor and the original doctor are equal by testing whether all the fields of both
         objects are equal */
@@ -126,8 +123,6 @@ public class DoctorManagerTests {
                 originalDoctor.getId(), loadedDoctor.getId());
         assertEquals("Original doctor and loaded doctor should share the same unique username",
                 originalDoctor.getUsername(), loadedDoctor.getUsername());
-        assertEquals("Original doctor and loaded doctor should share the same logs",
-                originalDoctor.getLogIds(), loadedDoctor.getLogIds());
         assertEquals("Original doctor and loaded doctor should share the same contact information",
                 originalDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
         assertTrue("Original doctor and loaded doctor should share the same password",

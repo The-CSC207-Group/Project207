@@ -22,7 +22,7 @@ public class LogManagerTests {
     @Test
     public void testAddingNewLog(){
         Database database = new Database(databaseFolder.toString());
-        Patient patient = new Patient("dan","dervi");
+        Patient patient = new Patient("dan","dervi", 1);
         Integer id = database.getPatientDatabase().add(patient);
         LogManager logManager = new LogManager(database);
         LogData logData = logManager.addLog("testing123", id);
@@ -33,7 +33,7 @@ public class LogManagerTests {
     @Test
     public void testGettingUserLogs(){
         Database database = new Database(databaseFolder.toString());
-        Patient patient = new Patient("dan","dervi");
+        Patient patient = new Patient("dan","dervi", 1);
         Integer id = database.getPatientDatabase().add(patient);
         LogManager logManager = new LogManager(database);
 
