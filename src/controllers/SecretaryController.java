@@ -19,10 +19,12 @@ import java.util.HashMap;
 public class SecretaryController extends UserController<Secretary> {
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final PatientManager patientManager;
-    private final ContactManager contactManager;
+    private final AdminManager adminManager;
+
     private final DoctorManager doctorManager;
+    private final SecretaryManager secretaryManager;
     private final AppointmentManager appointmentManager;
-    private SecretaryController self = this;
+    private final SecretaryController self = this;
 
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
@@ -34,8 +36,9 @@ public class SecretaryController extends UserController<Secretary> {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
         this.appointmentManager = new AppointmentManager(getDatabase());
         this.doctorManager = new DoctorManager(getDatabase());
-        this.contactManager = new ContactManager(getDatabase());
+        this.adminManager = new AdminManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
+        this.secretaryManager = new SecretaryManager(getDatabase());
     }
 
     /**
@@ -74,7 +77,10 @@ public class SecretaryController extends UserController<Secretary> {
     private Command createPatientAccount() {
         return (x) -> {
             UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
-            if (!patientManager.doesUserExist(userCredentials.username())) {
+            if (!patientManager.doesUserExist(userCredentials.username()) &&
+            !doctorManager.doesUserExist(userCredentials.username()) &&
+            !adminManager.doesUserExist(userCredentials.username()) &&
+            !secretaryManager.doesUserExist(userCredentials.username())){
                 patientManager.createPatient(userCredentials.username(), userCredentials.password());
                 secretaryScreenView.showRegisterPatientSuccess();
             } else {
