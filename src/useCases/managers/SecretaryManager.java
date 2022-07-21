@@ -12,6 +12,7 @@ public class SecretaryManager extends UserManager<Secretary> {
     DataMapperGateway<Contact> contactDatabase;
 
 
+
     /**
      * Constructor. Stores secretary and contact databases.
      * @param database - collection of databases.
@@ -31,7 +32,7 @@ public class SecretaryManager extends UserManager<Secretary> {
      * @return Secretary Data consisting all information for this secretary, null if username exists in database.
      */
     public SecretaryData createSecretary(String username, String password) {
-        Secretary secretary = new Secretary(username, password);
+        Secretary secretary = new Secretary(username, password, newContactInDatabase());
         secretaryDatabase.add(secretary);
         return new SecretaryData(secretary);
     }

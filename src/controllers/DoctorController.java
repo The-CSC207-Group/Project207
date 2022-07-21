@@ -1,6 +1,6 @@
 package controllers;
 
-import dataBundles.ContactData;
+import dataBundles.AvailabilityData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.TimeBlockData;
@@ -10,7 +10,6 @@ import useCases.managers.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -61,6 +60,9 @@ public class DoctorController extends UserController<Doctor> {
             if (loadedPatientData != null){
                 changeCurrentController(new DoctorLoadedPatientController(
                         getContext(), currentController, doctorData, loadedPatientData));
+                doctorView.showSuccessLoadingPatient(new ContactManager(getDatabase()).getContactData(loadedPatientData));
+            } else {
+                doctorView.showErrorLoadingPatient();
             }
         };
     }
@@ -92,9 +94,14 @@ public class DoctorController extends UserController<Doctor> {
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
                             .getContactData(doctorData), new AppointmentManager(getDatabase())
                     .getAvailabilityData(doctorData));
+            ArrayList<AvailabilityData> availabiltiy = doctorData.getAvailability();
+            if (deleteInteger >= 0 & deleteInteger < availabiltiy.size()){
+                new AppointmentManager(getDatabase()).removeAvailability(doctorData,
+                        doctorData.getAvailability().get(deleteInteger));
+            } else {
 
-            new AppointmentManager(getDatabase()).removeAvailability(doctorData,
-                    doctorData.getAvailability().get(deleteInteger));
+            }
+
         };
     }
     private Command deleteAbsence() {

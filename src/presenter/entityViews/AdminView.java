@@ -8,8 +8,8 @@ import dataBundles.AdminData;
 public class AdminView extends EntityView<AdminData> {
 
     /**
-     * @param item The admin data bundle to view.
-     * @return Returns item's full admin view.
+     * @param item AdminData bundle to view.
+     * @return String representing item's full admin view.
      */
     @Override
     public String viewFull(AdminData item) {
@@ -17,8 +17,8 @@ public class AdminView extends EntityView<AdminData> {
     }
 
     /**
-     * @param item The admin data bundle to view.
-     * @return Returns the admin's username as a view.
+     * @param item AdminData bundle to view.
+     * @return String representing the admin's username as a view.
      */
     public String viewUsername(AdminData item) {
         return "Admin username is " + item.getUsername() + ".";

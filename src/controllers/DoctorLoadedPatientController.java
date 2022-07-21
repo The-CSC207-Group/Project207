@@ -54,7 +54,8 @@ public class DoctorLoadedPatientController extends TerminalController {
         commands.put("delete report", deleteReport());
 
         HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
-        for (String key : commands.keySet()) {
+
+        for (String key : prescriptionCommands.keySet()) {
             commands.put("view " + key, prescriptionCommands.get(key));
         }
 

@@ -24,6 +24,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final PatientManager patientManager;
     private final ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
+    private SecretaryController prev;
 
     /**
      * Creates a new controller for handling the state of the program when a secretary has loaded a specific patient.
@@ -33,10 +34,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
      * @param patientData a data bundle containing the ID and attributes of the current loaded patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
-                                            PatientData patientData){
+                                            PatientData patientData, SecretaryController prev){
         super(context);
         this.secretaryController = secretaryController;
         this.patientData = patientData;
+        this.prev = prev;
 
 
         this.appointmentManager = new AppointmentManager(getDatabase());
@@ -47,8 +49,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that each
-     * command calls.
+     * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that
+     * each command calls.
      * @return HashMap of strings mapped to their respective secretary loaded patient commands.
      */
     @Override
@@ -64,6 +66,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("cancel appointment", cancelAppointment());
         commands.put("active prescription detail", viewActivePrescriptionsDetailed());
         commands.put("all prescription detail", viewAllPrescriptionsDetailed());
+        commands.put("back", back(prev));
         return commands;
     }
 

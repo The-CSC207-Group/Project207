@@ -8,8 +8,8 @@ import dataBundles.ClinicData;
 public class ClinicView extends EntityView<ClinicData> {
 
     /**
-     * @param item The clinic data bundle to view.
-     * @return Returns item's full clinic view.
+     * @param item ClinicData bundle to view.
+     * @return String representing item's full clinic view.
      */
     @Override
     public String viewFull(ClinicData item) {
@@ -21,8 +21,8 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item The clinic data bundle to view.
-     * @return Returns the clinic's name as a view.
+     * @param item ClinicData bundle to view.
+     * @return String representing the clinic's name as a view.
      */
     public String viewClinicName(ClinicData item) {
         String clinicName = getDefaultStringNA(item.getClinicName());
@@ -30,8 +30,8 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item The clinic data bundle to view.
-     * @return Returns the clinic's address as a view.
+     * @param item ClinicData bundle to view.
+     * @return String representing the clinic's address as a view.
      */
     public String viewAddress(ClinicData item) {
         String address = getDefaultStringNA(item.getAddress());
@@ -39,8 +39,8 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item The clinic data bundle to view.
-     * @return Returns the clinic's time zone as a view.
+     * @param item ClinicData bundle to view.
+     * @return String representing the clinic's time zone as a view.
      */
     public String viewTimeZone(ClinicData item) {
         String timeZone = getDefaultStringNA(item.getTimeZone().toString());
@@ -48,8 +48,8 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item The clinic data bundle to view.
-     * @return Returns the clinic's hours of operation as a view.
+     * @param item ClinicData bundle to view.
+     * @return String representing the clinic's hours of operation as a view.
      */
     public String viewClinicHours(ClinicData item) {
         String startTime = getDefaultStringNA(item.getClinicHours().getDoctorStartTime().toString());
@@ -58,8 +58,8 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item The clinic data bundle to view.
-     * @return Returns the clinic's phone number as a view.
+     * @param item ClinicData bundle to view.
+     * @return String representing the clinic's phone number as a view.
      */
     public String viewPhoneNumber(ClinicData item) {
         String phoneNumber = getDefaultStringNA(item.getPhoneNumber());

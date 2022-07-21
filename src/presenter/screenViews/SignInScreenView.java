@@ -10,8 +10,8 @@ public class SignInScreenView extends ScreenView {
      * Welcome message displayed before the user logs in.
      */
     public void welcomeMessage() {
-        infoMessage("Welcome to the program! Please sign in to continue.\n" +
-                    "Type 'help' to see a list of all possible commands.");
+        infoMessage("Welcome to the program! Please sign in to continue.");
+        showHelpPrompt();
     }
 
     /**

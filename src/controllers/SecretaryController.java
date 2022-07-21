@@ -1,13 +1,13 @@
 package controllers;
 
-import dataBundles.*;
-import entities.Availability;
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
+import dataBundles.SecretaryData;
 import entities.Secretary;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -19,6 +19,7 @@ public class SecretaryController extends UserController<Secretary> {
     private final ContactManager contactManager;
     private final DoctorManager doctorManager;
     private final AppointmentManager appointmentManager;
+    private SecretaryController self = this;
 
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
@@ -59,10 +60,11 @@ public class SecretaryController extends UserController<Secretary> {
             SecretaryController currentController = this;
             if (patientData != null) {
                 changeCurrentController(new SecretaryLoadedPatientController(getContext(), currentController,
-                        patientData));
+                        patientData, self));
                 secretaryScreenView.showSuccessLoadingPatient(contactManager.getContactData(patientData));
+            } else {
+                secretaryScreenView.showErrorLoadingPatient();
             }
-            secretaryScreenView.showErrorLoadingPatient();
         };
     }
 

@@ -37,10 +37,11 @@ public class DoctorManager extends UserManager<Doctor> {
      * @return doctor data if sign in successful, if username exists in the database, return null.
      */
     public DoctorData createDoctor(String username, String password) {
-        Doctor doctor = new Doctor(username, password);
+        Doctor doctor = new Doctor(username, password, newContactInDatabase());
         database.getClinic().getClinicHours().forEach(doctor::addAvailability);
         doctorDatabase.add(doctor);
         return new DoctorData(doctor);
+
     }
 
     private DoctorData toDoctorData(Doctor doctor) {
