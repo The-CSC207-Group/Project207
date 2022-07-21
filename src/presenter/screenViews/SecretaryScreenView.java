@@ -1,11 +1,9 @@
 package presenter.screenViews;
 
-import dataBundles.AppointmentData;
-import dataBundles.ContactData;
-import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
+import dataBundles.*;
 import entities.Availability;
 import presenter.entityViews.AppointmentView;
+import presenter.entityViews.AvailabilityView;
 import presenter.entityViews.ContactView;
 import presenter.entityViews.PrescriptionView;
 import presenter.response.AppointmentTimeDetails;
@@ -13,6 +11,7 @@ import presenter.response.UserCredentials;
 
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -246,32 +245,9 @@ public class SecretaryScreenView extends UserScreenView {
         return input("Enter doctor username: ");
     }
 
-    public LocalTime addDoctorAvailabilityTime() {
-        return LocalTime.of(inputInt("Hour: "), inputInt("Minute: "));
-    }
-
-
-    public Integer addDoctorAvailableLength() {
-        return inputInt("Length of Available time: ");
-    }
-
-    public Integer getIndexToRemove() {
-        return inputInt("Select an index to remove: ");
-    }
-
     public void viewPrescriptionsDetailed(ArrayList<PrescriptionData> prescriptionData) {
         for (PrescriptionData data : prescriptionData) {
             prescriptionView.viewFull(data);
-        }
-    }
-
-    public DayOfWeek getDay() {
-        return DayOfWeek.of(inputInt("Enter Day of the week (int): "));
-    }
-
-    public void viewAvailabilityFull(ArrayList<Availability> availabilities) {
-        for (int i=0; i<availabilities.size(); i++){
-            infoMessage(i + ": " + availabilities.get(i));
         }
     }
 
@@ -291,6 +267,22 @@ public class SecretaryScreenView extends UserScreenView {
         LocalTime localTime = LocalTime.MIDNIGHT;
         ZoneId zoneId = ZoneId.of(input("Zone ID: "));
         return ZonedDateTime.of(localDate, localTime, zoneId);
+    }
+
+    public ArrayList<Integer> addAvailabilityPrompt() {
+        Integer day = inputInt("Enter the day of the week you would like to add your availability " +
+                "time as an integer with 1 being Monday and 7 being Sunday: ");
+        Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
+        Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
+        Integer length = inputInt("Enter the length in minute that you are available: ");
+        return new ArrayList<>(Arrays.asList(day, hour, minute, length));
+    }
+
+    public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
+        String doctorName = contactView.viewName(doctorData);
+        infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
+        new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
+        return deleteItemFromEnumerationPrompt("availability");
     }
 
 
