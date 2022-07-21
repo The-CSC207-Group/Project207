@@ -59,9 +59,10 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("view appointments", viewAppointments());
         commands.put("change password", changePatientPassword());
         commands.put("unload patient", back(secretaryController));
-        commands.put("reschedule appointment", rescheduleAppointment());
-        commands.put("book appointment", bookAppointment());
-        commands.put("cancel appointment", cancelAppointment());
+        //pending implementation for phase 2
+        //commands.put("reschedule appointment", rescheduleAppointment());
+        //commands.put("book appointment", bookAppointment());
+        //commands.put("cancel appointment", cancelAppointment());
         commands.put("active prescription detail", viewActivePrescriptionsDetailed());
         commands.put("all prescription detail", viewAllPrescriptionsDetailed());
         commands.put("back", back(secretaryController));
@@ -105,87 +106,87 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-
-    private Command bookAppointment() {
-        return (x) -> {
-            LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
-            if (date == null) {
-                secretaryScreenView.showInvalidDateError();
-                return;
-            }
-            String doctor = secretaryScreenView.bookAppointmentDoctorPrompt();
-            DoctorData doctorData = doctorManager.getUserData(doctor);
-            if (doctorData == null) {
-                secretaryScreenView.showDoctorDoesNotExistError();
-                return;
-            }
-            ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
-                    LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-            if (appointments.size() == 0) {
-                secretaryScreenView.showNoAvailableAppointmentDayError();
-                return;
-            }
-            viewDoctorSchedule(doctorData, date);
-            AppointmentData appointment = bookAppointmentTime(doctorData, date);
-            if (appointment == null) {
-                secretaryScreenView.showAppointmentConflictError();
-                return;
-            }
-            secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
-                    contactManager.getContactData(doctorData));
-
-        };
-    }
-
-    private Command cancelAppointment() {
-        return (x) -> {
-            ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
-            ContactData contactData = contactManager.getContactData(patientData);
-            Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
-            if (index == null) {
-                secretaryScreenView.showDeleteNotAnIntegerError("null");
-            } else if (index >= data.size()) {
-                secretaryScreenView.showDeleteOutOfRangeError();
-            } else {
-                appointmentManager.removeAppointment(data.get(index));
-            }
-        };
-    }
-
-    private Command rescheduleAppointment() {
-        return (x) -> {
-            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            ContactData contactData = contactManager.getContactData(patientData);
-            Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
-            if (index == null) {
-                secretaryScreenView.showRescheduleNotAnIntegerError("null");
-            } else if (index >= appointments.size()) {
-                secretaryScreenView.showRescheduleOutOfRangeError();
-            } else {
-                LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
-                AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
-                appointmentManager.rescheduleAppointment(
-                        appointments.get(index), day.getYear(), day.getMonthValue(),
-                        day.getDayOfMonth(), time.time().getHour(), time.time().getMinute(), time.length());
-            }
-        };
-    }
-
-    private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
-        secretaryScreenView.viewAppointments(
-                contactManager.getContactData(doctorData),
-                appointmentManager.getScheduleData(
-                        doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth())));
-    }
-
-    private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
-        AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
-        return appointmentManager.bookAppointment(
-                patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
-                appointmentTimeDetails.time().getHour(),
-                appointmentTimeDetails.time().getMinute(),
-                appointmentTimeDetails.length());
-    }
+//pending implementation for phase 2
+//    private Command bookAppointment() {
+//        return (x) -> {
+//            LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
+//            if (date == null) {
+//                secretaryScreenView.showInvalidDateError();
+//                return;
+//            }
+//            String doctor = secretaryScreenView.bookAppointmentDoctorPrompt();
+//            DoctorData doctorData = doctorManager.getUserData(doctor);
+//            if (doctorData == null) {
+//                secretaryScreenView.showDoctorDoesNotExistError();
+//                return;
+//            }
+//            ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
+//                    LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+//            if (appointments.size() == 0) {
+//                secretaryScreenView.showNoAvailableAppointmentDayError();
+//                return;
+//            }
+//            viewDoctorSchedule(doctorData, date);
+//            AppointmentData appointment = bookAppointmentTime(doctorData, date);
+//            if (appointment == null) {
+//                secretaryScreenView.showAppointmentConflictError();
+//                return;
+//            }
+//            secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
+//                    contactManager.getContactData(doctorData));
+//
+//        };
+//    }
+//
+//    private Command cancelAppointment() {
+//        return (x) -> {
+//            ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
+//            ContactData contactData = contactManager.getContactData(patientData);
+//            Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
+//            if (index == null) {
+//                secretaryScreenView.showDeleteNotAnIntegerError("null");
+//            } else if (index >= data.size()) {
+//                secretaryScreenView.showDeleteOutOfRangeError();
+//            } else {
+//                appointmentManager.removeAppointment(data.get(index));
+//            }
+//        };
+//    }
+//
+//    private Command rescheduleAppointment() {
+//        return (x) -> {
+//            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
+//            ContactData contactData = contactManager.getContactData(patientData);
+//            Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
+//            if (index == null) {
+//                secretaryScreenView.showRescheduleNotAnIntegerError("null");
+//            } else if (index >= appointments.size()) {
+//                secretaryScreenView.showRescheduleOutOfRangeError();
+//            } else {
+//                LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
+//                AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
+//                appointmentManager.rescheduleAppointment(
+//                        appointments.get(index), day.getYear(), day.getMonthValue(),
+//                        day.getDayOfMonth(), time.time().getHour(), time.time().getMinute(), time.length());
+//            }
+//        };
+//    }
+//
+//    private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
+//        secretaryScreenView.viewAppointments(
+//                contactManager.getContactData(doctorData),
+//                appointmentManager.getScheduleData(
+//                        doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth())));
+//    }
+//
+//    private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
+//        AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
+//        return appointmentManager.bookAppointment(
+//                patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
+//                appointmentTimeDetails.time().getHour(),
+//                appointmentTimeDetails.time().getMinute(),
+//                appointmentTimeDetails.length());
+//    }
 
 
     private Command viewActivePrescriptionsDetailed() {

@@ -51,7 +51,8 @@ public class DoctorLoadedPatientController extends TerminalController {
 
         HashMap<String, Command> commands = super.AllCommands();
         commands.put("unload patient", back(previousController));
-        commands.put("view appointments", ViewPatientAppointments());
+        //pending implementation for phase 2
+        //commands.put("view appointments", ViewPatientAppointments());
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
         commands.put("delete report", deleteReport());
@@ -90,11 +91,11 @@ public class DoctorLoadedPatientController extends TerminalController {
             }
         };
     }
-
-    private Command ViewPatientAppointments() {
-        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
-                .getPatientAppointments(patientData));
-    }
+//pending implementation for phase 2
+//    private Command ViewPatientAppointments() {
+//        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
+//                .getPatientAppointments(patientData));
+//    }
 
     private Command getReport() {
         return (x) -> new ReportManager(getDatabase()).getReportData(patientData);
