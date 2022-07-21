@@ -7,6 +7,7 @@ import presenter.screenViews.TerminalScreenView;
  * Controller class that stores the current controller of the program and allows the program to switch controllers.
  */
 public class Context {
+
     private TerminalController currentController;
     private boolean exit = false;
     private final Database database;
@@ -14,7 +15,7 @@ public class Context {
 
     /**
      * Initializes the context object, which initially stores the sign in controller.
-     * @param database the collection of all entity databases in the program.
+     * @param database Database - the collection of all entity databases in the program.
      */
     public Context(Database database){
         this.database = database;
@@ -34,7 +35,7 @@ public class Context {
 
     /**
      * Updates the current controller to the one passed into the parameter.
-     * @param new_controller the new controller that the context will store.
+     * @param new_controller TerminalController - the new controller that the context will store.
      */
     public void changeController(TerminalController new_controller){
         terminalScreenView.showHelpPrompt();
@@ -50,9 +51,8 @@ public class Context {
 
     /**
      * Returns the database associated with this program.
-     * @return Database object that stores all the entity databases in the program/
+     * @return Database - collection of all the entity databases in the program.
      */
     public Database getDatabase() {return this.database;}
-
 
 }

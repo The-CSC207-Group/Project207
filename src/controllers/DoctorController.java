@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  * Controller class that processes the commands that a patient passes in.
  */
 public class DoctorController extends UserController<Doctor> {
+
     private final DoctorScreenView doctorView = new DoctorScreenView();
     private final DoctorData doctorData;
     private final DoctorController currentController = this;
@@ -79,10 +80,12 @@ public class DoctorController extends UserController<Doctor> {
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
                 .getDoctorAppointments(doctorData));
     }
+
     private Command ViewAllAppointments(){
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase()).getAllAppointments());
 
     }
+
     private Command newAvailability() {
         return (x) -> {
             ArrayList<Integer> availabilityInfo = doctorView.addAvailabilityPrompt();
@@ -90,6 +93,7 @@ public class DoctorController extends UserController<Doctor> {
                     availabilityInfo.get(1), availabilityInfo.get(2), availabilityInfo.get(3));
         };
     }
+
     private Command deleteAvailability() {
         return (x) -> {
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
@@ -102,6 +106,7 @@ public class DoctorController extends UserController<Doctor> {
             }
         };
     }
+
     private Command deleteAbsence() {
         return (x) -> {
             Integer deleteInteger = doctorView.deleteAbsencePrompt(new ContactManager(getDatabase())
@@ -111,6 +116,7 @@ public class DoctorController extends UserController<Doctor> {
             new AppointmentManager(getDatabase()).deleteAbsence(doctorData, doctorData.getAbsence().get(deleteInteger));
         };
     }
+
     private Command newAbsence() {
         return (x) -> {
             ArrayList<Integer> absenceData = doctorView.addAbsencePrompt();
@@ -120,4 +126,5 @@ public class DoctorController extends UserController<Doctor> {
                     absenceData.get(1), absenceData.get(2) + absenceData.get(3), 0, 0));
         };
     }
+
 }

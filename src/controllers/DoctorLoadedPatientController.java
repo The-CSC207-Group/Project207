@@ -14,6 +14,7 @@ import java.util.HashMap;
  * Controller class that process the commands a doctor would use on a specific patient that they loaded.
  */
 public class DoctorLoadedPatientController extends TerminalController {
+
     private final PatientData patientData;
     private final DoctorData doctorData;
     private final PrescriptionManager prescriptionManager;
@@ -22,11 +23,13 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
-     * @param context a reference to the context object, which stores the current controller and allows for switching
-     *                between controllers.
-     * @param previousController stores the previous controller, allows you to easily go back to it via the back command.
-     * @param doctorData a data bundle containing the ID and attributes of the current doctor user.
-     * @param patientData a data bundle containing the ID and attributes of the current loaded patient user.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
+     * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
+     *                           via the back command.
+     * @param doctorData DoctorData - a data bundle containing the ID and attributes of the current doctor user.
+     * @param patientData PatientData - a data bundle containing the ID and attributes of the current loaded
+     *                    patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
@@ -40,7 +43,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     /**
      * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.
-     * @return HashMap of strings mapped to their respective doctor loaded patient commands.
+     * @return HashMap<String, Command> - HashMap of strings mapped to their respective doctor loaded patient commands.
      */
     @Override
     public HashMap<String, Command> AllCommands() {
@@ -98,10 +101,8 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command createReport() {
-        return (x) -> {
-            new ReportManager(getDatabase()).addReport(patientData, doctorData,
-                    doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
-        };
+        return (x) -> new ReportManager(getDatabase()).addReport(patientData, doctorData,
+                doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
     }
 
     private Command deleteReport() {
@@ -111,4 +112,5 @@ public class DoctorLoadedPatientController extends TerminalController {
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
     }
+
 }

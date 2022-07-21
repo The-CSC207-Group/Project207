@@ -139,7 +139,7 @@ public class SecretaryScreenView extends UserScreenView {
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
-        successMessage("Successfully booked appointment for " + patientName + "with " + doctorName);
+        successMessage("Successfully booked appointment for " + patientName + " with " + doctorName);
     }
 
     /**
@@ -241,6 +241,11 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
+    public void viewDoctorAvailability(String doctorUsername, List<AvailabilityData> availabilityData) {
+        infoMessage("Viewing availabilities for Dr." + doctorUsername + ":");
+        infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
+    }
+
     /**
      * asks user for input and gets the target doctor username
      * @return a string representing username of the doctor.
@@ -310,7 +315,6 @@ public class SecretaryScreenView extends UserScreenView {
         new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
         return deleteItemFromEnumerationPrompt("availability");
     }
-
 
 
 

@@ -29,7 +29,7 @@ public class ContactView extends EntityView<ContactData> {
      * @return String representing the contact's name as a view.
      */
     public String viewName(ContactData item) {
-        return "Name: " + getDefaultString(item.getName(), "unnamed");
+        return getDefaultString(item.getName(), "unnamed");
     }
 
     /**

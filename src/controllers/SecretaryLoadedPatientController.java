@@ -15,6 +15,7 @@ import java.util.HashMap;
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
  */
 public class SecretaryLoadedPatientController extends TerminalController {
+
     private final PatientData patientData;
     private final SecretaryController secretaryController;
     private final PrescriptionView prescriptionView = new PrescriptionView();
@@ -26,20 +27,18 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     /**
-     * Creates a new controller for handling the state of the program when a secretary has loaded a specific patient.
-     *
-     * @param context             a reference to the context object, which stores the current controller and allows for switching
-     *                            between controllers.
-     * @param secretaryController the previous controller object, allowing you to easily go back.
-     * @param patientData         a data bundle containing the ID and attributes of the current loaded patient user.
+     * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
+     * @param secretaryController SecretaryController - the previous controller object, allowing you to easily go back.
+     * @param patientData PatientData - a data bundle containing the ID and attributes of the current loaded
+     *                    patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
         super(context);
         this.secretaryController = secretaryController;
         this.patientData = patientData;
-
-
         this.appointmentManager = new AppointmentManager(getDatabase());
         this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.doctorManager = new DoctorManager(getDatabase());
@@ -48,10 +47,9 @@ public class SecretaryLoadedPatientController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of secretary loaded patient commands mapped to the method that
-     * each command calls.
-     *
-     * @return HashMap of strings mapped to their respective secretary loaded patient commands.
+     * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
+     * command calls.
+     * @return HashMap<String, Command> - HashMap of strings mapped to their respective doctor loaded patient commands.
      */
     @Override
     public HashMap<String, Command> AllCommands() {
@@ -136,7 +134,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
             secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
                     contactManager.getContactData(doctorData));
 
-
         };
     }
 
@@ -152,7 +149,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
             } else {
                 appointmentManager.removeAppointment(data.get(index));
             }
-
         };
     }
 
@@ -171,7 +167,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 appointmentManager.rescheduleAppointment(
                         appointments.get(index), day.getYear(), day.getMonthValue(),
                         day.getDayOfMonth(), time.time().getHour(), time.time().getMinute(), time.length());
-
             }
         };
     }
@@ -185,7 +180,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
         AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
-
         return appointmentManager.bookAppointment(
                 patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
                 appointmentTimeDetails.time().getHour(),

@@ -19,8 +19,8 @@ public class SignInController extends TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program when a user is signing in.
-     * @param context a reference to the context object, which stores the current controller and allows for switching
-     *                between controllers.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
      */
     public SignInController(Context context) {
         super(context);
@@ -29,7 +29,7 @@ public class SignInController extends TerminalController {
 
     /**
      * Creates a hashmap of all string representations of sign in commands mapped to the method that each command calls.
-     * @return HashMap of strings mapped to their respective sign in commands.
+     * @return HashMap<String, Command> - HashMap of strings mapped to their respective sign in commands.
      */
     @Override
     public HashMap<String, Command> AllCommands() {
@@ -83,4 +83,5 @@ public class SignInController extends TerminalController {
         ClinicManager clinicManager = new ClinicManager(getDatabase());
         return (x) -> signInScreenView.viewClinicInfo(clinicManager.clinicData());
     }
+
 }
