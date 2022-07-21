@@ -11,8 +11,8 @@ import entities.TimeBlock;
 public class AppointmentView extends EntityView<AppointmentData> {
 
     /**
-     * @param item The appointment data bundle to view.
-     * @return Returns item's full appointment view.
+     * @param item AppointmentData bundle to view.
+     * @return String representing item's full appointment view.
      */
     @Override
     public String viewFull(AppointmentData item) {

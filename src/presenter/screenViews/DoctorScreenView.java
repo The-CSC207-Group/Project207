@@ -149,6 +149,20 @@ public class DoctorScreenView extends UserScreenView {
         return deleteItemFromEnumerationPrompt("availability");
     }
 
+    /**
+     * Error raised when the user inputted integer is outside the size of the given data bundle list.
+     */
+    public void showDeleteAvailabilityOutOfRangeError() {
+        showDeleteOutOfRangeError("availability");
+    }
+
+    /**
+     * Error raised when the user input is not an integer.
+     */
+    public void showDeleteAvailabilityNotAnIntegerError() {
+        showDeleteNotAnIntegerError("availability");
+    }
+
     public ArrayList<Integer> addAbsencePrompt() {
         infoMessage("When is the first day of your absence?");
         LocalDate date = showLocalDatePrompt();
@@ -161,6 +175,20 @@ public class DoctorScreenView extends UserScreenView {
         infoMessage("Viewing doctor " + doctorName + " absences to delete:");
         new TimeBlockView().viewFullAsEnumerationFromList(timeBlockData);
         return deleteItemFromEnumerationPrompt("absence");
+    }
+
+    /**
+     * Error raised when the user inputted integer is outside the size of the given data bundle list.
+     */
+    public void showDeleteAbsenceOutOfRangeError() {
+        showDeleteOutOfRangeError("report");
+    }
+
+    /**
+     * Error raised when the user input is not an integer.
+     */
+    public void showDeleteAbsenceNotAnIntegerError() {
+        showDeleteNotAnIntegerError("report");
     }
 
     /**
