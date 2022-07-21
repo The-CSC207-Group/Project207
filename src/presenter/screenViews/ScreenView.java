@@ -56,4 +56,6 @@ public abstract class ScreenView {
         return input("Enter " + accountType + " password: ");
     }
 
+    public void showHelpPrompt() {infoMessage("Type 'help' to see a list of all possible commands.");}
+
 }

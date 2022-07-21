@@ -17,10 +17,10 @@ public class Main {
                 new TimeBlock(ZonedDateTime.of(1, 2, 3, 4, 5, 6, 7,
                         ZoneId.of("US/Eastern")), ZonedDateTime.of(1, 2, 3, 4,
                         5, 6, 7, ZoneId.of("US/Eastern")))));
-        Context c = new Context(database);
-        c.run();
         AdminManager adminManager = new AdminManager(database);
         adminManager.createAdmin("root", "root");
         database.save();
+        Context c = new Context(database);
+        c.run();
     }
 }
