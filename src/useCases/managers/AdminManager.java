@@ -7,6 +7,7 @@ import entities.Admin;
 import entities.Contact;
 
 public class AdminManager extends UserManager<Admin>{
+
     DataMapperGateway<Admin> adminDatabase;
     DataMapperGateway<Contact> contactDatabase;
 
@@ -31,6 +32,27 @@ public class AdminManager extends UserManager<Admin>{
         adminDatabase.add(admin);
         return new AdminData(admin);
     }
+
+    /**
+     * Creates and returns a data bundle of the admin associated with the login details passed in.
+     * @param userName String - the username of the admin that wants to sign in.
+     * @return AdminData - the data bundle of the admin that wants to sign in.
+     */
+    @Override
+    public AdminData signIn(String userName, String password) {
+        return toAdminData(signInHelper(userName, password));
+    }
+
+    /**
+     * Creates and returns a data bundle of the admin associated with the username passed in.
+     * @param username String - username of the specified user.
+     * @return AdminData - data bundle of the admin associated with the username passed in.
+     */
+    @Override
+    public AdminData getUserData(String username) {
+       return getUserHelper(username).map(AdminData::new).orElse(null);
+    }
+
     private AdminData toAdminData(Admin admin){
         if (admin == null){
             return null;
@@ -39,13 +61,4 @@ public class AdminManager extends UserManager<Admin>{
         }
     }
 
-    @Override
-    public AdminData signIn(String userName, String password) {
-        return toAdminData(signInHelper(userName, password));
-    }
-
-    @Override
-    public AdminData getUserData(String username) {
-       return getUserHelper(username).map(AdminData::new).orElse(null);
-    }
 }

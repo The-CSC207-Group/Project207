@@ -14,11 +14,12 @@ import java.time.LocalDate;
  * Use case class meant for handling user contact info.
  */
 public class ContactManager {
+
     private final DataMapperGateway<Contact> contactDatabase;
 
     /**
-     * Constructor for the contactManager
-     * @param database Collection of all databases.
+     * Constructor for the contactManager.
+     * @param database Database - collection of all entity databases in the program.
      */
     public ContactManager(Database database){
         this.contactDatabase = database.getContactDatabase();
@@ -33,14 +34,6 @@ public class ContactManager {
      */
     public <T extends User> ContactData getContactData(UserData<T> userData){
         return new ContactData(contactDatabase.get(userData.getContactInfoId()));
-    }
-
-    /**
-     * Adds a new contact to the contact database and returns its id.
-     * @return Integer - id of the newly added contact to the database.
-     */
-    protected Integer addEmptyContactToDatabase(){
-        return contactDatabase.add(new Contact());
     }
 
     /**
@@ -169,4 +162,9 @@ public class ContactManager {
         contact.setEmergencyRelationship(emergencyRelationship);
         return true;
     }
+
+    protected Integer addEmptyContactToDatabase(){
+        return contactDatabase.add(new Contact());
+    }
+
 }
