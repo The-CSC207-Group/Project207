@@ -81,7 +81,6 @@ public class SignInController extends TerminalController {
 
     private Command ViewClinicInformation() {
         ClinicManager clinicManager = new ClinicManager(getDatabase());
-        System.out.println(clinicManager.clinicData());
         return (x) -> signInScreenView.viewClinicInfo(clinicManager.clinicData());
     }
 }
