@@ -53,7 +53,7 @@ public class Contact extends JsonSerializable {
         this.email = "";
         this.phoneNumber = "";
         this.address = "";
-        this.birthday = LocalDate.of(1, 1, 1);
+        this.birthday = null;
         this.emergencyContactName = "";
         this.emergencyContactEmail = "";
         this.emergencyContactPhoneNumber = "";
