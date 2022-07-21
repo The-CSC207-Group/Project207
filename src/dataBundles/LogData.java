@@ -38,4 +38,9 @@ public class LogData {
     public LocalDateTime getTime() {
         return log.getTime();
     }
+
+    /**
+     * @return Integer - id of the user the log belongs to.
+     */
+    public Integer getUserId(){return log.getUserId();}
 }

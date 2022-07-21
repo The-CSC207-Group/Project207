@@ -75,7 +75,7 @@ public class LogManager {
 
     public <T extends User> ArrayList<LogData> getUserLogs(UserData<T> userData){
         return databaseUtils.toArrayList(logDatabase.stream().
-                filter(log -> log.getId().equals(userData.getId())).map(LogData::new));
+                filter(log -> log.getUserId().equals(userData.getId())).map(LogData::new));
 
     }
 
