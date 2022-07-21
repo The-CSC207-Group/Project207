@@ -85,6 +85,14 @@ public abstract class UserManager<T extends User> {
             return user;}
         return null;
     }
+    public boolean canSignIn(String username, String password) {
+        T user = getUser(username);
+
+        if (user == null)
+            return false;
+
+        return user.comparePassword(password);
+    }
     public abstract UserData<T> signIn(String username, String password);
     public abstract UserData<T> getUserData(String username);
     protected Optional<T> getUserHelper(String username){
