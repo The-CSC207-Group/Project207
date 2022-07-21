@@ -1,6 +1,7 @@
 package controllers;
 
 import database.Database;
+import presenter.screenViews.TerminalScreenView;
 
 /**
  * Controller class that stores the current controller of the program and allows the program to switch controllers.
@@ -9,6 +10,7 @@ public class Context {
     private TerminalController currentController;
     private boolean exit = false;
     private final Database database;
+    private final TerminalScreenView terminalScreenView = new TerminalScreenView();
 
     /**
      * Initializes the context object, which initially stores the sign in controller.
@@ -33,6 +35,7 @@ public class Context {
      * @param new_controller the new controller that the context will store.
      */
     public void changeController(TerminalController new_controller){
+        terminalScreenView.showHelpPrompt();
         currentController = new_controller;
     }
 
