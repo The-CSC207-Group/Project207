@@ -52,8 +52,8 @@ public class ClinicView extends EntityView<ClinicData> {
      * @return Returns the clinic's hours of operation as a view.
      */
     public String viewClinicHours(ClinicData item) {
-        String startTime = getDefaultStringNA(item.getClinicHours().getStartTime().toString());
-        String endTime = getDefaultStringNA(item.getClinicHours().getEndTime().toString());
+        String startTime = getDefaultStringNA(item.getClinicHours().getDoctorStartTime().toString());
+        String endTime = getDefaultStringNA(item.getClinicHours().getDoctorEndTime().toString());
         return "This clinic is open from " + startTime + "to" + endTime + ".";
     }
 

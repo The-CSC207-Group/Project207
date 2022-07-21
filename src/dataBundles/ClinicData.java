@@ -1,9 +1,12 @@
 package dataBundles;
 
+import entities.Availability;
 import entities.Clinic;
 import entities.TimeBlock;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Wrapper class for Clinic entity.
@@ -35,8 +38,10 @@ public class ClinicData {
     /**
      * @return TimeBlock - hours of operations of the clinic stored.
      */
-    public TimeBlockData getClinicHours(){
-        return new TimeBlockData(clinic.getClinicHours());
+    public ArrayList<AvailabilityData> getClinicHours(){
+        return clinic.getClinicHours().stream()
+                .map(AvailabilityData::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
