@@ -16,7 +16,20 @@ public class Main {
 //        DataMapperGateway<User> userDatabase = new UserJsonDatabase();
         Database database = new Database();
         database.setClinic(new Clinic("", "", "", ZoneId.of("US/Eastern"),
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30), LocalTime.of(17, 0))))));
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                                LocalTime.of(17, 0)),
+                        new Availability(DayOfWeek.of(2), LocalTime.of(8, 30),
+                                LocalTime.of(17, 0)),
+                        new Availability(DayOfWeek.of(3), LocalTime.of(8, 30),
+                                LocalTime.of(17, 0)),
+                        new Availability(DayOfWeek.of(4), LocalTime.of(8, 30),
+                                LocalTime.of(17, 0)),
+                        new Availability(DayOfWeek.of(5), LocalTime.of(8, 30),
+                                LocalTime.of(17, 0)),
+                        new Availability(DayOfWeek.of(6), LocalTime.of(10, 0),
+                                LocalTime.of(16, 0)),
+                        new Availability(DayOfWeek.of(7), LocalTime.of(10, 0),
+                                LocalTime.of(16, 0))))));
         AdminManager adminManager = new AdminManager(database);
         adminManager.createAdmin("root", "root");
         database.save();

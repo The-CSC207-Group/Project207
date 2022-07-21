@@ -2,6 +2,8 @@ package presenter.entityViews;
 
 import dataBundles.ClinicData;
 
+import java.util.ArrayList;
+
 /**
  * The Clinic entity's view.
  */
@@ -16,8 +18,8 @@ public class ClinicView extends EntityView<ClinicData> {
         return viewClinicName(item) + "\n"
                 + viewAddress(item) + "\n"
                 + viewTimeZone(item) + "\n"
-                + viewClinicHours(item) + "\n"
-                + viewPhoneNumber(item);
+                + viewPhoneNumber(item) + "\n"
+                + viewClinicHours(item);
     }
 
     /**
@@ -49,20 +51,30 @@ public class ClinicView extends EntityView<ClinicData> {
 
     /**
      * @param item ClinicData bundle to view.
-     * @return String representing the clinic's hours of operation as a view.
-     */
-    public String viewClinicHours(ClinicData item) {
-        String startTime = getDefaultStringNA(item.getClinicHours().getStartTime().toString());
-        String endTime = getDefaultStringNA(item.getClinicHours().getEndTime().toString());
-        return "This clinic is open from " + startTime + " to " + endTime + ".";
-    }
-
-    /**
-     * @param item ClinicData bundle to view.
      * @return String representing the clinic's phone number as a view.
      */
     public String viewPhoneNumber(ClinicData item) {
         String phoneNumber = getDefaultStringNA(item.getPhoneNumber());
         return "This clinic's phone number is " + phoneNumber + ".";
+    }
+
+    /**
+     * @param item ClinicData bundle to view.
+     * @return String representing the clinic's hours of operation as a view.
+     */
+    public String viewClinicHours(ClinicData item) {
+        ArrayList<String> al = new ArrayList<>();
+        for (int i = 0; i <= 6; i++) {
+            al.add(item.getClinicHours().get(i).getDoctorStartTime().toString());
+            al.add(item.getClinicHours().get(i).getDoctorEndTime().toString());
+        }
+        return "Clinic hours:" +
+                "\nMonday: " + al.get(0) + " to " + al.get(1) +
+                "\nTuesday: " + al.get(2) + " to " + al.get(3) +
+                "\nWednesday: " + al.get(4) + " to " + al.get(5) +
+                "\nThursday: " + al.get(6) + " to " + al.get(7) +
+                "\nFriday: " + al.get(8) + " to " + al.get(9) +
+                "\nSaturday: " + al.get(10) + " to " + al.get(11) +
+                "\nSunday: " + al.get(12) + " to " + al.get(13);
     }
 }
