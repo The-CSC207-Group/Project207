@@ -33,7 +33,7 @@ public class PatientManager extends UserManager<Patient> {
      */
     public PatientData createPatient(String username, String password) {
         Patient patient = new Patient(username, password, newContactInDatabase());
-        patientDatabase.add(patient);
+        if (patientDatabase.add(patient) == null){return null;}
         return new PatientData(patient);
     }
 
