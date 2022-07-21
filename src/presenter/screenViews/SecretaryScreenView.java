@@ -241,6 +241,11 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
+    public void viewDoctorAvailability(ContactData doctorContact, List<AvailabilityData> availabilityData) {
+        infoMessage("Viewing availabilities for Dr." + contactView.viewName(doctorContact) + ":");
+        infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
+    }
+
     public String getTargetDoctor() {
         return input("Enter doctor username: ");
     }
