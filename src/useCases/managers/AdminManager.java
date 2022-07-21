@@ -39,6 +39,6 @@ public class AdminManager extends UserManager<Admin>{
 
     @Override
     public AdminData getUserData(String username) {
-       return getUserHelper(username).map(x -> new AdminData(x)).orElse(null);
+       return getUserHelper(username).map(AdminData::new).orElse(null);
     }
 }

@@ -22,7 +22,7 @@ public class AvailabilityData {
     }
 
     /**
-     * @return DayOfWeek associated the stored availability object.
+     * @return DayOfWeek associated with the stored availability object.
      */
     public DayOfWeek getDayOfWeek() {
         return availability.getDayOfWeek();

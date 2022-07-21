@@ -40,9 +40,9 @@ public class ClinicData {
     }
 
     /**
-     * @return CharSequence - phone number of the clinic stored.
+     * @return String - phone number of the clinic stored.
      */
-    public CharSequence getPhoneNumber() {
+    public String getPhoneNumber() {
         return clinic.getPhoneNumber();
     }
 

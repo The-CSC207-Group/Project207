@@ -62,7 +62,7 @@ public class ClinicView extends EntityView<ClinicData> {
      * @return Returns the clinic's phone number as a view.
      */
     public String viewPhoneNumber(ClinicData item) {
-        String phoneNumber = getDefaultStringNA(item.getPhoneNumber().toString());
+        String phoneNumber = getDefaultStringNA(item.getPhoneNumber());
         return "This clinic's phone number is " + phoneNumber + ".";
     }
 }
