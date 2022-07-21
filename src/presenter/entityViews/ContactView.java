@@ -69,7 +69,7 @@ public class ContactView extends EntityView<ContactData> {
             birthday = null;
         }
 
-        return "Date of Birth: " + getDefaultStringNA(item.getBirthday().toString());
+        return "Date of Birth: " + getDefaultStringNA(birthday);
     }
 
     /**
