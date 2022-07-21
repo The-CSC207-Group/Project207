@@ -241,16 +241,28 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
+    /**
+     * asks user for input and gets the target doctor username
+     * @return a string representing username of the doctor.
+     */
     public String getTargetDoctor() {
         return input("Enter doctor username: ");
     }
 
+    /**
+     * View details for each prescription
+     * @param prescriptionData takes in an arraylist consisting prescription data.
+     */
     public void viewPrescriptionsDetailed(ArrayList<PrescriptionData> prescriptionData) {
         for (PrescriptionData data : prescriptionData) {
             prescriptionView.viewFull(data);
         }
     }
 
+    /**
+     * prompts user to add a timezone, for START time
+     * @return a new ZonedDateTime object with the desired input from the user.
+     */
     public ZonedDateTime addZoneDateTimeStart() {
         infoMessage("You are about to add the START time: ");
         LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
@@ -260,6 +272,10 @@ public class SecretaryScreenView extends UserScreenView {
         return ZonedDateTime.of(localDate, localTime, zoneId);
     }
 
+    /**
+     * prompts user to add a timezone for END time
+     * @return a new ZonedDateTime object with the desired input from the user.
+     */
     public ZonedDateTime addZoneDateTimeEnd() {
         infoMessage("You are about to add the END time: ");
         LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
@@ -269,6 +285,10 @@ public class SecretaryScreenView extends UserScreenView {
         return ZonedDateTime.of(localDate, localTime, zoneId);
     }
 
+    /**
+     * prompt for user to add availability
+     * @return an arraylist of integer consisting day, hour minute, and length.
+     */
     public ArrayList<Integer> addAvailabilityPrompt() {
         Integer day = inputInt("Enter the day of the week you would like to add your availability " +
                 "time as an integer with 1 being Monday and 7 being Sunday: ");
@@ -278,12 +298,19 @@ public class SecretaryScreenView extends UserScreenView {
         return new ArrayList<>(Arrays.asList(day, hour, minute, length));
     }
 
-    public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
-        String doctorName = contactView.viewName(doctorData);
+    /**
+     * displays prompt for the user to select an index of availability to delete.
+     * @param contactData contact data for the desired doctor.
+     * @param availabilityData the availability data in a list.
+     * @return integer index of the desired availability to be deleted.
+     */
+    public Integer deleteAvailabilityPrompt(ContactData contactData, List<AvailabilityData> availabilityData) {
+        String doctorName = contactView.viewName(contactData);
         infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
         new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
         return deleteItemFromEnumerationPrompt("availability");
     }
+
 
 
 
