@@ -35,7 +35,7 @@ public class LogManager {
      * @param userId Integer - Id of the user that the log will be attached to.
      * @return LogData representing the log.
      */
-    protected LogData addLog(String message, Integer userId){
+    public LogData addLog(String message, Integer userId){
         Log log = new Log(userId, message);
         logDatabase.add(log);
         return new LogData(log);
@@ -44,10 +44,10 @@ public class LogManager {
     /**
      * Method for adding a log with some message to the user. Assumes userData has a valid id.
      * @param message String - Message attached with to the log.
-     * @param userData UserData - Data associated with some user.
+     * @param userData UserData<? extends User> - Data associated with some user.
      * @return LogData representing the log.
      */
-    protected LogData addLog(String message, UserData userData){
+    protected LogData addLog(String message, UserData<? extends User> userData){
         Log log = new Log(userData.getId(), message);
         logDatabase.add(log);
         return new LogData(log);

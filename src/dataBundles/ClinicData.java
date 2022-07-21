@@ -35,8 +35,8 @@ public class ClinicData {
     /**
      * @return TimeBlock - hours of operations of the clinic stored.
      */
-    public TimeBlock getClinicHours(){
-        return clinic.getClinicHours();
+    public TimeBlockData getClinicHours(){
+        return new TimeBlockData(clinic.getClinicHours());
     }
 
     /**

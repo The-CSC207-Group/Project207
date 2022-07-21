@@ -5,7 +5,7 @@ import database.Database;
 import entities.Clinic;
 
 public class ClinicManager {
-    private Clinic clinic;
+    private final Clinic clinic;
 
     public ClinicManager(Database database){
         this.clinic = database.getClinic();

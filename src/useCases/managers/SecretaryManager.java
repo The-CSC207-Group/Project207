@@ -13,8 +13,8 @@ public class SecretaryManager extends UserManager<Secretary> {
 
 
     /**
-     * Stores the databases.
-     *
+     * Constructor. Stores secretary and contact databases.
+     * @param database - collection of databases.
      */
 
     public SecretaryManager(Database database) {
@@ -51,7 +51,7 @@ public class SecretaryManager extends UserManager<Secretary> {
 
     @Override
     public SecretaryData getUserData(String username) {
-        return getUserHelper(username).map(x -> new SecretaryData(x)).orElse(null);
+        return getUserHelper(username).map(SecretaryData::new).orElse(null);
     }
 
 }

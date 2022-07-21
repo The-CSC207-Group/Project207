@@ -51,6 +51,6 @@ public class PatientManager extends UserManager<Patient> {
 
     @Override
     public PatientData getUserData(String username) {
-        return getUserHelper(username).map(x -> new PatientData(x)).orElse(null);
+        return getUserHelper(username).map(PatientData::new).orElse(null);
     }
 }
