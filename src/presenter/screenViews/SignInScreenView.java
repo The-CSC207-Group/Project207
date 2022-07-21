@@ -11,7 +11,6 @@ public class SignInScreenView extends ScreenView {
      */
     public void welcomeMessage() {
         infoMessage("Welcome to the program! Please sign in to continue.");
-        showHelpPrompt();
     }
 
     /**

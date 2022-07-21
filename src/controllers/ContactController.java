@@ -37,11 +37,6 @@ public class ContactController extends TerminalController {
         this.contactManager = new ContactManager(getDatabase());
     }
 
-    @Override
-    public void welcomeMessage() {
-
-    }
-
     /**
      * Creates a hashmap of all string representations of contact commands mapped to the method that each command calls.
      * @return HashMap<String, Command> - HashMap of strings mapped to their respective contact commands.

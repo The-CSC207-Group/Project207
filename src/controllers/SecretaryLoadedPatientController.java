@@ -46,11 +46,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
         this.contactManager = new ContactManager(getDatabase());
     }
 
-    @Override
-    public void welcomeMessage() {
-
-    }
-
     /**
      * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.

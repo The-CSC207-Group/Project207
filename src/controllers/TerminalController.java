@@ -24,7 +24,9 @@ abstract public class TerminalController {
         this.context = context;
     }
 
-    public abstract void welcomeMessage();
+    public void welcomeMessage() {
+        terminalScreenView.showHelpPrompt();
+    };
 
     /**
      * Gets the context (necessary for the state command).

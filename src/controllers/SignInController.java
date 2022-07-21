@@ -29,6 +29,7 @@ public class SignInController extends TerminalController {
     @Override
     public void welcomeMessage() {
         signInScreenView.welcomeMessage();
+        super.welcomeMessage();
     }
 
     /**
