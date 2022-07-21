@@ -69,7 +69,7 @@ public class AppointmentManagerTests {
 
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 100000)
     public void testBookInvalidAppointments() {
         Database originalDatabase = new Database(databaseFolder.toString());
 
@@ -85,13 +85,30 @@ public class AppointmentManagerTests {
 
         /*test an invalid appointment booked at a start time before a doctors availability
          */
-        AppointmentData invalidAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
-                doctorData, 2022, 12, 1, 7, 0, 120);
+        AppointmentData invalidAppointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 7, 0, 120);
         assertNull("an appointment should be returning null when booking at an invalid time",
-                invalidAppointment);
+                invalidAppointment1);
         assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
 
+        /*test an invalid appointment booked at an end time before a doctors availability
+         */
+        AppointmentData invalidAppointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 5, 16, 0, 120);
+        assertNull("an appointment should be returning null when booking at an invalid time",
+                invalidAppointment2);
+        assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase
+                .getAppointmentDatabase().getAllIds().isEmpty());
+
+        /*test an invalid appointment booked at an end time and start time not in a doctors availability
+         */
+        AppointmentData invalidAppointment3 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+                doctorData, 2022, 12, 1, 20, 0, 120);
+        assertNull("an appointment should be returning null when booking at an invalid time",
+                invalidAppointment3);
+        assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase
+                .getAppointmentDatabase().getAllIds().isEmpty());
     }
 
     @Test(timeout = 1000)

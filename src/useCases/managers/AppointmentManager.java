@@ -172,7 +172,6 @@ public class AppointmentManager {
                 .map(TimeBlockData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-
     /**
      * Gets the availability data from a doctor on a specific enum representing the day of the week.
      * @param doctorId Integer - id of the doctor the Appointment was assigned to.
@@ -271,8 +270,8 @@ public class AppointmentManager {
                 .filter(x -> x.getTimeBlock().getStartTime().getDayOfYear()
                         == proposedTime.getStartTime().getDayOfYear())
                 .filter(x -> x.getTimeBlock().getStartTime().isBefore(proposedTime.getStartTime()) &
-                        x.getTimeBlock().getEndTime().isAfter(proposedTime.getStartTime()))
-                .filter(x -> x.getTimeBlock().getStartTime().isAfter(proposedTime.getStartTime()) &
+                        x.getTimeBlock().getEndTime().isAfter(proposedTime.getStartTime()) | x.getTimeBlock().
+                        getStartTime().isAfter(proposedTime.getStartTime()) &
                         x.getTimeBlock().getStartTime().isBefore(proposedTime.getEndTime()))
                 .forEach(this::removeAppointment);
     }
