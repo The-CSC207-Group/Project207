@@ -30,7 +30,7 @@ public class PatientManager extends UserManager<Patient> {
      * @return PatientDataBundle which includes information of the patient, null if username already exists in database.
      */
     public PatientData createPatient(String username, String password) {
-        Patient patient = new Patient(username, password);
+        Patient patient = new Patient(username, password, newContactInDatabase());
         patientDatabase.add(patient);
         return new PatientData(patient);
     }

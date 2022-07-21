@@ -12,10 +12,13 @@ public abstract class UserManager<T extends User> {
     private final DataMapperGateway<T> typeTDatabase;
     private final DataMapperGateway<Contact> contactDatabase;
 
+    private final ContactManager contactManager;
+
     private final LogManager logManager;
     public UserManager(DataMapperGateway<T> typeTDatabase, Database database){
         this.typeTDatabase = typeTDatabase;
         this.contactDatabase = database.getContactDatabase();
+        this.contactManager = new ContactManager(database);
         this.logManager = new LogManager(database);
     }
 
@@ -87,4 +90,7 @@ public abstract class UserManager<T extends User> {
     protected Optional<T> getUserHelper(String username){
         return Optional.ofNullable(getUser(username));
     }
+
+    protected Integer newContactInDatabase(){return contactManager.addEmptyContactToDatabase();}
+
 }

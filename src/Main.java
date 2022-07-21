@@ -4,6 +4,7 @@ import entities.Admin;
 import entities.Availability;
 import entities.Clinic;
 import entities.TimeBlock;
+import useCases.managers.AdminManager;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -18,7 +19,8 @@ public class Main {
                         5, 6, 7, ZoneId.of("US/Eastern")))));
         Context c = new Context(database);
         c.run();
-        database.getAdminDatabase().add(new Admin("root", "root"));
+        AdminManager adminManager = new AdminManager(database);
+        adminManager.createAdmin("root", "root");
         database.save();
     }
 }

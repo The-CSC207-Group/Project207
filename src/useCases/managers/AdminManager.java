@@ -27,7 +27,7 @@ public class AdminManager extends UserManager<Admin>{
      * @return Admin data if sign in successful, if username exists in the database, return null.
      */
     public AdminData createAdmin(String username, String password){
-        Admin admin = new Admin(username, password);
+        Admin admin = new Admin(username, password, newContactInDatabase());
         adminDatabase.add(admin);
         return new AdminData(admin);
     }

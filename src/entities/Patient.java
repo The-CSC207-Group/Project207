@@ -18,15 +18,24 @@ public class Patient extends User {
         super(username, password, contactInfoId);
         this.healthNumber = healthNumber;
     }
-
     /**
-     * Creates an instance of Patient without contact info.
+     * Creates an instance of Patient with contact info.
      * @param username String representing the patient's username.
      * @param password String representing the patient's password.
+     * @param contactInfoId Integer representing the id of the patient's Contact object.
      */
-    public Patient(String username, String password){
-        super(username, password, new Contact().getId());
+    public Patient(String username, String password, Integer contactInfoId) {
+        super(username, password, contactInfoId);
     }
+
+//    /**
+//     * Creates an instance of Patient without contact info.
+//     * @param username String representing the patient's username.
+//     * @param password String representing the patient's password.
+//     */
+//    public Patient(String username, String password){
+//        super(username, password, new Contact().getId());
+//    }
 
     /**
      * @return String representing the patient's health number.

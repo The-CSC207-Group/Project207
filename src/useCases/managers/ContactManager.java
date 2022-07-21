@@ -36,6 +36,14 @@ public class ContactManager {
     }
 
     /**
+     * Adds a new contact to the contact database and returns its id.
+     * @return Integer - id of the newly added contact to the database.
+     */
+    protected Integer addEmptyContactToDatabase(){
+        return contactDatabase.add(new Contact());
+    }
+
+    /**
      * Change the name of a user in the contact database.
      * @param contactData ContactData - Contact data associated with a user.
      * @param newName String - the name we would like to assign to the user.
