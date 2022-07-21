@@ -316,6 +316,20 @@ public class SecretaryScreenView extends UserScreenView {
         return deleteItemFromEnumerationPrompt("availability");
     }
 
+    public void viewPrescription(List<PrescriptionData> prescriptionData){
+        for (int i = 0; i < prescriptionData.size(); i++) {
+            infoMessage(i + "" +  prescriptionView.viewHeader(prescriptionData.get(i)));
+        }
+
+    }
+
+    public void viewPrescriptionDetail(List<PrescriptionData> prescriptionData){
+        for (int i = 0; i < prescriptionData.size(); i++) {
+            infoMessage(i + "" +  prescriptionView.viewFull(prescriptionData.get(i)));
+        }
+
+    }
+
 
 
 }
