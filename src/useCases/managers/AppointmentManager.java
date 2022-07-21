@@ -27,7 +27,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *Book an doctor and patient specific appointment and store it in the appointment database.
      * @param patientData       data representing a patient entity.
      * @param doctorData        data representing a doctor entity.
      * @param year              an integer value that represents a year.
@@ -84,7 +84,7 @@ public class AppointmentManager {
     }
 
     /**
-     *
+     *reschedule an appointment, adjusting an appointments time block and validating it.
      * @param appointmentData data that represents an appointment entity.
      * @param year              an integer value that represents a year.
      * @param month             an integer value that represents a month of a year.
@@ -122,7 +122,7 @@ public class AppointmentManager {
 
     /**
      * gets all appointments related to a single patient id.
-     * @param patientData Data that represents the patient entity
+     * @param patientData Data that represents the patient entity.
      * @return ArrayList of AppointmentData which includes information of specific patient Appointments.
      */
     public ArrayList<AppointmentData> getPatientAppointments(PatientData patientData){
@@ -172,7 +172,7 @@ public class AppointmentManager {
     }
 
     /**
-     *Get the available time slots between a defined search start and end time in terms of TimeBlockData
+     *Get the available time slots between a defined search start and end time in terms of TimeBlockData.
      * @param doctorData    data representing a doctor entity.
      * @param year          an integer value that represents a year.
      * @param month         an integer value that represents a month of a year.
@@ -191,8 +191,8 @@ public class AppointmentManager {
      * gets all available time for a doctor considering their availability, other appointments, and search time
      * parameters.
      * @param doctorData        data representing a doctor entity.
-     * @param searchStartTime   ZonedDateTime representing the beginning of the search period
-     * @param searchEndTime     ZonedDateTime representing the beginning of the end period
+     * @param searchStartTime   ZonedDateTime representing the beginning of the search period.
+     * @param searchEndTime     ZonedDateTime representing the beginning of the end period.
      * @return an ArrayList of TimeBlocks representing all available timeslots to schedule an Appointment.
      */
     public ArrayList<TimeBlockData> searchAvailability(DoctorData doctorData, ZonedDateTime searchStartTime,
@@ -263,7 +263,7 @@ public class AppointmentManager {
 
     /**
      * gets all doctor specific appointments in a single day.
-     * @param doctorData  the data representing a specfic doctor in the database
+     * @param doctorData  the data representing a specfic doctor in the database.
      * @param selectedDay LocalDate that represents a date without a specific time attached.
      * @return ArrayList of AppointmentData which includes information of many Appointments.
      */
@@ -275,12 +275,12 @@ public class AppointmentManager {
     }
 
     /**
-     * A function that adds a new availability section to a doctor's ArrayList
-     * @param doctorData        the data representing a specific doctor in the database
-     * @param dayOfWeek         An enum that represents a particular day of the week
-     * @param hour              An integer value representing the hour of LocalTime
-     * @param minute            An integer value representing the minute of an hour of LocalTime
-     * @param lenOfAvailability The length of the newly added availability in terms of minutes
+     * A function that adds a new availability section to a doctor's ArrayList.
+     * @param doctorData        the data representing a specific doctor in the database.
+     * @param dayOfWeek         An enum that represents a particular day of the week.
+     * @param hour              An integer value representing the hour of LocalTime.
+     * @param minute            An integer value representing the minute of an hour of LocalTime.
+     * @param lenOfAvailability The length of the newly added availability in terms of minutes.
      */
     public void newAvailability(DoctorData doctorData, DayOfWeek dayOfWeek, Integer hour, Integer minute,
                                       Integer lenOfAvailability){
@@ -291,9 +291,9 @@ public class AppointmentManager {
     }
 
     /**
-     * removes an Availability from a doctor's ArrayList Availability
-     * @param doctorData        the data representing a specific doctor in the database
-     * @param availability      data that represents a reoccurring time in  which a doctor can have an appointment
+     * removes an Availability from a doctor's ArrayList Availability.
+     * @param doctorData        the data representing a specific doctor in the database.
+     * @param availability      data that represents a reoccurring time in  which a doctor can have an appointment.
      */
     public void removeAvailability(DoctorData doctorData, AvailabilityData availability) {
         ArrayList<Availability> availabilities = doctorDatabase.get(doctorData.getId()).getAvailability().stream()
@@ -305,29 +305,23 @@ public class AppointmentManager {
         //send notification to patient that their appointment was removed
     }
 
-    /**
-     *
-     * @param availability
-     * @param newStart
-     * @param newEnd
-     */
-    public void adjustAvailability(Availability availability, LocalTime newStart, LocalTime newEnd){
-        if (newStart.isAfter(availability.getDoctorStartTime())){
-            getAllAppointments().stream()
-                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
-                    .filter(x ->x.getTimeBlock().startTimeToLocal().isBefore(newStart))
-                    .forEach(this::removeAppointment);
-        }
-        else if (newEnd.isBefore(availability.getDoctorEndTime())){
-            getAllAppointments().stream()
-                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
-                    .filter(x ->x.getTimeBlock().endTimeToLocal().isAfter(newEnd))
-                    .forEach(this::removeAppointment);
-        }
-        availability.setDoctorStartTime(newStart);
-        availability.setDoctorEndTime(newEnd);
-;
-        }
+//    public void adjustAvailability(AvailabilityData availability, LocalTime newStart, LocalTime newEnd){
+//        if (newStart.isAfter(availability.getDoctorStartTime())){
+//            getAllAppointments().stream()
+//                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
+//                    .filter(x ->x.getTimeBlock().startTimeToLocal().isBefore(newStart))
+//                    .forEach(this::removeAppointment);
+//        }
+//        else if (newEnd.isBefore(availability.getDoctorEndTime())){
+//            getAllAppointments().stream()
+//                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
+//                    .filter(x ->x.getTimeBlock().endTimeToLocal().isAfter(newEnd))
+//                    .forEach(this::removeAppointment);
+//        }
+//        availability.setDoctorStartTime(newStart);
+//        availability.setDoctorEndTime(newEnd);
+//;
+//        }
 
     private boolean overlapDay(AppointmentData appointmentData, Availability availability){
         return appointmentData.getTimeBlock().getStartTime().getDayOfWeek().equals(availability.getDayOfWeek());
@@ -346,19 +340,19 @@ public class AppointmentManager {
     }
 
     /**
-     *
-     * @param doctorData
-     * @param absence
+     *deletes an absence from a doctor's stored Absence ArrayList.
+     * @param doctorData        the data representing a specific doctor in the database.
+     * @param absence           a TimeBlock representing the period in time that a doctor would be absent.
      */
     public void deleteAbsence(DoctorData doctorData, TimeBlock absence){
         doctorDatabase.get(doctorData.getId()).removeAbsence(absence);
     }
 
     /**
-     *
-     * @param doctorData
-     * @param startTime
-     * @param endTime
+     *Add an absence TimeBlock to a doctor's stored Absence ArrayList.
+     * @param doctorData        the data representing a specific doctor in the database.
+     * @param startTime         a ZonedDateTime representing the beginning of a new absence.
+     * @param endTime           a ZonedDateTime representing the ending of a new absence.
      */
     public void addAbsence(DoctorData doctorData, ZonedDateTime startTime, ZonedDateTime endTime){
         TimeBlock proposedTime = new TimeBlock(startTime, endTime);
@@ -372,6 +366,12 @@ public class AppointmentManager {
                         x.getTimeBlock().getStartTime().isBefore(proposedTime.getEndTime()))
                 .forEach(this::removeAppointment);
     }
+
+    /**
+     *get the availability of a doctor in terms of an ArrayList of AvailabilityData.
+     * @param doctorData  the data representing a specific doctor in the database.
+     * @return the ArrayList of AvailabilityData that represents a doctor's availability.
+     */
     public ArrayList<AvailabilityData> getAvailabilityData(DoctorData doctorData){
         return database.getDoctorDatabase().get(doctorData.getId()).getAvailability().stream()
                 .map(AvailabilityData::new)

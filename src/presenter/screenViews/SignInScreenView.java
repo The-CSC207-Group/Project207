@@ -16,7 +16,7 @@ public class SignInScreenView extends ScreenView {
 
     /**
      * Ask user for his username and password.
-     * Used for lgin.
+     * Used for login.
      * @return UserCredentials containing username and password.
      */
     public UserCredentials userLoginPrompt() {
