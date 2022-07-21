@@ -1,5 +1,6 @@
 package controllers;
 
+import dataBundles.AvailabilityData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.SecretaryData;
@@ -8,6 +9,8 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -97,26 +100,30 @@ public class SecretaryController extends UserController<Secretary> {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
+            ArrayList<Integer> days = secretaryScreenView.addAvailabilityPrompt();
             appointmentManager.newAvailability(doctorData,
-                    secretaryScreenView.getDay(),
-                    secretaryScreenView.addDoctorAvailabilityTime().getHour(),
-                    secretaryScreenView.addDoctorAvailabilityTime().getMinute(),
-                    secretaryScreenView.addDoctorAvailableLength());
+                    DayOfWeek.of(days.get(0)),
+                    days.get(1),
+                    days.get(2),
+                    days.get(3));
         };
 
     }
 
     private Command removeDoctorAvailability() {
         return (x) -> {
-//            String doctor = secretaryScreenView.getTargetDoctor();
-//            DoctorData doctorData = doctorManager.getUserData(doctor);
-//
-//            ArrayList<Availability> availableTimes =
-//                    appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
-//            secretaryScreenView.viewAvailabilityFull(availableTimes);
-//
-//            appointmentManager.removeAvailability(doctorData,
-//                    availableTimes.get(secretaryScreenView.getIndexToRemove()));
+            String doctor = secretaryScreenView.getTargetDoctor();
+            DoctorData doctorData = doctorManager.getUserData(doctor);
+            Integer deleteInteger = secretaryScreenView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
+                    .getContactData(doctorData), new AppointmentManager(getDatabase())
+                    .getAvailabilityData(doctorData));
+            ArrayList<AvailabilityData> availability = doctorData.getAvailability();
+            if (deleteInteger >= 0 & deleteInteger < availability.size()){
+                new AppointmentManager(getDatabase()).removeAvailability(doctorData,
+                        doctorData.getAvailability().get(deleteInteger));
+            } else {
+                secretaryScreenView.showDeleteOutOfRangeError();
+            }
         };
     }
 

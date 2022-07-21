@@ -123,7 +123,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
             ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
                     LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-            if (appointments == null) {
+            if (appointments.size() == 0) {
                 secretaryScreenView.showNoAvailableAppointmentDayError();
                 return;
             }
