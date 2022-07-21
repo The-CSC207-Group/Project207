@@ -17,8 +17,8 @@ abstract public class TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program where commands are being passed into the terminal.
-     * @param context a reference to the context object, which stores the current controller and allows for switching
-     *                between controllers.
+     * @param context Context a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
      */
     public TerminalController(Context context) {
         this.context = context;
@@ -26,7 +26,8 @@ abstract public class TerminalController {
 
     /**
      * Gets the context (necessary for the state command).
-     * @return Context of the current program.
+     * @return Context - reference to the context object, which stores the current controller and allows for switching
+     * between controllers.
      */
     public Context getContext() {
         return context;
@@ -34,7 +35,7 @@ abstract public class TerminalController {
 
     /**
      * Changes the current controller in the context to new controller.
-     * @param newController the controller we are switching to.
+     * @param newController TerminalController - the controller we are switching to.
      */
     public void changeCurrentController(TerminalController newController){
         context.changeController(newController);
@@ -42,7 +43,7 @@ abstract public class TerminalController {
 
     /**
      * Returns the database.
-     * @return Database of the program.
+     * @return Database - collection of all the entity databases of the program.
      */
     public Database getDatabase() {
         return context.getDatabase();
@@ -50,7 +51,7 @@ abstract public class TerminalController {
 
     /**
      * Creates a hashmap of the string representations of commands mapped to the method that each command calls.
-     * @return HashMap of strings mapped to their respective commands.
+     * @return HashMap<String, Command> - HashMap of strings mapped to their respective commands.
      */
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = new HashMap<>();
@@ -96,4 +97,5 @@ abstract public class TerminalController {
     protected Command Exit() {
         return (x) -> exit();
     }
+
 }

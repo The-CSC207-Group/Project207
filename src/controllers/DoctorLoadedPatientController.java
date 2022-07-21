@@ -14,6 +14,7 @@ import java.util.HashMap;
  * Controller class that process the commands a doctor would use on a specific patient that they loaded.
  */
 public class DoctorLoadedPatientController extends TerminalController {
+
     private final PatientData patientData;
     private final DoctorData doctorData;
     private final PrescriptionManager prescriptionManager;
@@ -98,10 +99,8 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command createReport() {
-        return (x) -> {
-            new ReportManager(getDatabase()).addReport(patientData, doctorData,
-                    doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
-        };
+        return (x) -> new ReportManager(getDatabase()).addReport(patientData, doctorData,
+                doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
     }
 
     private Command deleteReport() {
@@ -111,4 +110,5 @@ public class DoctorLoadedPatientController extends TerminalController {
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
     }
+
 }

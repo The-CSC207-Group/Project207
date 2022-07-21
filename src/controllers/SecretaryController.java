@@ -17,20 +17,20 @@ import java.util.HashMap;
  * Controller class that processes the commands that a secretary passes in.
  */
 public class SecretaryController extends UserController<Secretary> {
+
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final PatientManager patientManager;
     private final AdminManager adminManager;
-
     private final DoctorManager doctorManager;
     private final SecretaryManager secretaryManager;
     private final AppointmentManager appointmentManager;
-    private final SecretaryController self = this;
 
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
-     * @param context a reference to the context object, which stores the current controller and allows for switching
-     *                between controllers.
-     * @param secretaryData a data bundle containing the ID and attributes of the current secretary user.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
+     * @param secretaryData SecretaryData - a data bundle containing the ID and attributes of the current secretary
+     *                      user.
      */
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
@@ -44,7 +44,7 @@ public class SecretaryController extends UserController<Secretary> {
     /**
      * Creates a hashmap of all string representations of secretary commands mapped to the method that each
      * command calls.
-     * @return HashMap of strings mapped to their respective secretary commands.
+     * @return HashMap<String, Command> - HashMap of strings mapped to their respective secretary commands.
      */
     @Override
     public HashMap<String, Command> AllCommands() {

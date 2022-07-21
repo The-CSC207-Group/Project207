@@ -15,6 +15,7 @@ import java.util.HashMap;
  * Controller class that processes the commands that a patient passes in.
  */
 public class PatientController extends UserController<Patient> {
+
     private final PatientScreenView patientScreenView = new PatientScreenView();
     private final PatientData patientData;
 
@@ -55,4 +56,5 @@ public class PatientController extends UserController<Patient> {
             patientScreenView.viewAppointments(appointments);
         };
     }
+
 }

@@ -19,17 +19,20 @@ import java.util.HashMap;
  * @param <T> the type of user using this controller.
  */
 public abstract class UserController<T extends User> extends TerminalController {
+
     private final UserData<T> userData;
     private final UserManager<T> userManager;
     private final UserScreenView userScreenView;
 
     /**
      * Creates a new controller for handling the state of when a user is signed in.
-     * @param context a reference to the context object, which stores the current controller and allows for switching
-     *                between controllers.
-     * @param userData a data bundle containing the ID and attributes of the current user.
-     * @param userManager a manager for handling the user data (is generic depending on user type).
-     * @param userScreenView the current screen presenter method associated with this user
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
+     * @param userData UserData<T> where T extends User - a data bundle containing the ID and attributes of the current
+     *                 user.
+     * @param userManager UserManager<T> where T extends User - a manager for handling the user data (is generic
+     *                    depending on user type).
+     * @param userScreenView UserScreenView - the current screen presenter method associated with this user.
      */
     public UserController(Context context, UserData<T> userData, UserManager<T> userManager,
                           UserScreenView userScreenView) {
@@ -42,7 +45,7 @@ public abstract class UserController<T extends User> extends TerminalController 
     /**
      * Creates a hashmap of all string representations of user commands mapped to the method that each
      * command calls.
-     * @return HashMap of strings mapped to their respective user commands.
+     * @return HashMap<String, Command> - HashMap of strings mapped to their respective user commands.
      */
     @Override
     public HashMap<String, Command> AllCommands() {
@@ -86,4 +89,5 @@ public abstract class UserController<T extends User> extends TerminalController 
     private Command SignOut(){
         return (x) -> changeCurrentController(new SignInController(getContext()));
     }
+
 }
