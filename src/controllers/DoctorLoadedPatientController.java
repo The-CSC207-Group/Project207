@@ -40,6 +40,11 @@ public class DoctorLoadedPatientController extends TerminalController {
         this.previousController = previousController;
     }
 
+    @Override
+    public void welcomeMessage() {
+
+    }
+
     /**
      * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.

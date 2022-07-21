@@ -24,6 +24,8 @@ abstract public class TerminalController {
         this.context = context;
     }
 
+    public abstract void welcomeMessage();
+
     /**
      * Gets the context (necessary for the state command).
      * @return Context - reference to the context object, which stores the current controller and allows for switching

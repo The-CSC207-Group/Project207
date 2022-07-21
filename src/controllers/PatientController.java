@@ -30,6 +30,11 @@ public class PatientController extends UserController<Patient> {
         this.patientData = patientData;
     }
 
+    @Override
+    public void welcomeMessage() {
+
+    }
+
     /**
      * Creates a hashmap of all string representations of patient commands mapped to the method that each
      * command calls.

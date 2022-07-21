@@ -41,6 +41,11 @@ public class SecretaryController extends UserController<Secretary> {
         this.secretaryManager = new SecretaryManager(getDatabase());
     }
 
+    @Override
+    public void welcomeMessage() {
+
+    }
+
     /**
      * Creates a hashmap of all string representations of secretary commands mapped to the method that each
      * command calls.

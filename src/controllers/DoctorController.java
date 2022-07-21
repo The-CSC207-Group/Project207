@@ -35,6 +35,11 @@ public class DoctorController extends UserController<Doctor> {
         this.doctorData = doctorData;
     }
 
+    @Override
+    public void welcomeMessage() {
+
+    }
+
     /**
      * Creates a hashmap of all string representations of doctor commands mapped to the method that each
      * command calls.

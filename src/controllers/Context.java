@@ -11,23 +11,21 @@ public class Context {
     private TerminalController currentController;
     private boolean exit = false;
     private final Database database;
-    private final TerminalScreenView terminalScreenView = new TerminalScreenView();
 
     /**
      * Initializes the context object, which initially stores the sign in controller.
      * @param database Database - the collection of all entity databases in the program.
      */
-    public Context(Database database){
+    public Context(Database database) {
         this.database = database;
         this.currentController = new SignInController(this);
-        terminalScreenView.showHelpPrompt();
-
     }
 
     /**
      * Starts the program loop, running the controller stored in the context until the program is exited.
      */
     public void run(){
+        currentController.welcomeMessage();
         while (!exit){
             currentController.run();
         }
@@ -38,7 +36,6 @@ public class Context {
      * @param new_controller TerminalController - the new controller that the context will store.
      */
     public void changeController(TerminalController new_controller){
-        terminalScreenView.showHelpPrompt();
         currentController = new_controller;
     }
 
@@ -53,6 +50,8 @@ public class Context {
      * Returns the database associated with this program.
      * @return Database - collection of all the entity databases in the program.
      */
-    public Database getDatabase() {return this.database;}
+    public Database getDatabase() {
+        return this.database;
+    }
 
 }
