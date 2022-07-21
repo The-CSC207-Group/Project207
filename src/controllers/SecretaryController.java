@@ -106,15 +106,15 @@ public class SecretaryController extends UserController<Secretary> {
 
     private Command removeDoctorAvailability() {
         return (x) -> {
-            String doctor = secretaryScreenView.getTargetDoctor();
-            DoctorData doctorData = doctorManager.getUserData(doctor);
-
-            ArrayList<Availability> availableTimes =
-                    appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
-            secretaryScreenView.viewAvailabilityFull(availableTimes);
-
-            appointmentManager.removeAvailability(doctorData,
-                    availableTimes.get(secretaryScreenView.getIndexToRemove()));
+//            String doctor = secretaryScreenView.getTargetDoctor();
+//            DoctorData doctorData = doctorManager.getUserData(doctor);
+//
+//            ArrayList<Availability> availableTimes =
+//                    appointmentManager.getAvailabilityFromDayOfWeek(doctorData.getId(), secretaryScreenView.getDay());
+//            secretaryScreenView.viewAvailabilityFull(availableTimes);
+//
+//            appointmentManager.removeAvailability(doctorData,
+//                    availableTimes.get(secretaryScreenView.getIndexToRemove()));
         };
     }
 

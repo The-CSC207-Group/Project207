@@ -295,9 +295,13 @@ public class AppointmentManager {
      * @param doctorData        the data representing a specific doctor in the database
      * @param availability      data that represents a reoccurring time in  which a doctor can have an appointment
      */
-    public void removeAvailability(DoctorData doctorData, Availability availability) {
-        doctorDatabase.get(doctorData.getId()).removeAvailability(availability);
-        removeAppointmentConflictAvailability(doctorData, availability);
+    public void removeAvailability(DoctorData doctorData, AvailabilityData availability) {
+        ArrayList<Availability> availabilities = doctorDatabase.get(doctorData.getId()).getAvailability().stream()
+                        .filter(x -> x.getDayOfWeek().equals(availability.getDayOfWeek()))
+                        .filter(x -> x.getDoctorStartTime().equals(availability.getDoctorStartTime()))
+                .collect(Collectors.toCollection(ArrayList::new));
+        availabilities.forEach(x-> removeAppointmentConflictAvailability(doctorData, x));
+        availabilities.forEach(x -> doctorDatabase.get(doctorData.getId()).removeAvailability(x));
         //send notification to patient that their appointment was removed
     }
 

@@ -8,11 +8,9 @@ import java.time.LocalTime;
 /**
  * Wrapper class for Availability entity.
  */
-public class AvailabilityData {
+public class AvailabilityData{
 
     private final Availability availability;
-
-
     /**
      * Constructor.
      * @param availability Availability - availability entity.
@@ -41,4 +39,5 @@ public class AvailabilityData {
     public LocalTime getDoctorEndTime() {
         return availability.getDoctorEndTime();
     }
+
 }
