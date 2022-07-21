@@ -93,16 +93,13 @@ public class DoctorController extends UserController<Doctor> {
     private Command deleteAvailability() {
         return (x) -> {
             Integer deleteInteger = doctorView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
-                            .getContactData(doctorData), new AppointmentManager(getDatabase())
+                    .getContactData(doctorData), new AppointmentManager(getDatabase())
                     .getAvailabilityData(doctorData));
             ArrayList<AvailabilityData> availabiltiy = doctorData.getAvailability();
-            if (deleteInteger >= 0 & deleteInteger < availabiltiy.size()){
+            if (deleteInteger >= 0 & deleteInteger < availabiltiy.size()) {
                 new AppointmentManager(getDatabase()).removeAvailability(doctorData,
                         doctorData.getAvailability().get(deleteInteger));
-            } else {
-
             }
-
         };
     }
     private Command deleteAbsence() {
