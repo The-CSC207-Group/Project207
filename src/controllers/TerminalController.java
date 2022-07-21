@@ -78,6 +78,11 @@ abstract public class TerminalController {
     private void ProcessCommands() {
         getDatabase().save();
         String command = terminalScreenView.showCommandPrompt();
+
+        if (command.isBlank()) {
+            return;
+        }
+
         if (!AllCommands().containsKey(command)) {
             terminalScreenView.showInvalidCommandError(command);
         } else {
