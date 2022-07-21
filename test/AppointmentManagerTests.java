@@ -104,7 +104,7 @@ public class AppointmentManagerTests {
         /*test an invalid appointment booked at an end time and start time not in a doctors availability
          */
         AppointmentData invalidAppointment3 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
-                doctorData, 2022, 12, 1, 20, 0, 120);
+                doctorData, 2022, 12, 5, 20, 0, 120);
         assertNull("an appointment should be returning null when booking at an invalid time",
                 invalidAppointment3);
         assertTrue("An invalid appointment object should not exist in the database after booking", originalDatabase

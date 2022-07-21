@@ -54,7 +54,8 @@ public class AppointmentManager {
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
                 proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
                 proposedTime.getStartTime().toLocalDate()), proposedTime) &
-                isNoTimeBlockConflictAbsence(doctorData.getId(), proposedTime)) {
+                isNoTimeBlockConflictAbsence(doctorData.getId(), proposedTime) & isWithinAvailability(proposedTime,
+                doctorData)) {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
             return new AppointmentData(newApp);
@@ -297,9 +298,8 @@ public class AppointmentManager {
                 .filter(x -> x.getStartTime().getDayOfYear()
                         == proposedTime.getStartTime().getDayOfYear())
                 .filter(x -> x.getStartTime().isBefore(proposedTime.getStartTime()) &
-                        x.getEndTime().isAfter(proposedTime.getStartTime()))
-                .filter(x -> x.getStartTime().isAfter(proposedTime.getStartTime()) &
-                        x.getStartTime().isBefore(proposedTime.getEndTime()))
+                        x.getEndTime().isAfter(proposedTime.getStartTime()) | x.getStartTime().isAfter(proposedTime
+                        .getStartTime()) & x.getStartTime().isBefore(proposedTime.getEndTime()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -366,7 +366,14 @@ public class AppointmentManager {
         }
         return true;
     }
+    private boolean isWithinAvailability(TimeBlock proposedTime, DoctorData doctorData){
+        return !doctorData.getAvailability().stream()
+                .filter(x-> proposedTime.getStartTime().getDayOfWeek().equals(x.getDayOfWeek()))
+                .filter(x -> x.getDoctorStartTime().isBefore(proposedTime.startTimeToLocal()) & x.getDoctorEndTime()
+                        .isAfter(proposedTime.endTimeToLocal()))
+                .collect(Collectors.toCollection(ArrayList::new)).isEmpty();
 
+    }
     private ArrayList<Appointment> getAppointments(){
         return appointmentDatabase.getAllIds().stream()
                 .map(appointmentDatabase::get)
