@@ -27,7 +27,7 @@ public class AppointmentManagerTests {
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
-    @Test(timeout = 1000)
+    @Test(timeout = 10000)
     public void testBookAppointment() {
         Database originalDatabase = new Database(databaseFolder.toString());
 

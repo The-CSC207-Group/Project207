@@ -10,9 +10,10 @@ import java.time.ZonedDateTime;
 
 public class TimeManager {
 
-    public TimeBlock createTimeBlock(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer LenOfAppointment){
+    public TimeBlock createTimeBlock(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer lenOfAppointment){
+        ZonedDateTime starTime = createZonedDataTime(year, month, day, hour, minute);
         TimeBlock proposedTime = new TimeBlock(createZonedDataTime(year, month, day, hour, minute),
-                createZonedDataTime(year, month, day, hour, LenOfAppointment));
+                starTime.plusMinutes(lenOfAppointment));
         if (proposedTime.getStartTime().isBefore(getCurrentZonedDateTime())){
             proposedTime.getStartTime().plusYears(1);
             proposedTime.getEndTime().plusYears(1);
