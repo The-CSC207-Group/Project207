@@ -51,7 +51,6 @@ public class AppointmentData {
         return appointment.getId();
     }
 
-
 }
 
 

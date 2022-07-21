@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
  */
 public class ReportData {
 
-    Report report;
+    private final Report report;
 
     /**
      * Constructor.

@@ -1,6 +1,5 @@
 package entities;
 
-import dataBundles.AvailabilityData;
 import utilities.JsonSerializable;
 
 import java.time.ZoneId;
@@ -16,7 +15,7 @@ public class Clinic extends JsonSerializable {
     private String address;
     private ZoneId timeZone;
     //used to store the operating hours of the clinic for availability calculations
-    private ArrayList<Availability> clinicHours;
+    private final ArrayList<Availability> clinicHours;
 
     /**
      * Creates an instance of Clinic
@@ -108,4 +107,5 @@ public class Clinic extends JsonSerializable {
     public void addClinicHours(Availability clinicHours) {
         this.clinicHours.add(clinicHours);
     }
+
 }

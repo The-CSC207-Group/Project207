@@ -30,4 +30,5 @@ public class TerminalScreenView extends ScreenView {
     public void showInvalidCommandError(String command) {
         errorMessage("Invalid command: " + command);
     }
+
 }

@@ -11,7 +11,6 @@ public class SignInScreenView extends ScreenView {
      */
     public void welcomeMessage() {
         infoMessage("Welcome to the program! Please sign in to continue.");
-        showHelpPrompt();
     }
 
     /**
@@ -43,4 +42,5 @@ public class SignInScreenView extends ScreenView {
     public void showSuccessLogin(String user) {
         successMessage("Logged in to " + user + " successfully!");
     }
+
 }

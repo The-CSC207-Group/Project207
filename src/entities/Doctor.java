@@ -9,9 +9,9 @@ public class Doctor extends User {
 
     //availability should represent an arrayList of 7 Availability objects, 1 for each day of the week with the
     //doctor's personalized hours
-    private ArrayList<Availability> availability = new ArrayList<>();
+    private final ArrayList<Availability> availability = new ArrayList<>();
     //absence represents time off booked by the doctor
-    private ArrayList<TimeBlock> absence = new ArrayList<>();
+    private final ArrayList<TimeBlock> absence = new ArrayList<>();
 
     /**
      * Creates an instance of Doctor with contact info.

@@ -43,4 +43,5 @@ public class LogData {
      * @return Integer - id of the user the log belongs to.
      */
     public Integer getUserId(){return log.getUserId();}
+
 }

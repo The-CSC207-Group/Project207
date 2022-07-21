@@ -95,4 +95,5 @@ public abstract class Note extends JsonSerializable {
     public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
     }
+
 }

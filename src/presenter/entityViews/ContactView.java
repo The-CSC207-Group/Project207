@@ -103,4 +103,5 @@ public class ContactView extends EntityView<ContactData> {
     public String viewEmergencyRelationship(ContactData item) {
         return "Emergency Contact Relationship: " + getDefaultStringNA(item.getEmergencyRelationship());
     }
+
 }

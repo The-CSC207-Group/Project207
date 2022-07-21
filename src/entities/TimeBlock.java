@@ -69,5 +69,6 @@ public class TimeBlock {
     public LocalTime endTimeToLocal(){
         return startTime.toLocalTime();
     }
+
 }
 

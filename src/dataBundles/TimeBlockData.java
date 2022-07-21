@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Wrapper class for a TimeBlock entity.
  */
 public class TimeBlockData {
+
     private final TimeBlock timeBlock;
 
     /**
@@ -27,17 +28,21 @@ public class TimeBlockData {
     public ZonedDateTime getStartTime(){
         return timeBlock.getStartTime();
     }
+
     /**
      * @return ZonedDateTime - end time of the time block.
      */
     public ZonedDateTime getEndTime(){
         return timeBlock.getEndTime();
     }
+
     public LocalTime startTimeToLocal(){
         return timeBlock.startTimeToLocal();
     }
+
     public LocalTime endTimeToLocal(){
         return timeBlock.endTimeToLocal();
     }
-    }
+
+}
 

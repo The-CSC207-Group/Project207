@@ -32,4 +32,5 @@ public class PatientView extends EntityView<PatientData> {
     public String viewHealthNumber(PatientData item) {
         return "Patient health number is " + item.getHealthNumber() + ".";
     }
+
 }
