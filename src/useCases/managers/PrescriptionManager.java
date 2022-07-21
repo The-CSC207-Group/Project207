@@ -3,7 +3,6 @@ package useCases.managers;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
-import dataBundles.UserData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Prescription;
@@ -18,8 +17,8 @@ import java.util.stream.Stream;
  * Use case class meant for handling prescriptions.
  */
 public class PrescriptionManager {
-    private final DataMapperGateway<Prescription> prescriptionsDatabase;
 
+    private final DataMapperGateway<Prescription> prescriptionsDatabase;
     private final DatabaseQueryUtility databaseUtilities = new DatabaseQueryUtility();
 
     /***
@@ -28,11 +27,6 @@ public class PrescriptionManager {
      */
     public PrescriptionManager(Database database){
         this.prescriptionsDatabase = database.getPrescriptionDatabase();
-    }
-
-    private Stream<Prescription> getAll(PatientData patient){
-       return prescriptionsDatabase.stream()
-                        .filter(p -> p.getPatientId().equals(patient.getId()));
     }
 
     /**
@@ -60,7 +54,6 @@ public class PrescriptionManager {
         );
     }
 
-
     /**
      * Adds a prescription to the prescription database given the info provided. Assumes all info given is valid and
      * exists in their associated database if applicable.
@@ -69,7 +62,7 @@ public class PrescriptionManager {
      * @param patientData PatientData - data pertaining to a specific patient in the database.
      * @param doctorData DoctorData - data pertaining to a specific doctor in the database.
      * @param expiryDate ZonedDateTime - date the prescription expires.
-     * @return PrescriptionData object corresponding to the prescription.
+     * @return PrescriptionData - prescription data bundle that stores the information passed in.
      */
     public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
                                                ZonedDateTime expiryDate){
@@ -88,6 +81,11 @@ public class PrescriptionManager {
 
     private boolean isExpiredPrescription(Prescription prescription){
         return prescription.getExpiryDate().toLocalDateTime().isBefore(LocalDateTime.now());
+    }
+
+    private Stream<Prescription> getAll(PatientData patient){
+        return prescriptionsDatabase.stream()
+                .filter(p -> p.getPatientId().equals(patient.getId()));
     }
 
 }

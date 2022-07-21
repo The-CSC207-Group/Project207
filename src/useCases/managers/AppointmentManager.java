@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class AppointmentManager {
-    private DataMapperGateway<Appointment> appointmentDatabase;
-    private DataMapperGateway<Doctor> doctorDatabase;
-    private Database database;
+    private final DataMapperGateway<Appointment> appointmentDatabase;
+    private final DataMapperGateway<Doctor> doctorDatabase;
+    private final Database database;
 
     /**
      *Initializes Appointment Manager with the appointment database, and doctor database.
@@ -113,7 +113,7 @@ public class AppointmentManager {
 
     private ArrayList<TimeBlock> getTimeBlocksWithPatientAndDoctor(Integer doctorId, Integer patientId){
         return appointmentDatabase.getAllIds().stream()
-                .map(x -> appointmentDatabase.get(x))
+                .map(appointmentDatabase::get)
                 .filter(x -> x.getDoctorId().equals(doctorId))
                 .filter(x -> x.getPatientId().equals(patientId))
                 .map(Appointment::getTimeBlock)
@@ -162,7 +162,7 @@ public class AppointmentManager {
 
     private ArrayList<Appointment> getAppointments(){
         return appointmentDatabase.getAllIds().stream()
-                .map(x -> appointmentDatabase.get(x))
+                .map(appointmentDatabase::get)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     private ArrayList<TimeBlock> getAppointmentsTimeBlock(){
@@ -368,7 +368,7 @@ public class AppointmentManager {
     }
 
     /**
-     *get the availability of a doctor in terms of an ArrayList of AvailabilityData.
+     * Get the availability of a doctor in terms of an ArrayList of AvailabilityData.
      * @param doctorData  the data representing a specific doctor in the database.
      * @return the ArrayList of AvailabilityData that represents a doctor's availability.
      */
