@@ -2,6 +2,7 @@ package presenter.screenViews;
 
 import dataBundles.AppointmentData;
 import dataBundles.ContactData;
+import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import entities.Availability;
 import presenter.entityViews.AppointmentView;
@@ -225,10 +226,10 @@ public class SecretaryScreenView extends UserScreenView {
 
     /**
      * Show success message if loaded patient.
-     * @param patientContact Contact information of loaded patient.
+     * @param patientData Data of the patient.
      */
-    public void showSuccessLoadingPatient(ContactData patientContact) {
-        infoMessage("Success loading patient: " + contactView.viewName(patientContact));
+    public void showSuccessLoadingPatient(PatientData patientData) {
+        infoMessage("Success loading patient: " + patientData.getUsername());
     }
 
     /**

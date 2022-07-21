@@ -61,7 +61,7 @@ public class SecretaryController extends UserController<Secretary> {
             if (patientData != null) {
                 changeCurrentController(new SecretaryLoadedPatientController(getContext(), currentController,
                         patientData));
-                secretaryScreenView.showSuccessLoadingPatient(contactManager.getContactData(patientData));
+                secretaryScreenView.showSuccessLoadingPatient(patientData);
             } else {
                 secretaryScreenView.showErrorLoadingPatient();
             }
