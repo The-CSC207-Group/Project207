@@ -33,10 +33,11 @@ public class Context {
 
     /**
      * Updates the current controller to the one passed into the parameter.
-     * @param new_controller TerminalController - the new controller that the context will store.
+     * @param newController TerminalController - the new controller that the context will store.
      */
-    public void changeController(TerminalController new_controller){
-        currentController = new_controller;
+    public void changeController(TerminalController newController){
+        currentController = newController;
+        currentController.welcomeMessage();
     }
 
     /**
