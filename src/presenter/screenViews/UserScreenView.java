@@ -7,6 +7,9 @@ import presenter.response.PasswordResetDetails;
 
 import java.util.List;
 
+/**
+ * Presenter for a user of the program.
+ */
 public abstract class UserScreenView extends ScreenView {
 
     /**
@@ -44,6 +47,12 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(output);
     }
 
+    /**
+     * Views a user's information.
+     * @param userData T the user data being viewed.
+     * @param userView UserView<T> the user view to be used.
+     * @param <T> UserView type parameter.
+     */
     public <T extends UserData<?>> void displayUserInfo(T userData, UserView<T> userView) {
         infoMessage(userView.viewFull(userData));
     }
@@ -58,10 +67,19 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(clinicView.viewFull(clinicData));
     }
 
+    /**
+     * Shows a welcome message to the user.
+     * @param user UserData<?> the user to be welcomed.
+     */
     public void showWelcomeUserMessage(UserData<?> user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
     }
 
+    /**
+     * Prompts the user to delete an item from an enumeration.
+     * @param itemType String representing the item that is being deleted from enumeration.
+     * @return Integer representing the selected index of the list of items to be deleted.
+     */
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
         Integer index = inputInt("Input " + itemType + " number to delete: ");

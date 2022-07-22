@@ -5,6 +5,9 @@ import presenter.entityViews.ClinicView;
 
 import java.util.List;
 
+/**
+ * Presenter for the terminal.
+ */
 public class TerminalScreenView extends ScreenView {
 
     /**
