@@ -22,11 +22,8 @@ public class ClinicController extends TerminalController {
      *                switching between controllers.
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
-     * @param clinicData ClinicData - a data  storing the ID and attributes of the clinic associated
-     *                    with the program.
      */
-    public ClinicController(Context context, UserController<Admin> previousController,
-                             ClinicData clinicData) {
+    public ClinicController(Context context, UserController<Admin> previousController) {
         super(context);
         this.clinicManager = new ClinicManager(getDatabase());
         this.clinicScreenView = new ClinicScreenView();
