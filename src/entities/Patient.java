@@ -28,14 +28,14 @@ public class Patient extends User {
         super(username, password, contactInfoId);
     }
 
-//    /**
-//     * Creates an instance of Patient without contact info.
-//     * @param username String representing the patient's username.
-//     * @param password String representing the patient's password.
-//     */
-//    public Patient(String username, String password){
-//        super(username, password, new Contact().getId());
-//    }
+    /**
+     * Creates an instance of Patient without contact info.
+     * @param username String representing the patient's username.
+     * @param password String representing the patient's password.
+     */
+    public Patient(String username, String password){
+        super(username, password);
+    }
 
     /**
      * @return String representing the patient's health number.

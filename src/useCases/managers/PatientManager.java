@@ -32,9 +32,12 @@ public class PatientManager extends UserManager<Patient> {
      * null if username exists in database.
      */
     public PatientData createPatient(String username, String password) {
-        Patient patient = new Patient(username, password, newContactInDatabase());
-        if (patientDatabase.add(patient) == null){return null;}
-        return new PatientData(patient);
+        Patient patient = new Patient(username, password);
+        if (patientDatabase.add(patient) != null) {
+            patient.setContactInfoId(newContactInDatabase());
+            return new PatientData(patient);
+        }
+        return null;
     }
 
     /**

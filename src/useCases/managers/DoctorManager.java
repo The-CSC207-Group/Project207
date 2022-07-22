@@ -34,10 +34,13 @@ public class DoctorManager extends UserManager<Doctor> {
      * otherwise returns null.
      */
     public DoctorData createDoctor(String username, String password) {
-        Doctor doctor = new Doctor(username, password, newContactInDatabase());
+        Doctor doctor = new Doctor(username, password);
         database.getClinic().getClinicHours().forEach(doctor::addAvailability);
-        if (doctorDatabase.add(doctor) == null){return null;}
-        return new DoctorData(doctor);
+        if (doctorDatabase.add(doctor) != null) {
+            doctor.setContactInfoId(newContactInDatabase());
+            return new DoctorData(doctor);
+        }
+        return null;
     }
 
     /**

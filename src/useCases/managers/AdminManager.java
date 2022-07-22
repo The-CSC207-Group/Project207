@@ -28,13 +28,12 @@ public class AdminManager extends UserManager<Admin>{
      * @return Admin data if sign in successful, if username exists in the database, return null.
      */
     public AdminData createAdmin(String username, String password){
-        Admin admin = new Admin(username, password, 0);
-        if (adminDatabase.add(admin) == null) {
-            return null;
-        } else {
+        Admin admin = new Admin(username, password);
+        if (adminDatabase.add(admin) != null) {
             admin.setContactInfoId(newContactInDatabase());
+            return new AdminData(admin);
         }
-        return new AdminData(admin);
+        return null;
     }
 
     /**

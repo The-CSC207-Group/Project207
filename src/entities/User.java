@@ -18,9 +18,13 @@ public abstract class User extends JsonSerializable {
      * @param contactInfoId Integer representing the id of the user's Contact object.
      */
     public User(String username, String password, Integer contactInfoId) {
+        this(username, password);
+        this.contactInfoId = contactInfoId;
+    }
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.contactInfoId = contactInfoId;
     }
 
     /**

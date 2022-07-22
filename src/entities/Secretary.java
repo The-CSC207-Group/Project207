@@ -15,13 +15,13 @@ public class Secretary extends User {
         super(username, password, contactInfoId);
     }
 
-//    /**
-//     * Creates an instance of Secretary without contact info.
-//     * @param username String representing the secretary's username.
-//     * @param password String representing the secretary's password.
-//     */
-//    public Secretary(String username, String password){
-//        super(username, password, new Contact().getId());
-//    }
+    /**
+     * Creates an instance of Secretary without contact info.
+     * @param username String representing the secretary's username.
+     * @param password String representing the secretary's password.
+     */
+    public Secretary(String username, String password){
+        super(username, password);
+    }
 
 }
