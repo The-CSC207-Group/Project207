@@ -4,8 +4,11 @@ import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import entities.Doctor;
 import presenter.screenViews.DoctorScreenView;
-import useCases.managers.*;
-import java.util.HashMap;
+import useCases.managers.ContactManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
+
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that a patient passes in.
@@ -28,13 +31,14 @@ public class DoctorController extends UserController<Doctor> {
     }
 
     /**
-     * Creates a hashmap of all string representations of doctor commands mapped to the method that each
+     * Creates a linked hashmap of all string representations of doctor commands mapped to the method that each
      * command calls.
-     * @return HashMap of strings mapped to their respective doctor commands.
+     *
+     * @return LinkedHashMap of strings mapped to their respective doctor commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
 //        commands.put("show schedule", ViewSchedule());
 //        commands.put("show assigned appointments", ViewAllDoctorAppointments());
@@ -43,6 +47,7 @@ public class DoctorController extends UserController<Doctor> {
 //        commands.put("delete absence", deleteAbsence());
 //        commands.put("create new availability", newAvailability());
 //        commands.put("delete availability", deleteAvailability());
+        commands.putAll(super.AllCommands());
         return commands;
     }
 

@@ -6,12 +6,12 @@ import database.Database;
 import entities.Contact;
 import entities.Doctor;
 
+/**
+ * Use case class for handling operations and data of doctor users.
+ */
 public class DoctorManager extends UserManager<Doctor> {
 
-    DataMapperGateway<Doctor> doctorDatabase;
-    DataMapperGateway<Contact> contactDatabase;
-    Database database;
-    PatientManager patientManager;
+    private final DataMapperGateway<Doctor> doctorDatabase;
 
     /***
      * Initializes the doctor manager.
@@ -20,9 +20,6 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorManager(Database database) {
         super(database.getDoctorDatabase(), database);
         this.doctorDatabase = database.getDoctorDatabase();
-        this.contactDatabase = database.getContactDatabase();
-        this.database = database;
-        this.patientManager = new PatientManager(database);
     }
 
     /***

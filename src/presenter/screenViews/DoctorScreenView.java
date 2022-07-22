@@ -1,16 +1,14 @@
 package presenter.screenViews;
 
 import dataBundles.*;
-import entities.Availability;
 import presenter.entityViews.*;
 import presenter.response.PrescriptionDetails;
 import presenter.response.ReportDetails;
 
-import java.lang.reflect.Array;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -53,7 +51,7 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Error raised when the user inputted integer is outside the size of the given data list
+     * Error raised when the user inputted integer is outside the size of the given data bundle list
      */
     public void showDeletePrescriptionOutOfRangeError() {
         showDeleteOutOfRangeError("prescription");
@@ -147,6 +145,13 @@ public class DoctorScreenView extends UserScreenView {
         infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
         new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
         return deleteItemFromEnumerationPrompt("availability");
+    }
+
+    /**
+     * Success message when doctor successfully deletes an availability.
+     */
+    public void showSuccessfullyDeletedAvailability() {
+        successMessage("Successfully deleted availability.");
     }
 
     /**

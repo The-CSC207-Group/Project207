@@ -11,8 +11,7 @@ import entities.Patient;
  */
 public class PatientManager extends UserManager<Patient> {
 
-    DataMapperGateway<Patient> patientDatabase;
-    DataMapperGateway<Contact> contactDatabase;
+    private final DataMapperGateway<Patient> patientDatabase;
 
     /**
      * Initializes the patient manager.
@@ -21,7 +20,6 @@ public class PatientManager extends UserManager<Patient> {
     public PatientManager(Database database) {
         super(database.getPatientDatabase(), database);
         this.patientDatabase = database.getPatientDatabase();
-        this.contactDatabase = database.getContactDatabase();
     }
 
     /**
