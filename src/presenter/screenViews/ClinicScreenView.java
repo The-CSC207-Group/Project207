@@ -4,7 +4,7 @@ import dataBundles.ClinicData;
 import presenter.entityViews.ClinicView;
 
 /**
- * The Contact's presenter class.
+ * The Clinic's presenter class.
  */
 public class ClinicScreenView extends ScreenView {
 
