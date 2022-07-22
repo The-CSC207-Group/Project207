@@ -122,6 +122,9 @@ public class AdminController extends UserController<Admin> {
             String user = adminScreenView.deleteUserPrompt();
             if (deleteUserHelper(user)) {
                 adminScreenView.showDeleteUserSuccess();
+                if (user.equals(adminData.getUsername())) {
+                    changeCurrentController(new SignInController(getContext()));
+                }
             } else {
                 adminScreenView.showFailedToDeleteUserError();
             }

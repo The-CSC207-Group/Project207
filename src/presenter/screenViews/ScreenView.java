@@ -2,6 +2,8 @@ package presenter.screenViews;
 
 import presenter.response.UserCredentials;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public abstract class ScreenView {
@@ -48,6 +50,28 @@ public abstract class ScreenView {
     protected void showIrreversibleActionWarning() {
         warningMessage("This action cannot be undone!");
     }
+
+
+    /**
+     * Ask user to enter a local date.
+     * @return LocalDate if inputted date is valid.
+     *         null if inputted date is invalid.
+     */
+    protected LocalDate showLocalDatePrompt() {
+        Integer year = inputInt("Enter year (YYYY): ");
+        if (year == null) {return null;}
+        Integer month = inputInt("Enter month (MM): ");
+        if (month == null) {return null;}
+        Integer day = inputInt("Enter day (DD): ");
+        if (day == null) {return null;}
+
+        try {
+            return LocalDate.of(year, month, day);
+        } catch (DateTimeException ignored) {
+            return null;
+        }
+    }
+
 
     protected String enterUsernamePrompt(String accountType) {
         return input("Enter " + accountType + " username: ");

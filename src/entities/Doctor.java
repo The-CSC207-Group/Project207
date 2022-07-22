@@ -23,14 +23,14 @@ public class Doctor extends User {
         super(username, password, contactInfoId);
     }
 
-//    /**
-//     * Creates an instance of Doctor without contact info.
-//     * @param username String representing the doctor's username.
-//     * @param password String representing the doctor's password.
-//     */
-//    public Doctor(String username, String password){
-//        super(username, password, new Contact().getId());
-//    }
+    /**
+     * Creates an instance of Doctor without contact info.
+     * @param username String representing the doctor's username.
+     * @param password String representing the doctor's password.
+     */
+    public Doctor(String username, String password){
+        super(username, password);
+    }
 
     public ArrayList<Availability> getAvailability() {
         return availability;

@@ -2,6 +2,7 @@ package entities;
 
 import utilities.JsonSerializable;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
@@ -9,7 +10,7 @@ import java.time.ZonedDateTime;
  */
 public abstract class Note extends JsonSerializable {
 
-    private final ZonedDateTime dateNoted = ZonedDateTime.now();
+    private final ZonedDateTime dateNoted = ZonedDateTime.now(ZoneId.of("US/Eastern"));
     private String header;
     private String body;
     private Integer patientId;

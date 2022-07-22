@@ -54,17 +54,16 @@ public class SecretaryLoadedPatientController extends TerminalController {
     @Override
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("view active prescription", viewActivePrescription());
+        commands.put("view active prescriptions", viewActivePrescription());
         commands.put("view all prescriptions", viewPrescriptionHistory());
         commands.put("view appointments", viewAppointments());
-        commands.put("change password", changePatientPassword());
+        commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", back(secretaryController));
         commands.put("reschedule appointment", rescheduleAppointment());
         commands.put("book appointment", bookAppointment());
         commands.put("cancel appointment", cancelAppointment());
-        commands.put("active prescription detail", viewActivePrescriptionsDetailed());
-        commands.put("all prescription detail", viewAllPrescriptionsDetailed());
-        commands.put("back", back(secretaryController));
+        commands.put("view active prescription detailed", viewActivePrescriptionsDetailed());
+        commands.put("view all prescription detailed", viewAllPrescriptionsDetailed());
         return commands;
     }
 
