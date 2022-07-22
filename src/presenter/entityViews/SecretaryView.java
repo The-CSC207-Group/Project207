@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * The Secretary entity's view.
  */
-public class SecretaryView extends EntityView<SecretaryData> {
+public class SecretaryView extends UserView<SecretaryData> {
 
     /**
      * @param item The secretary data bundle to view.
@@ -22,6 +22,7 @@ public class SecretaryView extends EntityView<SecretaryData> {
      * @param item The secretary data bundle to view.
      * @return Returns the secretary's username as a view.
      */
+    @Override
     public String viewUsername(SecretaryData item) {
         return "Secretary username is " + item.getUsername() + ".";
     }

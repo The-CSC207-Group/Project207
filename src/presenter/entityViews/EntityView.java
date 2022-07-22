@@ -9,9 +9,9 @@ import java.util.List;
 public abstract class EntityView<T> {
 
     /**
-     * @param string The string to be returned if a string is inputted.
-     * @param defaultString The string to be returned if no string or a blank string was inputted in string.
-     * @return Returns either string or defaultString depending on the value of string.
+     * @param string String to be returned if a string is inputted.
+     * @param defaultString String to be returned if no string or a blank string was inputted in string.
+     * @return String string or defaultString depending on the value of string.
      */
     protected String getDefaultString(String string, String defaultString) {
         if (string == null) {
@@ -24,8 +24,8 @@ public abstract class EntityView<T> {
     }
 
     /**
-     * @param string The string to be returned if a string is inputted.
-     * @return Returns either string or N/A depending on if a string was inputted in string.
+     * @param string String to be returned if a string is inputted.
+     * @return String string or 'N/A' depending on if a string was inputted in string.
      */
     protected String getDefaultStringNA(String string) {
         return getDefaultString(string, "N/A");
