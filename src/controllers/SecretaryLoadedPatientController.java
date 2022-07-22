@@ -4,7 +4,6 @@ import dataBundles.*;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.SecretaryScreenView;
-import presenter.entityViews.PrescriptionView;
 import useCases.managers.*;
 
 import java.time.LocalDate;

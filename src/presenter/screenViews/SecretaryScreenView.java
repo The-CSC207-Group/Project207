@@ -1,7 +1,6 @@
 package presenter.screenViews;
 
 import dataBundles.*;
-import entities.Availability;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.AvailabilityView;
 import presenter.entityViews.ContactView;
@@ -13,7 +12,6 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class SecretaryScreenView extends UserScreenView {
 
