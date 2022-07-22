@@ -56,7 +56,7 @@ public final class UserCredentials {
     }
 
     /**
-     * @return String representing the string representation of this instance of UserCredentials.
+     * @return String representation of this instance of UserCredentials.
      */
     @Override
     public String toString() {

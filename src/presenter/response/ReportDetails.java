@@ -55,7 +55,7 @@ public final class ReportDetails {
     }
 
     /**
-     * @return String representing the string representation of this instance of ReportDetails.
+     * @return String representation of this instance of ReportDetails.
      */
     @Override
     public String toString() {
