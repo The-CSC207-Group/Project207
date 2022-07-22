@@ -282,7 +282,7 @@ public class PrescriptionManagerTests {
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getAllPrescriptions(patient2);
 
-        Assert.assertTrue(loadedPrescriptionList.isEmpty());
+        Assert.assertTrue("The list of this patient's prescriptions should be empty", loadedPrescriptionList.isEmpty());
     }
 
 
