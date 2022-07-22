@@ -42,6 +42,12 @@ public abstract class UserController<T extends User> extends TerminalController 
         this.userScreenView = userScreenView;
     }
 
+    @Override
+    public void welcomeMessage() {
+        userScreenView.showWelcomeUserMessage(userData);
+        super.welcomeMessage();
+    }
+
     /**
      * Creates a hashmap of all string representations of user commands mapped to the method that each
      * command calls.
@@ -81,12 +87,8 @@ public abstract class UserController<T extends User> extends TerminalController 
         UserController<?> currentController = this;
         ContactManager contactManager = new ContactManager(getDatabase());
         ContactData contactData = contactManager.getContactData(userData);
-        ContactController contactController = new ContactController(getContext(), currentController, contactData,
-                userScreenView);
-        return (x) -> {
-            userScreenView.showEnteredContactDetailsMenu();
-            changeCurrentController(contactController);
-        };
+        ContactController contactController = new ContactController(getContext(), currentController, contactData);
+        return (x) -> changeCurrentController(contactController);
     }
 
     private Command SignOut(){
