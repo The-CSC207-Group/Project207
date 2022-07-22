@@ -20,6 +20,7 @@ public class DeleteUtils {
                 deleteDirectory(file);
             }
         }
+        directoryToBeDeleted.delete();
     }
 
 }

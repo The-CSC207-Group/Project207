@@ -1,19 +1,18 @@
 import dataBundles.AppointmentData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
-import database.DataMapperGateway;
 import database.Database;
-import entities.Admin;
-import entities.Appointment;
 import entities.Availability;
 import entities.Clinic;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.AppointmentManager;
 import useCases.managers.DoctorManager;
 import useCases.managers.PatientManager;
-
+import utilities.DeleteUtils;
+import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -176,6 +175,11 @@ public class AppointmentManagerTests {
         assertTrue("An appointment object should not exist in the database after removing one",
                 originalDatabase.getAppointmentDatabase().getAllIds().isEmpty());
 
+    }
+
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
 
     @Test(timeout = 1000)

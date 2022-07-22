@@ -1,7 +1,6 @@
 import dataBundles.LogData;
 import dataBundles.PatientData;
 import database.Database;
-import entities.Log;
 import entities.Patient;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +9,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.LogManager;
 import utilities.DeleteUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -26,8 +24,8 @@ public class LogManagerTests {
         Integer id = database.getPatientDatabase().add(patient);
         LogManager logManager = new LogManager(database);
         LogData logData = logManager.addLog("testing123", id);
-        Assert.assertEquals(logData.getId(), id);
-        Assert.assertNotNull(database.getLogDatabase().get(id));
+        Assert.assertEquals("Make sure that the right log is returned to the user", logData.getId(), id);
+        Assert.assertNotNull("Make sure that log actually exists in the database", database.getLogDatabase().get(id));
     }
 
     @Test
@@ -44,22 +42,26 @@ public class LogManagerTests {
         System.out.println(database.getLogDatabase());
 
         ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
-        Assert.assertFalse(logArrayList.stream().
+        Assert.assertFalse("Check if logA is returned to the user as part of" +
+                "the arraylist returned when getting a user's logs", logArrayList.stream().
                 map(LogData::getUserId).
                 filter(x -> x.equals(logA.getUserId())).
                 collect(Collectors.toCollection(ArrayList::new)).
                 isEmpty());
-        Assert.assertFalse(logArrayList.stream().
+        Assert.assertFalse("Check if logB is returned to the user as part of" +
+                "the arraylist returned when getting a user's logs", logArrayList.stream().
                 map(LogData::getId).
                 filter(x -> x.equals(logB.getId())).
                 collect(Collectors.toCollection(ArrayList::new)).
                 isEmpty());
-        Assert.assertFalse(logArrayList.stream().
+        Assert.assertFalse("Check if logC is returned to the user as part of" +
+                "the arraylist returned when getting a user's logs", logArrayList.stream().
                 map(LogData::getId).
                 filter(x -> x.equals(logC.getId())).
                 collect(Collectors.toCollection(ArrayList::new)).
                 isEmpty());
-        Assert.assertEquals(3, logArrayList.size());
+        Assert.assertEquals("Make sure there are only 3 logs in the arraylist. When paired with the other" +
+                "assert statements, the arraylist only consists of logA, logB, logC", 3, logArrayList.size());
     }
     @Test
     public void testGettingNonExistentUserLogs(){
@@ -73,9 +75,8 @@ public class LogManagerTests {
         System.out.println(database.getLogDatabase());
 
         ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
-        Assert.assertTrue(logArrayList.isEmpty());
+        Assert.assertTrue("Since the user doesn't exist, we should get an empty arraylist", logArrayList.isEmpty());
     }
-
 
 
     @After

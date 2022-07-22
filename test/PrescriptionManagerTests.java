@@ -3,8 +3,6 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Doctor;
-import entities.Patient;
 import entities.Prescription;
 import org.junit.After;
 import org.junit.Assert;
@@ -282,7 +280,7 @@ public class PrescriptionManagerTests {
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getAllPrescriptions(patient2);
 
-        Assert.assertTrue(loadedPrescriptionList.isEmpty());
+        Assert.assertTrue("The list of this patient's prescriptions should be empty", loadedPrescriptionList.isEmpty());
     }
 
 

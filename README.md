@@ -1,7 +1,7 @@
 # CSC207 Project Phase 1
 we've certainly come a long way since phase 0 of the program to the point where you can barely see any phase 0 code still being used! The size of the project quadrupled, but as result, there are some functionalities that we've poured our heart and soul into but don't seem to be quite ready for phase 1 submission.  
 
-## _**PLEASE NOTE: Anything related to appointments, availability, absence, and reports have been moved to phase 2 of the project, and should not be graded.**_
+## _**PLEASE NOTE: Anything related to appointments, availability, absence, timeBlocks and reports have been moved to phase 2 of the project, and should not be graded.**_
 ## How to Install The Required Dependencies
 
 First make you are using java 11: In order to set up the SDK, click `Setup SDK` and then select `coretto-11` (if this

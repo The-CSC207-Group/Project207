@@ -19,6 +19,18 @@ public class ContactManagerTests {
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
     @Test
+    public void getContactInfoTest(){
+        Database database = new Database(databaseFolder.toString());
+        PatientManager patientManager = new PatientManager(database);
+        ContactManager contactManager = new ContactManager(database);
+
+        PatientData patientData = patientManager.createPatient("dan", "iel");
+
+        Assert.assertEquals("Test to see if the contact id stored in the patient is the same as the one" +
+                        "retrieved when getting contact info by username through contact manager.",
+                contactManager.getContactData(patientData).getContactId(), patientData.getContactInfoId());
+    }
+    @Test
     public void testChangeName(){
         Database database = new Database(databaseFolder.toString());
         PatientManager patientManager = new PatientManager(database);
@@ -26,9 +38,11 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeName(contactManager.getContactData(patientData), "Daniel Dervishi"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getName(), "Daniel Dervishi");
-        Assert.assertEquals(contactManager.getContactData(patientData).getName(), "Daniel Dervishi");
+        Assert.assertTrue("The change name method should return true",
+                contactManager.changeName(contactManager.getContactData(patientData), "Daniel Dervishi"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                        "reflects this",
+                database.getContactDatabase().get(patientData.getContactInfoId()).getName(), "Daniel Dervishi");
     }
     @Test
     public void testChangeEmailFailsRegex(){
@@ -38,10 +52,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertFalse(contactManager.changeEmail(contactManager.getContactData(patientData), "Daniel Dervishi"));
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getEmail());
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getEmail());
-
+        Assert.assertFalse("Testing method's return value",
+                contactManager.changeEmail(contactManager.getContactData(patientData), "Daniel Dervishi"));
+        Assert.assertNull("Make sure the field was not updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmail());
     }
 
     @Test
@@ -52,9 +66,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeEmail(contactManager.getContactData(patientData), "d.dervishi@mail.utoronto.ca"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getEmail(), "d.dervishi@mail.utoronto.ca");
-        Assert.assertEquals(contactManager.getContactData(patientData).getEmail(), "d.dervishi@mail.utoronto.ca");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeEmail(contactManager.getContactData(patientData), "d.dervishi@mail.utoronto.ca"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmail(), "d.dervishi@mail.utoronto.ca");
     }
 
     @Test
@@ -65,10 +80,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertFalse(contactManager.changePhoneNumber(contactManager.getContactData(patientData), "(416) 978-2011"));
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getPhoneNumber());
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getPhoneNumber());
-
+        Assert.assertFalse("Testing method's return value",
+                contactManager.changePhoneNumber(contactManager.getContactData(patientData), "(416) 978-2011"));
+        Assert.assertNull("Make sure the field was not updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getPhoneNumber());
     }
 
     @Test
@@ -79,9 +94,11 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changePhoneNumber(contactManager.getContactData(patientData), "4169782011"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getPhoneNumber(), "4169782011");
-        Assert.assertEquals(contactManager.getContactData(patientData).getPhoneNumber(), "4169782011");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changePhoneNumber(contactManager.getContactData(patientData), "4169782011"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                        "reflects this"
+                , database.getContactDatabase().get(patientData.getContactInfoId()).getPhoneNumber(), "4169782011");
     }
 
     @Test
@@ -92,9 +109,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeAddress(contactManager.getContactData(patientData), "59 clown street crescent blvd"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getAddress(), "59 clown street crescent blvd");
-        Assert.assertEquals(contactManager.getContactData(patientData).getAddress(), "59 clown street crescent blvd");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeAddress(contactManager.getContactData(patientData), "59 clown street crescent blvd"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getAddress(), "59 clown street crescent blvd");
     }
 
     @Test
@@ -107,9 +125,10 @@ public class ContactManagerTests {
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
 
-        Assert.assertTrue(contactManager.changeBirthday(contactManager.getContactData(patientData),localDate));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getBirthday(), localDate);
-        Assert.assertEquals(contactManager.getContactData(patientData).getBirthday(), localDate);
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeBirthday(contactManager.getContactData(patientData),localDate));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this",database.getContactDatabase().get(patientData.getContactInfoId()).getBirthday(), localDate);
     }
 
     @Test
@@ -120,10 +139,11 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertFalse(contactManager.changeEmergencyContactEmail(contactManager.getContactData(patientData), "Daniel Dervishi"));
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactEmail());
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactEmail());
-
+        Assert.assertFalse("Testing method's return value",
+                contactManager.changeEmergencyContactEmail(contactManager.getContactData(patientData),
+                        "Daniel Dervishi"));
+        Assert.assertNull("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactEmail());
     }
 
     @Test
@@ -134,9 +154,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeEmergencyContactEmail(contactManager.getContactData(patientData), "d.dervishi@mail.utoronto.ca"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactEmail(), "d.dervishi@mail.utoronto.ca");
-        Assert.assertEquals(contactManager.getContactData(patientData).getEmergencyContactEmail(), "d.dervishi@mail.utoronto.ca");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeEmergencyContactEmail(contactManager.getContactData(patientData), "d.dervishi@mail.utoronto.ca"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactEmail(), "d.dervishi@mail.utoronto.ca");
     }
 
     @Test
@@ -147,9 +168,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeEmergencyContactName(contactManager.getContactData(patientData), "Daniel Dervishi"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactName(), "Daniel Dervishi");
-        Assert.assertEquals(contactManager.getContactData(patientData).getEmergencyContactName(), "Daniel Dervishi");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeEmergencyContactName(contactManager.getContactData(patientData), "Daniel Dervishi"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactName(), "Daniel Dervishi");
     }
 
     @Test
@@ -160,10 +182,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertFalse(contactManager.changeEmergencyContactPhoneNumber(contactManager.getContactData(patientData), "(416) 978-2011"));
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactPhoneNumber());
-        Assert.assertNull(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactPhoneNumber());
-
+        Assert.assertFalse("Testing method's return value",
+                contactManager.changeEmergencyContactPhoneNumber(contactManager.getContactData(patientData), "(416) 978-2011"));
+        Assert.assertNull("Make sure the field was not updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactPhoneNumber());
     }
 
     @Test
@@ -174,9 +196,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeEmergencyContactPhoneNumber(contactManager.getContactData(patientData), "4169782011"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactPhoneNumber(), "4169782011");
-        Assert.assertEquals(contactManager.getContactData(patientData).getEmergencyContactPhoneNumber(), "4169782011");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeEmergencyContactPhoneNumber(contactManager.getContactData(patientData), "4169782011"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyContactPhoneNumber(), "4169782011");
     }
 
     @Test
@@ -187,9 +210,10 @@ public class ContactManagerTests {
 
         PatientData patientData = patientManager.createPatient("dan", "iel");
 
-        Assert.assertTrue(contactManager.changeEmergencyRelationship(contactManager.getContactData(patientData), "Father"));
-        Assert.assertEquals(database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyRelationship(), "Father");
-        Assert.assertEquals(contactManager.getContactData(patientData).getEmergencyRelationship(), "Father");
+        Assert.assertTrue("Testing method's return value",
+                contactManager.changeEmergencyRelationship(contactManager.getContactData(patientData), "Father"));
+        Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
+                "reflects this", database.getContactDatabase().get(patientData.getContactInfoId()).getEmergencyRelationship(), "Father");
     }
 
     @After

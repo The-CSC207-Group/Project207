@@ -6,7 +6,9 @@ import entities.Clinic;
 
 import java.util.regex.Pattern;
 
-
+/**
+ * Use case class for changing and interacting with clinic entities.
+ */
 public class ClinicManager {
     private final Clinic clinic;
 
