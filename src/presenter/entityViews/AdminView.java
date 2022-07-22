@@ -1,11 +1,13 @@
 package presenter.entityViews;
 
 import dataBundles.AdminData;
+import dataBundles.UserData;
+import entities.Admin;
 
 /**
  * The Admin entity's view.
  */
-public class AdminView extends EntityView<AdminData> {
+public class AdminView extends UserView<AdminData> {
 
     /**
      * @param item AdminData bundle to view.
@@ -20,6 +22,7 @@ public class AdminView extends EntityView<AdminData> {
      * @param item AdminData bundle to view.
      * @return String representing the admin's username as a view.
      */
+    @Override
     public String viewUsername(AdminData item) {
         return "Admin username is " + item.getUsername() + ".";
     }
