@@ -135,9 +135,7 @@ public class AdminController extends UserController<Admin> {
     }
 
     private Command changeClinicInformation() {
-        ClinicManager clinicManager = new ClinicManager(getDatabase());
-        return (x) -> changeCurrentController(new ClinicController(getContext(), currentController,
-                clinicManager.clinicData()));
+        return (x) -> changeCurrentController(new ClinicController(getContext(), currentController));
     }
 
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
