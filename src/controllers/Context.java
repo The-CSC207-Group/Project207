@@ -1,7 +1,6 @@
 package controllers;
 
 import database.Database;
-import presenter.screenViews.TerminalScreenView;
 
 /**
  * Controller class that stores the current controller of the program and allows the program to switch controllers.

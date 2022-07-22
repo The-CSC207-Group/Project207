@@ -63,6 +63,16 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(secretaryView.viewFull(secretaryData));
     }
 
+    /**
+     * Displays clinic information to users.
+     * @param clinicData ClinicData - a data bundle consisting of the information about the clinic associated
+     *                   with this program
+     */
+    public void displayClinicInfo(ClinicData clinicData) {
+        ClinicView clinicView = new ClinicView();
+        infoMessage(clinicView.viewFull(clinicData));
+    }
+
     public void showWelcomeUserMessage(UserData user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
     }

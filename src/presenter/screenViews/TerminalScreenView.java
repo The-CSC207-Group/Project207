@@ -1,5 +1,8 @@
 package presenter.screenViews;
 
+import dataBundles.ClinicData;
+import presenter.entityViews.ClinicView;
+
 import java.util.List;
 
 public class TerminalScreenView extends ScreenView {
