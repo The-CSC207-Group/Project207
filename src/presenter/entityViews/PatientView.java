@@ -23,7 +23,7 @@ public class PatientView extends UserView<PatientData> {
      */
     @Override
     public String viewUsername(PatientData item) {
-        return "Patient username is " + item.getUsername() + ".";
+        return "Patient username is " + getDefaultStringNA(item.getUsername()) + ".";
     }
 
     /**
@@ -31,7 +31,7 @@ public class PatientView extends UserView<PatientData> {
      * @return String representing the patient's health number as a view.
      */
     public String viewHealthNumber(PatientData item) {
-        return "Patient health number is " + item.getHealthNumber() + ".";
+        return "Patient health number is " + getDefaultStringNA(item.getHealthNumber()) + ".";
     }
 
 }

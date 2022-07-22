@@ -25,7 +25,6 @@ public abstract class UserController<T extends User> extends TerminalController 
     private final UserData<T> userData;
     private final UserManager<T> userManager;
     private final UserScreenView userScreenView;
-    private final UserView<UserData<T>> userView;
 
     /**
      * Creates a new controller for handling the state of when a user is signed in.
@@ -37,16 +36,13 @@ public abstract class UserController<T extends User> extends TerminalController 
      * @param userManager UserManager<T> where T extends User - a manager for handling the user data (is generic
      *                       depending on user type).
      * @param userScreenView UserScreenView - the current screen presenter method associated with this user.
-     * @param userView UserView<UserData<T>> where T extends User - the presenter view of the user associated
-     *                 with this controller
      */
     public UserController(Context context, UserData<T> userData, UserManager<T> userManager,
-                          UserScreenView userScreenView, UserView<UserData<T>> userView) {
+                          UserScreenView userScreenView) {
         super(context);
         this.userData = userData;
         this.userManager = userManager;
         this.userScreenView = userScreenView;
-        this.userView = userView;
     }
 
     @Override
@@ -86,7 +82,7 @@ public abstract class UserController<T extends User> extends TerminalController 
     }
 
     private Command ViewUserInformation() {
-        return (x) -> userScreenView.displayUserInfo(userData, userView);
+        return (x) -> userScreenView.displayUserInfo(userData);
     }
 
     private Command GetLogs() {

@@ -34,7 +34,7 @@ public class SecretaryController extends UserController<Secretary> {
      *                      user.
      */
     public SecretaryController(Context context, SecretaryData secretaryData) {
-        super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView(), userView);
+        super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
         this.appointmentManager = new AppointmentManager(getDatabase());
         this.doctorManager = new DoctorManager(getDatabase());
         this.adminManager = new AdminManager(getDatabase());
