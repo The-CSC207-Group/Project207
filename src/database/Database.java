@@ -84,6 +84,9 @@ public class Database {
     public DataMapperGateway<Contact> getContactDatabase() {
         return contactDatabase;
     }
+    public DataMapperGateway<Clinic> getClinicDatabase() {
+        return clinicDatabase;
+    }
 
     public Clinic getClinic() {
         Optional<Clinic> clinic = clinicDatabase.stream().findFirst();
