@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ClinicManagerTests {
     @Rule
@@ -39,13 +40,15 @@ public class ClinicManagerTests {
 
         ClinicManager clinicManager = new ClinicManager(originalDatabase);
 
-
         assertEquals("The original phone should stay same before changing it.",
                 clinicDatabase.get(clinicID).getPhoneNumber(), "123");
 
         clinicManager.changeClinicPhoneNumber("12345");
         assertEquals("The original phone number and the new phone number are the same",
                 clinicDatabase.get(clinicID).getPhoneNumber(), "12345");
+
+        assertNotEquals("The phone number in the database doesnt match the inputted phone number.",
+                clinicDatabase.get(clinicID).getPhoneNumber(), "123");
     }
     @Test(timeout = 1000)
     public void changeClinicAddress(){
@@ -65,8 +68,12 @@ public class ClinicManagerTests {
                 clinicDatabase.get(clinicID).getAddress(), "address");
 
         clinicManager.changeClinicAddress("abcde");
+
         assertEquals("The original address and the new address are the same",
                 clinicDatabase.get(clinicID).getAddress(), "abcde");
+
+        assertNotEquals("The address in database and the inputted address arent the same",
+                clinicDatabase.get(clinicID).getAddress(), "abcdefgh");
     }
     @Test(timeout = 1000)
     public void changeClinicName(){
@@ -86,8 +93,12 @@ public class ClinicManagerTests {
                 clinicDatabase.get(clinicID).getName(), "ABC");
 
         clinicManager.changeClinicName("The Clinic");
+
         assertEquals("The original name and the new name are the same",
                 clinicDatabase.get(clinicID).getName(), "The Clinic");
+
+        assertNotEquals("The clinic's name in database and input name aren't the same",
+                clinicDatabase.get(clinicID).getName(), "A Clinic");
     }
     @Test(timeout = 1000)
     public void changeClinicEmailAddress(){
@@ -107,8 +118,12 @@ public class ClinicManagerTests {
                 clinicDatabase.get(clinicID).getEmail(), "abc@gmail.com");
 
         clinicManager.changeClinicEmail("clinic@gmail.com");
+
         assertEquals("The original address and the new address are the same",
                 clinicDatabase.get(clinicID).getEmail(), "clinic@gmail.com");
+
+        assertNotEquals("The address in the database and the inputted address arent the same",
+                clinicDatabase.get(clinicID).getEmail(), "clinic@yahoo.com");
     }
 
     @After
