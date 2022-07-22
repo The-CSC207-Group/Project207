@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Interface that defines interaction with a database containing only items of type T.
+ * @param <T> T - type of the items in the database.
+ */
 public interface DataMapperGateway<T> {
     /**
      * Gets all unique identifiers in the stored in the database.
