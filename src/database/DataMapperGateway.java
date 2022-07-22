@@ -10,6 +10,7 @@ import java.util.stream.Stream;
  * @param <T> T - type of the items in the database.
  */
 public interface DataMapperGateway<T> {
+
     /**
      * Gets all unique identifiers in the stored in the database.
      * @return A hashset of all ids as a string.
@@ -20,12 +21,13 @@ public interface DataMapperGateway<T> {
      * Gets an object of type T from the database.
      * @param id The unique identifier of that object.
      * @return Object of type T.
+     *         null if id does not correspond to an object in the database.
      */
     T get(Integer id);
 
     /**
      * Access items in database as a stream.
-     * @return Object of type T.
+     * @return Stream with objects of type T.
      */
     Stream<T> stream();
 
@@ -33,6 +35,7 @@ public interface DataMapperGateway<T> {
      * Adds a new object of type T to the database.
      * @param item The item to add to the database.
      * @return an integer id is returned.
+     *         null if item can't be added.
      */
     Integer add(T item);
 
@@ -46,10 +49,15 @@ public interface DataMapperGateway<T> {
 
     /**
      * Saves the database.
-     * Called at the end of the program.
      */
     void save();
 
+    /**
+     * Returns the first items that matches the condition.
+     * @param condition Predicate representing the condition.
+     * @return T if it found and item in the database.
+     *         or null if no item matches the predicate.
+     */
     default T getByCondition(Predicate<T> condition) {
         Optional<T> item = stream().filter(condition).findFirst();
         return item.orElse(null);

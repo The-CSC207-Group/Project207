@@ -44,7 +44,7 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(output);
     }
 
-    public void displayUserInfo(UserData userData, UserView userView) {
+    public <T extends UserData<?>> void displayUserInfo(T userData, UserView<T> userView) {
         infoMessage(userView.viewFull(userData));
     }
 
@@ -58,7 +58,7 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(clinicView.viewFull(clinicData));
     }
 
-    public void showWelcomeUserMessage(UserData user) {
+    public void showWelcomeUserMessage(UserData<?> user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
     }
 
