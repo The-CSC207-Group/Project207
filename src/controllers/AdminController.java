@@ -30,7 +30,7 @@ public class AdminController extends UserController<Admin> {
      * @param adminData AdminData - a data containing the ID and attributes of the current admin user.
      */
     public AdminController(Context context, AdminData adminData) {
-        super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
+        super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView(), userView);
         this.adminData = adminData;
         this.patientManager = new PatientManager(getDatabase());
         secretaryManager = new SecretaryManager(getDatabase());
