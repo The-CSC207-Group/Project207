@@ -1,11 +1,8 @@
-import dataBundles.ClinicData;
-import database.DataMapperGateway;
 import database.Database;
 import entities.Availability;
 import entities.Clinic;
-import entities.Doctor;
 import org.junit.After;
-import org.junit.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
