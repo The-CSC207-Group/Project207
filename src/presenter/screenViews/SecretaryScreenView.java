@@ -255,16 +255,6 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * View details for each prescription
-     * @param prescriptionData takes in an arraylist consisting prescription data.
-     */
-    public void viewPrescriptionsDetailed(ArrayList<PrescriptionData> prescriptionData) {
-        for (PrescriptionData data : prescriptionData) {
-            prescriptionView.viewFull(data);
-        }
-    }
-
-    /**
      * prompts user to add a timezone, for START time
      * @return a new ZonedDateTime object with the desired input from the user.
      */
