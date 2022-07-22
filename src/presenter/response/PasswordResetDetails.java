@@ -2,23 +2,41 @@ package presenter.response;
 
 import java.util.Objects;
 
+/**
+ * A password's reset details as a response.
+ */
 public final class PasswordResetDetails {
     private final String password;
     private final String confirmedPassword;
 
+    /**
+     * Creates an instance of PasswordResetDetails.
+     * @param password String representing the user's inputted password.
+     * @param confirmedPassword String representing the user's inputted confirmed password.
+     */
     public PasswordResetDetails(String password, String confirmedPassword) {
         this.password = password;
         this.confirmedPassword = confirmedPassword;
     }
 
+    /**
+     * @return String representing the user's inputted password.
+     */
     public String password() {
         return password;
     }
 
+    /**
+     * @return String representing the user's inputted confirmed password.
+     */
     public String confirmedPassword() {
         return confirmedPassword;
     }
 
+    /**
+     * @param obj Object being compared.
+     * @return boolean indicating whether obj is "equal to" this instance of PasswordResetDetails.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
@@ -28,11 +46,17 @@ public final class PasswordResetDetails {
                 Objects.equals(this.confirmedPassword, that.confirmedPassword);
     }
 
+    /**
+     * @return int representing the hash code value for this instance of PasswordResetDetails.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(password, confirmedPassword);
     }
 
+    /**
+     * @return String representing the string representation of this instance of PasswordResetDetails.
+     */
     @Override
     public String toString() {
         return "PasswordResetDetails[" +
