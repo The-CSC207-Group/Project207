@@ -29,13 +29,13 @@ to the UserJsonDatabase. If you already logged into a user, use the `sign out` c
 ### State Pattern
 
 The state of the program is handled via the state pattern. For each possible state the program can be in there exists a
-unique controller. Then when the state of the program changes, we change the current controller. The current controller
+unique controller. Then, when the state of the program changes, we change the current controller. The current controller
 is stored in the Context and every controller has a link to the context in order to change the current controller.
 The while loop for the program exists completely in the context and the job of each controller is just to proccess a 
 single command and if needed change the current controller.
 
 For example the sign in controller processes the command sign in. If it's an unsuccessful sign in it does nothing
-leaving the current controller the same (in this case the sign in controller) if it succeeds it decided which controller
+leave the current controller the same (in this case the sign in controller) if it succeeds it decided which controller
 to swap to. In this case one of the User Controllers.
 
 ### Command Pattern
@@ -92,6 +92,7 @@ List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String 
 * `exit` - Terminates the program.
 
 ### Patient Post-Login:
+* `view my info` - Shows the account username and health-number.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of all presently active prescription headers related to the patient.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
@@ -106,6 +107,7 @@ List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String 
 * `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
 
 ### Doctor Post-Login:
+* `view my info` Shows the account username.
 * `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
 * `change password` - Change the login password for the current user and update it in the Json Database.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
@@ -116,6 +118,7 @@ List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String 
 * `exit` - Terminates the program.
 
 ### Secretary Post-Login:
+* `view my info` Shows the account username.
 * `create patient` - Create a patient and store it in the Json Database.
 * `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Secretary Commands** below.
 * `delete patient` - Deletes a patient user account from the Json Database based on inputted username.
@@ -140,6 +143,7 @@ password: `root`
 To create another admin account, use the `create admin` command while logged into the `root` account.
 
 ### Admin Post-Login:
+* `view my info` Shows the account username.
 * `create admin` - Create a new admin account and store it in the JsonDatabase.
 * `create secretary` - Create a new secretary account and store it in the JsonDatabase.
 * `create doctor` - Create a new doctor account and store it in the JsonDatabase.
