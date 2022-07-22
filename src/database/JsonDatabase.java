@@ -17,6 +17,10 @@ import java.util.HashSet;
 import java.util.stream.Stream;
 
 
+/**
+ * Implements the DataMapperGateway Interface with a JSON Backend.
+ * @param <T> Objects of type T stored in this table/database.
+ */
 public class JsonDatabase<T extends JsonSerializable> implements DataMapperGateway<T> {
 
     private final HashMap<Integer, T> database;
@@ -25,10 +29,21 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     private final KeyDelegator keyDelegator;
     private final File folder;
 
+    /**
+     * Constructs a JsonDatabase with a default KeyDelegator.
+     * @param type Type of Class the database saves/loads.
+     * @param folder Folder where the database is saved.
+     */
     public JsonDatabase(Class<T> type, File folder) {
         this(type, new KeyDelegator(), folder);
     }
 
+    /**
+     * Constructs a JsonDatabase.
+     * @param type Type of Class the database saves/loads.
+     * @param keyDelegator KeyDelegator linked to this database.
+     * @param folder Folder where the database is saved.
+     */
     public JsonDatabase(Class<T> type, KeyDelegator keyDelegator, File folder) {
         this.type = type;
 
@@ -37,7 +52,11 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         }
 
         GsonBuilder builder = Converters.registerAll(new GsonBuilder());
-        builder.registerTypeAdapter(getClassByName("java.time.ZoneRegion"), new ZoneIdConverter());
+
+        // Unfortunately, Google's Gson library implicitly serializes immutable private objects which causes the
+        // compiler to issue a runtime warning. This is a temporary fix for now, until I find a better library.
+        builder.registerTypeAdapter(getZoneRegionClass(), new ZoneIdConverter());
+
         this.gson = builder.create();
         this.database = new HashMap<>();
         this.keyDelegator = keyDelegator;
@@ -45,6 +64,12 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         load();
     }
 
+    /**
+     * Gets a Method in the entity T by its name.
+     * Used to initialize KeyDelegator with a unique Field as key.
+     * @param name Name of Method as String.
+     * @return Method in T corresponding to the given name.
+     */
     private Method getMethodByName(String name) {
         try {
             return type.getMethod(name);
@@ -53,19 +78,31 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         }
     }
 
-    private Class<?> getClassByName(String name) {
+    /**
+     * Gets ZoneRegion class by name.
+     * Used to initialize the Gson type adapter and avoid the serialization of immutable private object.
+     * @return ZoneRegion class by name.
+     */
+    private Class<?> getZoneRegionClass() {
         try {
-            return Class.forName(name);
+            return Class.forName("java.time.ZoneRegion");
         } catch (Exception ignored) {
             return null;
         }
     }
 
+    /**
+     * Creates a file name based on the name of the entity T.
+     * @return File where this database is stored.
+     */
     private File getSaveFile() {
         String fileName = type.getSimpleName() + ".json";
         return Paths.get(folder.toString(), fileName).toFile();
     }
 
+    /**
+     * Loads the database from the user's filesystem.
+     */
     private void load() {
         // noinspection ResultOfMethodCallIgnored
         folder.mkdirs();
@@ -97,6 +134,9 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save() {
         JsonElement jsonElement = gson.toJsonTree(database);
@@ -117,31 +157,33 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public HashSet<Integer> getAllIds() {
         return new HashSet<>(database.keySet());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T get(Integer id) {
         return database.get(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Stream<T> stream() {
         return getAllIds().stream().map(this::get);
     }
 
-    @Override
-    public T copy(Integer id) {
-        T object = get(id);
-        if (object != null) {
-            return gson.fromJson(gson.toJson(object), type);
-        } else {
-            return null;
-        }
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Integer add(T item) {
         if (keyDelegator.canAddItem(item)) {
@@ -154,6 +196,9 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean remove(Integer id) {
         if (database.containsKey(id)) {
