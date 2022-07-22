@@ -125,8 +125,8 @@ public class ContactManager {
         Contact contact = contactDatabase.get(contactData.getContactId());
         //got regex from https://regexlib.com/Search.aspx?k=email
         if (contact == null ||
-                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", emergencyContactEmail)){
-            return false;}
+                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                        emergencyContactEmail)){return false;}
         contact.setEmergencyContactEmail(emergencyContactEmail);
         return true;
     }

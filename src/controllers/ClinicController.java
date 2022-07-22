@@ -41,7 +41,6 @@ public class ClinicController extends TerminalController {
 
     /**
      * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command calls.
-     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
     public LinkedHashMap<String, Command> AllCommands() {

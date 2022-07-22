@@ -1,11 +1,8 @@
-import dataBundles.ClinicData;
-import database.DataMapperGateway;
 import database.Database;
 import entities.Availability;
 import entities.Clinic;
-import entities.Doctor;
 import org.junit.After;
-import org.junit.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -29,101 +26,94 @@ public class ClinicManagerTests {
     @Test(timeout = 1000)
     public void changeClinicPhoneNumber(){
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
 
         Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
                 ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                 LocalTime.of(17, 0)))));
-
-        Integer clinicID = clinicDatabase.add(clinic);
+        originalDatabase.setClinic(clinic);
 
         ClinicManager clinicManager = new ClinicManager(originalDatabase);
 
         assertEquals("The original phone should stay same before changing it.",
-                clinicDatabase.get(clinicID).getPhoneNumber(), "123");
+               clinic.getPhoneNumber(), "123");
 
         clinicManager.changeClinicPhoneNumber("12345");
         assertEquals("The original phone number and the new phone number are the same",
-                clinicDatabase.get(clinicID).getPhoneNumber(), "12345");
+               clinic.getPhoneNumber(), "12345");
 
         assertNotEquals("The phone number in the database doesnt match the inputted phone number.",
-                clinicDatabase.get(clinicID).getPhoneNumber(), "123");
+                clinic.getPhoneNumber(), "123");
     }
     @Test(timeout = 1000)
     public void changeClinicAddress(){
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
 
         Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
                 ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
-
-        Integer clinicID = clinicDatabase.add(clinic);
+        originalDatabase.setClinic(clinic);
 
         ClinicManager clinicManager = new ClinicManager(originalDatabase);
 
         assertEquals("The original address should stay same before changing it.",
-                clinicDatabase.get(clinicID).getAddress(), "address");
+                clinic.getAddress(), "address");
 
         clinicManager.changeClinicAddress("abcde");
 
         assertEquals("The original address and the new address are the same",
-                clinicDatabase.get(clinicID).getAddress(), "abcde");
+                clinic.getAddress(), "abcde");
 
         assertNotEquals("The address in database and the inputted address arent the same",
-                clinicDatabase.get(clinicID).getAddress(), "abcdefgh");
+                clinic.getAddress(), "abcdefgh");
     }
     @Test(timeout = 1000)
     public void changeClinicName(){
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
 
         Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
                 ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
-
-        Integer clinicID = clinicDatabase.add(clinic);
+        originalDatabase.setClinic(clinic);
 
         ClinicManager clinicManager = new ClinicManager(originalDatabase);
 
         assertEquals("The original name should stay same before changing it.",
-                clinicDatabase.get(clinicID).getName(), "ABC");
+                clinic.getName(), "ABC");
 
         clinicManager.changeClinicName("The Clinic");
 
         assertEquals("The original name and the new name are the same",
-                clinicDatabase.get(clinicID).getName(), "The Clinic");
+                clinic.getName(), "The Clinic");
 
         assertNotEquals("The clinic's name in database and input name aren't the same",
-                clinicDatabase.get(clinicID).getName(), "A Clinic");
+                clinic.getName(), "A Clinic");
     }
     @Test(timeout = 1000)
     public void changeClinicEmailAddress(){
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
 
         Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
                 ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
 
-        Integer clinicID = clinicDatabase.add(clinic);
+        originalDatabase.setClinic(clinic);
 
         ClinicManager clinicManager = new ClinicManager(originalDatabase);
 
         assertEquals("The original address should stay same before changing it.",
-                clinicDatabase.get(clinicID).getEmail(), "abc@gmail.com");
+                clinic.getEmail(), "abc@gmail.com");
 
         clinicManager.changeClinicEmail("clinic@gmail.com");
 
         assertEquals("The original address and the new address are the same",
-                clinicDatabase.get(clinicID).getEmail(), "clinic@gmail.com");
+                clinic.getEmail(), "clinic@gmail.com");
 
         assertNotEquals("The address in the database and the inputted address arent the same",
-                clinicDatabase.get(clinicID).getEmail(), "clinic@yahoo.com");
+                clinic.getEmail(), "clinic@yahoo.com");
     }
 
     @After

@@ -3,7 +3,6 @@ package useCases.managers;
 import dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Contact;
 import entities.Secretary;
 
 /**
