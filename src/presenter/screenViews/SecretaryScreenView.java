@@ -13,9 +13,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Secretary's presenter class.
+ */
 public class SecretaryScreenView extends UserScreenView {
 
+    /**
+     * ContactView that will be used by the secretary's presenter.
+     */
     public ContactView contactView = new ContactView();
+
+    /**
+     * PrescriptionView that will be used by the secretary's presenter.
+     */
     public PrescriptionView prescriptionView = new PrescriptionView();
 
     /**
@@ -42,7 +52,7 @@ public class SecretaryScreenView extends UserScreenView {
 
     /**
      * Ask to delete patient by username.
-     * @return username of patient.
+     * @return String representing the username of patient.
      */
     public String showDeletePatientPrompt() {
         showIrreversibleActionWarning();
@@ -65,7 +75,7 @@ public class SecretaryScreenView extends UserScreenView {
 
     /**
      * Ask for doctor username to book appointment.
-     * @return string representing the doctors' username.
+     * @return String representing the doctor's username.
      */
     public String bookAppointmentDoctorPrompt() {
         return enterUsernamePrompt("doctor");
@@ -239,22 +249,27 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
+    /**
+     * View a doctor's availabilities
+     * @param doctorUsername String representing the username of the doctor who the availabilities belong to.
+     * @param availabilityData List<AvailabilityData> of the doctor's availabilities.
+     */
     public void viewDoctorAvailability(String doctorUsername, List<AvailabilityData> availabilityData) {
         infoMessage("Viewing availabilities for Dr." + doctorUsername + ":");
         infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
     }
 
     /**
-     * asks user for input and gets the target doctor username
-     * @return a string representing username of the doctor.
+     * Asks user for input and gets the target doctor username.
+     * @return String representing username of the doctor.
      */
     public String getTargetDoctor() {
         return input("Enter doctor username: ");
     }
 
     /**
-     * prompts user to add a timezone, for START time
-     * @return a new ZonedDateTime object with the desired input from the user.
+     * Prompts user to add a timezone, for START time
+     * @return ZonedDateTime object with the desired input from the user.
      */
     public ZonedDateTime addZoneDateTimeStart() {
         infoMessage("You are about to add the START time: ");
@@ -266,8 +281,8 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * prompts user to add a timezone for END time
-     * @return a new ZonedDateTime object with the desired input from the user.
+     * Prompts user to add a timezone for END time
+     * @return ZonedDateTime object with the desired input from the user.
      */
     public ZonedDateTime addZoneDateTimeEnd() {
         infoMessage("You are about to add the END time: ");
@@ -279,8 +294,8 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * prompt for user to add availability
-     * @return an arraylist of integer consisting day, hour minute, and length.
+     * Prompts user to add availability
+     * @return ArrayList<Integer> consisting day, hour, minute, and length.
      */
     public ArrayList<Integer> addAvailabilityPrompt() {
         Integer day = inputInt("Enter the day of the week you would like to add your availability " +
@@ -292,10 +307,10 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * displays prompt for the user to select an index of availability to delete.
-     * @param contactData contact data for the desired doctor.
-     * @param availabilityData the availability data in a list.
-     * @return integer index of the desired availability to be deleted.
+     * Displays prompt for the user to select an index of availability to delete.
+     * @param contactData ContactData for the desired doctor.
+     * @param availabilityData List<AvailabilityData> representing the doctor's availabilities.
+     * @return Integer representing the index of the desired availability to be deleted.
      */
     public Integer deleteAvailabilityPrompt(ContactData contactData, List<AvailabilityData> availabilityData) {
         String doctorName = contactView.viewName(contactData);
@@ -305,8 +320,8 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * displays prescription header given a list of prescription data
-     * @param prescriptionData list of prescription data
+     * Displays prescription header given a list of prescription data.
+     * @param prescriptionData List<PrescriptionData> to be viewed.
      */
     public void viewPrescription(List<PrescriptionData> prescriptionData){
         for (int i = 0; i < prescriptionData.size(); i++) {
@@ -314,9 +329,10 @@ public class SecretaryScreenView extends UserScreenView {
         }
 
     }
+
     /**
-     * displays all prescription detail given a list of prescription data
-     * @param prescriptionData list of prescription data
+     * Displays all prescription detail given a list of prescription data.
+     * @param prescriptionData List<PrescriptionData> to be viewed in detail
      */
     public void viewPrescriptionDetail(List<PrescriptionData> prescriptionData){
         for (int i = 0; i < prescriptionData.size(); i++) {

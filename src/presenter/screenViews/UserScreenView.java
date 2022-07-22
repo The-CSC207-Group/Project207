@@ -7,6 +7,9 @@ import presenter.response.PasswordResetDetails;
 
 import java.util.List;
 
+/**
+ * Presenter for a user of the program.
+ */
 public abstract class UserScreenView extends ScreenView {
 
     /**

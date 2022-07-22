@@ -11,9 +11,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * The Doctor's presenter class.
+ */
 public class DoctorScreenView extends UserScreenView {
 
+    /**
+     * The contact view that will be used by the doctor's presenter.
+     */
     ContactView contactView = new ContactView();
 
     private void showDeleteOutOfRangeError(String itemType) {
@@ -24,6 +29,10 @@ public class DoctorScreenView extends UserScreenView {
         errorMessage("Could not delete " + itemType + ": please input a valid integer.");
     }
 
+    /**
+     * View used to view the doctor's appointments that are given.
+     * @param appointments List<AppointmentData> appointments to be viewed.
+     */
     public void viewAppointments(List<AppointmentData> appointments) {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
@@ -131,6 +140,11 @@ public class DoctorScreenView extends UserScreenView {
         return showLocalDatePrompt();
     }
 
+    /**
+     * Ask doctors for availability details. Used when creating a new availability time slot.
+     * @return ArrayList<Integer> containing the day of the week as an Integer, the starting hour, starting minute and
+     * length of the availability time slot.
+     */
     public ArrayList<Integer> addAvailabilityPrompt() {
         Integer day = inputInt("Enter the day of the week you would like to add your availability " +
                 "time as an integer with 1 being Monday and 7 being Sunday: ");
@@ -140,6 +154,14 @@ public class DoctorScreenView extends UserScreenView {
         return new ArrayList<>(Arrays.asList(day, hour, minute, length));
     }
 
+    /**
+     * View used to delete a doctor's availabilities. Show an enumeration of all availabilities and ask doctor for
+     * integer input corresponding to a selection.
+     * @param doctorData ContactData of doctor.
+     * @param availabilityData List<AvailabilityData> of availability data to display.
+     * @return Integer representing the selected AvailabilityData from the list. null, if and only if the user input
+     * is not an integer.
+     */
     public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
         String doctorName = contactView.viewName(doctorData);
         infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
@@ -168,6 +190,11 @@ public class DoctorScreenView extends UserScreenView {
         showDeleteNotAnIntegerError("availability");
     }
 
+    /**
+     * Ask doctors for absence details. Used when creating a new absence time slot.
+     * @return ArrayList<Integer> containing the year, month as an integer, day of month and length of the absence in
+     * days.
+     */
     public ArrayList<Integer> addAbsencePrompt() {
         infoMessage("When is the first day of your absence?");
         LocalDate date = showLocalDatePrompt();
@@ -175,6 +202,14 @@ public class DoctorScreenView extends UserScreenView {
         return new ArrayList<>(Arrays.asList(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), length));
     }
 
+    /**
+     * View used to delete a doctor's absence. Show an enumeration of all absences and ask doctor for
+     * integer input corresponding to a selection.
+     * @param doctorData ContactData of doctor.
+     * @param timeBlockData List<TimeBlockData> of time block data to display.
+     * @return Integer representing the selected TimeBlockData from the list. null, if and only if the user input
+     * is not an integer.
+     */
     public Integer deleteAbsencePrompt(ContactData doctorData, List<TimeBlockData> timeBlockData) {
         String doctorName = contactView.viewName(doctorData);
         infoMessage("Viewing doctor " + doctorName + " absences to delete:");
@@ -204,10 +239,17 @@ public class DoctorScreenView extends UserScreenView {
         return enterUsernamePrompt("patient");
     }
 
+    /**
+     * Shows an error when loading a patient with a username that does not exist.
+     */
     public void showErrorLoadingPatient() {
         errorMessage("Error loading patient: a patient with that username does not exist");
     }
 
+    /**
+     * Shows a success message when loading a patient.
+     * @param patientContact ContactData of the patient being loaded.
+     */
     public void showSuccessLoadingPatient(ContactData patientContact) {
         successMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
