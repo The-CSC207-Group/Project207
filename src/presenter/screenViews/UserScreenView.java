@@ -56,7 +56,7 @@ public abstract class UserScreenView extends ScreenView {
             infoMessage(new PatientView().viewFull((PatientData) userData));
         } else if (userData instanceof SecretaryData) {
             infoMessage(new SecretaryView().viewFull((SecretaryData) userData));
-        } else if (UserData instanceof DoctorData) {
+        } else if (userData instanceof DoctorData) {
             infoMessage(new DoctorView().viewFull((DoctorData) userData));
         }
     }
