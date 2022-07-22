@@ -23,7 +23,7 @@ public class PatientController extends UserController<Patient> {
      * @param patientData PatientData - a data  containing the ID and attributes of the current patient user.
      */
     public PatientController(Context context, PatientData patientData) {
-        super(context, patientData, new PatientManager(context.getDatabase()), new PatientScreenView());
+        super(context, patientData, new PatientManager(context.getDatabase()), new PatientScreenView(), userView);
         this.patientData = patientData;
     }
 
