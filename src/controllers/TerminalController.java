@@ -1,7 +1,9 @@
 package controllers;
 
+import dataBundles.ClinicData;
 import database.Database;
 import presenter.screenViews.TerminalScreenView;
+import useCases.managers.ClinicManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +28,7 @@ abstract public class TerminalController {
 
     public void welcomeMessage() {
         terminalScreenView.showHelpPrompt();
-    };
+    }
 
     /**
      * Gets the context (necessary for the state command).
@@ -91,20 +93,19 @@ abstract public class TerminalController {
         }
     }
 
-    protected Command back(TerminalController previousController){
+    protected Command Back(TerminalController previousController){
         return (x) -> changeCurrentController(previousController);
     }
 
+    protected Command Exit() {
+        return (x) -> exit();
+    }
 
     private Command Help() {
         return (x) -> {
             List<String> helpCommands = new ArrayList<>(AllCommands().keySet());
             terminalScreenView.showHelpView(helpCommands);
         };
-    }
-
-    protected Command Exit() {
-        return (x) -> exit();
     }
 
 }

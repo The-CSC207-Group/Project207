@@ -57,7 +57,7 @@ public class ContactController extends TerminalController {
         commands.put("change emergency contact email", ChangeEmergencyContactEmail());
         commands.put("change emergency contact phone number", ChangeEmergencyContactPhoneNumber());
         commands.put("change emergency contact relationship", ChangeEmergencyContactRelationship());
-        commands.put("back", back(previousController));
+        commands.put("back", Back(previousController));
         return commands;
     }
 

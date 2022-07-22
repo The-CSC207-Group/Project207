@@ -42,6 +42,15 @@ public class ClinicView extends EntityView<ClinicData> {
 
     /**
      * @param item ClinicData bundle to view.
+     * @return String representing the clinic's email as a view.
+     */
+    public String viewEmail(ClinicData item) {
+        String email = getDefaultStringNA(item.getEmail());
+        return "This clinic's email is " + email + ".";
+    }
+
+    /**
+     * @param item ClinicData bundle to view.
      * @return String representing the clinic's time zone as a view.
      */
     public String viewTimeZone(ClinicData item) {

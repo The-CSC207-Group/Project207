@@ -6,6 +6,7 @@ import dataBundles.UserData;
 import entities.User;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.UserScreenView;
+import useCases.managers.ClinicManager;
 import useCases.managers.ContactManager;
 import useCases.managers.LogManager;
 import useCases.managers.UserManager;
@@ -59,6 +60,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         commands.put("change password", ChangePassword());
         commands.put("get logs", GetLogs());
         commands.put("contact details", ContactDetails());
+        commands.put("view clinic info", ViewClinicInformation());
         commands.put("sign out", SignOut());
         return commands;
     }
@@ -89,6 +91,13 @@ public abstract class UserController<T extends User> extends TerminalController 
         ContactData contactData = contactManager.getContactData(userData);
         ContactController contactController = new ContactController(getContext(), currentController, contactData);
         return (x) -> changeCurrentController(contactController);
+    }
+
+    private Command ViewClinicInformation() {
+        return (x) -> {
+            ClinicManager clinicManager = new ClinicManager(getDatabase());
+            userScreenView.displayClinicInfo(clinicManager.clinicData());
+        };
     }
 
     private Command SignOut(){

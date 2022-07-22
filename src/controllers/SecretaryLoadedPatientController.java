@@ -58,7 +58,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("view all prescriptions", viewPrescriptionHistory());
         commands.put("view appointments", viewAppointments());
         commands.put("change patient password", changePatientPassword());
-        commands.put("unload patient", back(secretaryController));
+        commands.put("unload patient", Back(secretaryController));
         commands.put("reschedule appointment", rescheduleAppointment());
         commands.put("book appointment", bookAppointment());
         commands.put("cancel appointment", cancelAppointment());

@@ -27,6 +27,14 @@ public class ClinicData {
     public String getAddress(){
         return clinic.getAddress();
     }
+
+    /**
+     * @return String - address of the clinic stored.
+     */
+    public String getEmail(){
+        return clinic.getEmail();
+    }
+
     /**
      * @return ZoneId - timezone of the clinic stored.
      */

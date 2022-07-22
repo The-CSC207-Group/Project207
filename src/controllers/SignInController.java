@@ -8,6 +8,7 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
 import useCases.managers.*;
 
+import javax.swing.text.View;
 import java.util.HashMap;
 
 /**
@@ -102,8 +103,10 @@ public class SignInController extends TerminalController {
     }
 
     private Command ViewClinicInformation() {
-        ClinicManager clinicManager = new ClinicManager(getDatabase());
-        return (x) -> signInScreenView.viewClinicInfo(clinicManager.clinicData());
+        return (x) -> {
+            ClinicManager clinicManager = new ClinicManager(getDatabase());
+            signInScreenView.viewClinicInfo(clinicManager.clinicData());
+        };
     }
 
 }

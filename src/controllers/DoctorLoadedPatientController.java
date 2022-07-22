@@ -49,7 +49,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
 
         HashMap<String, Command> commands = super.AllCommands();
-        commands.put("unload patient", back(previousController));
+        commands.put("unload patient", Back(previousController));
         //pending implementation for phase 2
         //commands.put("view appointments", ViewPatientAppointments());
         commands.put("view reports", getReport());
