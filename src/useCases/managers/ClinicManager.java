@@ -43,7 +43,7 @@ public class ClinicManager {
      * @return boolean - returns whether the phone number was successfully changed or not.
      */
     public boolean changeClinicPhoneNumber(String newPhoneNumber){
-        if (!Pattern.matches("^(/d)+$", newPhoneNumber)){return false;}
+        if (!Pattern.matches("^([0-9])+$", newPhoneNumber)){return false;}
         clinic.setPhoneNumber(newPhoneNumber);
         return true;
     }
