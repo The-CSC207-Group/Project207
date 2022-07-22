@@ -4,6 +4,7 @@ import dataBundles.ContactData;
 import presenter.entityViews.ContactView;
 
 import java.time.LocalDate;
+
 /**
  * The Contact's presenter class.
  */

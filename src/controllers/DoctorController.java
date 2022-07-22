@@ -39,6 +39,7 @@ public class DoctorController extends UserController<Doctor> {
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
+
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("show schedule", ViewSchedule());
         commands.put("show assigned appointments", ViewAllDoctorAppointments());
@@ -47,6 +48,7 @@ public class DoctorController extends UserController<Doctor> {
         commands.put("delete absence", deleteAbsence());
         commands.put("create new availability", newAvailability());
         commands.put("delete availability", deleteAvailability()); */
+
         commands.putAll(super.AllCommands());
         return commands;
     }

@@ -1,7 +1,5 @@
 package controllers;
 
-import dataBundles.AvailabilityData;
-import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.SecretaryData;
 import entities.Secretary;
@@ -9,8 +7,6 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
-import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -23,7 +19,9 @@ public class SecretaryController extends UserController<Secretary> {
     private final AdminManager adminManager;
     private final DoctorManager doctorManager;
     private final SecretaryManager secretaryManager;
-    private final AppointmentManager appointmentManager;
+
+    /* PHASE 2 ATTRIBUTES
+     private final AppointmentManager appointmentManager; */
 
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
@@ -35,7 +33,11 @@ public class SecretaryController extends UserController<Secretary> {
      */
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
-        this.appointmentManager = new AppointmentManager(getDatabase());
+
+        /* PHASE 2 INSTANTIATIONS
+         this.appointmentManager = new AppointmentManager(getDatabase());
+         */
+
         this.doctorManager = new DoctorManager(getDatabase());
         this.adminManager = new AdminManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
@@ -53,9 +55,12 @@ public class SecretaryController extends UserController<Secretary> {
         commands.put("create patient", createPatientAccount());
         commands.put("load patient", LoadPatient());
         commands.put("delete patient", deletePatient());
+
+        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("add availability", addDoctorAvailability());
         commands.put("delete availability", removeDoctorAvailability());
-        commands.put("add absence", addDoctorAbsence());
+        commands.put("add absence", addDoctorAbsence()); */
+
         commands.putAll(super.AllCommands());
         return commands;
     }
@@ -103,6 +108,7 @@ public class SecretaryController extends UserController<Secretary> {
         };
     }
 
+    /* PENDING IMPLEMENTATION IN PHASE 2
     private Command addDoctorAvailability() {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
@@ -142,6 +148,6 @@ public class SecretaryController extends UserController<Secretary> {
             appointmentManager.addAbsence(doctorData, secretaryScreenView.addZoneDateTimeStart(),
                     secretaryScreenView.addZoneDateTimeEnd());
         };
-    }
+    } */
 
 }

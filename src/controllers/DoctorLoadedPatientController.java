@@ -56,11 +56,10 @@ public class DoctorLoadedPatientController extends TerminalController {
         commands.put("unload patient", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
-        commands.put("view appointments", ViewPatientAppointments()); */
-
+        commands.put("view appointments", ViewPatientAppointments());
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
-        commands.put("delete report", deleteReport());
+        commands.put("delete report", deleteReport()); */
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.put("create prescription", CreatePatientPrescription());
@@ -97,7 +96,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     private Command ViewPatientAppointments() {
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
                 .getPatientAppointments(patientData));
-    } */
+    }
 
     private Command getReport() {
         return (x) -> new ReportManager(getDatabase()).getReportData(patientData);
@@ -114,6 +113,6 @@ public class DoctorLoadedPatientController extends TerminalController {
                     .getContactData(patientData), new ReportManager(getDatabase()).getReportData(patientData));
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
-    }
+    } */
 
 }

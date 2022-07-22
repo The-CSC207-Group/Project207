@@ -1,8 +1,8 @@
+// PHASE 2 FILE
+
 package presenter.entityViews;
 
 import dataBundles.ReportData;
-
-import java.util.List;
 
 /**
  * The Report entity's view.

@@ -74,6 +74,31 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
+     * Load a patient from secretary.
+     * @return username of patient.
+     */
+    public String loadPatientPrompt() {
+        return enterUsernamePrompt("patient");
+    }
+
+    /**
+     * Error displayed when patient cannot be loaded due to username not existing.
+     */
+    public void showErrorLoadingPatient() {
+        errorMessage("Error loading patient: a patient with that username does not exist");
+    }
+
+    /**
+     * Show success message if loaded patient.
+     * @param patientData Data of the patient.
+     */
+    public void showSuccessLoadingPatient(PatientData patientData) {
+        successMessage("Success loading patient: " + patientData.getUsername());
+    }
+
+    // ALL METHODS BELOW ARE PENDING PHASE 2 IMPLEMENTATION
+
+    /**
      * Ask for doctor username to book appointment.
      * @return String representing the doctor's username.
      */
@@ -217,29 +242,6 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Load a patient from secretary.
-     * @return username of patient.
-     */
-    public String loadPatientPrompt() {
-        return enterUsernamePrompt("patient");
-    }
-
-    /**
-     * Error displayed when patient cannot be loaded due to username not existing.
-     */
-    public void showErrorLoadingPatient() {
-        errorMessage("Error loading patient: a patient with that username does not exist");
-    }
-
-    /**
-     * Show success message if loaded patient.
-     * @param patientData Data of the patient.
-     */
-    public void showSuccessLoadingPatient(PatientData patientData) {
-        successMessage("Success loading patient: " + patientData.getUsername());
-    }
-
-    /**
      * View appointments relating to doctor or patient.
      * @param userContact Contacting info of patient.
      * @param appointments list of appointments.
@@ -318,29 +320,5 @@ public class SecretaryScreenView extends UserScreenView {
         new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
         return deleteItemFromEnumerationPrompt("availability");
     }
-
-    /**
-     * Displays prescription header given a list of prescription data.
-     * @param prescriptionData List<PrescriptionData> to be viewed.
-     */
-    public void viewPrescription(List<PrescriptionData> prescriptionData){
-        for (int i = 0; i < prescriptionData.size(); i++) {
-            infoMessage(i + "" +  prescriptionView.viewHeader(prescriptionData.get(i)));
-        }
-
-    }
-
-    /**
-     * Displays all prescription detail given a list of prescription data.
-     * @param prescriptionData List<PrescriptionData> to be viewed in detail
-     */
-    public void viewPrescriptionDetail(List<PrescriptionData> prescriptionData){
-        for (int i = 0; i < prescriptionData.size(); i++) {
-            infoMessage(i + "" +  prescriptionView.viewFull(prescriptionData.get(i)));
-        }
-
-    }
-
-
 
 }

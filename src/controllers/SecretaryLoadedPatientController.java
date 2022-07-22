@@ -6,7 +6,6 @@ import presenter.response.PasswordResetDetails;
 import presenter.screenViews.SecretaryScreenView;
 import useCases.managers.*;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -19,7 +18,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
-    /* PHASE 2 IMPORTS
+    /* PHASE 2 ATTRIBUTES
     private final AppointmentManager appointmentManager;
     private final DoctorManager doctorManager;
     private final ContactManager contactManager; */
