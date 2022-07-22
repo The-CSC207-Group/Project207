@@ -10,7 +10,7 @@ import java.util.List;
 public class SecretaryView extends UserView<SecretaryData> {
 
     /**
-     * @param item The secretary data bundle to view.
+     * @param item The secretary data to view.
      * @return Returns item's full secretary view.
      */
     @Override
@@ -19,7 +19,7 @@ public class SecretaryView extends UserView<SecretaryData> {
     }
 
     /**
-     * @param item The secretary data bundle to view.
+     * @param item The secretary data to view.
      * @return Returns the secretary's username as a view.
      */
     @Override

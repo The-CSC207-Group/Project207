@@ -20,8 +20,8 @@ public class ClinicManager {
     }
 
     /**
-     * Returns a data bundle representing the clinic in the database.
-     * @return ClinicData - data bundle representing the clinic in the database.
+     * Returns a data representing the clinic in the database.
+     * @return ClinicData - data representing the clinic in the database.
      */
     public ClinicData clinicData(){
         return new ClinicData(clinic);

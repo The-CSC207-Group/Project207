@@ -1,11 +1,9 @@
 package dataBundles;
 
-import entities.Secretary;
 import entities.TimeBlock;
 
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 
 /**
  * Wrapper class for a TimeBlock entity.

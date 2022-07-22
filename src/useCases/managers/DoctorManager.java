@@ -6,12 +6,12 @@ import database.Database;
 import entities.Contact;
 import entities.Doctor;
 
+/**
+ * Use case class for handling operations and data of doctor users.
+ */
 public class DoctorManager extends UserManager<Doctor> {
 
-    DataMapperGateway<Doctor> doctorDatabase;
-    DataMapperGateway<Contact> contactDatabase;
-    Database database;
-    PatientManager patientManager;
+    private final DataMapperGateway<Doctor> doctorDatabase;
 
     /***
      * Initializes the doctor manager.
@@ -20,13 +20,10 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorManager(Database database) {
         super(database.getDoctorDatabase(), database);
         this.doctorDatabase = database.getDoctorDatabase();
-        this.contactDatabase = database.getContactDatabase();
-        this.database = database;
-        this.patientManager = new PatientManager(database);
     }
 
     /***
-     * Creates a doctor data bundle associated with the login details passed in and adds the doctor entity to
+     * Creates a doctor data associated with the login details passed in and adds the doctor entity to
      * the database.
      * @param username String - username of new account, should not exist in database.
      * @param password String - password of new account.
@@ -45,9 +42,9 @@ public class DoctorManager extends UserManager<Doctor> {
     }
 
     /**
-     * Creates and returns a data bundle of the doctor associated with the login details passed in.
+     * Creates and returns a data of the doctor associated with the login details passed in.
      * @param userName String - the username of the doctor that wants to sign in.
-     * @return PatientData - the data bundle of the doctor that wants to sign in.
+     * @return PatientData - the data of the doctor that wants to sign in.
      */
     @Override
     public DoctorData signIn(String userName, String password) {
@@ -55,9 +52,9 @@ public class DoctorManager extends UserManager<Doctor> {
     }
 
     /**
-     * Creates and returns a data bundle of the doctor associated with the username passed in.
+     * Creates and returns a data of the doctor associated with the username passed in.
      * @param username String - username of the specified user.
-     * @return PatientData - data bundle of the doctor associated with the username passed in.
+     * @return PatientData - data of the doctor associated with the username passed in.
      */
     @Override
     public DoctorData getUserData(String username) {

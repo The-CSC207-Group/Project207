@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * The generic entity view.
- * @param <T> The data bundle that the entity view will use.
+ * @param <T> The data that the entity view will use.
  */
 public abstract class EntityView<T> {
 
@@ -32,7 +32,7 @@ public abstract class EntityView<T> {
     }
 
     /**
-     * @param item The data bundle to view.
+     * @param item The data to view.
      * @return Returns a full entity view of item.
      */
     public abstract String viewFull(T item);

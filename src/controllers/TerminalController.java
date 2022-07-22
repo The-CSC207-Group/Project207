@@ -1,12 +1,10 @@
 package controllers;
 
-import dataBundles.ClinicData;
 import database.Database;
 import presenter.screenViews.TerminalScreenView;
-import useCases.managers.ClinicManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -56,11 +54,11 @@ abstract public class TerminalController {
     }
 
     /**
-     * Creates a hashmap of the string representations of commands mapped to the method that each command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective commands.
+     * Creates a Linked hashmap of the string representations of commands mapped to the method that each command calls.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective commands.
      */
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = new HashMap<>();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("help", Help());
         commands.put("exit", Exit());
         return commands;

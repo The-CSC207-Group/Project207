@@ -1,6 +1,5 @@
 package presenter.response;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public final class AppointmentPatientDoctorDetails {

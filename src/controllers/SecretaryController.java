@@ -11,7 +11,7 @@ import useCases.managers.*;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that a secretary passes in.
@@ -30,7 +30,7 @@ public class SecretaryController extends UserController<Secretary> {
      *
      * @param context       Context - a reference to the context object, which stores the current controller and allows for
      *                      switching between controllers.
-     * @param secretaryData SecretaryData - a data bundle containing the ID and attributes of the current secretary
+     * @param secretaryData SecretaryData - a data containing the ID and attributes of the current secretary
      *                      user.
      */
     public SecretaryController(Context context, SecretaryData secretaryData) {
@@ -43,21 +43,21 @@ public class SecretaryController extends UserController<Secretary> {
     }
 
     /**
-     * Creates a hashmap of all string representations of secretary commands mapped to the method that each
+     * Creates a linked hashmap of all string representations of secretary commands mapped to the method that each
      * command calls.
      *
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective secretary commands.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective secretary commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("create patient", createPatientAccount());
         commands.put("load patient", LoadPatient());
         commands.put("delete patient", deletePatient());
         commands.put("add availability", addDoctorAvailability());
         commands.put("delete availability", removeDoctorAvailability());
         commands.put("add absence", addDoctorAbsence());
-
+        commands.putAll(super.AllCommands());
         return commands;
     }
 

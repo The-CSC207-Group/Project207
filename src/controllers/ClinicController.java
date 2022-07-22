@@ -5,7 +5,7 @@ import entities.Admin;
 import presenter.screenViews.ClinicScreenView;
 import useCases.managers.ClinicManager;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that an admin performs on a clinic's information.
@@ -22,7 +22,7 @@ public class ClinicController extends TerminalController {
      *                switching between controllers.
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
-     * @param clinicData ClinicData - a data bundle storing the ID and attributes of the clinic associated
+     * @param clinicData ClinicData - a data  storing the ID and attributes of the clinic associated
      *                    with the program.
      */
     public ClinicController(Context context, UserController<Admin> previousController,
@@ -40,16 +40,18 @@ public class ClinicController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of clinic commands mapped to the method that each command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective contact commands.
+     * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command calls.
+     *
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("change clinic name", ChangeClinicName());
         commands.put("change clinic email", ChangeClinicEmail());
         commands.put("change clinic phone number", ChangeClinicPhoneNumber());
         commands.put("change clinic address", ChangeClinicAddress());
         commands.put("back", Back(previousController));
+        commands.putAll(super.AllCommands());
         return commands;
     }
 
