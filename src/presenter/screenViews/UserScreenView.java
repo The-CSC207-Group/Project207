@@ -1,12 +1,9 @@
 package presenter.screenViews;
 
 import dataBundles.*;
-import entities.Secretary;
-import entities.User;
 import presenter.entityViews.*;
 import presenter.response.PasswordResetDetails;
 
-import javax.print.Doc;
 import java.util.List;
 
 /**
@@ -47,18 +44,6 @@ public abstract class UserScreenView extends ScreenView {
         String output = logView.viewFullFromList(items);
         infoMessage("Logs:");
         infoMessage(output);
-    }
-
-    public <T extends UserData<?>> void displayUserInfo(T userData) {
-        if (userData instanceof AdminData) {
-            infoMessage(new AdminView().viewFull((AdminData) userData));
-        } else if (userData instanceof PatientData) {
-            infoMessage(new PatientView().viewFull((PatientData) userData));
-        } else if (userData instanceof SecretaryData) {
-            infoMessage(new SecretaryView().viewFull((SecretaryData) userData));
-        } else if (userData instanceof DoctorData) {
-            infoMessage(new DoctorView().viewFull((DoctorData) userData));
-        }
     }
 
     /**
