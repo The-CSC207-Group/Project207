@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
 import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
@@ -8,7 +9,7 @@ import useCases.managers.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
@@ -46,39 +47,24 @@ public class SecretaryLoadedPatientController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
+     * Creates a linked hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.
      *
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective doctor loaded patient commands.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded patient commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
-        commands.put("view active prescriptions", viewActivePrescription());
-        commands.put("view all prescriptions", viewPrescriptionHistory());
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
+        PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("view appointments", viewAppointments());
         commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", Back(secretaryController));
         commands.put("reschedule appointment", rescheduleAppointment());
         commands.put("book appointment", bookAppointment());
         commands.put("cancel appointment", cancelAppointment());
-        commands.put("view active prescription detailed", viewActivePrescriptionsDetailed());
-        commands.put("view all prescription detailed", viewAllPrescriptionsDetailed());
+        prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
+        commands.putAll(super.AllCommands());
         return commands;
-    }
-
-    private Command viewActivePrescription() {
-        return (x) -> {
-            ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
-            secretaryScreenView.viewPrescription(prescriptions);
-        };
-    }
-
-    private Command viewPrescriptionHistory() {
-        return (x) -> {
-            ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllPrescriptions(patientData);
-            secretaryScreenView.viewPrescription(prescriptions);
-        };
     }
 
     private Command viewAppointments() {
@@ -179,18 +165,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 appointmentTimeDetails.time().getHour(),
                 appointmentTimeDetails.time().getMinute(),
                 appointmentTimeDetails.length());
-    }
-
-
-    private Command viewActivePrescriptionsDetailed() {
-        return (x) -> secretaryScreenView.viewPrescriptionDetail(prescriptionManager
-                .getAllActivePrescriptions(patientData));
-
-    }
-
-    private Command viewAllPrescriptionsDetailed() {
-        ArrayList<PrescriptionData> prescriptionData = prescriptionManager.getAllPrescriptions(patientData);
-        return (x) -> secretaryScreenView.viewPrescriptionDetail(prescriptionData);
     }
 
 }

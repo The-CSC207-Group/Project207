@@ -2,11 +2,10 @@ package controllers;
 
 import dataBundles.ContactData;
 import presenter.screenViews.ContactScreenView;
-import presenter.screenViews.UserScreenView;
 import useCases.managers.ContactManager;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that a user performs on their contact information.
@@ -43,11 +42,12 @@ public class ContactController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of contact commands mapped to the method that each command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective contact commands.
+     * Creates a linked hashmap of all string representations of contact commands mapped to the method that each command calls.
+     *
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("view contact information", ViewContactInformation());
         commands.put("change name", ChangeName());
         commands.put("change email", ChangeEmail());
@@ -59,6 +59,7 @@ public class ContactController extends TerminalController {
         commands.put("change emergency contact phone number", ChangeEmergencyContactPhoneNumber());
         commands.put("change emergency contact relationship", ChangeEmergencyContactRelationship());
         commands.put("back", Back(previousController));
+        commands.putAll(super.AllCommands());
         return commands;
     }
 

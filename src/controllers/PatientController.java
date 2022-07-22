@@ -1,15 +1,12 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
-import dataBundles.AppointmentData;
 import dataBundles.PatientData;
 import entities.Patient;
 import presenter.screenViews.PatientScreenView;
-import useCases.managers.AppointmentManager;
 import useCases.managers.PatientManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that a patient passes in.
@@ -31,22 +28,20 @@ public class PatientController extends UserController<Patient> {
     }
 
     /**
-     * Creates a hashmap of all string representations of patient commands mapped to the method that each
+     * Creates a linked hashmap of all string representations of patient commands mapped to the method that each
      * command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective patient commands.
+     *
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective patient commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         //pending implementation for phase 2
         //commands.put("view appointments", ViewAppointments());
 
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
-        HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
-        for (String key : prescriptionCommands.keySet()) {
-            commands.put("view " + key, prescriptionCommands.get(key));
-        }
-
+        prescriptionController.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
+        commands.putAll(super.AllCommands());
         return commands;
     }
 //pending implementation for phase 2

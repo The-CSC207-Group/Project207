@@ -2,7 +2,6 @@ import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Contact;
 import entities.Doctor;
 import org.junit.After;
 import org.junit.Rule;
@@ -15,7 +14,6 @@ import java.io.File;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNull;
 
 public class DoctorManagerTests {
 

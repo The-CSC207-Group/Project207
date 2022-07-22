@@ -1,6 +1,5 @@
 package dataBundles;
 
-import entities.Availability;
 import entities.Doctor;
 import entities.TimeBlock;
 
