@@ -44,7 +44,16 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(output);
     }
 
-    public <T extends UserData<?>> void displayUserInfo(T userData, UserView<T> userView) {
+//    public <T extends UserData<?>> void displayUserInfo(T userData, UserView<T> userView) {
+//        infoMessage(userView.viewFull(userData));
+//    }
+
+    public void testSomething() {
+        displayUserInfo(new DoctorData(null),  // extends UserData<Doctor>
+                new DoctorView());             // extends UserView<DoctorData>
+    }
+
+    public <T extends UserView<G>, G extends UserData<?>> void displayUserInfo(G userData, T userView) {
         infoMessage(userView.viewFull(userData));
     }
 
