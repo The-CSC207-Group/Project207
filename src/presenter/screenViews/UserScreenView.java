@@ -63,6 +63,9 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(secretaryView.viewFull(secretaryData));
     }
 
+    public void showWelcomeUserMessage(UserData user) {
+        infoMessage("Welcome, " + user.getUsername() + "!");
+    }
 
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");

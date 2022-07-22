@@ -42,6 +42,12 @@ public abstract class UserController<T extends User> extends TerminalController 
         this.userScreenView = userScreenView;
     }
 
+    @Override
+    public void welcomeMessage() {
+        userScreenView.showWelcomeUserMessage(userData);
+        super.welcomeMessage();
+    }
+
     /**
      * Creates a hashmap of all string representations of user commands mapped to the method that each
      * command calls.

@@ -36,6 +36,12 @@ public class ContactController extends TerminalController {
         this.contactScreenView = new ContactScreenView();
     }
 
+    @Override
+    public void welcomeMessage() {
+        contactScreenView.showWelcomeMessage();
+        super.welcomeMessage();
+    }
+
     /**
      * Creates a hashmap of all string representations of contact commands mapped to the method that each command calls.
      * @return HashMap<String, Command> - HashMap of strings mapped to their respective contact commands.
