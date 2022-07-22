@@ -58,7 +58,7 @@ public abstract class User extends JsonSerializable {
      * Updates this user's Contact object id to a new Contact object id.
      * @param contactInfoId Integer representing the id of this user's new Contact object.
      */
-    public void updateContactInfo(Integer contactInfoId) {
+    public void setContactInfoId(Integer contactInfoId) {
         this.contactInfoId = contactInfoId;
     }
 
