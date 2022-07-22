@@ -15,6 +15,11 @@ import java.util.HashMap;
  */
 public class SignInController extends TerminalController {
 
+    private final PatientManager patientManager;
+    private final AdminManager adminManager;
+    private final SecretaryManager secretaryManager;
+    private final DoctorManager doctorManager;
+
     private final SignInScreenView signInScreenView = new SignInScreenView();
 
     /**
@@ -24,6 +29,10 @@ public class SignInController extends TerminalController {
      */
     public SignInController(Context context) {
         super(context);
+        patientManager = new PatientManager(getDatabase());
+        adminManager = new AdminManager(getDatabase());
+        secretaryManager = new SecretaryManager(getDatabase());
+        doctorManager = new DoctorManager(getDatabase());
     }
 
     @Override
@@ -44,40 +53,48 @@ public class SignInController extends TerminalController {
         return commands;
     }
 
+    private void adminSignIn(String username, String password) {
+        AdminData adminData = adminManager.signIn(username, password);
+        AdminController adminController = new AdminController(getContext(), adminData);
+        signInScreenView.showSuccessLogin(adminData.getUsername());
+        changeCurrentController(adminController);
+    }
+
+    private void patientSignIn(String username, String password) {
+        PatientData patientData = patientManager.signIn(username, password);
+        PatientController patientController = new PatientController(getContext(), patientData);
+        signInScreenView.showSuccessLogin(patientData.getUsername());
+        changeCurrentController(patientController);
+    }
+
+    private void doctorSignIn(String username, String password) {
+        DoctorData doctorData = doctorManager.signIn(username, password);
+        DoctorController doctorController = new DoctorController(getContext(), doctorData);
+        signInScreenView.showSuccessLogin(doctorData.getUsername());
+        changeCurrentController(doctorController);
+    }
+
+    private void secretarySignIn(String username, String password) {
+        SecretaryData secretaryData = secretaryManager.signIn(username, password);
+        SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
+        signInScreenView.showSuccessLogin(secretaryData.getUsername());
+        changeCurrentController(secretaryController);
+    }
+
     private Command SignInCommand() {
         return (x) -> {
-            PatientManager patientManager = new PatientManager(getDatabase());
-            AdminManager adminManager = new AdminManager(getDatabase());
-            SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
-            DoctorManager doctorManager = new DoctorManager(getDatabase());
             UserCredentials userCredentials = signInScreenView.userLoginPrompt();
             String username = userCredentials.username();
             String password = userCredentials.password();
 
             if (adminManager.canSignIn(username, password)) {
-                AdminData adminData = adminManager.signIn(username, password);
-                AdminController adminController = new AdminController(getContext(), adminData);
-                signInScreenView.showSuccessLogin(adminData.getUsername());
-                changeCurrentController(adminController);
-
+                adminSignIn(username, password);
             } else if (patientManager.canSignIn(username, password)) {
-                PatientData patientData = patientManager.signIn(username, password);
-                PatientController patientController = new PatientController(getContext(), patientData);
-                signInScreenView.showSuccessLogin(patientData.getUsername());
-                changeCurrentController(patientController);
-
+                patientSignIn(username, password);
             } else if (doctorManager.canSignIn(username, password)) {
-                DoctorData doctorData = doctorManager.signIn(username, password);
-                DoctorController doctorController = new DoctorController(getContext(), doctorData);
-                signInScreenView.showSuccessLogin(doctorData.getUsername());
-                changeCurrentController(doctorController);
-
+                doctorSignIn(username, password);
             } else if (secretaryManager.canSignIn(username, password)) {
-                SecretaryData secretaryData = secretaryManager.signIn(username, password);
-                SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
-                signInScreenView.showSuccessLogin(secretaryData.getUsername());
-                changeCurrentController(secretaryController);
-
+                secretarySignIn(username, password);
             } else {
                 signInScreenView.showLoginError();
             }
