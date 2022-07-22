@@ -32,31 +32,31 @@ public abstract class EntityView<T> {
     }
 
     /**
-     * @param item T data bundle to view.
-     * @return String representing a full entity view of item.
+     * @param item The data bundle to view.
+     * @return Returns a full entity view of item.
      */
     public abstract String viewFull(T item);
 
     /**
-     * @param items List<T> of data bundles to view.
-     * @return String representing the full entity view of all items in items.
+     * @param items The list of generic data bundles to view.
+     * @return Returns a full entity view of all items in items.
      */
     public String viewFullFromList(List<T> items) {
         return viewFromList(items, this::viewFull);
     }
 
     /**
-     * @param items List<T> of data bundles to view.
-     * @return String representing a full entity view as an enumeration of all items in items.
+     * @param items The list of generic data bundles to view.
+     * @return Returns a full entity view as an enumeration of all items in items.
      */
     public String viewFullAsEnumerationFromList(List<T> items) {
         return viewAsEnumerationFromList(items, this::viewFull);
     }
 
     /**
-     * @param items List<T> of data bundles to view.
-     * @param function ViewMethod<T> representing the view function to be used.
-     * @return String representing an entity view of all items in items using the view function function.
+     * @param items The list of generic data bundles to view.
+     * @param function The view function to be used.
+     * @return Returns an entity view of all items in items using the view function function.
      */
     public String viewFromList(List<T> items, ViewMethod<T> function) {
         StringBuilder appendedOutput = new StringBuilder();
@@ -70,10 +70,9 @@ public abstract class EntityView<T> {
     }
 
     /**
-     * @param items List<T> of data bundles to view.
-     * @param function ViewMethod<T> representing the view function to be used.
-     * @return String representing an entity view as an enumeration of all items in items using the view function
-     * function.
+     * @param items The list of generic data bundles to view.
+     * @param function The view function to be used.
+     * @return Returns an entity view as an enumeration of all items in items using the view function function.
      */
     public String viewAsEnumerationFromList(List<T> items, ViewMethod<T> function) {
         StringBuilder appendedOutput = new StringBuilder();

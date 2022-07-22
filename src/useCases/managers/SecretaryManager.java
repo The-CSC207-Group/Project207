@@ -3,7 +3,6 @@ package useCases.managers;
 import dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Contact;
 import entities.Secretary;
 
 /**
@@ -11,8 +10,7 @@ import entities.Secretary;
  */
 public class SecretaryManager extends UserManager<Secretary> {
 
-    DataMapperGateway<Secretary> secretaryDatabase;
-    DataMapperGateway<Contact> contactDatabase;
+    private final DataMapperGateway<Secretary> secretaryDatabase;
 
     /**
      * Initializes the secretary manager. Stores secretary and contact databases.
@@ -21,14 +19,13 @@ public class SecretaryManager extends UserManager<Secretary> {
     public SecretaryManager(Database database) {
         super(database.getSecretaryDatabase(), database);
         this.secretaryDatabase = database.getSecretaryDatabase();
-        this.contactDatabase = database.getContactDatabase();
     }
 
     /**
      * Creates a new secretary and stores it in the database.
      * @param username String - username of the new secretary, cannot exist in the database yet.
      * @param password String password for the user.
-     * @return SecretaryData - data bundle consisting of information for this secretary,
+     * @return SecretaryData - data consisting of information for this secretary,
      * null if username exists in database.
      */
     public SecretaryData createSecretary(String username, String password) {
@@ -41,9 +38,9 @@ public class SecretaryManager extends UserManager<Secretary> {
     }
 
     /**
-     * Creates and returns a data bundle of the secretary associated with the login details passed in.
+     * Creates and returns a data of the secretary associated with the login details passed in.
      * @param userName String - the username of the secretary that wants to sign in.
-     * @return SecretaryData - the data bundle of the secretary that wants to sign in.
+     * @return SecretaryData - the data of the secretary that wants to sign in.
      */
     @Override
     public SecretaryData signIn(String userName, String password) {
@@ -52,9 +49,9 @@ public class SecretaryManager extends UserManager<Secretary> {
     }
 
     /**
-     * Creates and returns a data bundle of the secretary associated with the username passed in.
+     * Creates and returns a data of the secretary associated with the username passed in.
      * @param username String - username of the specified user.
-     * @return SecretaryData - data bundle of the secretary associated with the username passed in.
+     * @return SecretaryData - data of the secretary associated with the username passed in.
      */
     @Override
     public SecretaryData getUserData(String username) {

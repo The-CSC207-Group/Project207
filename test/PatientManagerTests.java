@@ -38,16 +38,16 @@ public class PatientManagerTests {
 
         PatientManager patientManager = new PatientManager(originalDatabase);
 
-        PatientData patientDataBundle = patientManager.createPatient(username, password);
+        PatientData patientData = patientManager.createPatient(username, password);
 
-        /* Testing if the return patient data bundle is valid by testing if the fields of are equal to the parameters of
+        /* Testing if the return patient data is valid by testing if the fields of are equal to the parameters of
         createPatient */
-        assertEquals("The created patient data bundle should have the same name as the parameters of " +
-                        "createPatient method", patientDataBundle.getUsername(), username);
-        assertEquals("The created patient data bundle should have the same health number as the parameters " +
-                "of createPatient method", patientDataBundle.getHealthNumber(), healthNumber);
+        assertEquals("The created patient data should have the same name as the parameters of " +
+                        "createPatient method", patientData.getUsername(), username);
+        assertEquals("The created patient data should have the same health number as the parameters " +
+                "of createPatient method", patientData.getHealthNumber(), healthNumber);
 
-        Patient loadedPatient = patientDatabase.get(patientDataBundle.getId());
+        Patient loadedPatient = patientDatabase.get(patientData.getId());
 
         /* Testing if the patient object has been correctly added to the database by testing if the fields of the loaded
         patient are equal to the parameters of createPatient */

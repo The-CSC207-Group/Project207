@@ -8,7 +8,7 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
 import useCases.managers.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that users pass in before signing in to their accounts.
@@ -42,14 +42,15 @@ public class SignInController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of sign in commands mapped to the method that each command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective sign in commands.
+     * Creates a linked hashmap of all string representations of sign in commands mapped to the method that each command calls.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective sign in commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("sign in", SignInCommand());
         commands.put("view clinic info", ViewClinicInformation());
+        commands.putAll(super.AllCommands());
         return commands;
     }
 
@@ -102,8 +103,10 @@ public class SignInController extends TerminalController {
     }
 
     private Command ViewClinicInformation() {
-        ClinicManager clinicManager = new ClinicManager(getDatabase());
-        return (x) -> signInScreenView.viewClinicInfo(clinicManager.clinicData());
+        return (x) -> {
+            ClinicManager clinicManager = new ClinicManager(getDatabase());
+            signInScreenView.viewClinicInfo(clinicManager.clinicData());
+        };
     }
 
 }

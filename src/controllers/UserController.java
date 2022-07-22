@@ -6,12 +6,13 @@ import dataBundles.UserData;
 import entities.User;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.UserScreenView;
+import useCases.managers.ClinicManager;
 import useCases.managers.ContactManager;
 import useCases.managers.LogManager;
 import useCases.managers.UserManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -28,7 +29,7 @@ public abstract class UserController<T extends User> extends TerminalController 
      * Creates a new controller for handling the state of when a user is signed in.
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
-     * @param userData UserData<T> where T extends User - a data bundle containing the ID and attributes of the current
+     * @param userData UserData<T> where T extends User - a data containing the ID and attributes of the current
      *                 user.
      * @param userManager UserManager<T> where T extends User - a manager for handling the user data (is generic
      *                    depending on user type).
@@ -49,17 +50,19 @@ public abstract class UserController<T extends User> extends TerminalController 
     }
 
     /**
-     * Creates a hashmap of all string representations of user commands mapped to the method that each
+     * Creates a Linked hashmap of all string representations of user commands mapped to the method that each
      * command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective user commands.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective user commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("change password", ChangePassword());
         commands.put("get logs", GetLogs());
         commands.put("contact details", ContactDetails());
+        commands.put("view clinic info", ViewClinicInformation());
         commands.put("sign out", SignOut());
+        commands.putAll(super.AllCommands());
         return commands;
     }
 
@@ -89,6 +92,13 @@ public abstract class UserController<T extends User> extends TerminalController 
         ContactData contactData = contactManager.getContactData(userData);
         ContactController contactController = new ContactController(getContext(), currentController, contactData);
         return (x) -> changeCurrentController(contactController);
+    }
+
+    private Command ViewClinicInformation() {
+        return (x) -> {
+            ClinicManager clinicManager = new ClinicManager(getDatabase());
+            userScreenView.displayClinicInfo(clinicManager.clinicData());
+        };
     }
 
     private Command SignOut(){

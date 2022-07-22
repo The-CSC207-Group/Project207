@@ -12,6 +12,7 @@ public class Clinic extends JsonSerializable {
 
     private String name;
     private String phoneNumber;
+    private String email;
     private String address;
     private ZoneId timeZone;
     //used to store the operating hours of the clinic for availability calculations
@@ -25,9 +26,11 @@ public class Clinic extends JsonSerializable {
      * @param timeZone ZoneId representing the time zone of the clinic.
      * @param clinicHours TimeBlock representing the clinic's hours of operation.
      */
-    public Clinic(String name, String phoneNumber, String address, ZoneId timeZone, ArrayList<Availability> clinicHours) {
+    public Clinic(String name, String phoneNumber, String email, String address, ZoneId timeZone,
+                  ArrayList<Availability> clinicHours) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.email = email;
         this.address = address;
         this.timeZone = timeZone;
         this.clinicHours = clinicHours;
@@ -61,6 +64,21 @@ public class Clinic extends JsonSerializable {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * @return String representing the clinic's email.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the email of the clinic.
+     * @param email The new email of the clinic as String.
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**

@@ -2,8 +2,6 @@ package dataBundles;
 
 import entities.Patient;
 
-import java.util.ArrayList;
-
 /**
  * Wrapper class for Patient entity. Inherits from UserData<Patient>.
  */

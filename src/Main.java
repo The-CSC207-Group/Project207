@@ -16,7 +16,7 @@ public class Main {
         Database database = new Database();
 
         // Bootstrap database with default clinic and admin
-        database.setClinic(new Clinic("", "", "", ZoneId.of("US/Eastern"),
+        database.setClinic(new Clinic("", "", "", "", ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                                 LocalTime.of(17, 0)),
                         new Availability(DayOfWeek.of(2), LocalTime.of(8, 30),

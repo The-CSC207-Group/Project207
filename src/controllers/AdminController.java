@@ -8,7 +8,7 @@ import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
 import useCases.managers.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that processes the commands that an admin passes in.
@@ -21,12 +21,13 @@ public class AdminController extends UserController<Admin> {
     private final SecretaryManager secretaryManager;
     private final AdminManager adminManager;
     private final AdminScreenView adminScreenView = new AdminScreenView();
+    private final AdminController currentController = this;
 
     /**
      * Creates an admin controller object that handles the commands used by the current admin user.
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
-     * @param adminData AdminData - a data bundle containing the ID and attributes of the current admin user.
+     * @param adminData AdminData - a data containing the ID and attributes of the current admin user.
      */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
@@ -39,19 +40,21 @@ public class AdminController extends UserController<Admin> {
     }
 
     /**
-     * Creates a hashmap of all string representations of admin commands mapped to the method that each command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective admin commands.
+     * Creates a Linked hashmap of all string representations of admin commands mapped to the method that each command calls.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective admin commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("create admin", CreateAdmin());
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
+        commands.put("change clinic info", changeClinicInformation());
         commands.put("change user password", changeUserPassword());
         commands.put("delete user", deleteUser());
         commands.put("delete self", deleteSelf());
+        commands.putAll(super.AllCommands());
         return commands;
     }
 
@@ -131,6 +134,11 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
+    private Command changeClinicInformation() {
+        ClinicManager clinicManager = new ClinicManager(getDatabase());
+        return (x) -> changeCurrentController(new ClinicController(getContext(), currentController,
+                clinicManager.clinicData()));
+    }
 
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
         UserData<T> user = manager.getUserData(name);
@@ -143,8 +151,6 @@ public class AdminController extends UserController<Admin> {
         } else manager.changeUserPassword(user, password.password());
         return true;
     }
-
-
 
     private Command changeUserPassword() {
         return (x) -> {

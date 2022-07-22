@@ -61,6 +61,20 @@ public class LogManagerTests {
                 isEmpty());
         Assert.assertEquals(3, logArrayList.size());
     }
+    @Test
+    public void testGettingNonExistentUserLogs(){
+        Database database = new Database(databaseFolder.toString());
+        Patient patient = new Patient("dan","dervi", 1);
+        LogManager logManager = new LogManager(database);
+
+        logManager.addLog("testing1", 1);
+        logManager.addLog("testing2", 1);
+        logManager.addLog("testing3", 1);
+        System.out.println(database.getLogDatabase());
+
+        ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
+        Assert.assertTrue(logArrayList.isEmpty());
+    }
 
 
 

@@ -1,15 +1,13 @@
 package controllers;
 
+import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
-import presenter.response.AppointmentTimeDetails;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.SecretaryScreenView;
-import presenter.entityViews.PrescriptionView;
 import useCases.managers.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
@@ -18,76 +16,57 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private final PatientData patientData;
     private final SecretaryController secretaryController;
-    private final AppointmentManager appointmentManager;
-    private final PrescriptionManager prescriptionManager;
-    private final DoctorManager doctorManager;
     private final PatientManager patientManager;
-    private final ContactManager contactManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
+
+    /* PHASE 2 IMPORTS
+    private final AppointmentManager appointmentManager;
+    private final DoctorManager doctorManager;
+    private final ContactManager contactManager; */
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
-     *
-     * @param context             Context - a reference to the context object, which stores the current controller and allows for
-     *                            switching between controllers.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
      * @param secretaryController SecretaryController - the previous controller object, allowing you to easily go back.
-     * @param patientData         PatientData - a data bundle containing the ID and attributes of the current loaded
-     *                            patient user.
+     * @param patientData PatientData - a data containing the ID and attributes of the current loaded
+     *                    patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
         super(context);
         this.secretaryController = secretaryController;
         this.patientData = patientData;
-        this.appointmentManager = new AppointmentManager(getDatabase());
-        this.prescriptionManager = new PrescriptionManager(getDatabase());
-        this.doctorManager = new DoctorManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
-        this.contactManager = new ContactManager(getDatabase());
+
+        /* PHASE 2 INSTANTIATIONS
+        this.appointmentManager = new AppointmentManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
+        this.contactManager = new ContactManager(getDatabase()); */
     }
 
     /**
-     * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
-     * command calls.
-     *
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective doctor loaded patient commands.
+     * Creates a linked hashmap of all string representations of doctor loaded patient commands mapped to the method
+     * that each command calls.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded
+     * patient commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = super.AllCommands();
-        commands.put("view active prescriptions", viewActivePrescription());
-        commands.put("view all prescriptions", viewPrescriptionHistory());
-        commands.put("view appointments", viewAppointments());
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
+        PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", changePatientPassword());
-        commands.put("unload patient", back(secretaryController));
+        commands.put("unload patient", Back(secretaryController));
+
+        /* PENDING IMPLEMENTATION IN PHASE 2
+        commands.put("view appointments", viewAppointments());
         commands.put("reschedule appointment", rescheduleAppointment());
         commands.put("book appointment", bookAppointment());
-        commands.put("cancel appointment", cancelAppointment());
-        commands.put("view active prescription detailed", viewActivePrescriptionsDetailed());
-        commands.put("view all prescription detailed", viewAllPrescriptionsDetailed());
+        commands.put("cancel appointment", cancelAppointment()); */
+
+        prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
+        commands.putAll(super.AllCommands());
         return commands;
-    }
-
-    private Command viewActivePrescription() {
-        return (x) -> {
-            ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
-            secretaryScreenView.viewPrescription(prescriptions);
-        };
-    }
-
-    private Command viewPrescriptionHistory() {
-        return (x) -> {
-            ArrayList<PrescriptionData> prescriptions = prescriptionManager.getAllPrescriptions(patientData);
-            secretaryScreenView.viewPrescription(prescriptions);
-        };
-    }
-
-    private Command viewAppointments() {
-        return (x) -> {
-            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), appointments);
-
-        };
     }
 
     private Command changePatientPassword() {
@@ -98,6 +77,17 @@ public class SecretaryLoadedPatientController extends TerminalController {
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
             }
+        };
+    }
+
+    /* PENDING IMPLEMENTATION IN PHASE 2
+
+
+    private Command viewAppointments() {
+        return (x) -> {
+            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
+            secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), appointments);
+
         };
     }
 
@@ -180,18 +170,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 appointmentTimeDetails.time().getHour(),
                 appointmentTimeDetails.time().getMinute(),
                 appointmentTimeDetails.length());
-    }
-
-
-    private Command viewActivePrescriptionsDetailed() {
-        return (x) -> secretaryScreenView.viewPrescriptionDetail(prescriptionManager
-                .getAllActivePrescriptions(patientData));
-
-    }
-
-    private Command viewAllPrescriptionsDetailed() {
-        ArrayList<PrescriptionData> prescriptionData = prescriptionManager.getAllPrescriptions(patientData);
-        return (x) -> secretaryScreenView.viewPrescriptionDetail(prescriptionData);
-    }
+    } */
 
 }

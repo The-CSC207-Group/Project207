@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Stream;
@@ -131,16 +130,6 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     @Override
     public Stream<T> stream() {
         return getAllIds().stream().map(this::get);
-    }
-
-    @Override
-    public T copy(Integer id) {
-        T object = get(id);
-        if (object != null) {
-            return gson.fromJson(gson.toJson(object), type);
-        } else {
-            return null;
-        }
     }
 
     @Override

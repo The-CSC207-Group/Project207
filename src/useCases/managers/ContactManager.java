@@ -26,9 +26,10 @@ public class ContactManager {
     }
 
     /**
-     * Returns a ContactData object given a userData<T> object where T extends User .
+     * Returns a ContactData object given a userData<T> object where T extends User. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param userData UserData<T> where T extends User is the data associated with the user whose contacts
-     *                 are being accessed.
+     * are being accessed.
      * @return ContactData representing the contact data associated with the user.
      * @param <T> extends User
      */
@@ -37,7 +38,8 @@ public class ContactManager {
     }
 
     /**
-     * Change the name of a user in the contact database.
+     * Change the name of a user in the contact database. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - Contact data associated with a user.
      * @param newName String - the name we would like to assign to the user.
      * @return boolean - true if the contactData stores an id associated with a valid contact object. false otherwise.
@@ -50,7 +52,8 @@ public class ContactManager {
     }
 
     /**
-     * Changes the email of a user in their associated Contact object.
+     * Changes the email of a user in their associated Contact object. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - contactData object associated with a specific user.
      * @param newEmail String - the new email of the user.
      * @return boolean - false if the email is not valid according to a regex or if there is not a contact
@@ -67,7 +70,8 @@ public class ContactManager {
     }
 
     /**
-     * Changes the phone number of a user in their associated Contact object.
+     * Changes the phone number of a user in their associated Contact object. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - contactData object associated with a specific user.
      * @param phoneNumber String - the new phone number of the user.
      * @return boolean - false if the phone number does not consist of solely numbers or if there is not a contact
@@ -75,13 +79,14 @@ public class ContactManager {
      */
     public boolean changePhoneNumber(ContactData contactData, String phoneNumber){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null || !Pattern.matches("^(/d)+$", phoneNumber)){return false;}
+        if (contact == null || !Pattern.matches("^([0-9])+$", phoneNumber)){return false;}
         contact.setPhoneNumber(phoneNumber);
         return true;
     }
 
     /**
-     * Changes the address of a user in their associated Contact object.
+     * Changes the address of a user in their associated Contact object. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - contactData object associated with a specific user.
      * @param address String - the new address of the user.
      * @return false if there is not a contact associated with the id stored in contactData. true otherwise.
@@ -94,7 +99,9 @@ public class ContactManager {
     }
 
     /**
-     * Changes the birthday of a user in their associated Contact object.
+     * Changes the birthday of a user in their associated Contact object. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database. Assumes
+     * the birthday is a valid localDate.
      * @param contactData ContactData - contactData object associated with a specific user.
      * @param birthday String - the new birthday of the user.
      * @return false if there is not a contact associated with the id stored in contactData. true otherwise.
@@ -107,7 +114,8 @@ public class ContactManager {
     }
 
     /**
-     * Changes the emergency contact email of a user in their associated Contact object.
+     * Changes the emergency contact email of a user in their associated Contact object. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - contactData object associated with a specific user.
      * @param emergencyContactEmail String - the new email of the emergency contact.
      * @return boolean - false if the email is not valid according to a regex or if there is not a contact
@@ -117,14 +125,15 @@ public class ContactManager {
         Contact contact = contactDatabase.get(contactData.getContactId());
         //got regex from https://regexlib.com/Search.aspx?k=email
         if (contact == null ||
-                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", emergencyContactEmail)){
-            return false;}
+                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                        emergencyContactEmail)){return false;}
         contact.setEmergencyContactEmail(emergencyContactEmail);
         return true;
     }
 
     /**
-     * Change the name of an emergency contact of a user in the contact database.
+     * Change the name of an emergency contact of a user in the contact database. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - Contact data associated with a user.
      * @param emergencyContactName String - the name we would like to assign to the emergency contact.
      * @return boolean - true if the contactData stores an id associated with a valid contact object. false otherwise.
@@ -137,7 +146,8 @@ public class ContactManager {
     }
 
     /**
-     * Change the phone number of an emergency contact of a user in the contact database.
+     * Change the phone number of an emergency contact of a user in the contact database. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - Contact data associated with a user.
      * @param emergencyContactPhoneNumber String - the phone number that we would like to save for the emergency contact.
      * @return boolean - false if the phone number does not consist of solely numbers or if there is not a contact
@@ -145,13 +155,14 @@ public class ContactManager {
      */
     public boolean changeEmergencyContactPhoneNumber(ContactData contactData, String emergencyContactPhoneNumber){
         Contact contact = contactDatabase.get(contactData.getContactId());
-        if (contact == null || !Pattern.matches("^(/d)+$", emergencyContactPhoneNumber)){return false;}
+        if (contact == null || !Pattern.matches("^([0-9])+$", emergencyContactPhoneNumber)){return false;}
         contact.setEmergencyContactPhoneNumber(emergencyContactPhoneNumber);
         return true;
     }
 
     /**
-     * Change the emergency relationship of a user with their emergency contact in the contact database.
+     * Change the emergency relationship of a user with their emergency contact in the contact database. Assumes the
+     * contact id of userData is associated with the user's contact in the contact database.
      * @param contactData ContactData - Contact data associated with a user.
      * @param emergencyRelationship String - the relationship that we would like to save for the emergency contact.
      * @return boolean - true if the contactData stores an id associated with a valid contact object. false otherwise.

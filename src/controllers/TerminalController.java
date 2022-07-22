@@ -4,7 +4,7 @@ import database.Database;
 import presenter.screenViews.TerminalScreenView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ abstract public class TerminalController {
 
     public void welcomeMessage() {
         terminalScreenView.showHelpPrompt();
-    };
+    }
 
     /**
      * Gets the context (necessary for the state command).
@@ -54,11 +54,11 @@ abstract public class TerminalController {
     }
 
     /**
-     * Creates a hashmap of the string representations of commands mapped to the method that each command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective commands.
+     * Creates a Linked hashmap of the string representations of commands mapped to the method that each command calls.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective commands.
      */
-    public HashMap<String, Command> AllCommands() {
-        HashMap<String, Command> commands = new HashMap<>();
+    public LinkedHashMap<String, Command> AllCommands() {
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("help", Help());
         commands.put("exit", Exit());
         return commands;
@@ -91,20 +91,19 @@ abstract public class TerminalController {
         }
     }
 
-    protected Command back(TerminalController previousController){
+    protected Command Back(TerminalController previousController){
         return (x) -> changeCurrentController(previousController);
     }
 
+    protected Command Exit() {
+        return (x) -> exit();
+    }
 
     private Command Help() {
         return (x) -> {
             List<String> helpCommands = new ArrayList<>(AllCommands().keySet());
             terminalScreenView.showHelpView(helpCommands);
         };
-    }
-
-    protected Command Exit() {
-        return (x) -> exit();
     }
 
 }

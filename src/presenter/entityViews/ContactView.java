@@ -8,7 +8,7 @@ import dataBundles.ContactData;
 public class ContactView extends EntityView<ContactData> {
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing item's full contact view.
      */
     @Override
@@ -25,7 +25,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the contact's name as a view.
      */
     public String viewName(ContactData item) {
@@ -33,7 +33,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the contact's email as a view.
      */
     public String viewEmail(ContactData item) {
@@ -41,7 +41,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the contact's phone number as a view.
      */
     public String viewPhoneNumber(ContactData item) {
@@ -49,7 +49,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the contact's address as a view.
      */
     public String viewAddress(ContactData item) {
@@ -57,7 +57,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the contact's birthday as a view.
      */
     public String viewBirthday(ContactData item) {
@@ -73,7 +73,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the emergency contact's name as a view.
      */
     public String viewEmergencyContactName(ContactData item) {
@@ -81,7 +81,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the emergency contact's email as a view.
      */
     public String viewEmergencyContactEmail(ContactData item) {
@@ -89,7 +89,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the emergency contact's phone number as a view.
      */
     public String viewEmergencyContactPhoneNumber(ContactData item) {
@@ -97,7 +97,7 @@ public class ContactView extends EntityView<ContactData> {
     }
 
     /**
-     * @param item ContactData bundle to view.
+     * @param item ContactData to view.
      * @return String representing the emergency contact's relationship as a view.
      */
     public String viewEmergencyRelationship(ContactData item) {

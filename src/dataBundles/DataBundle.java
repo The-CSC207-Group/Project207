@@ -1,10 +1,12 @@
 package dataBundles;
+
 import utilities.JsonSerializable;
 
 /**
  * Abstract data bundle class that provides general getters to entity data bundles.
  */
 public abstract class DataBundle {
+
     private final JsonSerializable entity;
 
     /**

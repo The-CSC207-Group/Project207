@@ -1,14 +1,18 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
-import dataBundles.*;
+import dataBundles.ContactData;
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
+import dataBundles.PrescriptionData;
 import presenter.response.PrescriptionDetails;
-import presenter.response.ReportDetails;
 import presenter.screenViews.DoctorScreenView;
-import useCases.managers.*;
+import useCases.managers.ContactManager;
+import useCases.managers.PrescriptionManager;
+import useCases.managers.ReportManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Controller class that process the commands a doctor would use on a specific patient that they loaded.
@@ -27,8 +31,8 @@ public class DoctorLoadedPatientController extends TerminalController {
      *                switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
-     * @param doctorData DoctorData - a data bundle containing the ID and attributes of the current doctor user.
-     * @param patientData PatientData - a data bundle containing the ID and attributes of the current loaded
+     * @param doctorData DoctorData - a data containing the ID and attributes of the current doctor user.
+     * @param patientData PatientData - a data containing the ID and attributes of the current loaded
      *                    patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
@@ -41,30 +45,25 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     /**
-     * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
+     * Creates a Linked hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.
-     * @return HashMap<String, Command> - HashMap of strings mapped to their respective doctor loaded patient commands.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded patient commands.
      */
     @Override
-    public HashMap<String, Command> AllCommands() {
-        PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
-
-        HashMap<String, Command> commands = super.AllCommands();
-        commands.put("unload patient", back(previousController));
+    public LinkedHashMap<String, Command> AllCommands() {
+        PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
+        LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
+        commands.put("unload patient", Back(previousController));
         //pending implementation for phase 2
         //commands.put("view appointments", ViewPatientAppointments());
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
         commands.put("delete report", deleteReport());
 
-        HashMap<String, Command> prescriptionCommands = prescriptionController.AllCommands();
-
-        for (String key : prescriptionCommands.keySet()) {
-            commands.put("view " + key, prescriptionCommands.get(key));
-        }
-
+        prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.put("create prescription", CreatePatientPrescription());
         commands.put("delete prescription", DeletePatientPrescription());
+        commands.putAll(super.AllCommands());
         return commands;
     }
 
