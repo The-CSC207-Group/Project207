@@ -1,8 +1,6 @@
 package presenter.entityViews;
 
 import dataBundles.AdminData;
-import dataBundles.UserData;
-import entities.Admin;
 
 /**
  * The Admin entity's view.
@@ -26,4 +24,5 @@ public class AdminView extends UserView<AdminData> {
     public String viewUsername(AdminData item) {
         return "Admin username is " + item.getUsername() + ".";
     }
+
 }

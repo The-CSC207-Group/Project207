@@ -1,10 +1,8 @@
 package useCases.managers;
 
 import dataBundles.ClinicData;
-import dataBundles.ContactData;
 import database.Database;
 import entities.Clinic;
-import entities.Contact;
 
 import java.util.regex.Pattern;
 

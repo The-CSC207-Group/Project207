@@ -33,13 +33,13 @@ public abstract class UserManager<T extends User> {
 
     /**
      * Change the password of a user.
-     * @param dataBundle<T> where T extends User - the data associated with a user.
+     * @param userData<T> where T extends User - the data associated with a user.
      * @param password String - new password of the user.
      * @return boolean - true if the user exists in the database and operation is carried out, false if the user associated
      * with the userId stored in userData does not exist in the database.
      */
-    public boolean changeUserPassword(UserData<T> dataBundle, String password){
-        T user = typeTDatabase.get(dataBundle.getId());
+    public boolean changeUserPassword(UserData<T> userData, String password){
+        T user = typeTDatabase.get(userData.getId());
         if (user != null) {
             user.setPassword(password);
             return true;

@@ -4,7 +4,6 @@ import dataBundles.AdminData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
-import entities.Contact;
 
 /**
  * Use case class for handling operations and data of admin users.

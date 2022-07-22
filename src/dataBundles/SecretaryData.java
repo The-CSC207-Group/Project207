@@ -2,8 +2,6 @@ package dataBundles;
 
 import entities.Secretary;
 
-import java.util.ArrayList;
-
 /**
  * Wrapper class for a secretary entity.
  */

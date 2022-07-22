@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
  * Wrapper class for Log entity.
  */
 public class LogData {
+
     private final Log log;
 
     /**

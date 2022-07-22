@@ -7,10 +7,8 @@ import database.Database;
 import entities.Log;
 import entities.User;
 import utilities.DatabaseQueryUtility;
-import utilities.JsonSerializable;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Use case class meant for handling logs.
