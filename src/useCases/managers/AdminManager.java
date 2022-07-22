@@ -6,10 +6,12 @@ import database.Database;
 import entities.Admin;
 import entities.Contact;
 
+/**
+ * Use case class for handling operations and data of admin users.
+ */
 public class AdminManager extends UserManager<Admin>{
 
-    DataMapperGateway<Admin> adminDatabase;
-    DataMapperGateway<Contact> contactDatabase;
+    private final DataMapperGateway<Admin> adminDatabase;
 
     /***
      * Initialize the admin and contact databases.
@@ -18,7 +20,6 @@ public class AdminManager extends UserManager<Admin>{
     public AdminManager(Database database){
         super(database.getAdminDatabase(), database);
         this.adminDatabase = database.getAdminDatabase();
-        this.contactDatabase = database.getContactDatabase();
     }
 
     /***

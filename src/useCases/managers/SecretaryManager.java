@@ -11,8 +11,7 @@ import entities.Secretary;
  */
 public class SecretaryManager extends UserManager<Secretary> {
 
-    DataMapperGateway<Secretary> secretaryDatabase;
-    DataMapperGateway<Contact> contactDatabase;
+    private final DataMapperGateway<Secretary> secretaryDatabase;
 
     /**
      * Initializes the secretary manager. Stores secretary and contact databases.
@@ -21,7 +20,6 @@ public class SecretaryManager extends UserManager<Secretary> {
     public SecretaryManager(Database database) {
         super(database.getSecretaryDatabase(), database);
         this.secretaryDatabase = database.getSecretaryDatabase();
-        this.contactDatabase = database.getContactDatabase();
     }
 
     /**
