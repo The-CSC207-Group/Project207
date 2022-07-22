@@ -1,8 +1,10 @@
 package useCases.managers;
 
 import dataBundles.ClinicData;
+import dataBundles.ContactData;
 import database.Database;
 import entities.Clinic;
+import entities.Contact;
 
 import java.util.regex.Pattern;
 
@@ -26,23 +28,41 @@ public class ClinicManager {
     }
 
     /**
-     * Changes the clinic's phone number to the phone number passed in.
-     * @param phoneNumber String - the clinic's new phone number.
+     * Changes the clinic's name to the name passed in.
+     * @param newName String - the clinic's new phone number.
      * @return boolean - returns whether the phone number was successfully changed or not
      */
-    public boolean changePhone(String phoneNumber){
-        if (!Pattern.matches("^(/d)+$", phoneNumber)){return false;}
-        clinic.setPhoneNumber(phoneNumber);
+    public boolean changeClinicName(String newName){
+        clinic.setName(newName);
+        return true;
+    }
+
+    /**
+     * Changes the clinic's phone number to the phone number passed in.
+     * @param newPhoneNumber String - the clinic's new phone number.
+     * @return boolean - returns whether the phone number was successfully changed or not
+     */
+    public boolean changeClinicPhoneNumber(String newPhoneNumber){
+        if (!Pattern.matches("^(/d)+$", newPhoneNumber)){return false;}
+        clinic.setPhoneNumber(newPhoneNumber);
+        return true;
+    }
+
+    public boolean changeClinicEmail(String newEmail){
+        //got regex from https://regexlib.com/Search.aspx?k=email
+        if (!Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", newEmail)){
+            return false;}
+        clinic.setEmail(newEmail);
         return true;
     }
 
     /**
      * Changes the clinic's address to the address passed in.
-     * @param address String - the clinic's new address
+     * @param newAddress String - the clinic's new address
      * @return boolean - returns whether the phone number was successfully changed or not
      */
-    public boolean changeAddress(String address){
-        clinic.setAddress(address);
+    public boolean changeClinicAddress(String newAddress){
+        clinic.setAddress(newAddress);
         return true;
     }
 

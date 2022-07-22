@@ -21,6 +21,7 @@ public class AdminController extends UserController<Admin> {
     private final SecretaryManager secretaryManager;
     private final AdminManager adminManager;
     private final AdminScreenView adminScreenView = new AdminScreenView();
+    private final AdminController currentController = this;
 
     /**
      * Creates an admin controller object that handles the commands used by the current admin user.
@@ -49,6 +50,7 @@ public class AdminController extends UserController<Admin> {
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
+        commands.put("change clinic info", changeClinicInformation());
         commands.put("change user password", changeUserPassword());
         commands.put("delete user", deleteUser());
         commands.put("delete self", deleteSelf());
@@ -131,6 +133,11 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
+    private Command changeClinicInformation() {
+        ClinicManager clinicManager = new ClinicManager(getDatabase());
+        return (x) -> changeCurrentController(new ClinicController(getContext(), currentController,
+                clinicManager.clinicData()));
+    }
 
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
         UserData<T> user = manager.getUserData(name);
@@ -143,8 +150,6 @@ public class AdminController extends UserController<Admin> {
         } else manager.changeUserPassword(user, password.password());
         return true;
     }
-
-
 
     private Command changeUserPassword() {
         return (x) -> {
