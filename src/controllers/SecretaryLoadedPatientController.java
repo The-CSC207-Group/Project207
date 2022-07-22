@@ -19,7 +19,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final PatientData patientData;
     private final SecretaryController secretaryController;
     private final AppointmentManager appointmentManager;
-    private final PrescriptionManager prescriptionManager;
     private final DoctorManager doctorManager;
     private final PatientManager patientManager;
     private final ContactManager contactManager;
@@ -40,7 +39,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
         this.secretaryController = secretaryController;
         this.patientData = patientData;
         this.appointmentManager = new AppointmentManager(getDatabase());
-        this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.doctorManager = new DoctorManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
         this.contactManager = new ContactManager(getDatabase());
