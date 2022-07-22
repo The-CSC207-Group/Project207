@@ -10,8 +10,8 @@ import java.util.List;
 public class SecretaryView extends UserView<SecretaryData> {
 
     /**
-     * @param item The secretary data bundle to view.
-     * @return Returns item's full secretary view.
+     * @param item SecretaryData bundle to view.
+     * @return String representing item's full secretary view.
      */
     @Override
     public String viewFull(SecretaryData item) {
@@ -19,8 +19,8 @@ public class SecretaryView extends UserView<SecretaryData> {
     }
 
     /**
-     * @param item The secretary data bundle to view.
-     * @return Returns the secretary's username as a view.
+     * @param item SecretaryData bundle to view.
+     * @return String representing the secretary's username as a view.
      */
     @Override
     public String viewUsername(SecretaryData item) {

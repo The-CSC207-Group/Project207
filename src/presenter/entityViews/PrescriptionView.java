@@ -8,8 +8,8 @@ import dataBundles.PrescriptionData;
 public class PrescriptionView extends EntityView<PrescriptionData> {
 
     /**
-     * @param item The prescription data bundle to view.
-     * @return Returns item's full prescription view.
+     * @param item PrescriptionData bundle to view.
+     * @return String representing item's full prescription view.
      */
     @Override
     public String viewFull(PrescriptionData item) {
@@ -20,32 +20,32 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     }
 
     /**
-     * @param item The prescription data bundle to view.
-     * @return Returns the prescription's date noted as a view.
+     * @param item PrescriptionData bundle to view.
+     * @return String representing the prescription's date noted as a view.
      */
     public String viewDateNoted(PrescriptionData item) {
         return "Prescription was noted on " + item.getDateNoted() + ".";
     }
 
     /**
-     * @param item The prescription data bundle to view.
-     * @return Returns the prescription's expiry date as a view.
+     * @param item PrescriptionData bundle to view.
+     * @return String representing the prescription's expiry date as a view.
      */
     public String viewExpiryDate(PrescriptionData item) {
         return "Prescription expires on " + item.getExpiryDate() + ".";
     }
 
     /**
-     * @param item The prescription data bundle to view.
-     * @return Returns the prescription's header as a view.
+     * @param item PrescriptionData bundle to view.
+     * @return String representing the prescription's header as a view.
      */
     public String viewHeader(PrescriptionData item) {
         return "Prescription header reads: " + item.getHeader();
     }
 
     /**
-     * @param item The prescription data bundle to view.
-     * @return Returns the prescription's body as a view.
+     * @param item PrescriptionData bundle to view.
+     * @return String representing the prescription's body as a view.
      */
     public String viewBody(PrescriptionData item) {
         return "Prescription body reads: " + item.getBody();

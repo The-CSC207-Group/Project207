@@ -8,8 +8,8 @@ import dataBundles.LogData;
 public class LogView extends EntityView<LogData> {
 
     /**
-     * @param item The log data bundle to view.
-     * @return Returns item's full log view.
+     * @param item LogData bundle to view.
+     * @return String representing item's full log view.
      */
     @Override
     public String viewFull(LogData item) {

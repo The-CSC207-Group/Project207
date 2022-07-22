@@ -7,7 +7,7 @@ import presenter.response.PasswordResetDetails;
 
 import java.util.List;
 
-public abstract class UserScreenView<T extends UserData<?>> extends ScreenView {
+public abstract class UserScreenView extends ScreenView {
 
     /**
      * Show user a password reset prompt with a confirmation.
@@ -44,9 +44,9 @@ public abstract class UserScreenView<T extends UserData<?>> extends ScreenView {
         infoMessage(output);
     }
 
-//    public void displayUserInfo(UserData<?> userData, UserView<T> userView) {
-//        infoMessage(userView.viewFull(userData));
-//    }
+    public void displayUserInfo(UserData userData, UserView userView) {
+        infoMessage(userView.viewFull(userData));
+    }
 
     public void showWelcomeUserMessage(UserData user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
