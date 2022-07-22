@@ -50,7 +50,8 @@ decoupled from the state of the program.
 We added the ability to turn every database into a stream. allowing us to process them using higher order functions.
 this simplified a lot of complex code into a more readable alternative, and encouraged the reuse of logic.
 This pattern is very similar to the iterator pattern and in more modern languages is often implemented together with the
-iterator pattern (in rust for example streams are actually called iterators). 
+iterator pattern (in rust for example streams are actually called iterators). And in java any stream can be turned into
+an iterator.
 The sole difference is that the stream pattern encourages the use of higher order functions such as map and filter and
 getByCondition instead of manual for loops.
 
