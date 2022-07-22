@@ -7,15 +7,25 @@ import presenter.entityViews.PrescriptionView;
 
 import java.util.List;
 
+/**
+ * The Patient's presenter class.
+ */
 public class PatientScreenView extends UserScreenView {
 
+    /**
+     * PrescriptionView that will be used by the patient's presenter.
+     */
     PrescriptionView prescriptionView = new PrescriptionView();
+
+    /**
+     * AppointmentView that will be used by the patient's presenter.
+     */
     AppointmentView appointmentView = new AppointmentView();
 
     /**
      * Shows a list of prescriptions relating to patients.
-     * @param items list of prescriptions.
-     * @param details whether to show the prescription in full (body, expiration ...)
+     * @param items List<PrescriptionData> of prescriptions.
+     * @param details boolean indicating whether to show the prescription in full (body, expiration ...)
      */
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
         String output;
@@ -29,8 +39,8 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * View active prescriptions of patient. i.e. unexpired prescriptions.
-     * @param items list of prescriptions.
-     * @param details whether to show the prescription in full (body, expiration ...)
+     * @param items List<PrescriptionData> of prescriptions.
+     * @param details boolean indicating whether to show the prescription in full (body, expiration ...)
      */
     public void viewActivePrescriptions(List<PrescriptionData> items, boolean details) {
         infoMessage("List of active prescriptions:");
@@ -39,8 +49,8 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * View prescription history of patient. i.e. all prescriptions prescribed to the patient.
-     * @param items list of prescriptions.
-     * @param details whether to show the prescription in full (body, expiration ...)
+     * @param items List<PrescriptionData> of prescriptions.
+     * @param details boolean indicating whether to show the prescription in full (body, expiration ...)
      */
     public void viewPrescriptionHistory(List<PrescriptionData> items, boolean details) {
         infoMessage("Prescription History:");
@@ -49,7 +59,7 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * View all appointments of a patient.
-     * @param items list of appointments.
+     * @param items List<AppointmentData> of appointments.
      */
     public void viewAppointments(List<AppointmentData> items) {
         String output = appointmentView.viewFullFromList(items);

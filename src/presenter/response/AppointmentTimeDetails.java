@@ -56,7 +56,7 @@ public final class AppointmentTimeDetails {
     }
 
     /**
-     * @return String representing the string representation of this instance of AppointmentTimeDetails.
+     * @return String representation of this instance of AppointmentTimeDetails.
      */
     @Override
     public String toString() {

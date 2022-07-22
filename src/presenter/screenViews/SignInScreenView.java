@@ -4,6 +4,9 @@ import dataBundles.ClinicData;
 import presenter.entityViews.ClinicView;
 import presenter.response.UserCredentials;
 
+/**
+ * Presenter for signing in to the program.
+ */
 public class SignInScreenView extends ScreenView {
 
     /**
@@ -39,6 +42,10 @@ public class SignInScreenView extends ScreenView {
         errorMessage("Incorrect username or password, please try again...");
     }
 
+    /**
+     * Shows a success message that the user logged in.
+     * @param user String representing the username of the user logging in.
+     */
     public void showSuccessLogin(String user) {
         successMessage("Logged in to " + user + " successfully!");
     }

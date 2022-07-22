@@ -55,7 +55,7 @@ public final class PasswordResetDetails {
     }
 
     /**
-     * @return String representing the string representation of this instance of PasswordResetDetails.
+     * @return String representation of this instance of PasswordResetDetails.
      */
     @Override
     public String toString() {

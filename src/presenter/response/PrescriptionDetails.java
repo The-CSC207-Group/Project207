@@ -68,7 +68,7 @@ public final class PrescriptionDetails {
     }
 
     /**
-     * @return String representing the string representation of this instance of PrescriptionDetails.
+     * @return String representation of this instance of PrescriptionDetails.
      */
     @Override
     public String toString() {
