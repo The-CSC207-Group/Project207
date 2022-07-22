@@ -23,7 +23,7 @@ public class ContactController extends TerminalController {
      *                switching between controllers.
      * @param previousController UserController<?> - the object of the controller that switched into this contact
      *                           controller object.
-     * @param contactData ContactData - a data bundle storing the ID and attributes of the contact object associated
+     * @param contactData ContactData - a data  storing the ID and attributes of the contact object associated
      *                    with the current user.
      */
     public ContactController(Context context, UserController<?> previousController,

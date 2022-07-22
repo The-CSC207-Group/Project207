@@ -170,15 +170,15 @@ public class PrescriptionManagerTests {
         PrescriptionData prescriptionData = prescriptionManager.createPrescription(header, body, patient,
                 doctor, zonedExpiryDate);
 
-        /* testing if the created prescription data bundle is valid by testing if its fields match with the parameters
+        /* testing if the created prescription data is valid by testing if its fields match with the parameters
         * of the createPrescription method */
-        assertEquals("The created prescription data bundle should have the same header as the " +
+        assertEquals("The created prescription data should have the same header as the " +
                         "parameters of createPrescription method", prescriptionData.getHeader(), header);
-        assertEquals("The created prescription data bundle should have the same body as the " +
+        assertEquals("The created prescription data should have the same body as the " +
                         "parameters of createPrescription method", prescriptionData.getBody(), body);
-        assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
+        assertEquals("The created prescription data should have the same patient ID noted as the " +
                         "parameters of createPrescription method", prescriptionData.getPatientId(), patient.getId());
-        assertEquals("The created prescription data bundle should have the same patient ID noted as the " +
+        assertEquals("The created prescription data should have the same patient ID noted as the " +
                 "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 prescriptionData.getExpiryDate().compareTo(zonedExpiryDate), 0);

@@ -27,7 +27,7 @@ public class AdminController extends UserController<Admin> {
      * Creates an admin controller object that handles the commands used by the current admin user.
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
-     * @param adminData AdminData - a data bundle containing the ID and attributes of the current admin user.
+     * @param adminData AdminData - a data containing the ID and attributes of the current admin user.
      */
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());

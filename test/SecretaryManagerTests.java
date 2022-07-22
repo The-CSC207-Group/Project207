@@ -40,9 +40,9 @@ public class SecretaryManagerTests {
 
         SecretaryData secretaryData = secretaryManager.createSecretary(username, password);
 
-        /* Testing if the return secretary data bundle is valid by testing if the fields of are equal to the parameters of
+        /* Testing if the return secretary data is valid by testing if the fields of are equal to the parameters of
         createSecretary */
-        assertEquals("The created secretary data bundle should have the same name as the parameters of " +
+        assertEquals("The created secretary data should have the same name as the parameters of " +
                 "createSecretary method", secretaryData.getUsername(), username);
 
         Secretary loadedSecretary = secretaryDatabase.get(secretaryData.getId());

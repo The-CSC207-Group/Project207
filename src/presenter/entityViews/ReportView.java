@@ -10,7 +10,7 @@ import java.util.List;
 public class ReportView extends EntityView<ReportData> {
 
     /**
-     * @param item The report data bundle to view.
+     * @param item The report data to view.
      * @return Returns item's full report view.
      */
     @Override
@@ -21,7 +21,7 @@ public class ReportView extends EntityView<ReportData> {
     }
 
     /**
-     * @param item The report data bundle to view.
+     * @param item The report data to view.
      * @return Returns the report's date noted as a view.
      */
     public String viewDateNoted(ReportData item) {
@@ -29,14 +29,14 @@ public class ReportView extends EntityView<ReportData> {
     }
 
     /**
-     * @param item The report data bundle to view.
+     * @param item The report data to view.
      * @return Returns the report's header as a view.
      */
     public String viewHeader(ReportData item) {
         return "Report header reads: " + item.getHeader();
     }
     /**
-     * @param item The report data bundle to view.
+     * @param item The report data to view.
      * @return Returns the report's body as a view.
      */
     public String viewBody(ReportData item) {

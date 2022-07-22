@@ -37,9 +37,9 @@ public class AdminManager extends UserManager<Admin>{
     }
 
     /**
-     * Creates and returns a data bundle of the admin associated with the login details passed in.
+     * Creates and returns an adminData of the admin associated with the login details passed in.
      * @param userName String - the username of the admin that wants to sign in.
-     * @return AdminData - the data bundle of the admin that wants to sign in.
+     * @return AdminData - the data of the admin that wants to sign in.
      */
     @Override
     public AdminData signIn(String userName, String password) {
@@ -47,9 +47,9 @@ public class AdminManager extends UserManager<Admin>{
     }
 
     /**
-     * Creates and returns a data bundle of the admin associated with the username passed in.
+     * Creates and returns data of the admin associated with the username passed in.
      * @param username String - username of the specified user.
-     * @return AdminData - data bundle of the admin associated with the username passed in.
+     * @return AdminData - data of the admin associated with the username passed in.
      */
     @Override
     public AdminData getUserData(String username) {

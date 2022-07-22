@@ -30,7 +30,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
      * @param context             Context - a reference to the context object, which stores the current controller and allows for
      *                            switching between controllers.
      * @param secretaryController SecretaryController - the previous controller object, allowing you to easily go back.
-     * @param patientData         PatientData - a data bundle containing the ID and attributes of the current loaded
+     * @param patientData         PatientData - a data containing the ID and attributes of the current loaded
      *                            patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,

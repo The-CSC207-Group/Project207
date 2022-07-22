@@ -8,7 +8,7 @@ import dataBundles.AvailabilityData;
 public class AvailabilityView extends EntityView<AvailabilityData> {
 
     /**
-     * @param item AvailabilityData bundle to view.
+     * @param item AvailabilityData  to view.
      * @return String representing item's full availability view.
      */
     @Override
@@ -19,7 +19,7 @@ public class AvailabilityView extends EntityView<AvailabilityData> {
     }
 
     /**
-     * @param item AvailabilityData bundle to view.
+     * @param item AvailabilityData  to view.
      * @return String representing item's day of week as a view.
      */
     public String viewDayOfWeek(AvailabilityData item) {
@@ -27,7 +27,7 @@ public class AvailabilityView extends EntityView<AvailabilityData> {
     }
 
     /**
-     * @param item AvailabilityData bundle to view.
+     * @param item AvailabilityData  to view.
      * @return String representing item's doctor start time as a view.
      */
     public String viewDoctorStartTime(AvailabilityData item) {
@@ -35,7 +35,7 @@ public class AvailabilityView extends EntityView<AvailabilityData> {
     }
 
     /**
-     * @param item AvailabilityData bundle to view.
+     * @param item AvailabilityData  to view.
      * @return String representing item's doctor end time as a view.
      */
     public String viewDoctorEndTime(AvailabilityData item) {

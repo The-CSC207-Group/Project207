@@ -8,7 +8,7 @@ import dataBundles.DoctorData;
 public class DoctorView extends UserView<DoctorData> {
 
     /**
-     * @param item DoctorData bundle to view.
+     * @param item DoctorData to view.
      * @return String representing item's full doctor view.
      */
     @Override
@@ -17,7 +17,7 @@ public class DoctorView extends UserView<DoctorData> {
     }
 
     /**
-     * @param item DoctorData bundle to view.
+     * @param item DoctorData to view.
      * @return String representing the doctor's username as a view.
      */
     @Override

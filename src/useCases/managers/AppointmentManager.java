@@ -35,8 +35,8 @@ public class AppointmentManager {
 
     /**
      * Book a doctor and patient specific appointment and store it in the appointment database.
-     * @param patientData PatientData - data bundle representing a patient entity.
-     * @param doctorData DoctorData - data bundle representing a doctor entity.
+     * @param patientData PatientData - data representing a patient entity.
+     * @param doctorData DoctorData - data representing a doctor entity.
      * @param year Integer - an integer value that represents a year.
      * @param month Integer - an integer value that represents a month of a year.
      * @param day Integer - an integer value that represents a day of a month.
@@ -65,7 +65,7 @@ public class AppointmentManager {
 
     /**
      * Removes an Appointment from the database.
-     * @param appointmentData AppointmentData - data bundle representing an appointment entity.
+     * @param appointmentData AppointmentData - data representing an appointment entity.
      */
     public void removeAppointment(AppointmentData appointmentData){
         appointmentDatabase.remove(appointmentData.getAppointmentId());

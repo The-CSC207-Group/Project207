@@ -20,7 +20,7 @@ public class DoctorController extends UserController<Doctor> {
      * Creates a new controller for handling the state of the program when a doctor is signed in.
      * @param context a reference to the context object, which stores the current controller and allows for switching
      *                between controllers.
-     * @param doctorData a data bundle containing the ID and attributes of the current doctor user.
+     * @param doctorData a data  containing the ID and attributes of the current doctor user.
      */
     public DoctorController(Context context, DoctorData doctorData){
         super(context, doctorData, new DoctorManager(context.getDatabase()), new DoctorScreenView());

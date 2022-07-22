@@ -30,7 +30,7 @@ public class SecretaryController extends UserController<Secretary> {
      *
      * @param context       Context - a reference to the context object, which stores the current controller and allows for
      *                      switching between controllers.
-     * @param secretaryData SecretaryData - a data bundle containing the ID and attributes of the current secretary
+     * @param secretaryData SecretaryData - a data containing the ID and attributes of the current secretary
      *                      user.
      */
     public SecretaryController(Context context, SecretaryData secretaryData) {

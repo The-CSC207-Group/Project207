@@ -9,7 +9,7 @@ import dataBundles.TimeBlockData;
 public class AppointmentView extends EntityView<AppointmentData> {
 
     /**
-     * @param item AppointmentData bundle to view.
+     * @param item AppointmentData  to view.
      * @return String representing item's full appointment view.
      */
     @Override

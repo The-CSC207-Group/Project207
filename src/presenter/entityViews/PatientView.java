@@ -8,7 +8,7 @@ import dataBundles.PatientData;
 public class PatientView extends UserView<PatientData> {
 
     /**
-     * @param item The patient data bundle to view.
+     * @param item The patient data to view.
      * @return Returns item's full patient view.
      */
     @Override
@@ -18,7 +18,7 @@ public class PatientView extends UserView<PatientData> {
     }
 
     /**
-     * @param item The patient data bundle to view.
+     * @param item The patient data to view.
      * @return Returns the patient's username as a view.
      */
     @Override
@@ -27,7 +27,7 @@ public class PatientView extends UserView<PatientData> {
     }
 
     /**
-     * @param item The patient data bundle to view.
+     * @param item The patient data to view.
      * @return Returns the patient's health number as a view.
      */
     public String viewHealthNumber(PatientData item) {

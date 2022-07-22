@@ -10,7 +10,7 @@ import java.util.List;
 public class TimeBlockView extends EntityView<TimeBlockData> {
 
     /**
-     * @param item The time block data bundle to view.
+     * @param item The time block data to view.
      * @return Returns item's full time block view.
      */
     @Override
@@ -20,14 +20,14 @@ public class TimeBlockView extends EntityView<TimeBlockData> {
     }
 
     /**
-     * @param item The time block data bundle to view.
+     * @param item The time block data to view.
      * @return Returns the time block's start time as a view.
      */
     public String viewStartTime(TimeBlockData item) {
         return "This time block's start time is " + item.getStartTime() + ".";
     }
     /**
-     * @param item The time block data bundle to view.
+     * @param item The time block data to view.
      * @return Returns the time block's end time as a view.
      */
     public String viewEndTime(TimeBlockData item) {

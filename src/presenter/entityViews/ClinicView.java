@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ClinicView extends EntityView<ClinicData> {
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing item's full clinic view.
      */
     @Override
@@ -23,7 +23,7 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing the clinic's name as a view.
      */
     public String viewClinicName(ClinicData item) {
@@ -32,7 +32,7 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing the clinic's address as a view.
      */
     public String viewAddress(ClinicData item) {
@@ -41,7 +41,7 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing the clinic's email as a view.
      */
     public String viewEmail(ClinicData item) {
@@ -50,7 +50,7 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing the clinic's time zone as a view.
      */
     public String viewTimeZone(ClinicData item) {
@@ -59,7 +59,7 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing the clinic's phone number as a view.
      */
     public String viewPhoneNumber(ClinicData item) {
@@ -68,7 +68,7 @@ public class ClinicView extends EntityView<ClinicData> {
     }
 
     /**
-     * @param item ClinicData bundle to view.
+     * @param item ClinicData to view.
      * @return String representing the clinic's hours of operation as a view.
      */
     public String viewClinicHours(ClinicData item) {
