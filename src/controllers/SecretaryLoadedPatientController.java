@@ -18,7 +18,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private final PatientData patientData;
     private final SecretaryController secretaryController;
-    private final PrescriptionView prescriptionView = new PrescriptionView();
     private final AppointmentManager appointmentManager;
     private final PrescriptionManager prescriptionManager;
     private final DoctorManager doctorManager;
@@ -28,11 +27,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *
+     * @param context             Context - a reference to the context object, which stores the current controller and allows for
+     *                            switching between controllers.
      * @param secretaryController SecretaryController - the previous controller object, allowing you to easily go back.
-     * @param patientData PatientData - a data bundle containing the ID and attributes of the current loaded
-     *                    patient user.
+     * @param patientData         PatientData - a data bundle containing the ID and attributes of the current loaded
+     *                            patient user.
      */
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
@@ -49,6 +49,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     /**
      * Creates a hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.
+     *
      * @return HashMap<String, Command> - HashMap of strings mapped to their respective doctor loaded patient commands.
      */
     @Override
@@ -99,6 +100,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
+
     private Command bookAppointment() {
         return (x) -> {
             LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
@@ -135,7 +137,9 @@ public class SecretaryLoadedPatientController extends TerminalController {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
-            if (index >= 0 && index < data.size()) {
+            if (index == null) {
+                secretaryScreenView.showDeleteNotAnIntegerError("null");
+            } else if (index < 0 || index > data.size()) {
                 secretaryScreenView.showDeleteOutOfRangeError();
             } else {
                 appointmentManager.removeAppointment(data.get(index));
@@ -148,7 +152,9 @@ public class SecretaryLoadedPatientController extends TerminalController {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
-            if (index >= 0 && index > appointments.size()) {
+            if (index == null) {
+                secretaryScreenView.showRescheduleNotAnIntegerError("null");
+            } else if (index >= 0 && index > appointments.size()) {
                 secretaryScreenView.showRescheduleOutOfRangeError();
             } else {
                 LocalDate day = secretaryScreenView.bookAppointmentDayPrompt();
