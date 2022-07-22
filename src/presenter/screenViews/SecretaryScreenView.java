@@ -1,7 +1,6 @@
 package presenter.screenViews;
 
 import dataBundles.*;
-import entities.Availability;
 import presenter.entityViews.AppointmentView;
 import presenter.entityViews.AvailabilityView;
 import presenter.entityViews.ContactView;
@@ -13,7 +12,6 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class SecretaryScreenView extends UserScreenView {
 
@@ -252,16 +250,6 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public String getTargetDoctor() {
         return input("Enter doctor username: ");
-    }
-
-    /**
-     * View details for each prescription
-     * @param prescriptionData takes in an arraylist consisting prescription data.
-     */
-    public void viewPrescriptionsDetailed(ArrayList<PrescriptionData> prescriptionData) {
-        for (PrescriptionData data : prescriptionData) {
-            prescriptionView.viewFull(data);
-        }
     }
 
     /**

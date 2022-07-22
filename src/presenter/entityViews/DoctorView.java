@@ -5,11 +5,11 @@ import dataBundles.DoctorData;
 /**
  * The Doctor entity's view.
  */
-public class DoctorView extends EntityView<DoctorData> {
+public class DoctorView extends UserView<DoctorData> {
 
     /**
-     * @param item The doctor data bundle to view.
-     * @return Returns item's full doctor view.
+     * @param item DoctorData bundle to view.
+     * @return String representing item's full doctor view.
      */
     @Override
     public String viewFull(DoctorData item) {
@@ -17,9 +17,10 @@ public class DoctorView extends EntityView<DoctorData> {
     }
 
     /**
-     * @param item The doctor data bundle to view.
-     * @return Returns the doctor's username as a view.
+     * @param item DoctorData bundle to view.
+     * @return String representing the doctor's username as a view.
      */
+    @Override
     public String viewUsername(DoctorData item) {
         return "Doctor username is " + item.getUsername() + ".";
     }
