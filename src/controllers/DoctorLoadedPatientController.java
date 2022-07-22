@@ -47,7 +47,6 @@ public class DoctorLoadedPatientController extends TerminalController {
     /**
      * Creates a Linked hashmap of all string representations of doctor loaded patient commands mapped to the method that each
      * command calls.
-     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded patient commands.
      */
     @Override

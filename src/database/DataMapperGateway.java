@@ -20,14 +20,6 @@ public interface DataMapperGateway<T> {
     T get(Integer id);
 
     /**
-     * Gets copy of an object of type T from the database.
-     * The copy is not linked to the database and therefore cannot modify it.
-     * @param id The unique identifier of that object.
-     * @return Object of type T.
-     */
-    T copy(Integer id);
-
-    /**
      * Access items in database as a stream.
      * @return Object of type T.
      */

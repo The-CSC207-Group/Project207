@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  * Use case class for handling operations and data pertaining to appointments.
  */
 public class AppointmentManager {
+
     private final DataMapperGateway<Appointment> appointmentDatabase;
     private final DataMapperGateway<Doctor> doctorDatabase;
     private final Database database;

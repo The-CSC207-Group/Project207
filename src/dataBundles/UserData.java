@@ -6,7 +6,7 @@ import entities.User;
  * Abstract user data class that provides general getters to different user data bundles.
  * @param <T> extends User - to be specified within each end user data class.
  */
-public abstract class UserData<T extends User> extends DataBundle{
+public abstract class UserData<T extends User> extends DataBundle {
 
     /**
      * User being stored

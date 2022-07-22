@@ -30,27 +30,28 @@ public class PatientController extends UserController<Patient> {
     /**
      * Creates a linked hashmap of all string representations of patient commands mapped to the method that each
      * command calls.
-     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective patient commands.
      */
     @Override
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
-        //pending implementation for phase 2
-        //commands.put("view appointments", ViewAppointments());
+
+        /* PENDING IMPLEMENTATION IN PHASE 2
+        commands.put("view appointments", ViewAppointments()); */
 
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
         prescriptionController.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.putAll(super.AllCommands());
         return commands;
     }
-//pending implementation for phase 2
-//    private Command ViewAppointments() {
-//        AppointmentManager appointmentManager = new AppointmentManager(getDatabase());
-//        return (x) -> {
-//            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-//            patientScreenView.viewAppointments(appointments);
-//        };
-//    }
+
+    /* PENDING IMPLEMENTATION IN PHASE 2
+    private Command ViewAppointments() {
+        AppointmentManager appointmentManager = new AppointmentManager(getDatabase());
+        return (x) -> {
+            ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
+            patientScreenView.viewAppointments(appointments);
+        };
+    } */
 
 }

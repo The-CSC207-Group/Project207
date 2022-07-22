@@ -8,7 +8,7 @@ import java.time.LocalTime;
 /**
  * Wrapper class for Availability entity.
  */
-public class AvailabilityData{
+public class AvailabilityData {
 
     private final Availability availability;
     /**

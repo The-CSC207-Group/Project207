@@ -41,7 +41,6 @@ public class AdminController extends UserController<Admin> {
 
     /**
      * Creates a Linked hashmap of all string representations of admin commands mapped to the method that each command calls.
-     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective admin commands.
      */
     @Override

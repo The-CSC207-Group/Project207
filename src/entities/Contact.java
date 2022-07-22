@@ -48,17 +48,7 @@ public class Contact extends JsonSerializable {
     /**
      * Creates an empty instance of Contact.
      */
-    public Contact(){
-//        this.name = "";
-//        this.email = "";
-//        this.phoneNumber = "";
-//        this.address = "";
-//        this.birthday = null;
-//        this.emergencyContactName = "";
-//        this.emergencyContactEmail = "";
-//        this.emergencyContactPhoneNumber = "";
-//        this.emergencyRelationship = "";
-    }
+    public Contact(){}
 
     /**
      * @return String representing the name of the contact.
