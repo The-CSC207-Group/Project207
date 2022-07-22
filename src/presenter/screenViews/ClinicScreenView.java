@@ -6,7 +6,7 @@ package presenter.screenViews;
  */
 public class ClinicScreenView extends ScreenView {
     /**
-     * Shows the welcome message that is presented at the start of the program.
+     * Shows the welcome message that is presented at the start of the screen.
      */
     public void showWelcomeMessage() {
         infoMessage("Entered clinic details menu.");
