@@ -26,13 +26,20 @@ public class ClinicManagerTests {
     public void changePhone(){
         Database originalDatabase = new Database(databaseFolder.toString());
 
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-        originalDatabase.setClinic(new Clinic("ABC", "123", "abc",
+
+//        originalDatabase.setClinic(new Clinic("ABC", "123", "abc",
+//                ZoneId.of("US/Eastern"),
+//                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+//                        LocalTime.of(17, 0))))));
+
+        Clinic clinic = new Clinic("ABC", "123", "abc", "address",
                 ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
-        ClinicData clinicData = new ClinicData(originalDatabase.getClinic());
-        clinicManager.changePhone("12345");
+                LocalTime.of(17, 0)))));
+        ClinicManager clinicManager = new ClinicManager(originalDatabase);
+        ClinicData clinicData = new ClinicData(clinic);
+        originalDatabase.setClinic(clinic);
+        clinicManager.changeClinicPhoneNumber("12345");
 
         assertEquals("The original phone number and the new phone number are the same",
                 clinicData.getPhoneNumber(), "12345");
@@ -44,12 +51,12 @@ public class ClinicManagerTests {
 
 
 
-    @Test(timeout = 1000)
-    public void changeAddress(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        originalDatabase.setClinic(new Clinic("", "", "", ZoneId.of("US/Eastern"),
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-    }
+//    @Test(timeout = 1000)
+//    public void changeAddress(){
+//        Database originalDatabase = new Database(databaseFolder.toString());
+//        originalDatabase.setClinic(new Clinic("", "", "", ZoneId.of("US/Eastern"),
+//                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+//                        LocalTime.of(17, 0))))));
+//        ClinicManager clinicManager = new ClinicManager(originalDatabase);
+//    }
 }

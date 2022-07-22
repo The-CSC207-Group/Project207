@@ -310,8 +310,8 @@ public class DatabaseTests {
         ZoneId torontoID = ZoneId.of("Canada/Eastern");
         ArrayList<Availability> clinicHours = new ArrayList<>();
         clinicHours.add(new Availability(DayOfWeek.of(1), LocalTime.of(8, 0), LocalTime.of(20, 0)));
-        Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "21 jump street",
-                torontoID, clinicHours);
+        Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "abc@gmail.com",
+                "21 jump street", torontoID, clinicHours);
 
         originalDatabase.setClinic(originalClinic);
 
