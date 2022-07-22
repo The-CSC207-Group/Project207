@@ -26,7 +26,7 @@ public class PatientManager extends UserManager<Patient> {
      * Creates a new patient and stores it in the database.
      * @param username String - username of the new patient, cannot exist in the database yet.
      * @param password String password for the user.
-     * @return PatientData - data bundle consisting of information for this patient,
+     * @return PatientData - data consisting of information for this patient,
      * null if username exists in database.
      */
     public PatientData createPatient(String username, String password) {
@@ -39,9 +39,9 @@ public class PatientManager extends UserManager<Patient> {
     }
 
     /**
-     * Creates and returns a data bundle of the patient associated with the login details passed in.
+     * Creates and returns a data of the patient associated with the login details passed in.
      * @param userName String - the username of the patient that wants to sign in.
-     * @return PatientData - the data bundle of the patient that wants to sign in.
+     * @return PatientData - the data of the patient that wants to sign in.
      */
     @Override
     public PatientData signIn(String userName, String password) {
@@ -50,9 +50,9 @@ public class PatientManager extends UserManager<Patient> {
     }
 
     /**
-     * Creates and returns a data bundle of the patient associated with the username passed in.
+     * Creates and returns a data of the patient associated with the username passed in.
      * @param username String - username of the specified user.
-     * @return PatientData - data bundle of the patient associated with the username passed in.
+     * @return PatientData - data of the patient associated with the username passed in.
      */
     @Override
     public PatientData getUserData(String username) {

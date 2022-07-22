@@ -31,7 +31,7 @@ public class LogManager {
      * Method for adding a log with some message to the user. Assumes userId is valid.
      * @param message String - message attached with to the log.
      * @param userId Integer - id of the user that the log will be attached to.
-     * @return LogData - data bundle representing a log with the information passed in.
+     * @return LogData - data representing a log with the information passed in.
      */
     public LogData addLog(String message, Integer userId){
         Log log = new Log(userId, message);

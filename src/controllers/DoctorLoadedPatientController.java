@@ -31,8 +31,8 @@ public class DoctorLoadedPatientController extends TerminalController {
      *                switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
-     * @param doctorData DoctorData - a data bundle containing the ID and attributes of the current doctor user.
-     * @param patientData PatientData - a data bundle containing the ID and attributes of the current loaded
+     * @param doctorData DoctorData - a data containing the ID and attributes of the current doctor user.
+     * @param patientData PatientData - a data containing the ID and attributes of the current loaded
      *                    patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,

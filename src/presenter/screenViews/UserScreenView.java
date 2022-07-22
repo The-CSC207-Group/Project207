@@ -50,7 +50,7 @@ public abstract class UserScreenView<T extends UserData<?>> extends ScreenView {
 
     /**
      * Displays clinic information to users.
-     * @param clinicData ClinicData - a data bundle consisting of the information about the clinic associated
+     * @param clinicData ClinicData - data consisting of the information about the clinic associated
      *                   with this program
      */
     public void displayClinicInfo(ClinicData clinicData) {

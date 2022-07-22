@@ -8,7 +8,7 @@ import dataBundles.PrescriptionData;
 public class PrescriptionView extends EntityView<PrescriptionData> {
 
     /**
-     * @param item The prescription data bundle to view.
+     * @param item The prescription data to view.
      * @return Returns item's full prescription view.
      */
     @Override
@@ -20,7 +20,7 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     }
 
     /**
-     * @param item The prescription data bundle to view.
+     * @param item The prescription data to view.
      * @return Returns the prescription's date noted as a view.
      */
     public String viewDateNoted(PrescriptionData item) {
@@ -28,7 +28,7 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     }
 
     /**
-     * @param item The prescription data bundle to view.
+     * @param item The prescription data to view.
      * @return Returns the prescription's expiry date as a view.
      */
     public String viewExpiryDate(PrescriptionData item) {
@@ -36,7 +36,7 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     }
 
     /**
-     * @param item The prescription data bundle to view.
+     * @param item The prescription data to view.
      * @return Returns the prescription's header as a view.
      */
     public String viewHeader(PrescriptionData item) {
@@ -44,7 +44,7 @@ public class PrescriptionView extends EntityView<PrescriptionData> {
     }
 
     /**
-     * @param item The prescription data bundle to view.
+     * @param item The prescription data to view.
      * @return Returns the prescription's body as a view.
      */
     public String viewBody(PrescriptionData item) {

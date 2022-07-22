@@ -62,7 +62,7 @@ public class PrescriptionManager {
      * @param patientData PatientData - data pertaining to a specific patient in the database.
      * @param doctorData DoctorData - data pertaining to a specific doctor in the database.
      * @param expiryDate ZonedDateTime - date the prescription expires.
-     * @return PrescriptionData - prescription data bundle that stores the information passed in.
+     * @return PrescriptionData - prescription data that stores the information passed in.
      */
     public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
                                                ZonedDateTime expiryDate){

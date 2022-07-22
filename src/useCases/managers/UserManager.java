@@ -33,7 +33,7 @@ public abstract class UserManager<T extends User> {
 
     /**
      * Change the password of a user.
-     * @param dataBundle UserData<T> where T extends User - the data bundle associated with a user.
+     * @param dataUserData<T> where T extends User - the data associated with a user.
      * @param password String - new password of the user.
      * @return boolean - true if the user exists in the database and operation is carried out, false if the user associated
      * with the userId stored in userData does not exist in the database.
@@ -65,7 +65,7 @@ public abstract class UserManager<T extends User> {
 
     /**
      * Deletes a user passed into the parameters
-     * @param user UserData<T> where T extends User - the data bundle representing the user that is to be deleted.
+     * @param user UserData<T> where T extends User - the data representing the user that is to be deleted.
      */
     public void deleteUserByData(UserData<T> user){
         deleteUser(user.getUsername());
@@ -85,17 +85,17 @@ public abstract class UserManager<T extends User> {
     }
 
     /**
-     * Returns the data bundle representing the user associated with the passed in username is the password is correct.
+     * Returns the data representing the user associated with the passed in username is the password is correct.
      * @param username String - username of the user that wants to sign in.
      * @param password String - password of the user that wants to sign in.
-     * @return UserData<T> where T extends User - the data bundle representing the user that wants to sign in.
+     * @return UserData<T> where T extends User - the data representing the user that wants to sign in.
      */
     public abstract UserData<T> signIn(String username, String password);
 
     /**
-     * Returns the data bundle representing the user associated with the passed in username.
+     * Returns the data representing the user associated with the passed in username.
      * @param username String - username of the specified user.
-     * @return UserData<T> where T extends User - the data bundle representing the specified user.
+     * @return UserData<T> where T extends User - the data representing the specified user.
      */
     public abstract UserData<T> getUserData(String username);
 
@@ -108,6 +108,13 @@ public abstract class UserManager<T extends User> {
             return null;
         }
     }
+
+    /**
+     * Used to see if a combination of username and password can sign in.
+     * @param username a string that represents the unique account username.
+     * @param password a string that represents a key required to log into an account.
+     * @return a boolean representing if the given username and password can log into an account.
+     */
     public boolean canSignIn(String username, String password) {
         T user = getUser(username);
 

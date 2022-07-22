@@ -37,9 +37,9 @@ public class DoctorManagerTests {
 
         DoctorData AppointmentData = doctorManager.createDoctor(username, password);
 
-        /* Testing if the return doctor data bundle is valid by testing if the fields of are equal to the parameters of
+        /* Testing if the return doctor data is valid by testing if the fields of are equal to the parameters of
         createDoctor */
-        assertEquals("The created doctor data bundle should have the same name as the parameters of " +
+        assertEquals("The created doctor data should have the same name as the parameters of " +
                 "createDoctor method", AppointmentData.getUsername(), username);
 
         Doctor loadedDoctor = doctorDatabase.get(AppointmentData.getId());

@@ -4,12 +4,15 @@ import database.Database;
 import entities.Availability;
 import entities.Clinic;
 import entities.Doctor;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.ClinicManager;
+import utilities.DeleteUtils;
 
+import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -17,46 +20,115 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ClinicManagerTests {
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
     @Test(timeout = 1000)
-    public void changePhone(){
+    public void changeClinicPhoneNumber(){
         Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
 
-
-//        originalDatabase.setClinic(new Clinic("ABC", "123", "abc",
-//                ZoneId.of("US/Eastern"),
-//                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-//                        LocalTime.of(17, 0))))));
-
-        Clinic clinic = new Clinic("ABC", "123", "abc", "address",
+        Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
                 ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                 LocalTime.of(17, 0)))));
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-        ClinicData clinicData = new ClinicData(clinic);
-        originalDatabase.setClinic(clinic);
-        clinicManager.changeClinicPhoneNumber("12345");
 
+        Integer clinicID = clinicDatabase.add(clinic);
+
+        ClinicManager clinicManager = new ClinicManager(originalDatabase);
+
+        assertEquals("The original phone should stay same before changing it.",
+                clinicDatabase.get(clinicID).getPhoneNumber(), "123");
+
+        clinicManager.changeClinicPhoneNumber("12345");
         assertEquals("The original phone number and the new phone number are the same",
-                clinicData.getPhoneNumber(), "12345");
+                clinicDatabase.get(clinicID).getPhoneNumber(), "12345");
+
+        assertNotEquals("The phone number in the database doesnt match the inputted phone number.",
+                clinicDatabase.get(clinicID).getPhoneNumber(), "123");
+    }
+    @Test(timeout = 1000)
+    public void changeClinicAddress(){
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
+
+        Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
+                ZoneId.of("US/Eastern"),
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                        LocalTime.of(17, 0)))));
+
+        Integer clinicID = clinicDatabase.add(clinic);
+
+        ClinicManager clinicManager = new ClinicManager(originalDatabase);
+
+        assertEquals("The original address should stay same before changing it.",
+                clinicDatabase.get(clinicID).getAddress(), "address");
+
+        clinicManager.changeClinicAddress("abcde");
+
+        assertEquals("The original address and the new address are the same",
+                clinicDatabase.get(clinicID).getAddress(), "abcde");
+
+        assertNotEquals("The address in database and the inputted address arent the same",
+                clinicDatabase.get(clinicID).getAddress(), "abcdefgh");
+    }
+    @Test(timeout = 1000)
+    public void changeClinicName(){
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
+
+        Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
+                ZoneId.of("US/Eastern"),
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                        LocalTime.of(17, 0)))));
+
+        Integer clinicID = clinicDatabase.add(clinic);
+
+        ClinicManager clinicManager = new ClinicManager(originalDatabase);
+
+        assertEquals("The original name should stay same before changing it.",
+                clinicDatabase.get(clinicID).getName(), "ABC");
+
+        clinicManager.changeClinicName("The Clinic");
+
+        assertEquals("The original name and the new name are the same",
+                clinicDatabase.get(clinicID).getName(), "The Clinic");
+
+        assertNotEquals("The clinic's name in database and input name aren't the same",
+                clinicDatabase.get(clinicID).getName(), "A Clinic");
+    }
+    @Test(timeout = 1000)
+    public void changeClinicEmailAddress(){
+        Database originalDatabase = new Database(databaseFolder.toString());
+        DataMapperGateway<Clinic> clinicDatabase = originalDatabase.getClinicDatabase();
+
+        Clinic clinic = new Clinic("ABC", "123", "abc@gmail.com", "address",
+                ZoneId.of("US/Eastern"),
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                        LocalTime.of(17, 0)))));
+
+        Integer clinicID = clinicDatabase.add(clinic);
+
+        ClinicManager clinicManager = new ClinicManager(originalDatabase);
+
+        assertEquals("The original address should stay same before changing it.",
+                clinicDatabase.get(clinicID).getEmail(), "abc@gmail.com");
+
+        clinicManager.changeClinicEmail("clinic@gmail.com");
+
+        assertEquals("The original address and the new address are the same",
+                clinicDatabase.get(clinicID).getEmail(), "clinic@gmail.com");
+
+        assertNotEquals("The address in the database and the inputted address arent the same",
+                clinicDatabase.get(clinicID).getEmail(), "clinic@yahoo.com");
     }
 
-
-
-
-
-
-
-//    @Test(timeout = 1000)
-//    public void changeAddress(){
-//        Database originalDatabase = new Database(databaseFolder.toString());
-//        originalDatabase.setClinic(new Clinic("", "", "", ZoneId.of("US/Eastern"),
-//                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-//                        LocalTime.of(17, 0))))));
-//        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-//    }
+    @After
+    public void after() {
+        DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
+    }
 }
+

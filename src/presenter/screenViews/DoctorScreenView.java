@@ -99,7 +99,7 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Error raised when the user inputted integer is outside the size of the given data bundle list
+     * Error raised when the user inputted integer is outside the size of the given data list
      */
     public void showDeleteReportOutOfRangeError() {
         showDeleteOutOfRangeError("report");
@@ -155,7 +155,7 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Error raised when the user inputted integer is outside the size of the given data bundle list.
+     * Error raised when the user inputted integer is outside the size of the given data list.
      */
     public void showDeleteAvailabilityOutOfRangeError() {
         showDeleteOutOfRangeError("availability");
@@ -183,7 +183,7 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Error raised when the user inputted integer is outside the size of the given data bundle list.
+     * Error raised when the user inputted integer is outside the size of the given data list.
      */
     public void showDeleteAbsenceOutOfRangeError() {
         showDeleteOutOfRangeError("report");
