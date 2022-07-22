@@ -81,12 +81,8 @@ public abstract class UserController<T extends User> extends TerminalController 
         UserController<?> currentController = this;
         ContactManager contactManager = new ContactManager(getDatabase());
         ContactData contactData = contactManager.getContactData(userData);
-        ContactController contactController = new ContactController(getContext(), currentController, contactData,
-                userScreenView);
-        return (x) -> {
-            userScreenView.showEnteredContactDetailsMenu();
-            changeCurrentController(contactController);
-        };
+        ContactController contactController = new ContactController(getContext(), currentController, contactData);
+        return (x) -> changeCurrentController(contactController);
     }
 
     private Command SignOut(){

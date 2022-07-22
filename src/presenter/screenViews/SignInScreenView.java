@@ -9,7 +9,7 @@ public class SignInScreenView extends ScreenView {
     /**
      * Welcome message displayed before the user logs in.
      */
-    public void welcomeMessage() {
+    public void showWelcomeMessage() {
         infoMessage("Welcome to the program! Please sign in to continue.");
     }
 

@@ -1,6 +1,7 @@
 package controllers;
 
 import dataBundles.ContactData;
+import presenter.screenViews.ContactScreenView;
 import presenter.screenViews.UserScreenView;
 import useCases.managers.ContactManager;
 
@@ -13,7 +14,7 @@ import java.util.HashMap;
 public class ContactController extends TerminalController {
 
     private final ContactData contactData;
-    private final UserScreenView userScreenView;
+    private final ContactScreenView contactScreenView;
     private final ContactManager contactManager;
     private final UserController<?> previousController;
 
@@ -25,16 +26,14 @@ public class ContactController extends TerminalController {
      *                           controller object.
      * @param contactData ContactData - a data bundle storing the ID and attributes of the contact object associated
      *                    with the current user.
-     * @param userScreenView UserScreenView - the presenter object of the user that this controller's contact data is
-     *                       associated with.
      */
     public ContactController(Context context, UserController<?> previousController,
-                             ContactData contactData, UserScreenView userScreenView) {
+                             ContactData contactData) {
         super(context);
         this.previousController = previousController;
         this.contactData = contactData;
-        this.userScreenView = userScreenView;
         this.contactManager = new ContactManager(getDatabase());
+        this.contactScreenView = new ContactScreenView();
     }
 
     /**
@@ -58,113 +57,113 @@ public class ContactController extends TerminalController {
     }
 
     private Command ViewContactInformation() {
-        return (x) -> userScreenView.displayContactInfo(contactData);
+        return (x) -> contactScreenView.displayContactInfo(contactData);
     }
 
     private Command ChangeName() {
         return (x) -> {
-            String newName = userScreenView.showNamePrompt(false);
+            String newName = contactScreenView.showNamePrompt(false);
             if (contactManager.changeName(contactData, newName)) {
-                userScreenView.showSuccessfullyChangedName(false);
+                contactScreenView.showSuccessfullyChangedName(false);
             }
             else {
-                userScreenView.showNameFormatError();
+                contactScreenView.showNameFormatError();
             }
         };
     }
 
     private Command ChangeEmail() {
         return (x) -> {
-            String newEmail = userScreenView.showEmailPrompt(false);
+            String newEmail = contactScreenView.showEmailPrompt(false);
             if (contactManager.changeEmail(contactData, newEmail)) {
-                userScreenView.showSuccessfullyChangedEmail(false);
+                contactScreenView.showSuccessfullyChangedEmail(false);
             }
             else {
-                userScreenView.showEmailFormatError();
+                contactScreenView.showEmailFormatError();
             }
         };
     }
 
     private Command ChangePhoneNumber() {
         return (x) -> {
-            String newPhoneNumber = userScreenView.showPhoneNumberPrompt(false);
+            String newPhoneNumber = contactScreenView.showPhoneNumberPrompt(false);
             if (contactManager.changePhoneNumber(contactData, newPhoneNumber)) {
-                userScreenView.showSuccessfullyChangedPhoneNumber(false);
+                contactScreenView.showSuccessfullyChangedPhoneNumber(false);
             }
             else {
-                userScreenView.showPhoneNumberFormatError();
+                contactScreenView.showPhoneNumberFormatError();
             }
         };
     }
 
     private Command ChangeAddress() {
         return (x) -> {
-            String newAddress = userScreenView.showAddressPrompt();
+            String newAddress = contactScreenView.showAddressPrompt();
             if (contactManager.changeAddress(contactData, newAddress)) {
-                userScreenView.showSuccessfullyChangedAddress();
+                contactScreenView.showSuccessfullyChangedAddress();
             }
             else {
-                userScreenView.showAddressFormatError();
+                contactScreenView.showAddressFormatError();
             }
         };
     }
 
     private Command ChangeBirthday() {
         return (x) -> {
-            LocalDate newBirthday = userScreenView.showBirthdayPrompt();
+            LocalDate newBirthday = contactScreenView.showBirthdayPrompt();
             if (contactManager.changeBirthday(contactData, newBirthday)) {
-                userScreenView.showSuccessfullyChangedBirthday();
+                contactScreenView.showSuccessfullyChangedBirthday();
             }
             else {
-                userScreenView.showBirthdayFormatError();
+                contactScreenView.showBirthdayFormatError();
             }
         };
     }
 
     private Command ChangeEmergencyContactName() {
         return (x) -> {
-            String newEmergencyContactName = userScreenView.showNamePrompt(true);
+            String newEmergencyContactName = contactScreenView.showNamePrompt(true);
             if (contactManager.changeEmergencyContactName(contactData, newEmergencyContactName)) {
-                userScreenView.showSuccessfullyChangedName(true);
+                contactScreenView.showSuccessfullyChangedName(true);
             }
             else {
-                userScreenView.showNameFormatError();
+                contactScreenView.showNameFormatError();
             }
         };
     }
 
     private Command ChangeEmergencyContactEmail() {
         return (x) -> {
-            String newEmergencyContactEmail = userScreenView.showEmailPrompt(true);
+            String newEmergencyContactEmail = contactScreenView.showEmailPrompt(true);
             if (contactManager.changeEmergencyContactEmail(contactData, newEmergencyContactEmail)) {
-                userScreenView.showSuccessfullyChangedEmail(true);
+                contactScreenView.showSuccessfullyChangedEmail(true);
             }
             else {
-                userScreenView.showEmailFormatError();
+                contactScreenView.showEmailFormatError();
             }
         };
     }
 
     private Command ChangeEmergencyContactPhoneNumber() {
         return (x) -> {
-            String newEmergencyContactPhoneNumber = userScreenView.showPhoneNumberPrompt(true);
+            String newEmergencyContactPhoneNumber = contactScreenView.showPhoneNumberPrompt(true);
             if (contactManager.changeEmergencyContactPhoneNumber(contactData, newEmergencyContactPhoneNumber)) {
-                userScreenView.showSuccessfullyChangedPhoneNumber(true);
+                contactScreenView.showSuccessfullyChangedPhoneNumber(true);
             }
             else {
-                userScreenView.showPhoneNumberFormatError();
+                contactScreenView.showPhoneNumberFormatError();
             }
         };
     }
 
     private Command ChangeEmergencyContactRelationship() {
         return (x) -> {
-            String newEmergencyContactRelationship = userScreenView.showEmergencyRelationshipPrompt();
+            String newEmergencyContactRelationship = contactScreenView.showEmergencyRelationshipPrompt();
             if (contactManager.changeEmergencyRelationship(contactData, newEmergencyContactRelationship)) {
-                userScreenView.showSuccessfullyChangedEmergencyRelationship();
+                contactScreenView.showSuccessfullyChangedEmergencyRelationship();
             }
             else {
-                userScreenView.showEmergencyRelationshipError();
+                contactScreenView.showEmergencyRelationshipError();
             }
         };
     }
