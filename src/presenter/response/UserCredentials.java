@@ -2,7 +2,6 @@ package presenter.response;
 
 import java.util.Objects;
 
-
 public final class UserCredentials {
 
     private final String username;

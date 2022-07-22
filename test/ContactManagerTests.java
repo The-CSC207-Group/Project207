@@ -192,12 +192,6 @@ public class ContactManagerTests {
         Assert.assertEquals(contactManager.getContactData(patientData).getEmergencyRelationship(), "Father");
     }
 
-
-
-
-
-
-
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
