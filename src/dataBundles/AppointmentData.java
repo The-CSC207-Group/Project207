@@ -1,8 +1,6 @@
 package dataBundles;
 
 import entities.Appointment;
-import entities.TimeBlock;
-
 
 /**
  * Wrapper class for appointment entity.

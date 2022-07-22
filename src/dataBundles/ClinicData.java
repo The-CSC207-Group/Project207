@@ -1,8 +1,6 @@
 package dataBundles;
 
-import entities.Availability;
 import entities.Clinic;
-import entities.TimeBlock;
 
 import java.time.ZoneId;
 import java.util.ArrayList;

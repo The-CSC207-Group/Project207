@@ -3,7 +3,6 @@ package controllers;
 import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
 import presenter.response.PrescriptionDetails;
-import presenter.response.ReportDetails;
 import presenter.screenViews.DoctorScreenView;
 import useCases.managers.*;
 

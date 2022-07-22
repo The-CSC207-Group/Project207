@@ -1,19 +1,11 @@
 package controllers;
 
-import dataBundles.AvailabilityData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
-import dataBundles.TimeBlockData;
 import entities.Doctor;
 import presenter.screenViews.DoctorScreenView;
 import useCases.managers.*;
-import utilities.TimeUtils;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 /**
  * Controller class that processes the commands that a patient passes in.

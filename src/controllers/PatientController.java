@@ -1,14 +1,10 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
-import dataBundles.AppointmentData;
 import dataBundles.PatientData;
 import entities.Patient;
 import presenter.screenViews.PatientScreenView;
-import useCases.managers.AppointmentManager;
 import useCases.managers.PatientManager;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
