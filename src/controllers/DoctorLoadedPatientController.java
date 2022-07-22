@@ -54,8 +54,10 @@ public class DoctorLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
-        //pending implementation for phase 2
-        //commands.put("view appointments", ViewPatientAppointments());
+
+        /* PENDING IMPLEMENTATION IN PHASE 2
+        commands.put("view appointments", ViewPatientAppointments()); */
+
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
         commands.put("delete report", deleteReport());
@@ -90,11 +92,12 @@ public class DoctorLoadedPatientController extends TerminalController {
             }
         };
     }
-//pending implementation for phase 2
-//    private Command ViewPatientAppointments() {
-//        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
-//                .getPatientAppointments(patientData));
-//    }
+
+/* PENDING IMPLEMENTATION IN PHASE 2
+    private Command ViewPatientAppointments() {
+        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
+                .getPatientAppointments(patientData));
+    } */
 
     private Command getReport() {
         return (x) -> new ReportManager(getDatabase()).getReportData(patientData);

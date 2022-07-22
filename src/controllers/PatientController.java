@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
  */
 public class PatientController extends UserController<Patient> {
 
-    private final PatientScreenView patientScreenView = new PatientScreenView();
+    // private final PatientScreenView patientScreenView = new PatientScreenView();
     private final PatientData patientData;
 
     /**
