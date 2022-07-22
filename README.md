@@ -23,6 +23,66 @@ Use `help` to see all possible commands at any point of the program.
 To properly close the program, use the built-in `exit` command that lives in the user login page in order to save data
 to the UserJsonDatabase. If you already logged into a user, use the `sign out` command and then use the `exit` command.
 
+## Design patterns
+
+
+### state pattern
+
+The state of the program is handled via the state pattern. For each possible state the program can be in there exists a
+unique controller. Then when the state of the program changes, we change the current controller. The current controller
+is stored in the Context and every controller has a link to the context in order to change the current controller.
+The while loop for the program exists completely in the context and the job of each controller is just to proccess a 
+single command and if needed change the current controller.
+
+For example the sign in controller processes the command sign in. If it's an unsuccessful sign in it does nothing
+leaving the current controller the same (in this case the sign in controller) if it succeeds it decided which controller
+to swap to. In this case one of the User Controllers.
+
+### Command pattern
+
+Instead of processing input via a long switch statement we instead do it by storing functions in a hashmap where the
+command input string is the key that is linked to the function we want to run. This provided us with numerous benefits. It allowed easy 
+inheritance of commands just by adding maps to each other. As well as providing easy help functionality that never got
+decoupled from the state of the program.
+
+### Iterator/Stream pattern and higher order functions.
+
+We added the ability to turn every database into a stream. allowing us to process them using higher order functions.
+this simplified a lot of complex code into a more readable alternative, and encouraged the reuse of logic.
+This pattern is very similar to the iterator pattern and in more modern languages is often implemented together with the
+iterator pattern (in rust for example streams are actually called iterators). And in java any stream can be turned into
+an iterator.
+The sole difference is that the stream pattern encourages the use of higher order functions such as map and filter and
+getByCondition instead of manual for loops.
+
+an illustration of the difference can be seen in the following code snippets 
+
+```
+Item getItemByName(String name){
+    return database.getBycondition(x -> x.getname.equals(name));
+}
+List<Appointments> getAppointmentsbyDoctorAndPatient(String patientName, String doctorName){
+    return appointmentdatabase.stream()
+                .filter(x -> x.patientname.eqauls(patientname))
+                .filter(x -> x.doctorname.equals(doctorname))
+
+Item getItemByname(String name) {
+    for (x : database.Iterator){
+        if (x.getname.equals(name)){
+            return x
+            }
+    }
+List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String doctorName){
+    List<Appointments> result = new ArrayList();
+    for (x : apointmentdatabase.iterator){
+        if (x.patientname.equals(patientname) | x.doctorname.equals(doctorname){
+            result.append(x)
+            }
+    return result;
+```
+
+ 
+
 ## Command List:
 
 ### Pre-Login:

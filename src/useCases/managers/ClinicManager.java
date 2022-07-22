@@ -6,6 +6,7 @@ import entities.Clinic;
 
 import java.util.regex.Pattern;
 
+
 public class ClinicManager {
     private final Clinic clinic;
 
