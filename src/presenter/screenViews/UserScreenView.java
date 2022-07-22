@@ -1,12 +1,13 @@
 package presenter.screenViews;
 
 import dataBundles.*;
+import entities.User;
 import presenter.entityViews.*;
 import presenter.response.PasswordResetDetails;
 
 import java.util.List;
 
-public abstract class UserScreenView extends ScreenView {
+public abstract class UserScreenView<T extends UserData<?>> extends ScreenView {
 
     /**
      * Show user a password reset prompt with a confirmation.
@@ -43,25 +44,9 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(output);
     }
 
-    public void displayAdminInfo(AdminData adminData) {
-        AdminView adminView = new AdminView();
-        infoMessage(adminView.viewFull(adminData));
-    }
-
-    public void displayDoctorInfo(DoctorData doctorData) {
-        DoctorView doctorView = new DoctorView();
-        infoMessage(doctorView.viewFull(doctorData));
-    }
-
-    public void displayPatientInfo(PatientData patientData) {
-        PatientView patientView = new PatientView();
-        infoMessage(patientView.viewFull(patientData));
-    }
-
-    public void displaySecretaryInfo(SecretaryData secretaryData) {
-        SecretaryView secretaryView = new SecretaryView();
-        infoMessage(secretaryView.viewFull(secretaryData));
-    }
+//    public void displayUserInfo(UserData<?> userData, UserView<T> userView) {
+//        infoMessage(userView.viewFull(userData));
+//    }
 
     public void showWelcomeUserMessage(UserData user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
