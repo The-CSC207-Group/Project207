@@ -3,8 +3,6 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Doctor;
-import entities.Patient;
 import entities.Prescription;
 import org.junit.After;
 import org.junit.Assert;

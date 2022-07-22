@@ -1,7 +1,6 @@
 import dataBundles.LogData;
 import dataBundles.PatientData;
 import database.Database;
-import entities.Log;
 import entities.Patient;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +9,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.managers.LogManager;
 import utilities.DeleteUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -79,7 +77,6 @@ public class LogManagerTests {
         ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
         Assert.assertTrue("Since the user doesn't exist, we should get an empty arraylist", logArrayList.isEmpty());
     }
-
 
 
     @After
