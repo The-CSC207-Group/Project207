@@ -55,6 +55,23 @@ public class KeyDelegator {
     }
 
     /**
+     * Remove the items unique field from the set of unique fields during the removal of that item.
+     * @param item A database entity.
+     */
+    public void removeItem(Object item) {
+        if (uniqueFieldMethod != null) {
+            Object result = null;
+            try {
+                result = uniqueFieldMethod.invoke(item);
+            } catch (Exception ignored) {}
+
+            if (result != null) {
+                uniqueFieldObjects.remove(result);
+            }
+        }
+    }
+
+    /**
      * Set the method to use to get the unique Field.
      * @param uniqueFieldMethod Method used to get the field of an Entity.
      */

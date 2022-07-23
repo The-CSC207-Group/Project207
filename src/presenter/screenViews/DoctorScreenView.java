@@ -48,7 +48,7 @@ public class DoctorScreenView extends UserScreenView {
     public Integer deletePrescriptionPrompt(ContactData patientContact, List<PrescriptionData> prescriptionData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " prescriptions to delete:");
-        new PrescriptionView().viewFullAsEnumerationFromList(prescriptionData);
+        infoMessage(new PrescriptionView().viewFullAsEnumerationFromList(prescriptionData));
         return deleteItemFromEnumerationPrompt("prescription");
     }
 
@@ -82,6 +82,9 @@ public class DoctorScreenView extends UserScreenView {
         String body = input("Enter your prescription body: ");
         infoMessage("Enter the expiry date:");
         LocalDate expiryDate = showLocalDatePrompt();
+        if (expiryDate == null) {
+            return null;
+        }
         return new PrescriptionDetails(header, body, expiryDate.atStartOfDay(ZoneId.of("US/Eastern")));
     }
 
@@ -90,6 +93,13 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void showSuccessfullyCreatedPrescription() {
         successMessage("Successfully created prescription.");
+    }
+
+    /**
+     * Error message when the inputted expiry date is not valid.
+     */
+    public void showInvalidPrescriptionDateError() {
+        errorMessage("Cannot create prescription: invalid expiry date.");
     }
 
     /**

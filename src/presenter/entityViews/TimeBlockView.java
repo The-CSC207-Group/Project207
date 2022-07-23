@@ -1,8 +1,8 @@
+// PHASE 2 FILE
+
 package presenter.entityViews;
 
 import dataBundles.TimeBlockData;
-
-import java.util.List;
 
 /**
  * The TimeBlock entity's view.

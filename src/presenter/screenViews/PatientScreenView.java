@@ -57,6 +57,8 @@ public class PatientScreenView extends UserScreenView {
         viewPrescriptions(items, details);
     }
 
+    // ALL METHODS BELOW ARE PENDING PHASE 2 IMPLEMENTATION
+
     /**
      * View all appointments of a patient.
      * @param items List<AppointmentData> of appointments.

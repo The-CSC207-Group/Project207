@@ -202,6 +202,7 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     @Override
     public boolean remove(Integer id) {
         if (database.containsKey(id)) {
+            keyDelegator.removeItem(database.get(id));
             database.remove(id);
             return true;
         } else {

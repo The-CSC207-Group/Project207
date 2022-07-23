@@ -17,6 +17,7 @@ public class ClinicView extends EntityView<ClinicData> {
     public String viewFull(ClinicData item) {
         return viewClinicName(item) + "\n"
                 + viewAddress(item) + "\n"
+                + viewEmail(item) + "\n"
                 + viewTimeZone(item) + "\n"
                 + viewPhoneNumber(item) + "\n"
                 + viewClinicHours(item);
@@ -66,6 +67,8 @@ public class ClinicView extends EntityView<ClinicData> {
         String phoneNumber = getDefaultStringNA(item.getPhoneNumber());
         return "This clinic's phone number is " + phoneNumber + ".";
     }
+
+    // ALL CODE BELOW IS FOR PHASE 2
 
     /**
      * @param item ClinicData to view.

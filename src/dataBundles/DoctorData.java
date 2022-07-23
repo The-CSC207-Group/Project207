@@ -23,6 +23,8 @@ public class DoctorData extends UserData<Doctor> {
         this.doctor = doctor;
     }
 
+    // ALL CODE BELOW IS FOR PHASE 2
+
     /**
      * Get the doctor's availability stored in the doctor entity
      * @return ArrayList<Availability>

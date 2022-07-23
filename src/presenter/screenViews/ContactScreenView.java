@@ -4,6 +4,7 @@ import dataBundles.ContactData;
 import presenter.entityViews.ContactView;
 
 import java.time.LocalDate;
+
 /**
  * The Contact's presenter class.
  */
@@ -143,7 +144,7 @@ public class ContactScreenView extends ScreenView {
      * Show a success message for changing an address.
      */
     public void showSuccessfullyChangedAddress() {
-        errorMessage("Successfully changed address.");
+        successMessage("Successfully changed address.");
     }
 
     /**
