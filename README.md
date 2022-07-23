@@ -81,57 +81,6 @@ List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String 
     return result;
 ```
 
-## Command List:
-
-### Pre-Login:
-
-*Note: Only a secretaries and admins can create Patient and Doctor accounts, and only an Admin can create secretary accounts; reference the admin section below.*
-* `sign in` - Log into a pre-existing account saved in the Json Database.
-* `view clinic info` - Shows a list of information relating to specific clinic.
-* `help` - Shows a list of all available commands, available at any point in the program.
-* `exit` - Terminates the program.
-
-### Patient Post-Login:
-* `view my info` - Shows the account username and health-number.
-* `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
-* `view active prescriptions` - Shows a list of all presently active prescription headers related to the patient.
-* `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
-* `view all prescriptions` - Shows a list of all past and present prescription headers related to the patient.
-* `change password` - Change the login password and update it in the Json Database.
-* `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - Access the contact commands screen, which new commands relevant to contact. see Contact Commands below.
-* `view clinic info` - Shows a list of information relating to specific clinic.
-* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
-* `help` - Shows a list of all available commands, available at any point in the program.
-* `exit` - Terminates the program.
-* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
-
-### Doctor Post-Login:
-* `view my info` Shows the account username.
-* `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
-* `change password` - Change the login password for the current user and update it in the Json Database.
-* `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - Access the contact commands screen, which new commands relevant to contact. see Contact Commands below.
-* `view clinic info` - Shows a list of information relating to specific clinic.
-* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
-* `help` - Shows a list of all available commands, available at any point in the program.
-* `exit` - Terminates the program.
-
-### Secretary Post-Login:
-* `view my info` Shows the account username.
-* `create patient` - Create a patient and store it in the Json Database.
-* `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Secretary Commands** below.
-* `delete patient` - Deletes a patient user account from the Json Database based on inputted username.
-* `add availability` - Add a new time block to a doctor's reoccurring availability.
-* `delete availability` - Delete a time block from a doctor's reoccurring availability.
-* `add absence` - Add a time block to a doctor's absence list representing when a doctor is absent from the office.
-* `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - Access the contact commands screen, which new commands relevant to contact. see Contact Commands below.
-* `view clinic info` - Shows a list of information relating to specific clinic.
-* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
-* `help` - Shows a list of all available commands, available at any point in the program.
-* `exit` - Terminates the program.
-
 ### Admin:
 
 To access admin privileges, use the provided admin account:
@@ -142,57 +91,93 @@ password: `root`
 
 To create another admin account, use the `create admin` command while logged into the `root` account.
 
+## Command List:
+
+
+### Pre-Login:
+
+*Note: Only a secretaries and admins can create Patient and Doctor accounts, and only an Admin can create secretary accounts; reference the admin section below.*
+* `sign in` - Log into a pre-existing account saved in the Json Database.
+* `view clinic info` - Shows a list of information relating to specific clinic.
+* `help` - Shows a list of all available commands, available at any point in the program.
+* `exit` - Terminates the program.
+
 ### Admin Post-Login:
-* `view my info` Shows the account username.
 * `create admin` - Create a new admin account and store it in the JsonDatabase.
 * `create secretary` - Create a new secretary account and store it in the JsonDatabase.
 * `create doctor` - Create a new doctor account and store it in the JsonDatabase.
 * `create patient`- Create a new patient account and store it in the Json Database.
-* `change clinic info` - access the Clinic screen, which new commands relevant to the clinic. see Clinic Screen below.
+* `change clinic info` - access the Clinic screen, with new commands relevant to the clinic. see Clinic Screen below.
 * `change user password` - Change the password of another user's account by inputting the user's unique username and new password.
 * `delete user` - Delete another user's account permanently by inputting their username.
 * `delete self` - Delete the current user account permanently.
-* `change password` - Change the login password and update it in the Json Database.
+* `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - access the contact screen, which new commands relevant to contact. see Contact Screen below.
-* `view clinic info` - Shows a list of information relating to specific clinic.
-* `sign out` - Exits the admin post-login screen and saves new data to the Json Database, this will bring you back to the login page.
+* `view clinic info` - Shows a list of information relating to the clinic.
+* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
+### Patient Post-Login:
+* `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
+* `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
+* `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
+* `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
+* `change password` - Change this user's login password.
+* `get logs` - Shows a list of logs that represents the current user's login dates.
+* `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
+* `view clinic info` - Shows a list of information relating to the clinic.
+* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `help` - Shows a list of all available commands, available at any point in the program.
+* `exit` - Terminates the program.
+* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
+
+### Doctor Post-Login:
+* `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
+* `change password` - Change this user's login password.
+* `get logs` - Shows a list of logs that represents the current user's login dates.
+* `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
+* `view clinic info` - Shows a list of information relating to the clinic.
+* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `help` - Shows a list of all available commands, available at any point in the program.
+* `exit` - Terminates the program.
+
+### Secretary Post-Login:
+* `create patient` - Create a patient and store it in the Json Database.
+* `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Secretary Commands** below.
+* `delete patient` - Deletes a patient user account from the Json Database based on inputted username.
+* `change password` - Change this user's login password.
+* `get logs` - Shows a list of logs that represents the current user's login dates.
+* `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
+* `view clinic info` - Shows a list of information relating to the clinic.
+* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `help` - Shows a list of all available commands, available at any point in the program.
+* `exit` - Terminates the program.
+
+
 ### Patient Loaded Doctor Commands:
-_Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. to all other account types, these commands are unreachable._
+_Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. To all other account types, these commands are unreachable._
 * `unload patient` - Unloads the patient, returning the doctor to the basic doctor command screen. Similar to the `back` command.
-* `view reports` - Show all reports related to the loaded patient.
-* `create report` - Creates a new report related loaded patient based on inputted data.
-* `delete report` - Deletes a report related to the loaded patient.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
-* `view active prescriptions` - Shows a list of all presently active prescription headers related to the loaded patient.
+* `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
-* `view all prescriptions` - Shows a list of all past and present prescription headers related to the loaded patient.
-* `create prescription` - creates a new prescription related to the loaded patient based on inputted data.
-* `delete prescription` - deletes a prescription related to the loaded patient.
+* `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
+* `create prescription` - Creates a new prescription related to the loaded patient based on inputted data.
+* `delete prescription` - Deletes a prescription related to the loaded patient.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
 ### Patient Loaded Secretary Commands:
-_Note: These commands can only be accessed by loading a patient through the `load patient` secretary command. to all other account types, these commands are unreachable._
+_Note: These commands can only be accessed by loading a patient through the `load patient` secretary command. To all other account types, these commands are unreachable._
 * `change patient password` - Changes the password of a patient based on inputted data.
 * `unload patient` - Unloads the patient, returning the secretary to the basic secretary command screen. Similar to the `back` command.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
-* `view active prescriptions` - Shows a list of all presently active prescription headers related to the loaded patient.
+* `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
-* `view all prescriptions` - Shows a list of all past and present prescription headers related to the loaded patient.
+* `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
-
-to be implemented in phase 2:
-* `view appointments` - Shows the appointments related to the loaded patient.
-
-* `cancel appointment` - Cancels an appointment related to the loaded patient. Frees up a doctor's availability.
-* `book appointment` - Books an appointment related to the loaded patient and related doctor and stores it in the Appointment Json Database.
-* `reschedule appointment` - change the date and/or time of an appointment related to the loaded patient and update it in the Appointment Json Database.
-
 
 ### Contact Commands:
 _Note: These commands can only be accessed by running the `contact details` command. These commands are available to all account types._
