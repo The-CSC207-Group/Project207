@@ -54,6 +54,10 @@ public class KeyDelegator {
         return true;
     }
 
+    /**
+     * Remove the items unique field from the set of unique fields during the removal of that item.
+     * @param item A database entity.
+     */
     public void removeItem(Object item) {
         if (uniqueFieldMethod != null) {
             Object result = null;
