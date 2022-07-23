@@ -32,6 +32,8 @@ public class Doctor extends User {
         super(username, password);
     }
 
+    // ALL CODE BELOW IS FOR PHASE 2
+
     public ArrayList<Availability> getAvailability() {
         return availability;
     }
