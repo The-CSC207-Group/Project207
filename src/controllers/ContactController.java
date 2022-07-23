@@ -117,10 +117,10 @@ public class ContactController extends TerminalController {
     private Command ChangeBirthday() {
         return (x) -> {
             LocalDate newBirthday = contactScreenView.showBirthdayPrompt();
-            if (contactManager.changeBirthday(contactData, newBirthday)) {
+            if (newBirthday != null) {
+                contactManager.changeBirthday(contactData, newBirthday);
                 contactScreenView.showSuccessfullyChangedBirthday();
-            }
-            else {
+            } else {
                 contactScreenView.showBirthdayFormatError();
             }
         };
