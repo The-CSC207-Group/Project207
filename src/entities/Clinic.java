@@ -103,6 +103,8 @@ public class Clinic extends JsonSerializable {
         return timeZone;
     }
 
+    // ALL CODE BELOW IS FOR PHASE 2
+
     /**
      * Sets the time zone of the clinic.
      * @param timeZone The new time zone of the clinic as ZoneId.

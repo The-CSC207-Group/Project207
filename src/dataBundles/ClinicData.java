@@ -43,15 +43,6 @@ public class ClinicData {
     }
 
     /**
-     * @return TimeBlock - hours of operations of the clinic stored.
-     */
-    public ArrayList<AvailabilityData> getClinicHours(){
-        return clinic.getClinicHours().stream()
-                .map(AvailabilityData::new)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    /**
      * @return String - phone number of the clinic stored.
      */
     public String getPhoneNumber() {
@@ -70,6 +61,17 @@ public class ClinicData {
      */
     public Integer getClinicId() {
         return clinic.getId();
+    }
+
+    // ALL CODE BELOW IS FOR PHASE 2
+
+    /**
+     * @return TimeBlock - hours of operations of the clinic stored.
+     */
+    public ArrayList<AvailabilityData> getClinicHours(){
+        return clinic.getClinicHours().stream()
+                .map(AvailabilityData::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 }

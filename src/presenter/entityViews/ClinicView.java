@@ -68,6 +68,8 @@ public class ClinicView extends EntityView<ClinicData> {
         return "This clinic's phone number is " + phoneNumber + ".";
     }
 
+    // ALL CODE BELOW IS FOR PHASE 2
+
     /**
      * @param item ClinicData to view.
      * @return String representing the clinic's hours of operation as a view.
