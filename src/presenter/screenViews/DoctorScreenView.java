@@ -95,6 +95,9 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Successfully created prescription.");
     }
 
+    /**
+     * Error message when the inputted expiry date is not valid.
+     */
     public void showInvalidPrescriptionDateError() {
         errorMessage("Cannot create prescription: invalid expiry date.");
     }
