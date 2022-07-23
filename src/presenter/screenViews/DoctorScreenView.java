@@ -48,7 +48,7 @@ public class DoctorScreenView extends UserScreenView {
     public Integer deletePrescriptionPrompt(ContactData patientContact, List<PrescriptionData> prescriptionData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " prescriptions to delete:");
-        new PrescriptionView().viewFullAsEnumerationFromList(prescriptionData);
+        infoMessage(new PrescriptionView().viewFullAsEnumerationFromList(prescriptionData));
         return deleteItemFromEnumerationPrompt("prescription");
     }
 
