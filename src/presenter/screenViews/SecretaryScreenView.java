@@ -6,6 +6,7 @@ import presenter.entityViews.AvailabilityView;
 import presenter.entityViews.ContactView;
 import presenter.entityViews.PrescriptionView;
 import presenter.response.AppointmentTimeDetails;
+import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 
 import java.time.*;
@@ -18,14 +19,7 @@ import java.util.List;
  */
 public class SecretaryScreenView extends UserScreenView {
 
-    /**
-     * ContactView that will be used by the secretary's presenter.
-     */
     public ContactView contactView = new ContactView();
-
-    /**
-     * PrescriptionView that will be used by the secretary's presenter.
-     */
     public PrescriptionView prescriptionView = new PrescriptionView();
 
     /**
@@ -48,6 +42,17 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public void showRegisterPatientError() {
         errorMessage("Could not create patient: a user with this username already exists");
+    }
+
+    /**
+     * Show secretary a password reset prompt for a patient with a confirmation.
+     * @return PasswordResetDetails containing new password and confirmed new password.
+     */
+    public PasswordResetDetails resetPatientPasswordPrompt() {
+        infoMessage("You are about to reset the patient's password.");
+        String username = input("Enter new password: ");
+        String password = input("Confirm new password: ");
+        return new PasswordResetDetails(username, password);
     }
 
     /**

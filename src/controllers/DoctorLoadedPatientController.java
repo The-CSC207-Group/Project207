@@ -71,9 +71,13 @@ public class DoctorLoadedPatientController extends TerminalController {
     private Command CreatePatientPrescription() {
         return (x) -> {
             PrescriptionDetails prescriptionDetails = doctorView.prescriptionDetailsPrompt();
-            prescriptionManager.createPrescription(prescriptionDetails.header(), prescriptionDetails.body(),
-                    patientData, doctorData, prescriptionDetails.expiryDate());
-            doctorView.showSuccessfullyCreatedPrescription();
+            if (prescriptionDetails != null) {
+                prescriptionManager.createPrescription(prescriptionDetails.header(), prescriptionDetails.body(),
+                        patientData, doctorData, prescriptionDetails.expiryDate());
+                doctorView.showSuccessfullyCreatedPrescription();
+            } else {
+                doctorView.showInvalidPrescriptionDateError();
+            }
         };
     }
 

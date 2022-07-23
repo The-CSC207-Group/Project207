@@ -45,7 +45,7 @@ public class ContactView extends EntityView<ContactData> {
      * @return String representing the contact's phone number as a view.
      */
     public String viewPhoneNumber(ContactData item) {
-        return "Phone Number: " + getDefaultStringNA("N/A");
+        return "Phone Number: " + getDefaultStringNA(item.getPhoneNumber());
     }
 
     /**

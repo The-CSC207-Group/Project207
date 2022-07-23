@@ -17,6 +17,7 @@ public class ClinicView extends EntityView<ClinicData> {
     public String viewFull(ClinicData item) {
         return viewClinicName(item) + "\n"
                 + viewAddress(item) + "\n"
+                + viewEmail(item) + "\n"
                 + viewTimeZone(item) + "\n"
                 + viewPhoneNumber(item) + "\n"
                 + viewClinicHours(item);
