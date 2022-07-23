@@ -152,13 +152,15 @@ public class AdminController extends UserController<Admin> {
 
     private Command changeUserPassword() {
         return (x) -> {
-            // NOTE this is can be any user not just the one using it so can't use reset password prompt
+            // NOTE this is can be any user not just the one using it,
+            // so can't use reset password prompt presenter method
             String name = adminScreenView.getUsersName();
-            if (!(changePassword(patientManager, name) |
+            if ((changePassword(patientManager, name) |
                     (changePassword(adminManager, name)) |
                     (changePassword(secretaryManager, name)) |
                     (changePassword(doctorManager, name)))){
-
+                adminScreenView.showResetPasswordSuccessMessage();
+            } else {
                 adminScreenView.userDoesNotExistError(name);
             }
         };
