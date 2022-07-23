@@ -70,7 +70,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private Command changePatientPassword() {
         return (x) -> {
-            PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPasswordPrompt();
+            PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPatientPasswordPrompt();
             if (patientManager.changeUserPassword(patientData, passwordResetDetails.password())) {
                 secretaryScreenView.showResetPasswordSuccessMessage();
             } else {
