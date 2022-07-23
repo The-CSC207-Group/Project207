@@ -37,48 +37,25 @@ public class PrescriptionListCommands {
      */
     public HashMap<String, Command> AllCommands() {
         HashMap<String, Command> commands = new HashMap<>();
-        commands.put("active prescriptions", new ViewPrescriptions(true, false));
-        commands.put("all prescriptions", new ViewPrescriptions(false, false));
-        commands.put("active prescriptions detailed", new ViewPrescriptions(true, true));
-        commands.put("all prescriptions detailed", new ViewPrescriptions(false, true));
+        commands.put("active prescriptions", ViewPrescriptions(true, false));
+        commands.put("all prescriptions", ViewPrescriptions(false, false));
+        commands.put("active prescriptions detailed", ViewPrescriptions(true, true));
+        commands.put("all prescriptions detailed", ViewPrescriptions(false, true));
         return commands;
     }
-//    private Command viewPrescriptions(boolean active, boolean detail){
-//        return (x) -> {
-//            ArrayList<PrescriptionData> prescriptions;
-//            if (active) {
-//                prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
-//                patientScreenView.viewActivePrescriptions(prescriptions, detail);
-//
-//            }
-//            else {
-//                prescriptions = prescriptionManager.getAllPrescriptions(patientData);
-//                patientScreenView.viewPrescriptionHistory(prescriptions, detail);
-//            }
-//        };
-//    }
 
-    private class ViewPrescriptions implements Command {
-        private final boolean active;
-        private final boolean detail;
-
-        public ViewPrescriptions(boolean active, boolean detail) {
-            this.active = active;
-            this.detail = detail;
-        }
-
-        @Override
-        public void execute(ArrayList<String> args) {
+    private Command ViewPrescriptions(boolean active, boolean detail){
+        return (x) -> {
             ArrayList<PrescriptionData> prescriptions;
-            if (this.active) {
+            if (active) {
                 prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
-                patientScreenView.viewActivePrescriptions(prescriptions, this.detail);
+                patientScreenView.viewActivePrescriptions(prescriptions, detail);
 
-            }
-            else {
+            } else {
                 prescriptions = prescriptionManager.getAllPrescriptions(patientData);
-                patientScreenView.viewPrescriptionHistory(prescriptions, this.detail);
+                patientScreenView.viewPrescriptionHistory(prescriptions, detail);
             }
-        }
+        };
     }
+
 }
