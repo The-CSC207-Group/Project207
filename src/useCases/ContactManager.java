@@ -1,4 +1,4 @@
-package useCases.managers;
+package useCases;
 
 import dataBundles.ContactData;
 import dataBundles.UserData;

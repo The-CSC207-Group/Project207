@@ -7,9 +7,8 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import presenter.response.PrescriptionDetails;
 import presenter.screenViews.DoctorScreenView;
-import useCases.managers.ContactManager;
-import useCases.managers.PrescriptionManager;
-import useCases.managers.ReportManager;
+import useCases.ContactManager;
+import useCases.PrescriptionManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

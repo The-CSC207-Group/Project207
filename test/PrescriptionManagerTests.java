@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.managers.DoctorManager;
-import useCases.managers.PatientManager;
-import useCases.managers.PrescriptionManager;
+import useCases.DoctorManager;
+import useCases.PatientManager;
+import useCases.PrescriptionManager;
 import utilities.DeleteUtils;
 
 import static org.junit.Assert.*;

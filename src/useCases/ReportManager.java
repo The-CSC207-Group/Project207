@@ -1,6 +1,6 @@
 // PHASE 2 FILE
 
-package useCases.managers;
+package useCases;
 
 import dataBundles.DoctorData;
 import dataBundles.PatientData;

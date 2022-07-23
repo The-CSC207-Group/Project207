@@ -1,4 +1,4 @@
-package useCases.managers;
+package useCases;
 
 import dataBundles.AdminData;
 import database.DataMapperGateway;

@@ -5,7 +5,10 @@ import dataBundles.SecretaryData;
 import entities.Secretary;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SecretaryScreenView;
-import useCases.managers.*;
+import useCases.AdminManager;
+import useCases.DoctorManager;
+import useCases.PatientManager;
+import useCases.SecretaryManager;
 
 import java.util.LinkedHashMap;
 

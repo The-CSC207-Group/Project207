@@ -1,9 +1,8 @@
 package controllers;
 
-import dataBundles.ClinicData;
 import entities.Admin;
 import presenter.screenViews.ClinicScreenView;
-import useCases.managers.ClinicManager;
+import useCases.ClinicManager;
 
 import java.util.LinkedHashMap;
 

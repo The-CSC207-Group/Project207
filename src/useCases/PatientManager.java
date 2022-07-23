@@ -1,4 +1,4 @@
-package useCases.managers;
+package useCases;
 
 import dataBundles.PatientData;
 import database.DataMapperGateway;
