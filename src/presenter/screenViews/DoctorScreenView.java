@@ -95,6 +95,10 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Successfully created prescription.");
     }
 
+    public void showInvalidPrescriptionDateError() {
+        errorMessage("Cannot create prescription: invalid expiry date.");
+    }
+
     /**
      * View used to delete reports relating to a patient. Show an enumeration of all reports and ask user for
      * integer input corresponding to a selection.
