@@ -71,8 +71,7 @@ public class ContactController extends TerminalController {
             String newName = contactScreenView.showNamePrompt(false);
             if (contactManager.changeName(contactData, newName)) {
                 contactScreenView.showSuccessfullyChangedName(false);
-            }
-            else {
+            } else {
                 contactScreenView.showNameFormatError();
             }
         };
@@ -83,8 +82,7 @@ public class ContactController extends TerminalController {
             String newEmail = contactScreenView.showEmailPrompt(false);
             if (contactManager.changeEmail(contactData, newEmail)) {
                 contactScreenView.showSuccessfullyChangedEmail(false);
-            }
-            else {
+            } else {
                 contactScreenView.showEmailFormatError();
             }
         };
@@ -95,8 +93,7 @@ public class ContactController extends TerminalController {
             String newPhoneNumber = contactScreenView.showPhoneNumberPrompt(false);
             if (contactManager.changePhoneNumber(contactData, newPhoneNumber)) {
                 contactScreenView.showSuccessfullyChangedPhoneNumber(false);
-            }
-            else {
+            } else {
                 contactScreenView.showPhoneNumberFormatError();
             }
         };
@@ -107,8 +104,7 @@ public class ContactController extends TerminalController {
             String newAddress = contactScreenView.showAddressPrompt();
             if (contactManager.changeAddress(contactData, newAddress)) {
                 contactScreenView.showSuccessfullyChangedAddress();
-            }
-            else {
+            } else {
                 contactScreenView.showAddressFormatError();
             }
         };
@@ -131,8 +127,7 @@ public class ContactController extends TerminalController {
             String newEmergencyContactName = contactScreenView.showNamePrompt(true);
             if (contactManager.changeEmergencyContactName(contactData, newEmergencyContactName)) {
                 contactScreenView.showSuccessfullyChangedName(true);
-            }
-            else {
+            } else {
                 contactScreenView.showNameFormatError();
             }
         };
@@ -143,8 +138,7 @@ public class ContactController extends TerminalController {
             String newEmergencyContactEmail = contactScreenView.showEmailPrompt(true);
             if (contactManager.changeEmergencyContactEmail(contactData, newEmergencyContactEmail)) {
                 contactScreenView.showSuccessfullyChangedEmail(true);
-            }
-            else {
+            } else {
                 contactScreenView.showEmailFormatError();
             }
         };
@@ -155,8 +149,7 @@ public class ContactController extends TerminalController {
             String newEmergencyContactPhoneNumber = contactScreenView.showPhoneNumberPrompt(true);
             if (contactManager.changeEmergencyContactPhoneNumber(contactData, newEmergencyContactPhoneNumber)) {
                 contactScreenView.showSuccessfullyChangedPhoneNumber(true);
-            }
-            else {
+            } else {
                 contactScreenView.showPhoneNumberFormatError();
             }
         };
@@ -167,8 +160,7 @@ public class ContactController extends TerminalController {
             String newEmergencyContactRelationship = contactScreenView.showEmergencyRelationshipPrompt();
             if (contactManager.changeEmergencyRelationship(contactData, newEmergencyContactRelationship)) {
                 contactScreenView.showSuccessfullyChangedEmergencyRelationship();
-            }
-            else {
+            } else {
                 contactScreenView.showEmergencyRelationshipError();
             }
         };
