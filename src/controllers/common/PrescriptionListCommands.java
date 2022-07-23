@@ -4,7 +4,7 @@ import controllers.Command;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.Database;
-import presenter.screenViews.PatientScreenView;
+import presenters.screenViews.PatientScreenView;
 import useCases.PrescriptionManager;
 
 import java.util.ArrayList;

@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public interface Command {
     /**
-     * runs the code in execute. to be used as part of the command pattern.
-     * @param args
+     * Runs the code in execute. to be used as part of the command pattern.
+     * @param args ArrayList<String> - the list of arguments passed in to the command
      */
     void execute(ArrayList<String> args);
 }

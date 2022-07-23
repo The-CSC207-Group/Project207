@@ -4,8 +4,8 @@ import dataBundles.AdminData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.SecretaryData;
-import presenter.response.UserCredentials;
-import presenter.screenViews.SignInScreenView;
+import presenters.response.UserCredentials;
+import presenters.screenViews.SignInScreenView;
 import useCases.*;
 
 import java.util.LinkedHashMap;

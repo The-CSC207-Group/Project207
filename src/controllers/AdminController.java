@@ -3,9 +3,9 @@ package controllers;
 import dataBundles.*;
 import entities.Admin;
 import entities.User;
-import presenter.response.PasswordResetDetails;
-import presenter.response.UserCredentials;
-import presenter.screenViews.AdminScreenView;
+import presenters.response.PasswordResetDetails;
+import presenters.response.UserCredentials;
+import presenters.screenViews.AdminScreenView;
 import useCases.*;
 
 import java.util.LinkedHashMap;

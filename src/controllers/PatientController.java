@@ -3,7 +3,7 @@ package controllers;
 import controllers.common.PrescriptionListCommands;
 import dataBundles.PatientData;
 import entities.Patient;
-import presenter.screenViews.PatientScreenView;
+import presenters.screenViews.PatientScreenView;
 import useCases.PatientManager;
 
 import java.util.LinkedHashMap;

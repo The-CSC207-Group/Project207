@@ -2,8 +2,8 @@ package controllers;
 
 import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
-import presenter.response.PasswordResetDetails;
-import presenter.screenViews.SecretaryScreenView;
+import presenters.response.PasswordResetDetails;
+import presenters.screenViews.SecretaryScreenView;
 import useCases.PatientManager;
 
 import java.util.LinkedHashMap;

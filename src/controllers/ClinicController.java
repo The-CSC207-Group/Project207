@@ -1,7 +1,7 @@
 package controllers;
 
 import entities.Admin;
-import presenter.screenViews.ClinicScreenView;
+import presenters.screenViews.ClinicScreenView;
 import useCases.ClinicManager;
 
 import java.util.LinkedHashMap;

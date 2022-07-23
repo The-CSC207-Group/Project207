@@ -1,7 +1,7 @@
 package controllers;
 
 import dataBundles.ContactData;
-import presenter.screenViews.ContactScreenView;
+import presenters.screenViews.ContactScreenView;
 import useCases.ContactManager;
 
 import java.time.LocalDate;

@@ -5,8 +5,8 @@ import dataBundles.ContactData;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
-import presenter.response.PrescriptionDetails;
-import presenter.screenViews.DoctorScreenView;
+import presenters.response.PrescriptionDetails;
+import presenters.screenViews.DoctorScreenView;
 import useCases.ContactManager;
 import useCases.PrescriptionManager;
 

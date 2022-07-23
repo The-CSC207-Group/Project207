@@ -1,7 +1,7 @@
 package controllers;
 
 import database.Database;
-import presenter.screenViews.TerminalScreenView;
+import presenters.screenViews.TerminalScreenView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

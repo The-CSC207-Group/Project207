@@ -3,7 +3,7 @@ package controllers;
 import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import entities.Doctor;
-import presenter.screenViews.DoctorScreenView;
+import presenters.screenViews.DoctorScreenView;
 import useCases.ContactManager;
 import useCases.DoctorManager;
 import useCases.PatientManager;
