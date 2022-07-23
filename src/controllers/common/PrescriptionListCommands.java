@@ -43,6 +43,20 @@ public class PrescriptionListCommands {
         commands.put("all prescriptions detailed", new ViewPrescriptions(false, true));
         return commands;
     }
+//    private Command viewPrescriptions(boolean active, boolean detail){
+//        return (x) -> {
+//            ArrayList<PrescriptionData> prescriptions;
+//            if (active) {
+//                prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
+//                patientScreenView.viewActivePrescriptions(prescriptions, detail);
+//
+//            }
+//            else {
+//                prescriptions = prescriptionManager.getAllPrescriptions(patientData);
+//                patientScreenView.viewPrescriptionHistory(prescriptions, detail);
+//            }
+//        };
+//    }
 
     private class ViewPrescriptions implements Command {
         private final boolean active;
