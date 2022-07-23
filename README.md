@@ -12,6 +12,10 @@ All libraries will be automatically installed by intellij when the program first
 
 The xml metadata for the libraries can be found in: `.idea/libraries`
 
+## UML Diagrams
+
+The uml diagrams can be found under the UML Diagrams folder in the Project207 directory.
+
 ## How to Run The Program
 
 To start the program, Run Main.
