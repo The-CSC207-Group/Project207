@@ -4,7 +4,6 @@ import dataBundles.*;
 import presenters.entityViews.AppointmentView;
 import presenters.entityViews.AvailabilityView;
 import presenters.entityViews.ContactView;
-import presenters.entityViews.PrescriptionView;
 import presenters.response.AppointmentTimeDetails;
 import presenters.response.PasswordResetDetails;
 import presenters.response.UserCredentials;
