@@ -17,7 +17,7 @@ public class AdminScreenView extends UserScreenView {
     /**
      * The Contact entity's view.
      */
-    ContactView contactView = new ContactView();
+    private final ContactView contactView = new ContactView();
 
     /**
      * Register a secretary account.

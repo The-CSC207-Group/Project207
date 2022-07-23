@@ -19,8 +19,7 @@ import java.util.List;
  */
 public class SecretaryScreenView extends UserScreenView {
 
-    public ContactView contactView = new ContactView();
-    public PrescriptionView prescriptionView = new PrescriptionView();
+    private final ContactView contactView = new ContactView();
 
     /**
      * Create a new patient prompt.

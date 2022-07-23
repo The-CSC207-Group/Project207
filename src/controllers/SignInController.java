@@ -19,7 +19,6 @@ public class SignInController extends TerminalController {
     private final AdminManager adminManager;
     private final SecretaryManager secretaryManager;
     private final DoctorManager doctorManager;
-
     private final SignInScreenView signInScreenView = new SignInScreenView();
 
     /**

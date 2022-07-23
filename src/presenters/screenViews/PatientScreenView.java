@@ -12,15 +12,8 @@ import java.util.List;
  */
 public class PatientScreenView extends UserScreenView {
 
-    /**
-     * PrescriptionView that will be used by the patient's presenter.
-     */
-    PrescriptionView prescriptionView = new PrescriptionView();
-
-    /**
-     * AppointmentView that will be used by the patient's presenter.
-     */
-    AppointmentView appointmentView = new AppointmentView();
+    private final PrescriptionView prescriptionView = new PrescriptionView();
+    private final AppointmentView appointmentView = new AppointmentView();
 
     /**
      * Shows a list of prescriptions relating to patients.

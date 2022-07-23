@@ -19,7 +19,7 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * The contact view that will be used by the doctor's presenter.
      */
-    ContactView contactView = new ContactView();
+    private final ContactView contactView = new ContactView();
 
     private void showDeleteOutOfRangeError(String itemType) {
         errorMessage("Could not delete " + itemType + ": index out of range.");
