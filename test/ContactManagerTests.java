@@ -1,14 +1,12 @@
 import dataBundles.PatientData;
 import database.Database;
-import entities.Patient;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.managers.ContactManager;
-import useCases.managers.LogManager;
-import useCases.managers.PatientManager;
+import useCases.ContactManager;
+import useCases.PatientManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.managers.PatientManager;
+import useCases.PatientManager;
 import utilities.DeleteUtils;
 import java.io.File;
 import java.time.LocalDate;

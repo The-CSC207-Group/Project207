@@ -6,7 +6,7 @@ import entities.User;
 import presenter.response.PasswordResetDetails;
 import presenter.response.UserCredentials;
 import presenter.screenViews.AdminScreenView;
-import useCases.managers.*;
+import useCases.*;
 
 import java.util.LinkedHashMap;
 

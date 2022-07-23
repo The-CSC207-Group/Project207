@@ -4,7 +4,7 @@ import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.SecretaryScreenView;
-import useCases.managers.*;
+import useCases.PatientManager;
 
 import java.util.LinkedHashMap;
 

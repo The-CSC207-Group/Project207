@@ -4,9 +4,9 @@ import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import entities.Doctor;
 import presenter.screenViews.DoctorScreenView;
-import useCases.managers.ContactManager;
-import useCases.managers.DoctorManager;
-import useCases.managers.PatientManager;
+import useCases.ContactManager;
+import useCases.DoctorManager;
+import useCases.PatientManager;
 
 import java.util.LinkedHashMap;
 

@@ -2,7 +2,7 @@ package controllers;
 
 import dataBundles.ContactData;
 import presenter.screenViews.ContactScreenView;
-import useCases.managers.ContactManager;
+import useCases.ContactManager;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;

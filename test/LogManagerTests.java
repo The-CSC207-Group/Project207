@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.managers.LogManager;
+import useCases.LogManager;
 import utilities.DeleteUtils;
 import java.io.File;
 import java.util.ArrayList;

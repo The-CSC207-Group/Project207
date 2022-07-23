@@ -5,7 +5,7 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import database.Database;
 import presenter.screenViews.PatientScreenView;
-import useCases.managers.PrescriptionManager;
+import useCases.PrescriptionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

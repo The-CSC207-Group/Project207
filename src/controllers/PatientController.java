@@ -4,7 +4,7 @@ import controllers.common.PrescriptionListCommands;
 import dataBundles.PatientData;
 import entities.Patient;
 import presenter.screenViews.PatientScreenView;
-import useCases.managers.PatientManager;
+import useCases.PatientManager;
 
 import java.util.LinkedHashMap;
 

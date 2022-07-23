@@ -6,7 +6,7 @@ import dataBundles.PatientData;
 import dataBundles.SecretaryData;
 import presenter.response.UserCredentials;
 import presenter.screenViews.SignInScreenView;
-import useCases.managers.*;
+import useCases.*;
 
 import java.util.LinkedHashMap;
 

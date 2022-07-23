@@ -6,10 +6,10 @@ import dataBundles.UserData;
 import entities.User;
 import presenter.response.PasswordResetDetails;
 import presenter.screenViews.UserScreenView;
-import useCases.managers.ClinicManager;
-import useCases.managers.ContactManager;
-import useCases.managers.LogManager;
-import useCases.managers.UserManager;
+import useCases.ClinicManager;
+import useCases.ContactManager;
+import useCases.LogManager;
+import useCases.UserManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
