@@ -30,14 +30,6 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * View used to view the doctor's appointments that are given.
-     * @param appointments List<AppointmentData> appointments to be viewed.
-     */
-    public void viewAppointments(List<AppointmentData> appointments) {
-        infoMessage(new AppointmentView().viewFullFromList(appointments));
-    }
-
-    /**
      * View used to delete prescriptions relating to a patient. Show an enumeration of all prescriptions
      * and ask user for integer input corresponding to a selection.
      * @param patientContact contact information of patient.
@@ -67,13 +59,6 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeletePrescriptionNotAnIntegerError() {
-        showDeleteNotAnIntegerError("prescription");
-    }
-
-    /**
      * Ask doctors for prescription details. Used when creating prescriptions.
      * @return PrescriptionDetails containing header, body and expiry date of prescription.
      */
@@ -100,6 +85,47 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void showInvalidPrescriptionDateError() {
         errorMessage("Cannot create prescription: invalid expiry date.");
+    }
+
+    /**
+     * Load an existing patient.
+     * @return patient username inputted by doctor.
+     */
+    public String loadPatientPrompt() {
+        return enterUsernamePrompt("patient");
+    }
+
+    /**
+     * Shows an error when loading a patient with a username that does not exist.
+     */
+    public void showErrorLoadingPatient() {
+        errorMessage("Error loading patient: a patient with that username does not exist");
+    }
+
+    /**
+     * Shows a success message when loading a patient.
+     * @param patientContact ContactData of the patient being loaded.
+     */
+    public void showSuccessLoadingPatient(ContactData patientContact) {
+        successMessage("Success loading patient: " + contactView.viewName(patientContact));
+    }
+
+    // ALL CODE BELOW PENDING FOR PHASE 2
+
+    /**
+     * View used to view the doctor's appointments that are given.
+     * @param appointments List<AppointmentData> appointments to be viewed.
+     */
+    public void viewAppointments(List<AppointmentData> appointments) {
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
+
+
+    /**
+     * Error raised when the user input is not an integer.
+     */
+    public void showDeletePrescriptionNotAnIntegerError() {
+        showDeleteNotAnIntegerError("prescription");
     }
 
     /**
@@ -239,29 +265,6 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void showDeleteAbsenceNotAnIntegerError() {
         showDeleteNotAnIntegerError("report");
-    }
-
-    /**
-     * Load an existing patient.
-     * @return patient username inputted by doctor.
-     */
-    public String loadPatientPrompt() {
-        return enterUsernamePrompt("patient");
-    }
-
-    /**
-     * Shows an error when loading a patient with a username that does not exist.
-     */
-    public void showErrorLoadingPatient() {
-        errorMessage("Error loading patient: a patient with that username does not exist");
-    }
-
-    /**
-     * Shows a success message when loading a patient.
-     * @param patientContact ContactData of the patient being loaded.
-     */
-    public void showSuccessLoadingPatient(ContactData patientContact) {
-        successMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 
 }
