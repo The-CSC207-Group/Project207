@@ -13,8 +13,7 @@ import utilities.TimeUtils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -151,21 +150,21 @@ public class AppointmentManager {
     public ArrayList<TimeBlockData> getAvailableTimes(DoctorData doctorData, Integer year, Integer month,
                                                     Integer startDay, Integer endDay){
         TimeUtils timeUtils = new TimeUtils();
-        return searchAvailability(doctorData, timeUtils.createZonedDataTime(year, month, startDay, 0, 0),
-                timeUtils.createZonedDataTime(year, month, endDay, 23, 59));
+        return searchAvailability(doctorData, timeUtils.createLocalDateTime(year, month, startDay, 0, 0),
+                timeUtils.createLocalDateTime(year, month, endDay, 23, 59));
     }
 
     /**
      * Gets all available time for a doctor considering their availability, other appointments, and search time
      * parameters.
      * @param doctorData DoctorData - data representing a doctor entity.
-     * @param searchStartTime ZonedDateTime - ZonedDateTime object representing the beginning of the search period.
-     * @param searchEndTime ZonedDateTime - ZonedDateTime object representing the beginning of the end period.
+     * @param searchStartTime LocalDateTime - LocalDateTime object representing the beginning of the search period.
+     * @param searchEndTime LocalDateTime - LocalDateTime object representing the beginning of the end period.
      * @return ArrayList<TimeBlockData> - an ArrayList of TimeBlocks representing all available timeslots to schedule an
      * Appointment.
      */
-    public ArrayList<TimeBlockData> searchAvailability(DoctorData doctorData, ZonedDateTime searchStartTime,
-                                                       ZonedDateTime searchEndTime){
+    public ArrayList<TimeBlockData> searchAvailability(DoctorData doctorData, LocalDateTime searchStartTime,
+                                                       LocalDateTime searchEndTime){
         ArrayList<TimeBlock> totalAvailableTimes = new ArrayList<>();
         for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
             LocalDate daySearched = searchEndTime.toLocalDate();
@@ -264,10 +263,10 @@ public class AppointmentManager {
     /**
      * Add an absence TimeBlock to a doctor's stored Absence ArrayList.
      * @param doctorData DoctorData - the data representing a specific doctor in the database.
-     * @param startTime ZonedDateTime - a ZonedDateTime representing the beginning of a new absence.
-     * @param endTime ZonedDateTime - a ZonedDateTime representing the ending of a new absence.
+     * @param startTime LocalDateTime - a LocalDateTime representing the beginning of a new absence.
+     * @param endTime LocalDateTime - a LocalDateTime representing the ending of a new absence.
      */
-    public void addAbsence(DoctorData doctorData, ZonedDateTime startTime, ZonedDateTime endTime){
+    public void addAbsence(DoctorData doctorData, LocalDateTime startTime, LocalDateTime endTime){
         TimeBlock proposedTime = new TimeBlock(startTime, endTime);
         doctorDatabase.get(doctorData.getId()).addAbsence(new TimeBlock(startTime, endTime));
         getAllAppointments().stream()
@@ -314,10 +313,8 @@ public class AppointmentManager {
 
     private ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
         return getAvailabilityFromDayOfWeek(doctorId, selectedDay.getDayOfWeek()).stream()
-                .map(x -> new TimeBlock(ZonedDateTime.of(selectedDay,
-                        x.getDoctorStartTime(), ZoneId.of("US/Eastern")),
-                        ZonedDateTime.of(selectedDay, x.getDoctorEndTime(),
-                                ZoneId.of("US/Eastern"))))
+                .map(x -> new TimeBlock(LocalDateTime.of(selectedDay, x.getDoctorStartTime()), LocalDateTime
+                        .of(selectedDay, x.getDoctorEndTime())))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -340,7 +337,7 @@ public class AppointmentManager {
     private ArrayList<TimeBlock> parseAvailabilityWithAppointmentData(ArrayList<TimeBlock> availability,
                                                                       Integer doctorId){
         ArrayList<TimeBlock> parsedAvailability = new ArrayList<>();
-        ArrayList<ZonedDateTime> startTime = new ArrayList<>();
+        ArrayList<LocalDateTime> startTime = new ArrayList<>();
         for (TimeBlock availabilityTimeBlock: availability) {
             startTime.add(availabilityTimeBlock.getStartTime());
             ArrayList<TimeBlock> allConflicts = getAppointmentsTimeBlock();
@@ -357,7 +354,7 @@ public class AppointmentManager {
         return parsedAvailability;
     }
 
-    private boolean calculateNoConflictTime(TimeBlock timeBlock, ArrayList<ZonedDateTime> startTime,
+    private boolean calculateNoConflictTime(TimeBlock timeBlock, ArrayList<LocalDateTime> startTime,
                                             ArrayList<TimeBlock> collectedTimeBlocks){
         if (startTime.get(0).equals(timeBlock.getEndTime())){
             startTime.remove(0);

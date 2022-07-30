@@ -8,8 +8,7 @@ import database.Database;
 import entities.Prescription;
 import utilities.DatabaseQueryUtility;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -61,11 +60,11 @@ public class PrescriptionManager {
      * @param body String - body of the prescription, all notes relating to the prescription.
      * @param patientData PatientData - data pertaining to a specific patient in the database.
      * @param doctorData DoctorData - data pertaining to a specific doctor in the database.
-     * @param expiryDate ZonedDateTime - date the prescription expires.
+     * @param expiryDate LocalDate - date the prescription expires.
      * @return PrescriptionData - prescription data that stores the information passed in.
      */
     public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
-                                               ZonedDateTime expiryDate){
+                                               LocalDate expiryDate){
         Prescription prescription = new Prescription(header, body, patientData.getId(), doctorData.getId(), expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionData(prescription);
@@ -80,7 +79,7 @@ public class PrescriptionManager {
     }
 
     private boolean isExpiredPrescription(Prescription prescription){
-        return prescription.getExpiryDate().toLocalDateTime().isBefore(LocalDateTime.now());
+        return prescription.getExpiryDate().isBefore(LocalDate.now());
     }
 
     private Stream<Prescription> getAll(PatientData patient){

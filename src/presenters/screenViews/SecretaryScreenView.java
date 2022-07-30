@@ -273,29 +273,27 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Prompts user to add a timezone, for START time
-     * @return ZonedDateTime object with the desired input from the user.
+     * Prompts user to add a local start time
+     * @return LocalDateTime object with the desired input from the user.
      */
-    public ZonedDateTime addZoneDateTimeStart() {
+    public LocalDateTime addLocalDateTimeStart() {
         infoMessage("You are about to add the START time: ");
         LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
                 inputInt("day: "));
         LocalTime localTime = LocalTime.MIDNIGHT;
-        ZoneId zoneId = ZoneId.of(input("Zone ID: "));
-        return ZonedDateTime.of(localDate, localTime, zoneId);
+        return LocalDateTime.of(localDate, localTime);
     }
 
     /**
-     * Prompts user to add a timezone for END time
-     * @return ZonedDateTime object with the desired input from the user.
+     * Prompts user to add a local end time
+     * @return LocalDateTime object with the desired input from the user.
      */
-    public ZonedDateTime addZoneDateTimeEnd() {
+    public LocalDateTime addLocalDateTimeEnd() {
         infoMessage("You are about to add the END time: ");
         LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
                 inputInt("day: "));
         LocalTime localTime = LocalTime.MIDNIGHT;
-        ZoneId zoneId = ZoneId.of(input("Zone ID: "));
-        return ZonedDateTime.of(localDate, localTime, zoneId);
+        return LocalDateTime.of(localDate, localTime);
     }
 
     /**

@@ -6,7 +6,6 @@ import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +69,7 @@ public class DoctorScreenView extends UserScreenView {
         if (expiryDate == null) {
             return null;
         }
-        return new PrescriptionDetails(header, body, expiryDate.atStartOfDay(ZoneId.of("US/Eastern")));
+        return new PrescriptionDetails(header, body, expiryDate);
     }
 
     /**

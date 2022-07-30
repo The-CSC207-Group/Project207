@@ -2,71 +2,71 @@
 
 package entities;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 
 /**
  * Represents a time block.
  */
 public class TimeBlock {
 
-    private ZonedDateTime startTime;
-    private ZonedDateTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     //private Date date; (optional, default = null)
     //private Time time; (required)
     //private Day day; (optional, represents Enum of the days the week, default = null)
 
     /**
      * Creates an instance of TimeBlock.
-     * @param startTime ZonedDateTime representing the time block's start time.
-     * @param endTime ZonedDateTime representing the time block's end time.
+     * @param startTime LocalDateTime representing the time block's start time.
+     * @param endTime LocalDateTime representing the time block's end time.
      */
-    public TimeBlock(ZonedDateTime startTime, ZonedDateTime endTime) {
+    public TimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     /**
-     * @return ZonedDateTime representing the time block's start time.
+     * @return LocalDateTime representing the time block's start time.
      */
-    public ZonedDateTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
     /**
      * Sets the time block's start time.
-     * @param startTime ZonedDateTime representing the time block's new start time.
+     * @param startTime LocalDateTime representing the time block's new start time.
      */
-    public void setStartTime(ZonedDateTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
     /**
-     * @return ZonedDateTime representing the time block's end time.
+     * @return LocalDateTime representing the time block's end time.
      */
-    public ZonedDateTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
     /**
      * Sets the time block's end time.
-     * @param endTime ZonedDateTime representing the time block's new end time.
+     * @param endTime LocalDateTime representing the time block's new end time.
      */
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
     /**
-     * Converts the ZonedDateTime start time to LocalTime.
-     * @return LocalTime representing the time block's start time in LocalTime.
+     * Converts the LocalDateTime start time to LocalTime.
+     * @return LocalTime representing the time block's start tim.
      */
     public LocalTime startTimeToLocal(){
         return startTime.toLocalTime();
     }
 
     /**
-     * Converts the ZonedDateTime end time to LocalTime.
-     * @return LocalTime representing the time block's end time in LocalTime.
+     * Converts the LocalDateTime end time to LocalTime.
+     * @return LocalTime representing the time block's end time.
      */
     public LocalTime endTimeToLocal(){
         return startTime.toLocalTime();

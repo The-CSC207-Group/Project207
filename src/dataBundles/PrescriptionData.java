@@ -2,7 +2,8 @@ package dataBundles;
 
 import entities.Prescription;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Wrapper class for Prescription entity.
@@ -20,16 +21,16 @@ public class PrescriptionData {
     }
 
     /**
-     * @return ZonedDateTime - date the prescription stored was created.
+     * @return LocalDate - date the prescription stored was created.
      */
-    public ZonedDateTime getDateNoted() {
+    public LocalDate getDateNoted() {
         return prescription.getDateNoted();
     }
 
     /**
-     * @return ZonedDateTime - expiry date of the prescription stored.
+     * @return LocalDate - expiry date of the prescription stored.
      */
-    public ZonedDateTime getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return prescription.getExpiryDate();
     }
 

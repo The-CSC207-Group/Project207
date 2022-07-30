@@ -18,7 +18,6 @@ public class ClinicView extends EntityView<ClinicData> {
         return viewClinicName(item) + "\n"
                 + viewAddress(item) + "\n"
                 + viewEmail(item) + "\n"
-                + viewTimeZone(item) + "\n"
                 + viewPhoneNumber(item) + "\n"
                 + viewClinicHours(item);
     }
@@ -48,15 +47,6 @@ public class ClinicView extends EntityView<ClinicData> {
     public String viewEmail(ClinicData item) {
         String email = getDefaultStringNA(item.getEmail());
         return "This clinic's email is " + email + ".";
-    }
-
-    /**
-     * @param item ClinicData to view.
-     * @return String representing the clinic's time zone as a view.
-     */
-    public String viewTimeZone(ClinicData item) {
-        String timeZone = getDefaultStringNA(item.getTimeZone().toString());
-        return "This clinic's time zone is " + timeZone + ".";
     }
 
     /**

@@ -4,7 +4,7 @@ package dataBundles;
 
 import entities.Report;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 /**
  * Wrapper class for Report entity.
@@ -22,9 +22,9 @@ public class ReportData {
     }
 
     /**
-     * @return ZonedDateTime - date and time that the stored report was created.
+     * @return LocalDate - date that the stored report was created.
      */
-    public ZonedDateTime getDateNoted() {
+    public LocalDate getDateNoted() {
         return report.getDateNoted();
     }
 

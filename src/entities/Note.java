@@ -2,15 +2,14 @@ package entities;
 
 import utilities.JsonSerializable;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 /**
  * Represents a note.
  */
 public abstract class Note extends JsonSerializable {
 
-    private final ZonedDateTime dateNoted = ZonedDateTime.now(ZoneId.of("US/Eastern"));
+    private final LocalDate dateNoted = LocalDate.now();
     private String header;
     private String body;
     private Integer patientId;
@@ -31,9 +30,9 @@ public abstract class Note extends JsonSerializable {
     }
 
     /**
-     * @return ZonedDateTime representing the date and time that the note was created.
+     * @return LocalDate representing the date that the note was created.
      */
-    public ZonedDateTime getDateNoted() {
+    public LocalDate getDateNoted() {
         return dateNoted;
     }
 

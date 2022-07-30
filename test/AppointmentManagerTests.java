@@ -15,7 +15,6 @@ import utilities.DeleteUtils;
 import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class AppointmentManagerTests {
     public void testBookAppointment() {
         Database originalDatabase = new Database(databaseFolder.toString());
 
-        originalDatabase.setClinic(new Clinic("", "", "","", ZoneId.of("US/Eastern"),
+        originalDatabase.setClinic(new Clinic("", "", "","",
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0))))));
 
@@ -72,7 +71,7 @@ public class AppointmentManagerTests {
 //    public void testBookInvalidAppointments() {
 //        Database originalDatabase = new Database(databaseFolder.toString());
 //
-//        originalDatabase.setClinic(new Clinic("", "", "","", ZoneId.of("US/Eastern"),
+//        originalDatabase.setClinic(new Clinic("", "", "","",
 //                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
 //                        LocalTime.of(17, 0))))));
 //
@@ -160,7 +159,7 @@ public class AppointmentManagerTests {
     public void testRemoveAppointment() {
         Database originalDatabase = new Database(databaseFolder.toString());
 
-        originalDatabase.setClinic(new Clinic("", "", "","", ZoneId.of("US/Eastern"),
+        originalDatabase.setClinic(new Clinic("", "", "","",
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0))))));
 
