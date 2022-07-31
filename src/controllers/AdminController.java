@@ -54,7 +54,7 @@ public class AdminController extends UserController<Admin> {
         commands.put("change user password", changeUserPassword());
         commands.put("delete user", deleteUser());
         commands.put("delete self", deleteSelf());
-        commands.put("log out", logOut());
+
         commands.putAll(super.AllCommands());
         return commands;
     }
@@ -167,8 +167,6 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
-    private Command logOut (){
-        return (x) -> SignOut();
-    }
+
 
 }

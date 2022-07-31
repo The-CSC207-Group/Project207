@@ -52,7 +52,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     public LinkedHashMap<String, Command> AllCommands() {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
-        commands.put("unload patient", unloadPatient());
+        commands.put("unload patient", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", ViewPatientAppointments());
@@ -65,6 +65,9 @@ public class DoctorLoadedPatientController extends TerminalController {
         commands.put("delete prescription", DeletePatientPrescription());
         commands.putAll(super.AllCommands());
         return commands;
+    }
+    private Command Back(DoctorController previousController){
+        return (x) -> changeCurrentController(previousController);
     }
 
     private Command CreatePatientPrescription() {
@@ -95,10 +98,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         };
     }
 
-    private Command unloadPatient (){
-        return (x) -> {
-            Back(previousController);};
-    }
+
 
 /* PENDING IMPLEMENTATION IN PHASE 2
     private Command ViewPatientAppointments() {

@@ -58,7 +58,7 @@ public class SecretaryController extends UserController<Secretary> {
         commands.put("create patient", createPatientAccount());
         commands.put("load patient", LoadPatient());
         commands.put("delete patient", deletePatient());
-        commands.put("log out", logOut());
+
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("add availability", addDoctorAvailability());
@@ -110,9 +110,6 @@ public class SecretaryController extends UserController<Secretary> {
             }
 
         };
-    }
-    private Command logOut (){
-        return (x) -> SignOut();
     }
 
     /* PENDING IMPLEMENTATION IN PHASE 2

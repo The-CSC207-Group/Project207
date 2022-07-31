@@ -102,7 +102,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         };
     }
 
-    protected Command SignOut(){
+    private Command SignOut(){
         return (x) -> changeCurrentController(new SignInController(getContext()));
     }
 

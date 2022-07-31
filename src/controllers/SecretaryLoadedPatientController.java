@@ -55,7 +55,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", changePatientPassword());
-        commands.put("unload patient", unloadPatient());
+        commands.put("unload patient", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", viewAppointments());
@@ -78,9 +78,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-    private Command unloadPatient (){
-        return (x) -> {
-            Back(previousController);};
+    private Command Back(SecretaryController previousController){
+        return (x) -> changeCurrentController(previousController);
     }
 
     /* PENDING IMPLEMENTATION IN PHASE 2
