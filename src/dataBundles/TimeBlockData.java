@@ -4,13 +4,14 @@ package dataBundles;
 
 import entities.TimeBlock;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
  * Wrapper class for a TimeBlock entity.
  */
-public class TimeBlockData {
+public class TimeBlockData implements UniversalTimeBlockWithDay{
 
     private final TimeBlock timeBlock;
 
@@ -44,5 +45,19 @@ public class TimeBlockData {
         return timeBlock.endTimeToLocal();
     }
 
+    @Override
+    public LocalTime startTime() {
+        return timeBlock.startTime();
+    }
+
+    @Override
+    public LocalTime endTime() {
+        return timeBlock.endTime();
+    }
+
+    @Override
+    public LocalDate date() {
+        return timeBlock.date();
+    }
 }
 

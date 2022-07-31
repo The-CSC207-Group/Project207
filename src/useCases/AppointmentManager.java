@@ -14,6 +14,7 @@ import utilities.TimeUtils;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,10 @@ public class AppointmentManager {
             return new AppointmentData(newApp);
         }
         return null;
+    }
+    public boolean doesNotOverlapWithDoctorsApointments(UniversalTimeBlockWithDay timeblock, DoctorData doctorData){
+        return getDoctorAppointments(doctorData).stream()
+                .anyMatch(x -> overlapDay(x, timeblock) && overlapTime(x, timeblock));
     }
 
     /**
@@ -194,11 +199,11 @@ public class AppointmentManager {
      * @return ArrayList<AppointmentData> - ArrayList of AppointmentData which includes information of many Appointments.
      */
     public ArrayList<AppointmentData> getScheduleData(DoctorData doctorData, LocalDate selectedDay){
-        return getAllAppointments().stream()
-                .filter(x -> x.getDoctorId().equals(doctorData.getId()))
-                .filter(x->x.getTimeBlock().getStartTime().toLocalDate().equals(selectedDay))
+        return getDoctorAppointments(doctorData).stream()
+                .filter(x-> x.date().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
 
 
 
@@ -352,11 +357,23 @@ public class AppointmentManager {
                         appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorEndTime()));
     }
 
-    private void removeAppointmentConflictAvailability(DoctorData doctorData, Availability availability){
-        getDoctorAppointments(doctorData).stream()
-                .filter(x-> overlapDay(x, availability))
-                .filter(x -> overlapTime(x, availability))
-                .forEach(this::removeAppointment);
+//    private void removeAppointmentConflictAvailability(DoctorData doctorData, Availability availability){
+//        getDoctorAppointments(doctorData).stream()
+//                .filter(x-> overlapDay(x, availability))
+//                .filter(x -> overlapTime(x, availability))
+//                .forEach(this::removeAppointment);
+//    }
+    private boolean overlaps(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
+        return overlapTime(day1, day2) && overlapDay(day1, day2);
+    }
+    private boolean overlapDay(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
+        return day1.date().equals(day2.date());
+    }
+    private boolean overlapTime(UniversalTimeBlock time1, UniversalTimeBlock time2){
+        return isWithinHours(time1, time2.startTime()) && isWithinHours(time1, time2.endTime());
+    }
+    private boolean isWithinHours(UniversalTimeBlock timeBlock, LocalTime time){
+        return time.isAfter(timeBlock.startTime()) && time.isBefore(timeBlock.endTime());
     }
 
 }

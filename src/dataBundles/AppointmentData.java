@@ -4,10 +4,13 @@ package dataBundles;
 
 import entities.Appointment;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Wrapper class for appointment entity.
  */
-public class AppointmentData {
+public class AppointmentData implements UniversalTimeBlockWithDay {
 
     private final Appointment appointment;
 
@@ -51,6 +54,21 @@ public class AppointmentData {
         return appointment.getId();
     }
 
+
+    @Override
+    public LocalTime startTime() {
+        return appointment.startTime();
+    }
+
+    @Override
+    public LocalTime endTime() {
+        return appointment.endTime();
+    }
+
+    @Override
+    public LocalDate date() {
+        return appointment.date();
+    }
 }
 
 

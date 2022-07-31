@@ -2,12 +2,16 @@
 
 package entities;
 
+import dataBundles.UniversalTimeBlockWithDay;
 import utilities.JsonSerializable;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * Represents an appointment.
  */
-public class Appointment extends JsonSerializable {
+public class Appointment extends JsonSerializable implements UniversalTimeBlockWithDay {
 
     private TimeBlock timeBlock;
     private Integer doctorId;
@@ -68,5 +72,20 @@ public class Appointment extends JsonSerializable {
      */
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+    }
+
+    @Override
+    public LocalTime startTime() {
+        return timeBlock.startTime();
+
+    }
+    @Override
+    public LocalTime endTime() {
+        return timeBlock.endTime();
+    }
+
+    @Override
+    public LocalDate date() {
+        return timeBlock.date();
     }
 }

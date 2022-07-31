@@ -10,7 +10,7 @@ import java.time.LocalTime;
 /**
  * Wrapper class for Availability entity.
  */
-public class AvailabilityData {
+public class AvailabilityData implements UniversalTimeBlock {
 
     private final Availability availability;
     /**
@@ -40,5 +40,20 @@ public class AvailabilityData {
      */
     public LocalTime getDoctorEndTime() {
         return availability.getDoctorEndTime();
+    }
+
+    @Override
+    public LocalTime startTime() {
+        return availability.startTime();
+    }
+
+    @Override
+    public LocalTime endTime() {
+        return availability.endTime();
+    }
+
+    @Override
+    public DayOfWeek dayOfWeek() {
+        return availability.dayOfWeek();
     }
 }
