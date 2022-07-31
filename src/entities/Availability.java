@@ -2,13 +2,15 @@
 
 package entities;
 
+import dataBundles.UniversalTimeBlock;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 /**
  * Represents a doctor's availability days and times.
  */
-public class Availability {
+public class Availability implements UniversalTimeBlock {
 
     private final DayOfWeek dayOfWeek;
     private LocalTime doctorStartTime;
@@ -63,4 +65,18 @@ public class Availability {
         this.doctorEndTime = endTime;
     }
 
+    @Override
+    public LocalTime startTime() {
+        return doctorStartTime;
+    }
+
+    @Override
+    public LocalTime endTime() {
+        return doctorEndTime;
+    }
+
+    @Override
+    public DayOfWeek dayOfWeek() {
+        return dayOfWeek;
+    }
 }
