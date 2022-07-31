@@ -4,10 +4,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public interface UniversalTimeBlockWithDay extends UniversalTimeBlock {
-    LocalDate day();
+    LocalDate date();
 
     @Override
     default DayOfWeek dayOfWeek(){
-        return day().getDayOfWeek();
+        return date().getDayOfWeek();
     }
 }
