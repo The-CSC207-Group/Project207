@@ -1,13 +1,11 @@
 package dataBundles;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.LocalTime;
 
-public interface UniversalTimeBlock extends UniversalHourBlock{
-    LocalDate day();
+public interface UniversalTimeBlock {
+    LocalTime startTime();
+    LocalTime endTime();
+    DayOfWeek dayOfWeek();
 
-    @Override
-    default DayOfWeek dayOfWeek(){
-        return day().getDayOfWeek();
-    }
 }
