@@ -17,9 +17,7 @@ import utilities.DeleteUtils;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -34,20 +32,16 @@ public class PrescriptionManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
-        LocalDateTime localExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+        LocalDate localExpiryDate = LocalDate.of(2050, 7, 1);
 
         PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
         DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
 
         Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(), doctor.getId(), zonedExpiryDate);
+                Prescription("medicine", "healthy", patient.getId(), doctor.getId(), localExpiryDate);
         Prescription originalPrescription2 = new
                 Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), zonedExpiryDate);
+                doctor.getId(), localExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
@@ -88,18 +82,14 @@ public class PrescriptionManagerTests {
         PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
         DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
-        LocalDateTime localExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+        LocalDate localExpiryDate = LocalDate.of(2021, 7, 1);
 
         Prescription originalPrescription1 = new
                 Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), zonedExpiryDate);
+                doctor.getId(), localExpiryDate);
         Prescription originalPrescription2 = new
                 Prescription("bad", "very unhealthy", doctor.getId(),
-                doctor.getId(), zonedExpiryDate);
+                doctor.getId(), localExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
@@ -120,20 +110,15 @@ public class PrescriptionManagerTests {
         PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
         DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
-        LocalDateTime inactiveLocalExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
-        LocalDateTime activeLocalExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime inactiveZonedExpiryDate = ZonedDateTime.of(inactiveLocalExpiryDate, torontoID);
-        ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
+        LocalDate inactiveLocalExpiryDate = LocalDate.of(2021, 7, 1);
+        LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
                 Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveZonedExpiryDate);
+                doctor.getId(), inactiveLocalExpiryDate);
         Prescription originalPrescription2 = new
                 Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeZonedExpiryDate);
+                doctor.getId(), activeLocalExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
@@ -155,18 +140,14 @@ public class PrescriptionManagerTests {
         PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
         DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
-        LocalDateTime localExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+        LocalDate localExpiryDate = LocalDate.of(2050, 7, 1);
         String header = "medicine";
         String body = "healthy";
 
         PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
 
         PrescriptionData prescriptionData = prescriptionManager.createPrescription(header, body, patient,
-                doctor, zonedExpiryDate);
+                doctor, localExpiryDate);
 
         /* testing if the created prescription data is valid by testing if its fields match with the parameters
         * of the createPrescription method */
@@ -179,7 +160,7 @@ public class PrescriptionManagerTests {
         assertEquals("The created prescription data should have the same patient ID noted as the " +
                 "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
-                prescriptionData.getExpiryDate().compareTo(zonedExpiryDate), 0);
+                prescriptionData.getExpiryDate().compareTo(localExpiryDate), 0);
 
         Prescription loadedPrescription = prescriptionDatabase.get(prescriptionData.getPrescriptionId());
 
@@ -194,7 +175,7 @@ public class PrescriptionManagerTests {
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
                 "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
         assertEquals("The loaded prescription object should have the same expiry as the parameters of " +
-                        "createPrescription method", prescriptionData.getExpiryDate().compareTo(zonedExpiryDate),
+                        "createPrescription method", prescriptionData.getExpiryDate().compareTo(localExpiryDate),
                 0);
     }
 
@@ -206,20 +187,15 @@ public class PrescriptionManagerTests {
         PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
         DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
-        LocalDateTime inactiveLocalExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
-        LocalDateTime activeLocalExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime inactiveZonedExpiryDate = ZonedDateTime.of(inactiveLocalExpiryDate, torontoID);
-        ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
+        LocalDate inactiveLocalExpiryDate = LocalDate.of(2021, 7, 1);
+        LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
                 Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveZonedExpiryDate);
+                doctor.getId(), inactiveLocalExpiryDate);
         Prescription originalPrescription2 = new
                 Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeZonedExpiryDate);
+                doctor.getId(), activeLocalExpiryDate);
 
         Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
         Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
@@ -257,20 +233,15 @@ public class PrescriptionManagerTests {
         PatientData patient2 = new PatientManager(originalDatabase).createPatient("test 5", "test4");
         DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2020,7,1,4,3);
-        LocalDateTime inactiveLocalExpiryDate = LocalDateTime.of(2021, 7, 1, 0, 0);
-        LocalDateTime activeLocalExpiryDate = LocalDateTime.of(2050, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime inactiveZonedExpiryDate = ZonedDateTime.of(inactiveLocalExpiryDate, torontoID);
-        ZonedDateTime activeZonedExpiryDate = ZonedDateTime.of(activeLocalExpiryDate, torontoID);
+        LocalDate inactiveLocalExpiryDate = LocalDate.of(2021, 7, 1);
+        LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
                 Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveZonedExpiryDate);
+                doctor.getId(), inactiveLocalExpiryDate);
         Prescription originalPrescription2 = new
                 Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeZonedExpiryDate);
+                doctor.getId(), activeLocalExpiryDate);
 
         prescriptionDatabase.add(originalPrescription1);
         prescriptionDatabase.add(originalPrescription2);

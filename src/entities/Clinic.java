@@ -2,7 +2,6 @@ package entities;
 
 import utilities.JsonSerializable;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 /**
@@ -14,8 +13,6 @@ public class Clinic extends JsonSerializable {
     private String phoneNumber;
     private String email;
     private String address;
-    private ZoneId timeZone;
-    //used to store the operating hours of the clinic for availability calculations
     private final ArrayList<Availability> clinicHours;
 
     /**
@@ -23,16 +20,13 @@ public class Clinic extends JsonSerializable {
      * @param name String representing the name of the clinic.
      * @param phoneNumber String representing the phone number of the clinic.
      * @param address String representing the address of the clinic.
-     * @param timeZone ZoneId representing the time zone of the clinic.
      * @param clinicHours TimeBlock representing the clinic's hours of operation.
      */
-    public Clinic(String name, String phoneNumber, String email, String address, ZoneId timeZone,
-                  ArrayList<Availability> clinicHours) {
+    public Clinic(String name, String phoneNumber, String email, String address, ArrayList<Availability> clinicHours) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
-        this.timeZone = timeZone;
         this.clinicHours = clinicHours;
     }
 
@@ -96,22 +90,7 @@ public class Clinic extends JsonSerializable {
         this.address = address;
     }
 
-    /**
-     * @return ZoneId representing the time zone of the clinic.
-     */
-    public ZoneId getTimeZone() {
-        return timeZone;
-    }
-
     // ALL CODE BELOW IS FOR PHASE 2
-
-    /**
-     * Sets the time zone of the clinic.
-     * @param timeZone The new time zone of the clinic as ZoneId.
-     */
-    public void setTimeZone(ZoneId timeZone) {
-        this.timeZone = timeZone;
-    }
 
     /**
      * @return TimeBlock representing the clinic's hours of operation.

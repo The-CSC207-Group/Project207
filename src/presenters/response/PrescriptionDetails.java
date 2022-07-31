@@ -1,6 +1,7 @@
 package presenters.response;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -10,15 +11,15 @@ public final class PrescriptionDetails {
 
     private final String header;
     private final String body;
-    private final ZonedDateTime expiryDate;
+    private final LocalDate expiryDate;
 
     /**
      * Creates an instance of PrescriptionDetails.
      * @param header String representing this prescription's header.
      * @param body String representing this prescription's body.
-     * @param expiryDate ZonedDateTime representing this prescription's expiry date.
+     * @param expiryDate LocalDate representing this prescription's expiry date.
      */
-    public PrescriptionDetails(String header, String body, ZonedDateTime expiryDate) {
+    public PrescriptionDetails(String header, String body, LocalDate expiryDate) {
         this.header = header;
         this.body = body;
         this.expiryDate = expiryDate;
@@ -39,9 +40,9 @@ public final class PrescriptionDetails {
     }
 
     /**
-     * @return ZonedDateTime representing this prescription's expiry date.
+     * @return LocalDate representing this prescription's expiry date.
      */
-    public ZonedDateTime expiryDate() {
+    public LocalDate expiryDate() {
         return expiryDate;
     }
 

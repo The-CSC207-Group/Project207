@@ -121,8 +121,8 @@ public class DoctorController extends UserController<Doctor> {
         return (x) -> {
             ArrayList<Integer> absenceData = doctorScreenView.addAbsencePrompt();
             new AppointmentManager(getDatabase()).addAbsence(doctorData, new TimeUtils()
-                    .createZonedDataTime(absenceData.get(0), absenceData.get(1),
-                    absenceData.get(2), 0, 0), new TimeUtils().createZonedDataTime(absenceData.get(0),
+                    .createLocalDateTime(absenceData.get(0), absenceData.get(1),
+                    absenceData.get(2), 0, 0), new TimeUtils().createLocalDataTime(absenceData.get(0),
                     absenceData.get(1), absenceData.get(2) + absenceData.get(3), 0, 0));
         };
     } */

@@ -12,7 +12,6 @@ import utilities.DeleteUtils;
 import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class ClinicManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
 
         Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                 LocalTime.of(17, 0)))));
         originalDatabase.setClinic(clinic);
@@ -48,7 +46,6 @@ public class ClinicManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
 
         Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
         originalDatabase.setClinic(clinic);
@@ -69,7 +66,6 @@ public class ClinicManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
 
         Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
         originalDatabase.setClinic(clinic);
@@ -90,7 +86,6 @@ public class ClinicManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
 
         Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
         originalDatabase.setClinic(clinic);
@@ -111,7 +106,6 @@ public class ClinicManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
 
         Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
 
@@ -133,7 +127,6 @@ public class ClinicManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
 
         Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                ZoneId.of("US/Eastern"),
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
 

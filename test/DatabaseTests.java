@@ -130,15 +130,11 @@ public class DatabaseTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Prescription> originalPrescriptionDatabase = originalDatabase.getPrescriptionDatabase();
 
-        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
-        LocalDateTime localExpiryDate = LocalDateTime.of(2024, 7, 1, 0, 0);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
-        ZonedDateTime zonedExpiryDate = ZonedDateTime.of(localExpiryDate, torontoID);
+        LocalDate localExpiryDate = LocalDate.of(2024, 7, 1);
 
         Prescription originalPrescription = new
                 Prescription("medicine", "healthy", 123,
-                456, zonedExpiryDate);
+                456, localExpiryDate);
 
         Integer prescriptionID = originalPrescriptionDatabase.add(originalPrescription);
         originalPrescriptionDatabase.save();
@@ -170,10 +166,6 @@ public class DatabaseTests {
     public void testSaveLoadReportDatabase() {
         Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Report> originalReportDatabase = originalDatabase.getReportDatabase();
-
-        LocalDateTime localDateNoted = LocalDateTime.of(2022,7,1,4,3);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedDateNoted = ZonedDateTime.of(localDateNoted, torontoID);
 
         Report originalReport = new
                 Report("medicine", "healthy", 123,
@@ -209,10 +201,7 @@ public class DatabaseTests {
 
         LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
         LocalDateTime localEndTime = LocalDateTime.of(2022,7,1,6,3);
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
-        ZonedDateTime zonedStartTime = ZonedDateTime.of(localStartTime, torontoID);
-        ZonedDateTime zonedEndTime = ZonedDateTime.of(localEndTime, torontoID);
-        TimeBlock timeBlock = new TimeBlock(zonedStartTime, zonedEndTime);
+        TimeBlock timeBlock = new TimeBlock(localStartTime, localEndTime);
 
         Appointment originalAppointment = new Appointment(timeBlock,  123, 456);
 
@@ -307,11 +296,10 @@ public class DatabaseTests {
     public void testSetGetClinic() {
         Database originalDatabase = new Database(databaseFolder.toString());
 
-        ZoneId torontoID = ZoneId.of("Canada/Eastern");
         ArrayList<Availability> clinicHours = new ArrayList<>();
         clinicHours.add(new Availability(DayOfWeek.of(1), LocalTime.of(8, 0), LocalTime.of(20, 0)));
         Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "abc@gmail.com",
-                "21 jump street", torontoID, clinicHours);
+                "21 jump street", clinicHours);
 
         originalDatabase.setClinic(originalClinic);
 
@@ -328,8 +316,6 @@ public class DatabaseTests {
                 originalClinic.getPhoneNumber(), loadedClinic.getPhoneNumber());
         assertEquals("Original clinic and loaded clinic should share the same address",
                 originalClinic.getAddress(), loadedClinic.getAddress());
-        assertEquals("Original clinic and loaded clinic should share the same time zone",
-                originalClinic.getTimeZone().toString(), loadedClinic.getTimeZone().toString());
         assertEquals("Original clinic and loaded clinic should start at the same time",
                 originalClinic.getClinicHours().get(0).getDoctorStartTime().compareTo(loadedClinic.getClinicHours().get(0).
                         getDoctorStartTime()), 0); // the compareTo function returns 0 when both dates are equal

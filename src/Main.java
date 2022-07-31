@@ -6,7 +6,6 @@ import useCases.AdminManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class Main {
             return;
         }
 
-        database.setClinic(new Clinic("", "", "", "", ZoneId.of("US/Eastern"),
+        database.setClinic(new Clinic("", "", "", "",
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                                 LocalTime.of(17, 0)),
                         new Availability(DayOfWeek.of(2), LocalTime.of(8, 30),

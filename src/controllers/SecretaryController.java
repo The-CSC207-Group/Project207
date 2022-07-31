@@ -148,8 +148,8 @@ public class SecretaryController extends UserController<Secretary> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
 
-            appointmentManager.addAbsence(doctorData, secretaryScreenView.addZoneDateTimeStart(),
-                    secretaryScreenView.addZoneDateTimeEnd());
+            appointmentManager.addAbsence(doctorData, secretaryScreenView.addLocalDateTimeStart(),
+                    secretaryScreenView.addLocalDateTimeEnd());
         };
     } */
 

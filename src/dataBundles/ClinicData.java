@@ -2,7 +2,6 @@ package dataBundles;
 
 import entities.Clinic;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -33,13 +32,6 @@ public class ClinicData {
      */
     public String getEmail(){
         return clinic.getEmail();
-    }
-
-    /**
-     * @return ZoneId - timezone of the clinic stored.
-     */
-    public ZoneId getTimeZone() {
-        return clinic.getTimeZone();
     }
 
     /**

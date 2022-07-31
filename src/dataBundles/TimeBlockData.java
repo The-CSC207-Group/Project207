@@ -4,8 +4,8 @@ package dataBundles;
 
 import entities.TimeBlock;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 
 /**
  * Wrapper class for a TimeBlock entity.
@@ -23,16 +23,16 @@ public class TimeBlockData {
     }
 
     /**
-     * @return ZonedDateTime - start time of the time block.
+     * @return LocalDateTime - start time of the time block.
      */
-    public ZonedDateTime getStartTime(){
+    public LocalDateTime getStartTime(){
         return timeBlock.getStartTime();
     }
 
     /**
-     * @return ZonedDateTime - end time of the time block.
+     * @return LocalDateTime - end time of the time block.
      */
-    public ZonedDateTime getEndTime(){
+    public LocalDateTime getEndTime(){
         return timeBlock.getEndTime();
     }
 

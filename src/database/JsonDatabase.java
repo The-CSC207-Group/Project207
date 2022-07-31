@@ -1,7 +1,6 @@
 package database;
 
 import com.fatboyindustrial.gsonjavatime.Converters;
-import com.fatboyindustrial.gsonjavatime.ZoneIdConverter;
 import com.google.gson.*;
 import utilities.JsonSerializable;
 
@@ -53,10 +52,6 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
         GsonBuilder builder = Converters.registerAll(new GsonBuilder());
 
-        // Unfortunately, Google's Gson library implicitly serializes immutable private objects which causes the
-        // compiler to issue a runtime warning. This is a temporary fix for now, until I find a better library.
-        builder.registerTypeAdapter(getZoneRegionClass(), new ZoneIdConverter());
-
         this.gson = builder.create();
         this.database = new HashMap<>();
         this.keyDelegator = keyDelegator;
@@ -74,19 +69,6 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
         try {
             return type.getMethod(name);
         } catch (NoSuchMethodException ignored) {
-            return null;
-        }
-    }
-
-    /**
-     * Gets ZoneRegion class by name.
-     * Used to initialize the Gson type adapter and avoid the serialization of immutable private object.
-     * @return ZoneRegion class by name.
-     */
-    private Class<?> getZoneRegionClass() {
-        try {
-            return Class.forName("java.time.ZoneRegion");
-        } catch (Exception ignored) {
             return null;
         }
     }

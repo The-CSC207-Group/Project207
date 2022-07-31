@@ -4,17 +4,15 @@ package utilities;
 
 import entities.TimeBlock;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
+
 /**
  * Utility class of methods relating to usage of time, used anything related to appointments, absence, availability, and
  * time blocks.
  */
 public class TimeUtils {
     /**
-     * A method that creates a time block without requiring an input of ZonedDateTimes.
+     * A method that creates a time block without requiring an input of LocalDateTime.
      * @param year              an integer that represents the year for a time block to exist.
      * @param month             an integer that represents the month of the given year.
      * @param day               an integer that represents a day of a given month.
@@ -24,15 +22,9 @@ public class TimeUtils {
      * @return a TimeBlock grouping together all the inputted data.
      */
     public TimeBlock createTimeBlock(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer lenOfAppointment){
-        ZonedDateTime starTime = createZonedDataTime(year, month, day, hour, minute);
-        TimeBlock proposedTime = new TimeBlock(createZonedDataTime(year, month, day, hour, minute),
-                starTime.plusMinutes(lenOfAppointment));
-        if (proposedTime.getStartTime().isBefore(getCurrentZonedDateTime())){
-            proposedTime.getStartTime().plusYears(1);
-            proposedTime.getEndTime().plusYears(1);
-            return proposedTime;
-        }
-        return proposedTime;
+        LocalDateTime startTime = createLocalDateTime(year, month, day, hour, minute);
+        return new TimeBlock(createLocalDateTime(year, month, day, hour, minute),
+                startTime.plusMinutes(lenOfAppointment));
     }
 
     /**
@@ -58,26 +50,26 @@ public class TimeUtils {
     }
 
     /**
-     *Creates a zoned date time which holds both a time and a date.
+     *Creates a local date time which holds both a time and a date.
      * @param year          an integer that represents the year for a time block to exist.
      * @param month         an integer that represents the month of the given year.
      * @param dayOfMonth    an integer that represents a day of a given month.
      * @param hour          an integer that represents an hour of a given day.
      * @param minute        an integer that represents a minute of a given hour.
-     * @return a ZonedDateTime from inputted data.
+     * @return a LocalDateTime from inputted data.
      */
-    public ZonedDateTime createZonedDataTime(Integer year, Integer month, Integer dayOfMonth, Integer hour,
+    public LocalDateTime createLocalDateTime(Integer year, Integer month, Integer dayOfMonth, Integer hour,
                                              Integer minute){
-        return ZonedDateTime.of(year, month, dayOfMonth, hour,
-                minute, 0, 0, ZoneId.of("US/Eastern"));
+        return LocalDateTime.of(year, month, dayOfMonth, hour,
+                minute, 0, 0);
     }
 
     /**
-     * gets the current zoned date time of the system, in US/Eastern timezone.
-     * @return a ZonedDateTime from the system.
+     * gets the current local date time of the system.
+     * @return a LocalDateTime from the system.
      */
-    public ZonedDateTime getCurrentZonedDateTime(){
-        return ZonedDateTime.now(ZoneId.of("US/Eastern"));
+    public LocalDateTime getCurrentLocalDateTime(){
+        return LocalDateTime.now();
     }
 
     /**
