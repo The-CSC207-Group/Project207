@@ -56,6 +56,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", Back(previousController));
+        commands.put("back", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", viewAppointments());
@@ -78,9 +79,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-    private Command Back(SecretaryController previousController){
-        return (x) -> changeCurrentController(previousController);
-    }
+
 
     /* PENDING IMPLEMENTATION IN PHASE 2
 
