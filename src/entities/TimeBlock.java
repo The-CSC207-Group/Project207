@@ -2,13 +2,17 @@
 
 package entities;
 
+import dataBundles.UniversalTimeBlockWithDay;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
  * Represents a time block.
  */
-public class TimeBlock {
+public class TimeBlock implements UniversalTimeBlockWithDay {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -72,5 +76,24 @@ public class TimeBlock {
         return startTime.toLocalTime();
     }
 
+    @Override
+    public LocalTime startTime() {
+        return startTime.toLocalTime();
+    }
+
+    @Override
+    public LocalTime endTime() {
+        return startTime.toLocalTime();
+    }
+
+    @Override
+    public LocalDate date() {
+        return startTime.toLocalDate();
+    }
+    @Override
+    public DayOfWeek dayOfWeek() {
+        return startTime.getDayOfWeek();
+    }
 }
+
 

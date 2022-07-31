@@ -41,5 +41,4 @@ public class AvailabilityData {
     public LocalTime getDoctorEndTime() {
         return availability.getDoctorEndTime();
     }
-
 }
