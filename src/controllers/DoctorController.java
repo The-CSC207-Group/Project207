@@ -39,6 +39,7 @@ public class DoctorController extends UserController<Doctor> {
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
+        commands.put("log out", logOut());
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("show schedule", ViewSchedule());
@@ -66,6 +67,9 @@ public class DoctorController extends UserController<Doctor> {
                 doctorScreenView.showErrorLoadingPatient();
             }
         };
+    }
+    private Command logOut (){
+        return (x) -> SignOut();
     }
 
 /* PENDING IMPLEMENTATION IN PHASE 2

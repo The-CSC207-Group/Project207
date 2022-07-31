@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 public class SecretaryLoadedPatientController extends TerminalController {
 
     private final PatientData patientData;
-    private final SecretaryController secretaryController;
+    private final SecretaryController previousController;
     private final PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
@@ -34,7 +34,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
         super(context);
-        this.secretaryController = secretaryController;
+        this.previousController = secretaryController;
         this.patientData = patientData;
         this.patientManager = new PatientManager(getDatabase());
 
@@ -55,7 +55,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", changePatientPassword());
-        commands.put("unload patient", Back(secretaryController));
+        commands.put("unload patient", unloadPatient());
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", viewAppointments());
@@ -77,6 +77,10 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 secretaryScreenView.showResetPasswordMismatchError();
             }
         };
+    }
+    private Command unloadPatient (){
+        return (x) -> {
+            Back(previousController);};
     }
 
     /* PENDING IMPLEMENTATION IN PHASE 2

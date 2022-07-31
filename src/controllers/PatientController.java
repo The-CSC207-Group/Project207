@@ -41,8 +41,12 @@ public class PatientController extends UserController<Patient> {
 
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
         prescriptionController.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
+        commands.put("log out", logOut());
         commands.putAll(super.AllCommands());
         return commands;
+    }
+    private Command logOut (){
+        return (x) -> SignOut();
     }
 
     /* PENDING IMPLEMENTATION IN PHASE 2
