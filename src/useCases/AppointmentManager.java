@@ -333,7 +333,7 @@ public class AppointmentManager {
                 .filter(x -> x.getPatientId().equals(patientId))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-
+ //made the assumption that appointments must be sorted
     private ArrayList<TimeBlock> parseAvailabilityWithAppointmentData(ArrayList<TimeBlock> availability,
                                                                       Integer doctorId){
         ArrayList<TimeBlock> parsedAvailability = new ArrayList<>();

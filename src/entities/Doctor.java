@@ -7,9 +7,6 @@ import java.util.ArrayList;
  */
 public class Doctor extends User {
 
-    //availability should represent an arrayList of 7 Availability objects, 1 for each day of the week with the
-    //doctor's personalized hours
-    private final ArrayList<Availability> availability = new ArrayList<>();
     //absence represents time off booked by the doctor
     private final ArrayList<TimeBlock> absence = new ArrayList<>();
 
@@ -32,11 +29,6 @@ public class Doctor extends User {
         super(username, password);
     }
 
-    // ALL CODE BELOW IS FOR PHASE 2
-
-    public ArrayList<Availability> getAvailability() {
-        return availability;
-    }
 
     /**
      * @return ArrayList containing the TimeBlocks that the doctor is absent.
@@ -59,22 +51,6 @@ public class Doctor extends User {
      */
     public void removeAbsence(TimeBlock timeBlock) {
         this.absence.remove(timeBlock);
-    }
-
-    /**
-     * Adds a time the doctor is available in.
-     * @param Availability Availability time the doctor is available in.
-     */
-    public void addAvailability(Availability Availability) {
-        availability.add(Availability);
-    }
-
-    /**
-     * Removes a time the doctor was available in.
-     * @param Availability Availability time the doctor was available in.
-     */
-    public void removeAvailability(Availability Availability) {
-        availability.remove(Availability);
     }
 
 }
