@@ -31,10 +31,9 @@ public class ReportManager {
      * Delete a report from the report database.
      *
      * @param reportData ReportData - data associated with the report to be deleted.
-     * @return boolean - true if the id associated with the reportData exists in the database. false otherwise.
      */
-    public boolean deleteReport(ReportData reportData) {
-        return reportDatabase.remove(reportData.getReportId());
+    public void deleteReport(ReportData reportData) {
+        reportDatabase.remove(reportData.getReportId());
     }
 
     /**

@@ -28,13 +28,12 @@ public class DoctorLoadedPatientController extends TerminalController {
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
      *
-     * @param context            Context - a reference to the context object, which stores the current controller and allows for
-     *                           switching between controllers.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
-     * @param doctorData         DoctorData - a data containing the ID and attributes of the current doctor user.
-     * @param patientData        PatientData - a data containing the ID and attributes of the current loaded
-     *                           patient user.
+     * @param doctorData DoctorData - a data containing the ID and attributes of the current doctor user.
+     * @param patientData PatientData - a data containing the ID and attributes of the current loaded patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
@@ -58,9 +57,9 @@ public class DoctorLoadedPatientController extends TerminalController {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
         commands.put("view appointments", ViewPatientAppointments());
-        commands.put("view reports", getReport());
-        commands.put("create report", createReport());
-        commands.put("delete report", deleteReport());
+        commands.put("view reports", ViewPatientReports());
+        commands.put("create report", CreatePatientReport());
+        commands.put("delete report", DeletePatientReport());
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.put("create prescription", CreatePatientPrescription());
         commands.put("delete prescription", DeletePatientPrescription());
@@ -102,7 +101,7 @@ public class DoctorLoadedPatientController extends TerminalController {
                 .getPatientAppointments(patientData));
     }
 
-    private Command getReport() {
+    private Command ViewPatientReports() {
         return (x) -> {
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
             if (reportData.size() > 0) {
@@ -115,14 +114,14 @@ public class DoctorLoadedPatientController extends TerminalController {
         };
     }
 
-    private Command createReport() {
+    private Command CreatePatientReport() {
         return (x) -> {
             ReportDetails reportDetails = doctorView.reportDetailsPrompt();
             reportManager.addReport(patientData, doctorData, reportDetails.header(), reportDetails.body());
         };
     }
 
-    private Command deleteReport() {
+    private Command DeletePatientReport() {
         return (x) -> {
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
 
