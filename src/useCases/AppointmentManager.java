@@ -54,7 +54,7 @@ public class AppointmentManager {
         TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute,
                 lengthOfAppointments);
         if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
-                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(doctorData.getId(),
+                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(
                 proposedTime.getStartTime().toLocalDate()), proposedTime) &
                 isNoTimeBlockConflictAbsence(doctorData.getId(), proposedTime) & isWithinAvailability(proposedTime,
                 doctorData)) {
@@ -92,7 +92,7 @@ public class AppointmentManager {
         ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorId(),
                 appointment.getPatientId());
         if (isNoTimeBlockConflictAppointment(consideration, proposedTime) &
-                isNoTimeBlockConflictAppointment(getSingleDayAvailability(appointmentData.getDoctorId(),
+                isNoTimeBlockConflictAppointment(getSingleDayAvailability(
                 proposedTime.getStartTime().toLocalDate()), proposedTime) &
                 isNoTimeBlockConflictAbsence(appointmentData.getDoctorId(), proposedTime)){
             appointmentDatabase.add(appointment);
@@ -168,7 +168,7 @@ public class AppointmentManager {
         ArrayList<TimeBlock> totalAvailableTimes = new ArrayList<>();
         for (int numOfDays = searchEndTime.getDayOfYear() - searchStartTime.getDayOfYear(); numOfDays > 0; numOfDays--){
             LocalDate daySearched = searchEndTime.toLocalDate();
-            totalAvailableTimes.addAll(parseAvailabilityWithAppointmentData(getSingleDayAvailability(doctorData.getId(),
+            totalAvailableTimes.addAll(parseAvailabilityWithAppointmentData(getSingleDayAvailability(
                     daySearched.minusDays(numOfDays)), doctorData.getId()));
         }
         return totalAvailableTimes.stream()
@@ -177,12 +177,11 @@ public class AppointmentManager {
     }
     /**
      * Gets the availability data from a doctor on a specific enum representing the day of the week.
-     * @param doctorId Integer - id of the doctor the Appointment was assigned to.
      * @param dayOfWeek DayOfWeek - an Enum that represents a day of the week without ties to a specific date.
      * @return ArrayList<Availability> - an ArrayList of Availability that holds data on a doctor's available time.
      */
-    public ArrayList<Availability> getAvailabilityFromDayOfWeek(Integer doctorId, DayOfWeek dayOfWeek){
-        return doctorDatabase.get(doctorId).getAvailability()
+    public ArrayList<Availability> getAvailabilityFromDayOfWeek(DayOfWeek dayOfWeek){
+        return database.getClinic().getClinicHours()
                 .stream()
                 .filter(x -> dayOfWeek.equals(x.getDayOfWeek()))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -201,55 +200,8 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    /**
-     * A function that adds a new availability section to a doctor's ArrayList.
-     * @param doctorData DoctorData - the data representing a specific doctor in the database.
-     * @param dayOfWeek DayOfWeek - an enum that represents a particular day of the week.
-     * @param hour Integer - an integer value representing the hour of LocalTime.
-     * @param minute Integer - an integer value representing the minute of an hour of LocalTime.
-     * @param lengthOfAvailability Integer - the length of the newly added availability in terms of minutes.
-     */
-    public void newAvailability(DoctorData doctorData, DayOfWeek dayOfWeek, Integer hour, Integer minute,
-                                Integer lengthOfAvailability){
-        TimeUtils timeUtils = new TimeUtils();
-        doctorDatabase.get(doctorData.getId()).addAvailability(new Availability(dayOfWeek,
-                timeUtils.createLocalTime(hour, minute, 0), timeUtils.createLocalTime(hour, minute,
-                0).plusMinutes(lengthOfAvailability)));
-    }
 
-    /**
-     * Removes an Availability from a doctor's ArrayList Availability.
-     * @param doctorData DoctorData - the data representing a specific doctor in the database.
-     * @param availability AvailabilityData - data that represents a reoccurring time in which a doctor can
-     *                     have an appointment.
-     */
-    public void removeAvailability(DoctorData doctorData, AvailabilityData availability) {
-        ArrayList<Availability> availabilities = doctorDatabase.get(doctorData.getId()).getAvailability().stream()
-                        .filter(x -> x.getDayOfWeek().equals(availability.getDayOfWeek()))
-                        .filter(x -> x.getDoctorStartTime().equals(availability.getDoctorStartTime()))
-                .collect(Collectors.toCollection(ArrayList::new));
-        availabilities.forEach(x-> removeAppointmentConflictAvailability(doctorData, x));
-        availabilities.forEach(x -> doctorDatabase.get(doctorData.getId()).removeAvailability(x));
-        //send notification to patient that their appointment was removed
-    }
 
-//    public void adjustAvailability(AvailabilityData availability, LocalTime newStart, LocalTime newEnd){
-//        if (newStart.isAfter(availability.getDoctorStartTime())){
-//            getAllAppointments().stream()
-//                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
-//                    .filter(x ->x.getTimeBlock().startTimeToLocal().isBefore(newStart))
-//                    .forEach(this::removeAppointment);
-//        }
-//        else if (newEnd.isBefore(availability.getDoctorEndTime())){
-//            getAllAppointments().stream()
-//                    .filter(x-> x.getTimeBlock().getStartTime().getDayOfWeek() == availability.getDayOfWeek())
-//                    .filter(x ->x.getTimeBlock().endTimeToLocal().isAfter(newEnd))
-//                    .forEach(this::removeAppointment);
-//        }
-//        availability.setDoctorStartTime(newStart);
-//        availability.setDoctorEndTime(newEnd);
-//;
-//        }
 
     /**
      * Deletes an absence from a doctor's stored Absence ArrayList.
@@ -285,7 +237,7 @@ public class AppointmentManager {
      * @return ArrayList<AvailabilityData> - the ArrayList of AvailabilityData that represents a doctor's availability.
      */
     public ArrayList<AvailabilityData> getAvailabilityData(DoctorData doctorData){
-        return database.getDoctorDatabase().get(doctorData.getId()).getAvailability().stream()
+        return database.getClinic().getClinicHours().stream()
                 .map(AvailabilityData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -311,8 +263,8 @@ public class AppointmentManager {
         return timeConflictList(doctorDatabase.get(doctorId).getAbsence(), proposedTime).isEmpty();
     }
 
-    private ArrayList<TimeBlock> getSingleDayAvailability(Integer doctorId, LocalDate selectedDay){
-        return getAvailabilityFromDayOfWeek(doctorId, selectedDay.getDayOfWeek()).stream()
+    private ArrayList<TimeBlock> getSingleDayAvailability(LocalDate selectedDay){
+        return getAvailabilityFromDayOfWeek(selectedDay.getDayOfWeek()).stream()
                 .map(x -> new TimeBlock(LocalDateTime.of(selectedDay, x.getDoctorStartTime()), LocalDateTime
                         .of(selectedDay, x.getDoctorEndTime())))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -368,10 +320,11 @@ public class AppointmentManager {
         return true;
     }
     private boolean isWithinAvailability(TimeBlock proposedTime, DoctorData doctorData){
-        ArrayList<AvailabilityData> s = doctorData.getAvailability().stream()
+        ArrayList<AvailabilityData> s = database.getClinic().getClinicHours().stream()
                 .filter(x-> proposedTime.getStartTime().getDayOfWeek().equals(x.getDayOfWeek()))
                 .filter(x -> x.getDoctorStartTime().isBefore(proposedTime.startTimeToLocal()) & x.getDoctorEndTime()
                         .isAfter(proposedTime.endTimeToLocal()))
+                .map(AvailabilityData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
         return s.isEmpty();
 

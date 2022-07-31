@@ -23,17 +23,6 @@ public class DoctorData extends UserData<Doctor> {
         this.doctor = doctor;
     }
 
-    // ALL CODE BELOW IS FOR PHASE 2
-
-    /**
-     * Get the doctor's availability stored in the doctor entity
-     * @return ArrayList<Availability>
-     */
-    public ArrayList<AvailabilityData> getAvailability(){
-        return doctor.getAvailability().stream().
-                map(AvailabilityData::new).
-                collect(Collectors.toCollection(ArrayList::new));
-    }
 
     public ArrayList<TimeBlock> getAbsence(){
         return doctor.getAbsence();
