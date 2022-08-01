@@ -5,10 +5,7 @@ package useCases;
 import dataBundles.*;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Appointment;
-import entities.Availability;
-import entities.Doctor;
-import entities.TimeBlock;
+import entities.*;
 import utilities.TimeUtils;
 
 import java.time.DayOfWeek;
@@ -26,6 +23,7 @@ public class AppointmentManager {
     private final DataMapperGateway<Appointment> appointmentDatabase;
     private final DataMapperGateway<Doctor> doctorDatabase;
     private final Database database;
+    private final Clinic clinicData;
 
     /**
      *Initializes Appointment Manager with the appointment database, and doctor database.
@@ -34,6 +32,7 @@ public class AppointmentManager {
         this.appointmentDatabase = database.getAppointmentDatabase();
         this.doctorDatabase  = database.getDoctorDatabase();
         this.database = database;
+        this.clinicData = database.getClinic();
     }
 
     /**
@@ -54,21 +53,32 @@ public class AppointmentManager {
                                            Integer lengthOfAppointments) {
         TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute,
                 lengthOfAppointments);
-        if (isNoTimeBlockConflictAppointment(getTimeBlocksWithPatientAndDoctor(doctorData.getId(), patientData.getId()),
-                proposedTime) & isNoTimeBlockConflictAppointment(getSingleDayAvailability(
-                proposedTime.getStartTime().toLocalDate()), proposedTime) &
-                isNoTimeBlockConflictAbsence(doctorData.getId(), proposedTime) & isWithinAvailability(proposedTime,
-                doctorData)) {
+        if (isValidApointment(doctorData, proposedTime))  {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
             return new AppointmentData(newApp);
         }
         return null;
     }
+    private DoctorData fromIdToDoctorData(Integer id){
+        return new DoctorData(doctorDatabase.get(id));
+    }
+    private boolean isValidApointment(DoctorData doctorData, TimeBlock timeBlock){
+        return doesNotOverlapWithDoctorsApointments(timeBlock, doctorData) && strictlyOverlapsWithClinicHours(timeBlock);
+    }
     public boolean doesNotOverlapWithDoctorsApointments(UniversalTimeBlockWithDay timeblock, DoctorData doctorData){
         return getDoctorAppointments(doctorData).stream()
-                .anyMatch(x -> overlapDay(x, timeblock) && overlapTime(x, timeblock));
+                .anyMatch(x -> overlapsDateAndHours(x, timeblock));
     }
+    private boolean strictlyOverlapsWithClinicHours(UniversalTimeBlock timeBlock){
+        for (Availability i: clinicData.getClinicHours()){
+            if (i.dayOfWeek().equals(timeBlock.dayOfWeek()) && strictlyWithinHours(i, timeBlock)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Removes an Appointment from the database.
@@ -91,16 +101,12 @@ public class AppointmentManager {
      */
     public boolean rescheduleAppointment(AppointmentData appointmentData, Integer year, Integer month, Integer day,
                                          Integer hour, Integer minute, Integer lengthOfAppointments){
-        Appointment appointment = appointmentDatabase.get(appointmentData.getAppointmentId());
-        appointmentDatabase.get(appointmentData.getAppointmentId()).setTimeBlock(null);
+
         TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute, lengthOfAppointments);
-        ArrayList<TimeBlock> consideration = getTimeBlocksWithPatientAndDoctor(appointment.getDoctorId(),
-                appointment.getPatientId());
-        if (isNoTimeBlockConflictAppointment(consideration, proposedTime) &
-                isNoTimeBlockConflictAppointment(getSingleDayAvailability(
-                proposedTime.getStartTime().toLocalDate()), proposedTime) &
-                isNoTimeBlockConflictAbsence(appointmentData.getDoctorId(), proposedTime)){
-            appointmentDatabase.add(appointment);
+
+        DoctorData doctorData = fromIdToDoctorData(appointmentData.getDoctorId());
+        if (isValidApointment(doctorData, proposedTime)){
+            appointmentDatabase.add(new Appointment(proposedTime, appointmentData.getDoctorId(), appointmentData.getPatientId()));
             return true;
         }
         return false;
@@ -346,34 +352,23 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private boolean overlapDay(AppointmentData appointmentData, Availability availability){
-        return appointmentData.getTimeBlock().getStartTime().getDayOfWeek().equals(availability.getDayOfWeek());
-    }
 
-    private boolean overlapTime (AppointmentData appointmentData, Availability availability){
-        return (appointmentData.getTimeBlock().startTimeToLocal().isBefore(availability.getDoctorStartTime()) &
-                appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorStartTime())) |
-                (appointmentData.getTimeBlock().startTimeToLocal().isBefore(availability.getDoctorEndTime()) &
-                        appointmentData.getTimeBlock().endTimeToLocal().isAfter(availability.getDoctorEndTime()));
-    }
 
-//    private void removeAppointmentConflictAvailability(DoctorData doctorData, Availability availability){
-//        getDoctorAppointments(doctorData).stream()
-//                .filter(x-> overlapDay(x, availability))
-//                .filter(x -> overlapTime(x, availability))
-//                .forEach(this::removeAppointment);
-//    }
-    private boolean overlaps(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
-        return overlapTime(day1, day2) && overlapDay(day1, day2);
+
+
+    private boolean overlapsDateAndHours(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
+        return overlaphours(day1, day2) && overlapdate(day1, day2);
     }
-    private boolean overlapDay(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
+    private boolean overlapdate(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
         return day1.date().equals(day2.date());
     }
-    private boolean overlapTime(UniversalTimeBlock time1, UniversalTimeBlock time2){
+    private boolean overlaphours(UniversalTimeBlock time1, UniversalTimeBlock time2){
         return isWithinHours(time1, time2.startTime()) && isWithinHours(time1, time2.endTime());
     }
     private boolean isWithinHours(UniversalTimeBlock timeBlock, LocalTime time){
         return time.isAfter(timeBlock.startTime()) && time.isBefore(timeBlock.endTime());
     }
-
+    private boolean strictlyWithinHours(UniversalTimeBlock timeBlock, UniversalTimeBlock timeBlock2){
+        return isWithinHours(timeBlock, timeBlock2.startTime()) && isWithinHours(timeBlock, timeBlock2.endTime());
+    }
 }
