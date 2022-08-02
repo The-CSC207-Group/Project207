@@ -43,7 +43,7 @@ public class AdminUserManagementController extends TerminalController {
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
-        //commands.put("delete user", DeleteUser());
+        commands.put("delete user", DeleteUser());
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -100,5 +100,17 @@ public class AdminUserManagementController extends TerminalController {
             return true;
         } else return adminManager.deleteUser(username);
     }
-
+    private Command DeleteUser() {
+        return (x) -> {
+            String user = adminScreenView.deleteUserPrompt();
+            if (DeleteUserHelper(user)) {
+                adminScreenView.showDeleteUserSuccess();
+                if (user.equals(adminData.getUsername())) {
+                    changeCurrentController(new SignInController(getContext()));
+                }
+            } else {
+                adminScreenView.showFailedToDeleteUserError();
+            }
+        };
+    }
 }
