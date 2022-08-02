@@ -22,6 +22,8 @@ public class AppointmentManager {
 
     private final DataMapperGateway<Appointment> appointmentDatabase;
     private final DataMapperGateway<Doctor> doctorDatabase;
+
+    private final DoctorManager doctorManager;
     private final Database database;
     private final Clinic clinicData;
 
@@ -33,6 +35,7 @@ public class AppointmentManager {
         this.doctorDatabase  = database.getDoctorDatabase();
         this.database = database;
         this.clinicData = database.getClinic();
+        this.doctorManager = new DoctorManager(database);
     }
 
     /**
@@ -77,7 +80,7 @@ public class AppointmentManager {
     }
 
     public boolean doesNotOverlapWithDoctorsAbsence(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData){
-        return getDoctorAbsence(doctorData).stream()
+        return doctorManager.getAbsence(doctorData).stream()
                 .anyMatch(x -> overlapsDateAndHours(x, timeBlock));
     }
     /**

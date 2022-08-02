@@ -1,9 +1,13 @@
 package useCases;
 
 import dataBundles.DoctorData;
+import dataBundles.TimeBlockData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Use case class for handling operations and data of doctor users.
@@ -69,5 +73,9 @@ public class DoctorManager extends UserManager<Doctor> {
         }
     }
 
+    public ArrayList<TimeBlockData> getAbsence(DoctorData doctorData){
+        Doctor doctor = doctorDatabase.get(doctorData.getId());
+        return doctor.getAbsence().stream().map(TimeBlockData::new).collect(Collectors.toCollection(ArrayList::new));
+    }
 }
 
