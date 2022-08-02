@@ -59,7 +59,6 @@ public class SecretaryController extends UserController<Secretary> {
         commands.put("load patient", LoadPatient());
         commands.put("delete patient", deletePatient());
 
-
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("add availability", addDoctorAvailability());
         commands.put("delete availability", removeDoctorAvailability());

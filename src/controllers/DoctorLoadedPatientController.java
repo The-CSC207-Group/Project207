@@ -96,8 +96,6 @@ public class DoctorLoadedPatientController extends TerminalController {
         };
     }
 
-
-
 /* PENDING IMPLEMENTATION IN PHASE 2
     private Command ViewPatientAppointments() {
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())

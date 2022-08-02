@@ -166,7 +166,4 @@ public class AdminController extends UserController<Admin> {
             }
         };
     }
-
-
-
 }

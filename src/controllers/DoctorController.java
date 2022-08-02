@@ -67,6 +67,7 @@ public class DoctorController extends UserController<Doctor> {
             }
         };
     }
+
 /* PENDING IMPLEMENTATION IN PHASE 2
     private Command ViewSchedule(){
         return (x) -> {
