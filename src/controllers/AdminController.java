@@ -62,7 +62,7 @@ public class AdminController extends UserController<Admin> {
     private Command LoadUserManagement(){
         return (x) -> {
             changeCurrentController(new AdminUserManagementController(getContext(), currentController, adminData));
-
+            adminScreenView.showUserManagementWelcomeMessage();
         };
     }
     private Command deleteSelf() {
