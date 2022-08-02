@@ -53,22 +53,19 @@ public class AppointmentManager {
                                            Integer lengthOfAppointments) {
         TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute,
                 lengthOfAppointments);
-        if (isValidApointment(doctorData, proposedTime))  {
+        if (isValidAppointment(doctorData, proposedTime))  {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
                     appointmentDatabase.add(newApp);
             return new AppointmentData(newApp);
         }
         return null;
     }
-    private DoctorData fromIdToDoctorData(Integer id){
-        return new DoctorData(doctorDatabase.get(id));
+    private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock){
+        return doesNotOverlapWithDoctorsAppointments(timeBlock, doctorData) && strictlyOverlapsWithClinicHours(timeBlock);
     }
-    private boolean isValidApointment(DoctorData doctorData, TimeBlock timeBlock){
-        return doesNotOverlapWithDoctorsApointments(timeBlock, doctorData) && strictlyOverlapsWithClinicHours(timeBlock);
-    }
-    public boolean doesNotOverlapWithDoctorsApointments(UniversalTimeBlockWithDay timeblock, DoctorData doctorData){
+    public boolean doesNotOverlapWithDoctorsAppointments(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData){
         return getDoctorAppointments(doctorData).stream()
-                .anyMatch(x -> overlapsDateAndHours(x, timeblock));
+                .anyMatch(x -> overlapsDateAndHours(x, timeBlock));
     }
     private boolean strictlyOverlapsWithClinicHours(UniversalTimeBlock timeBlock){
         for (Availability i: clinicData.getClinicHours()){
@@ -79,7 +76,10 @@ public class AppointmentManager {
         return false;
     }
 
-
+    public boolean doesNotOverlapWithDoctorsAbsence(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData){
+        return getDoctorAbsence(doctorData).stream()
+                .anyMatch(x -> overlapsDateAndHours(x, timeBlock));
+    }
     /**
      * Removes an Appointment from the database.
      * @param appointmentData AppointmentData - data representing an appointment entity.
@@ -104,8 +104,8 @@ public class AppointmentManager {
 
         TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute, lengthOfAppointments);
 
-        DoctorData doctorData = fromIdToDoctorData(appointmentData.getDoctorId());
-        if (isValidApointment(doctorData, proposedTime)){
+        DoctorData doctorData = new DoctorData(doctorDatabase.get(appointmentData.getDoctorId()));
+        if (isValidAppointment(doctorData, proposedTime)){
             appointmentDatabase.add(new Appointment(proposedTime, appointmentData.getDoctorId(), appointmentData.getPatientId()));
             return true;
         }
@@ -210,7 +210,17 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-
+    public ArrayList<AppointmentData> searchScheduleData(DoctorData doctorData, Integer startYear, Integer startMonth,
+                                                         Integer startDay, Integer endYear, Integer endMonth, Integer endDay){
+        ArrayList<AppointmentData> validAppointments = new ArrayList<>();
+        LocalDate startTime = LocalDate.of(startYear, startMonth, startDay);
+        LocalDate endTime = LocalDate.of(endYear, endMonth, endDay);
+        while (startTime.isBefore(endTime)){
+            validAppointments.addAll(getScheduleData(doctorData, startTime));
+            startTime = startTime.plusDays(1);
+        }
+        return validAppointments;
+    }
 
 
 
