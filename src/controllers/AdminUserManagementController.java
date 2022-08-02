@@ -91,6 +91,14 @@ public class AdminUserManagementController extends TerminalController {
             adminScreenView.showRegisterUserSuccess();
         }
     }
-
+    private boolean DeleteUserHelper(String username) {
+        if (patientManager.deleteUser(username)) {
+            return true;
+        } else if (doctorManager.deleteUser(username)) {
+            return true;
+        } else if (secretaryManager.deleteUser(username)) {
+            return true;
+        } else return adminManager.deleteUser(username);
+    }
 
 }
