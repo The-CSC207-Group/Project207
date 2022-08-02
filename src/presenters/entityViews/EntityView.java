@@ -41,7 +41,7 @@ public abstract class EntityView<T> {
      * @param items The list of generic data bundles to view.
      * @return Returns a full entity view of all items in items.
      */
-    public String viewFullFromList(List<T> items) {
+    public String viewFullFromList(List<? extends T> items) {
         return viewFromList(items, this::viewFull);
     }
 
@@ -49,7 +49,7 @@ public abstract class EntityView<T> {
      * @param items The list of generic data bundles to view.
      * @return Returns a full entity view as an enumeration of all items in items.
      */
-    public String viewFullAsEnumerationFromList(List<T> items) {
+    public String viewFullAsEnumerationFromList(List<? extends T> items) {
         return viewAsEnumerationFromList(items, this::viewFull);
     }
 
@@ -58,7 +58,7 @@ public abstract class EntityView<T> {
      * @param function The view function to be used.
      * @return Returns an entity view of all items in items using the view function function.
      */
-    public String viewFromList(List<T> items, ViewMethod<T> function) {
+    public String viewFromList(List<? extends T> items, ViewMethod<T> function) {
         StringBuilder appendedOutput = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             appendedOutput.append(function.view(items.get(i)));
@@ -74,7 +74,7 @@ public abstract class EntityView<T> {
      * @param function The view function to be used.
      * @return Returns an entity view as an enumeration of all items in items using the view function function.
      */
-    public String viewAsEnumerationFromList(List<T> items, ViewMethod<T> function) {
+    public String viewAsEnumerationFromList(List<? extends T> items, ViewMethod<T> function) {
         StringBuilder appendedOutput = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             appendedOutput.append(i + 1).append(":\n");

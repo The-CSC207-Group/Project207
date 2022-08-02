@@ -7,6 +7,7 @@ import dataBundles.PatientData;
 import dataBundles.PrescriptionData;
 import presenters.response.PrescriptionDetails;
 import presenters.screenViews.DoctorScreenView;
+import useCases.AppointmentManager;
 import useCases.ContactManager;
 import useCases.PrescriptionManager;
 
@@ -54,8 +55,9 @@ public class DoctorLoadedPatientController extends TerminalController {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
 
-        /* PENDING IMPLEMENTATION IN PHASE 2
+
         commands.put("view appointments", ViewPatientAppointments());
+        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
         commands.put("delete report", deleteReport()); */
@@ -95,12 +97,12 @@ public class DoctorLoadedPatientController extends TerminalController {
         };
     }
 
-/* PENDING IMPLEMENTATION IN PHASE 2
+
     private Command ViewPatientAppointments() {
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
                 .getPatientAppointments(patientData));
     }
-
+    /* PENDING IMPLEMENTATION IN PHASE 2
     private Command getReport() {
         return (x) -> new ReportManager(getDatabase()).getReportData(patientData);
     }

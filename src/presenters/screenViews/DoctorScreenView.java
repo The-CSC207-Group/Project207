@@ -2,6 +2,7 @@ package presenters.screenViews;
 
 import dataBundles.*;
 import presenters.entityViews.*;
+import presenters.entityViews.UniversalTimeBlockWithDayView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
@@ -116,9 +117,12 @@ public class DoctorScreenView extends UserScreenView {
      * @param appointments List<AppointmentData> appointments to be viewed.
      */
     public void viewAppointments(List<AppointmentData> appointments) {
-        infoMessage(new AppointmentView().viewFullFromList(appointments));
+        infoMessage(new UniversalTimeBlockWithDayView().viewFullFromList(appointments));
     }
-
+    public void viewAbsences(List<TimeBlockData> absences){
+        infoMessage("Showing All Scheduled Absences:");
+        infoMessage(new UniversalTimeBlockWithDayView().viewFullFromList(absences));
+    }
 
     /**
      * Error raised when the user input is not an integer.

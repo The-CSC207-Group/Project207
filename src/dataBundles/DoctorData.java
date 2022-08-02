@@ -24,8 +24,8 @@ public class DoctorData extends UserData<Doctor> {
     }
 
 
-    public ArrayList<TimeBlock> getAbsence(){
-        return doctor.getAbsence();
+    public ArrayList<TimeBlockData> getAbsence(){
+        return doctor.getAbsence().stream().map(TimeBlockData::new).collect(Collectors.toCollection(ArrayList::new));
     }
 
 }

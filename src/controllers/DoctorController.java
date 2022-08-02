@@ -1,13 +1,13 @@
 package controllers;
 
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
+import dataBundles.*;
 import entities.Doctor;
 import presenters.screenViews.DoctorScreenView;
-import useCases.ContactManager;
-import useCases.DoctorManager;
-import useCases.PatientManager;
+import useCases.*;
+import utilities.TimeUtils;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -18,6 +18,13 @@ public class DoctorController extends UserController<Doctor> {
     private final DoctorScreenView doctorScreenView = new DoctorScreenView();
     private final DoctorData doctorData;
     private final DoctorController currentController = this;
+    private final AppointmentManager appointmentManager;
+
+    private final DoctorManager doctorManager;
+
+    private final ContactManager contactManager;
+
+    private final TimeUtils timeUtils = new TimeUtils();
 
     /**
      * Creates a new controller for handling the state of the program when a doctor is signed in.
@@ -28,6 +35,9 @@ public class DoctorController extends UserController<Doctor> {
     public DoctorController(Context context, DoctorData doctorData){
         super(context, doctorData, new DoctorManager(context.getDatabase()), new DoctorScreenView());
         this.doctorData = doctorData;
+        this.appointmentManager = new AppointmentManager(context.getDatabase());
+        this.doctorManager = new DoctorManager(context.getDatabase());
+        this.contactManager = new ContactManager(context.getDatabase());
     }
 
     /**
@@ -39,15 +49,13 @@ public class DoctorController extends UserController<Doctor> {
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
+        commands.put("view appointments", ViewAppointments());
+//        commands.put("view absences", ViewAbsences());
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("show schedule", ViewSchedule());
-        commands.put("show assigned appointments", ViewAllDoctorAppointments());
-        commands.put("show all appointments", ViewAllAppointments());
         commands.put("create new absence", newAbsence());
-        commands.put("delete absence", deleteAbsence());
-        commands.put("create new availability", newAvailability());
-        commands.put("delete availability", deleteAvailability()); */
+        commands.put("delete absence", deleteAbsence());*/
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -67,6 +75,37 @@ public class DoctorController extends UserController<Doctor> {
             }
         };
     }
+    private Command ViewAppointments(){
+        return (x) -> {
+            ArrayList<AppointmentData> appointments = appointmentManager.getDoctorAppointments(doctorData);
+            doctorScreenView.viewAppointments(appointments);
+        };
+    }
+    /**
+     * Frozen until work is finished with absences.
+     */
+//    private Command ViewAbsences(){
+//        return (x) -> {
+//            ArrayList<TimeBlockData> absences = doctorManager.getAbsence(doctorData);
+//            doctorScreenView.viewAbsences(absences);
+//        };
+//    }
+
+//    private Command AddAbsence(){
+//        return (x) -> {
+//            doctorScreenView.addAbsencePrompt();
+//            LocalDateTime startTime = timeUtils()
+//            LocalDateTime endTime;
+//            appointmentManager.addAbsence(doctorData, startTime, endTime);
+//        };
+//    }
+//    private Command RemoveAbsence(){
+//        return (x) -> {
+//            Integer appointmentNumber = doctorScreenView.deleteAbsencePrompt(contactManager.getContactData(doctorData), doctorData.getAbsence());
+//            // DELETE ABSENCE WITH THIS NUMBER
+////            appointmentManager.deleteAbsence(doctorData.getAbsence().get(appointmentNumber));
+//        };
+//    }
 
 /* PENDING IMPLEMENTATION IN PHASE 2
     private Command ViewSchedule(){

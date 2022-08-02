@@ -2,10 +2,18 @@ package controllers;
 
 import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
+import entities.Appointment;
+import entities.Availability;
+import presenters.response.AppointmentTimeDetails;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.SecretaryScreenView;
+import useCases.AppointmentManager;
+import useCases.ContactManager;
+import useCases.DoctorManager;
 import useCases.PatientManager;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -18,10 +26,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
-    /* PHASE 2 ATTRIBUTES
+
     private final AppointmentManager appointmentManager;
+    private final ContactManager contactManager;
+
     private final DoctorManager doctorManager;
-    private final ContactManager contactManager; */
+
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
@@ -38,10 +48,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
         this.patientData = patientData;
         this.patientManager = new PatientManager(getDatabase());
 
-        /* PHASE 2 INSTANTIATIONS
+
         this.appointmentManager = new AppointmentManager(getDatabase());
+
+        this.contactManager = new ContactManager(getDatabase());
+
         this.doctorManager = new DoctorManager(getDatabase());
-        this.contactManager = new ContactManager(getDatabase()); */
     }
 
     /**
@@ -79,16 +91,15 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
-    /* PENDING IMPLEMENTATION IN PHASE 2
-
 
     private Command viewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), appointments);
-
         };
     }
+
+
 
     private Command bookAppointment() {
         return (x) -> {
@@ -103,12 +114,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 secretaryScreenView.showDoctorDoesNotExistError();
                 return;
             }
-            ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(doctorData,
-                    LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-            if (appointments.size() == 0) {
-                secretaryScreenView.showNoAvailableAppointmentDayError();
-                return;
-            }
             viewDoctorSchedule(doctorData, date);
             AppointmentData appointment = bookAppointmentTime(doctorData, date);
             if (appointment == null) {
@@ -120,6 +125,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
         };
     }
+
 
     private Command cancelAppointment() {
         return (x) -> {
@@ -135,6 +141,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
+    /* PENDING IMPLEMENTATION IN PHASE 2
 
     private Command rescheduleAppointment() {
         return (x) -> {
@@ -154,12 +161,16 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
+    */
 
     private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
-        secretaryScreenView.viewAppointments(
-                contactManager.getContactData(doctorData),
-                appointmentManager.getScheduleData(
-                        doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth())));
+        ContactData doctorContact = contactManager.getContactData(doctorData);
+
+        ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(
+                doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+        secretaryScreenView.viewAppointments(doctorContact, appointments);
+
+        secretaryScreenView.viewDoctorAvailability(doctorContact, appointmentManager.getAvailabilityData());
     }
 
     private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
@@ -169,6 +180,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 appointmentTimeDetails.time().getHour(),
                 appointmentTimeDetails.time().getMinute(),
                 appointmentTimeDetails.length());
-    } */
+    }
 
 }

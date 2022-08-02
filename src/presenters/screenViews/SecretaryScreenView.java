@@ -1,7 +1,7 @@
 package presenters.screenViews;
 
 import dataBundles.*;
-import presenters.entityViews.AppointmentView;
+import presenters.entityViews.UniversalTimeBlockWithDayView;
 import presenters.entityViews.AvailabilityView;
 import presenters.entityViews.ContactView;
 import presenters.response.AppointmentTimeDetails;
@@ -188,7 +188,7 @@ public class SecretaryScreenView extends UserScreenView {
     public Integer deleteAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " appointments to delete:");
-        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        new UniversalTimeBlockWithDayView().viewFullAsEnumerationFromList(appointmentData);
         return deleteItemFromEnumerationPrompt("appointment");
     }
 
@@ -202,7 +202,7 @@ public class SecretaryScreenView extends UserScreenView {
     public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " appointments to reschedule:");
-        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        new UniversalTimeBlockWithDayView().viewFullAsEnumerationFromList(appointmentData);
         return rescheduleAppointmentFromEnumerationPrompt();
     }
 
@@ -251,16 +251,16 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public void viewAppointments(ContactData userContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
-        infoMessage(new AppointmentView().viewFullFromList(appointments));
+        infoMessage(new UniversalTimeBlockWithDayView().viewFullFromList(appointments));
     }
 
     /**
      * View a doctor's availabilities
-     * @param doctorUsername String representing the username of the doctor who the availabilities belong to.
+     * @param userContact String representing the username of the doctor who the availabilities belong to.
      * @param availabilityData List<AvailabilityData> of the doctor's availabilities.
      */
-    public void viewDoctorAvailability(String doctorUsername, List<AvailabilityData> availabilityData) {
-        infoMessage("Viewing availabilities for Dr." + doctorUsername + ":");
+    public void viewDoctorAvailability(ContactData userContact, List<AvailabilityData> availabilityData) {
+        infoMessage("Viewing availabilities for Dr." + contactView.viewName(userContact) + ":");
         infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
     }
 

@@ -1,5 +1,7 @@
 package controllers;
 
+import dataBundles.AppointmentData;
+import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.SecretaryData;
 import entities.Secretary;
@@ -10,6 +12,7 @@ import useCases.DoctorManager;
 import useCases.PatientManager;
 import useCases.SecretaryManager;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
