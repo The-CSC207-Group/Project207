@@ -53,6 +53,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
+        commands.put("back", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", ViewPatientAppointments());
