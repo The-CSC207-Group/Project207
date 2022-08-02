@@ -51,33 +51,45 @@ public class AdminUserManagementController extends TerminalController {
 
     private Command CreateAdmin(){
         return (x) -> {
-
+            UserCredentials userCred = adminScreenView.registerAdminPrompt();
+            AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
+            DisplaySuccessOnCreateAccount(admin);
         };
     }
 
     private Command CreateDoctor(){
         DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
-
+            UserCredentials userCred = adminScreenView.registerDoctorPrompt();
+            DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
+            DisplaySuccessOnCreateAccount(doctor);
         };
     }
 
     private Command CreatePatient(){
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-
+            UserCredentials userCred = adminScreenView.registerPatientPrompt();
+            PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
+            DisplaySuccessOnCreateAccount(patient);
         };
     }
 
     private Command CreateSecretary(){
         SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
-
+            UserCredentials userCred = adminScreenView.registerSecretaryPrompt();
+            SecretaryData secretary = secretaryManager.createSecretary(userCred.username(), userCred.password());
+            DisplaySuccessOnCreateAccount(secretary);
         };
     }
 
     private void DisplaySuccessOnCreateAccount(UserData<?> user) {
-
+        if (user == null) {
+            adminScreenView.showFailedToRegisterUserError();
+        } else {
+            adminScreenView.showRegisterUserSuccess();
+        }
     }
 
 
