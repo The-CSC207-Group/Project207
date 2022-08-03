@@ -115,18 +115,10 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     /**
-     * Get all appointments in the appointment database.
-     * @return ArrayList<AppointmentData> - ArrayList of AppointmentData which includes information of many Appointments.
-     */
-    private Stream<AppointmentData> getAllAppointments(){
-
-        return getAppointments().stream()
-                .map(AppointmentData::new);
-    }
-    /**
      * Gets the availability data from a doctor on a specific enum representing the day of the week.
      * @param dayOfWeek DayOfWeek - an Enum that represents a day of the week without ties to a specific date.
-     * @return ArrayList<Availability> - an ArrayList of Availability that holds data on a doctor's available time.
+     * @return AvailabilityData - returns AvailabilityData that represents the clinic's operating hours on the specific
+     * DayOfWeek.
      */
     public AvailabilityData getAvailabilityFromDayOfWeek(DayOfWeek dayOfWeek){
         return new AvailabilityData(database.getClinic().getClinicHours().stream()
@@ -187,7 +179,8 @@ public class AppointmentManager {
     }
     /**
      * Get the availability of a doctor in terms of an ArrayList of AvailabilityData.
-     * @return ArrayList<AvailabilityData> - the ArrayList of AvailabilityData that represents a doctor's availability.
+     * @return ArrayList<AvailabilityData> - the ArrayList of AvailabilityData that represents the clinic's hours of
+     * operation for every day of the week.
      */
     public ArrayList<AvailabilityData> getAvailabilityData(){
         return database.getClinic().getClinicHours().stream()
@@ -218,6 +211,11 @@ public class AppointmentManager {
             }
         }
         return false;
+    }
+    private Stream<AppointmentData> getAllAppointments(){
+
+        return getAppointments().stream()
+                .map(AppointmentData::new);
     }
     private boolean doesNotOverlapWithDoctorsAbsence(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData){
         return doctorManager.getAbsence(doctorData).stream()
