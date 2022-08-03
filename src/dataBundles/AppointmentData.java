@@ -3,6 +3,7 @@
 package dataBundles;
 
 import entities.Appointment;
+import entities.UniversalTimeBlockWithDay;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

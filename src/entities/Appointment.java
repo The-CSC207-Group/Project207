@@ -2,7 +2,6 @@
 
 package entities;
 
-import dataBundles.UniversalTimeBlockWithDay;
 import utilities.JsonSerializable;
 
 import java.time.LocalDate;

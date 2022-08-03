@@ -3,6 +3,7 @@
 package dataBundles;
 
 import entities.Availability;
+import entities.UniversalTimeBlock;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

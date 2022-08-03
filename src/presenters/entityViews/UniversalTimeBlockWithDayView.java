@@ -2,7 +2,7 @@
 
 package presenters.entityViews;
 
-import dataBundles.UniversalTimeBlockWithDay;
+import entities.UniversalTimeBlockWithDay;
 
 /**
  * The Appointment entity's view.

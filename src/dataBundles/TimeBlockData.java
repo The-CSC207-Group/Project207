@@ -3,6 +3,7 @@
 package dataBundles;
 
 import entities.TimeBlock;
+import entities.UniversalTimeBlockWithDay;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalTime;
 /**
  * Wrapper class for a TimeBlock entity.
  */
-public class TimeBlockData implements UniversalTimeBlockWithDay{
+public class TimeBlockData implements UniversalTimeBlockWithDay {
 
     private final TimeBlock timeBlock;
 

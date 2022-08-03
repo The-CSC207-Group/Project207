@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.UniversalTimeBlock;
+import entities.UniversalTimeBlock;
 
 public class UniversalTimeBlockView extends EntityView<UniversalTimeBlock>{
 

@@ -2,8 +2,6 @@
 
 package entities;
 
-import dataBundles.UniversalTimeBlock;
-
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
