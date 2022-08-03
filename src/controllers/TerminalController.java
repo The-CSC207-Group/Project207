@@ -1,11 +1,14 @@
 package controllers;
 
 import database.Database;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import presenters.screenViews.TerminalScreenView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller class for processing the commands passed in to the terminal.
@@ -75,6 +78,53 @@ abstract public class TerminalController {
         context.exit();
     }
 
+    private String processSpelling(String inputtedCommand) {
+        int maxDistance = (int) Math.ceil(inputtedCommand.length() / 8f);
+        LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
+        int currentMin = Integer.MAX_VALUE;
+        String newCommand = inputtedCommand;
+        for (String command : AllCommands().keySet()) {
+            int dist = levenshteinDistance.apply(command, inputtedCommand);
+            if (dist <= maxDistance) {
+                if (dist < currentMin){
+                    newCommand = command;
+                    currentMin = dist;
+                }
+            }
+        }
+        return newCommand;
+    }
+
+    private Integer processNumber(String inputtedCommand) {
+        if (NumberUtils.isParsable(inputtedCommand)){
+            int number = NumberUtils.createInteger(inputtedCommand) - 1;
+            if (number <= AllCommands().size() - 1 & number >= 0) {
+                return number;
+            }
+        }
+        return null;
+    }
+
+    private String getCommand(String inputtedCommand) {
+        if (AllCommands().containsKey(inputtedCommand)) {
+            return inputtedCommand;
+        }
+
+        Integer numberCommand = processNumber(inputtedCommand);
+        if (numberCommand != null) {
+            return new ArrayList<>(AllCommands().keySet()).get(numberCommand);
+        }
+
+        String correctSpelling = processSpelling(inputtedCommand);
+        if (!Objects.equals(correctSpelling, inputtedCommand)) {
+            if (terminalScreenView.showCorrectSpellingPrompt(correctSpelling)) {
+                return correctSpelling;
+            }
+        }
+
+        return null;
+    }
+
     private void ProcessCommands() {
         getDatabase().save();
         String command = terminalScreenView.showCommandPrompt();
@@ -83,11 +133,12 @@ abstract public class TerminalController {
             return;
         }
 
-        if (!AllCommands().containsKey(command)) {
-            terminalScreenView.showInvalidCommandError(command);
-        } else {
-            AllCommands().get(command).execute(new ArrayList<>());
+        String correctedCommand = getCommand(command);
+        if (correctedCommand != null) {
+            AllCommands().get(correctedCommand).execute(new ArrayList<>());
             getDatabase().save();
+        } else {
+            terminalScreenView.showInvalidCommandError(command);
         }
     }
 

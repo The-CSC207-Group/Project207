@@ -19,6 +19,16 @@ public class TerminalScreenView extends ScreenView {
     }
 
     /**
+     * Ask user whether user wants its spelling corrected after the command prompt
+     * @param correctSpelling the correct spelling of the word
+     * @return whether user wants its spelling corrected after the command prompt
+     */
+    public boolean showCorrectSpellingPrompt(String correctSpelling) {
+        String confirmation = input("Did you mean: " + correctSpelling + "? (y[n]) ");
+        return confirmation.startsWith("y");
+    }
+
+    /**
      * Ask user to input command.
      * @return string representing stripped input.
      */
