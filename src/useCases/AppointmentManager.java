@@ -262,7 +262,6 @@ public class AppointmentManager {
 
     /**
      * Get the availability of a doctor in terms of an ArrayList of AvailabilityData.
-     * @param doctorData DoctorData - the data representing a specific doctor in the database.
      * @return ArrayList<AvailabilityData> - the ArrayList of AvailabilityData that represents a doctor's availability.
      */
     public ArrayList<AvailabilityData> getAvailabilityData(){
