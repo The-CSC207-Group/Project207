@@ -4,7 +4,6 @@ import dataBundles.*;
 import entities.Admin;
 import entities.User;
 import presenters.response.PasswordResetDetails;
-import presenters.response.UserCredentials;
 import presenters.screenViews.AdminScreenView;
 import useCases.*;
 
