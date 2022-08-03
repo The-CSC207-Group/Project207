@@ -10,6 +10,9 @@ import useCases.SecretaryManager;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Controller class that handles the creation and deletion of users by an admin.
+ */
 public class AdminUserManagementController extends TerminalController {
 
     private final AdminController previousController;
@@ -19,11 +22,15 @@ public class AdminUserManagementController extends TerminalController {
     private final DoctorManager doctorManager;
     private final SecretaryManager secretaryManager;
     private final AdminManager adminManager;
+
     /**
-     * Creates a new controller for handling the state of the program where commands are being passed into the terminal.
-     *
+     * Creates a new controller for handling the state of the program when an admin wants to create/delete users
      * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *      *                switching between controllers.
+     * @param previousController AdminController - stores the previous controller, allows you to easily go back to it
+     *      *                           via the back command.
+     * @param adminData AdminData - a data containing the ID and attributes of the current loaded
+     *      *                    admin user.
      */
     public AdminUserManagementController(Context context, AdminController previousController, AdminData adminData) {
         super(context);
@@ -35,6 +42,12 @@ public class AdminUserManagementController extends TerminalController {
         this.adminManager = new AdminManager(getDatabase());
     }
 
+    /**
+     * Creates a Linked hashmap of all string representations of AdminUserManagement commands mapped to the
+     * method that each command calls.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective
+     * AdminUserManagement commands.
+     */
     @Override
     public LinkedHashMap<String, Command> AllCommands (){
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
