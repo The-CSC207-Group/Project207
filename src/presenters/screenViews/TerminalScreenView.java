@@ -13,8 +13,8 @@ public class TerminalScreenView extends ScreenView {
      */
     public void showHelpView(List<String> helpCommands) {
         infoMessage("Available Commands:");
-        for (String command : helpCommands) {
-            infoMessage(command);
+        for (int i = 0; i < helpCommands.size(); i++) {
+            infoMessage((i + 1) + ". " + helpCommands.get(i));
         }
     }
 
