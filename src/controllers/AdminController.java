@@ -50,16 +50,16 @@ public class AdminController extends UserController<Admin> {
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
-        commands.put("change clinic info", changeClinicInformation());
-        commands.put("change user password", changeUserPassword());
-        commands.put("delete user", deleteUser());
-        commands.put("delete self", deleteSelf());
+        commands.put("change clinic info", ChangeClinicInformation());
+        commands.put("change user password", ChangeUserPassword());
+        commands.put("delete user", DeleteUser());
+        commands.put("delete self", DeleteSelf());
 
         commands.putAll(super.AllCommands());
         return commands;
     }
 
-    private Command deleteSelf() {
+    private Command DeleteSelf() {
         return (x) -> {
             adminManager.deleteUserByData(adminData);
             changeCurrentController(new SignInController(getContext()));
@@ -121,7 +121,7 @@ public class AdminController extends UserController<Admin> {
         } else return adminManager.deleteUser(username);
     }
 
-    private Command deleteUser() {
+    private Command DeleteUser() {
         return (x) -> {
             String user = adminScreenView.deleteUserPrompt();
             if (deleteUserHelper(user)) {
@@ -135,7 +135,7 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
-    private Command changeClinicInformation() {
+    private Command ChangeClinicInformation() {
         return (x) -> changeCurrentController(new ClinicController(getContext(), currentController));
     }
 
@@ -151,9 +151,9 @@ public class AdminController extends UserController<Admin> {
         return true;
     }
 
-    private Command changeUserPassword() {
+    private Command ChangeUserPassword() {
         return (x) -> {
-            // NOTE this is can be any user not just the one using it,
+            // NOTE can be any user not just the one using it,
             // so can't use reset password prompt presenter method
             String name = adminScreenView.getUsersName();
             if ((changePassword(patientManager, name) |
@@ -166,4 +166,5 @@ public class AdminController extends UserController<Admin> {
             }
         };
     }
+
 }
