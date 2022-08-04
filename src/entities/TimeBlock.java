@@ -81,7 +81,7 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
 
     @Override
     public LocalTime endTime() {
-        return startTime.toLocalTime();
+        return endTime.toLocalTime();
     }
 
     @Override
