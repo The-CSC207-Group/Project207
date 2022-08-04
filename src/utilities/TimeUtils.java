@@ -23,8 +23,8 @@ public class TimeUtils {
      */
     public TimeBlock createTimeBlock(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer lenOfAppointment){
         LocalDateTime startTime = createLocalDateTime(year, month, day, hour, minute);
-        return new TimeBlock(createLocalDateTime(year, month, day, hour, minute),
-                startTime.plusMinutes(lenOfAppointment));
+        TimeBlock timeBlock = new TimeBlock(startTime, startTime.plusMinutes(lenOfAppointment));
+        return timeBlock;
     }
 
     /**

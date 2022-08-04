@@ -3,21 +3,20 @@
 package presenters.entityViews;
 
 import dataBundles.AvailabilityData;
+import utilities.DayOfWeekUtils;
 
 /**
  * The Availability entity's view.
  */
 public class AvailabilityView extends EntityView<AvailabilityData> {
-
+    private final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
     /**
      * @param item AvailabilityData  to view.
      * @return String representing item's full availability view.
      */
     @Override
     public String viewFull(AvailabilityData item) {
-        return viewDayOfWeek(item)
-                + viewDoctorStartTime(item)
-                + viewDoctorEndTime(item);
+        return dayOfWeekUtils.dayOfWeekToString(item.getDayOfWeek()) + ": " + item.startTime() + " to " + item.endTime();
     }
 
     /**
@@ -25,23 +24,23 @@ public class AvailabilityView extends EntityView<AvailabilityData> {
      * @return String representing item's day of week as a view.
      */
     public String viewDayOfWeek(AvailabilityData item) {
-        return "Availability day of week is " + item.getDayOfWeek() + ".";
+        return "Day of week: " + dayOfWeekUtils.dayOfWeekToString(item.dayOfWeek());
     }
 
     /**
      * @param item AvailabilityData  to view.
      * @return String representing item's doctor start time as a view.
      */
-    public String viewDoctorStartTime(AvailabilityData item) {
-        return "Doctor start time is " + item.getDoctorStartTime() + ".";
+    public String viewStartTime(AvailabilityData item) {
+        return "Start of availability: " + item.getDoctorStartTime() + ".";
     }
 
     /**
      * @param item AvailabilityData  to view.
      * @return String representing item's doctor end time as a view.
      */
-    public String viewDoctorEndTime(AvailabilityData item) {
-        return "Doctor end time is " + item.getDoctorEndTime() + ".";
+    public String viewEndTIme(AvailabilityData item) {
+        return "End of availability: " + item.getDoctorEndTime() + ".";
     }
 
 }

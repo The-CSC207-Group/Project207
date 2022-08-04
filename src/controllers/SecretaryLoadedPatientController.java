@@ -2,8 +2,6 @@ package controllers;
 
 import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
-import entities.Appointment;
-import entities.Availability;
 import presenters.response.AppointmentTimeDetails;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.SecretaryScreenView;
@@ -69,11 +67,14 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", Back(secretaryController));
 
-        /* PENDING IMPLEMENTATION IN PHASE 2
+
         commands.put("view appointments", viewAppointments());
+
+        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("reschedule appointment", rescheduleAppointment());
+        */
         commands.put("book appointment", bookAppointment());
-        commands.put("cancel appointment", cancelAppointment()); */
+        commands.put("cancel appointment", cancelAppointment());
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.putAll(super.AllCommands());
@@ -117,7 +118,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             viewDoctorSchedule(doctorData, date);
             AppointmentData appointment = bookAppointmentTime(doctorData, date);
             if (appointment == null) {
-                secretaryScreenView.showAppointmentConflictError();
+                secretaryScreenView.showAppointmentBookingError();
                 return;
             }
             secretaryScreenView.showBookAppointmentSuccess(contactManager.getContactData(patientData),
@@ -170,16 +171,17 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
         secretaryScreenView.viewAppointments(doctorContact, appointments);
 
-        secretaryScreenView.viewDoctorAvailability(doctorContact, appointmentManager.getAvailabilityData());
+        secretaryScreenView.viewDoctorAvailability(doctorContact, appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek()));
     }
 
     private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
         AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
+        if (appointmentTimeDetails == null) { return null;}
         return appointmentManager.bookAppointment(
-                patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
-                appointmentTimeDetails.time().getHour(),
-                appointmentTimeDetails.time().getMinute(),
-                appointmentTimeDetails.length());
+                    patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
+                    appointmentTimeDetails.time().getHour(),
+                    appointmentTimeDetails.time().getMinute(),
+                    appointmentTimeDetails.length());
     }
 
 }
