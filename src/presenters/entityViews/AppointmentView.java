@@ -5,6 +5,8 @@ package presenters.entityViews;
 import dataBundles.AppointmentData;
 import entities.UniversalTimeBlockWithDay;
 
+import java.time.LocalTime;
+
 /**
  * The Appointment entity's view.
  */
@@ -16,7 +18,10 @@ public class AppointmentView extends EntityView<AppointmentData> {
      */
     @Override
     public String viewFull(AppointmentData item) {
-        return "Appointment starting at " + item.startTime() + " and ending at " + item.endTime() + "on " + item.date() +
+        LocalTime startTime = item.getTimeBlock().getStartTime().toLocalTime();
+        LocalTime endTime = item.getTimeBlock().getEndTime().toLocalTime();
+        return "Appointment starting at " + startTime
+                + " and ending at " + endTime + " on " + item.date() +
                 ".";
     }
 

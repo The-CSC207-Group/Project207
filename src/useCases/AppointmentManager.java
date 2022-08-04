@@ -197,12 +197,11 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock){
-        return doesNotOverlapWithDoctorsAppointments(timeBlock, doctorData) && strictlyOverlapsWithClinicHours(timeBlock)
-                && doesNotOverlapWithDoctorsAbsence(timeBlock, doctorData);
+        return doesNotOverlapWithDoctorsAppointments(timeBlock, doctorData) && strictlyOverlapsWithClinicHours(timeBlock);
     }
     private boolean doesNotOverlapWithDoctorsAppointments(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData){
         return getDoctorAppointments(doctorData).stream()
-                .anyMatch(x -> overlapsDateAndHours(x, timeBlock));
+                .noneMatch(x -> overlapsDateAndHours(x, timeBlock));
     }
     private boolean strictlyOverlapsWithClinicHours(UniversalTimeBlock timeBlock){
         for (Availability i: clinicData.getClinicHours()){
@@ -228,10 +227,10 @@ public class AppointmentManager {
         return day1.date().equals(day2.date());
     }
     private boolean overlapHours(UniversalTimeBlock time1, UniversalTimeBlock time2){
-        return isWithinHours(time1, time2.startTime()) && isWithinHours(time1, time2.endTime());
+        return isWithinHours(time1, time2.startTime()) || isWithinHours(time1, time2.endTime());
     }
     private boolean isWithinHours(UniversalTimeBlock timeBlock, LocalTime time){
-        return time.isAfter(timeBlock.startTime()) && time.isBefore(timeBlock.endTime());
+        return !time.isBefore(timeBlock.startTime()) && !time.isAfter(timeBlock.endTime());
     }
     private boolean strictlyWithinHours(UniversalTimeBlock timeBlock, UniversalTimeBlock timeBlock2){
         return isWithinHours(timeBlock, timeBlock2.startTime()) && isWithinHours(timeBlock, timeBlock2.endTime());

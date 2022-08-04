@@ -157,8 +157,8 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Show error when appointment overlaps with absence or unavailability or another appointment.
      */
-    public void showAppointmentConflictError() {
-        errorMessage("Appointment booking error: time period unavailability.");
+    public void showAppointmentBookingError() {
+        errorMessage("Error Booking Appointment.");
     }
 
     /**
@@ -189,7 +189,7 @@ public class SecretaryScreenView extends UserScreenView {
     public Integer deleteAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " appointments to delete:");
-        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        infoMessage(new AppointmentView().viewFullAsEnumerationFromList(appointmentData));
         return deleteItemFromEnumerationPrompt("appointment");
     }
 
