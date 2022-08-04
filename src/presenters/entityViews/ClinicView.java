@@ -69,7 +69,7 @@ public class ClinicView extends EntityView<ClinicData> {
      */
 
     public String viewClinicHours(ClinicData item){
-        ArrayList<AvailabilityData> availabilites = item.getClinicHours();
+        ArrayList<AvailabilityData> availabilities = item.getClinicHours();
         StringBuilder out = new StringBuilder("Clinic Hours: \n");
         LinkedHashMap<String, DayOfWeek> dayMap = new LinkedHashMap<>() {{
             put("Monday", DayOfWeek.MONDAY);
@@ -80,13 +80,14 @@ public class ClinicView extends EntityView<ClinicData> {
             put("Saturday", DayOfWeek.SATURDAY);
             put("Sunday", DayOfWeek.SUNDAY);
         }};
+        AvailabilityView availabilityView = new AvailabilityView();
 
         for (String dayString: dayMap.keySet()){
-            Optional<AvailabilityData> availabilityData = availabilites.stream().
+            Optional<AvailabilityData> availabilityData = availabilities.stream().
                     filter(availability -> availability.dayOfWeek().equals(dayMap.get(dayString))).
                     findFirst();
             if (availabilityData.isPresent()) {
-                out.append(dayString + ": " + availabilityData.get().startTime() + " to " + availabilityData.get().endTime() + " \n");
+                out.append(availabilityView.viewFull(availabilityData.get()) + "\n");
             }else{
                 out.append(dayString + ": No Availability \n");
             }

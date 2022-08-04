@@ -103,46 +103,78 @@ public class ClinicScreenView extends ScreenView {
         successMessage("Successfully changed the clinic's phone number.");
     }
 
+    /**
+     * Shows a success message when clinic hours are changed.
+     */
     public void showSuccessfullyChangedAvailability(){
         successMessage("Successfully changed the clinic's availability.");
     }
 
+    /**
+     * Shows an error message when a user incorrectly enters a field when changing clinic hours.
+     */
     public void showEnteredInvalidAvailabilityInfoError(){
-        errorMessage("New availability data is incorrect.");
+        errorMessage("Invalid entry.");
     }
+
+    /**
+     * Shows an error when a user selects an invalid day of week when removing availability.
+     */
+    public void showInvalidSelectionError(){
+        errorMessage("Invalid selection.");
+    }
+
+    /**
+     * Shows a success message when availability is removed from clinic hours.
+     */
+    public void showSuccessfullyDeletedAvailability(){
+        successMessage("Availability removed successfully.");
+    }
+
+    /**
+     * Shows the clinic's hours throughout the week given the clinic data.
+     * @param clinicData
+     */
 
     public void showClinicHours(ClinicData clinicData){
         ClinicView clinicView = new ClinicView();
         clinicView.viewClinicHours(clinicData);
     }
+
+    /**
+     * Shows a prompt for changing the hours of a clinic on a certain day.
+     * @return AvailabilityDetails - a response containing DayOfWeek, StartTime and EndTime or returns null
+     * if the user enters any invalid info.
+     */
     public AvailabilityDetails showChangeClinicHoursPrompt(){
-        infoMessage("Select day of week:");
         DayOfWeek dayOfWeek = showDayOfWeekPrompt();
         if (dayOfWeek == null){return null;}
-        infoMessage("Start Time:");
+        infoMessage("Start Time: ");
         LocalTime localStartTime = showLocalTimePrompt();
         if (localStartTime == null){return null;}
-        infoMessage("End Time:");
+        infoMessage("End Time: ");
         LocalTime localEndTime = showLocalTimePrompt();
         if (localEndTime == null){return null;}
         return new AvailabilityDetails(dayOfWeek, localStartTime, localEndTime);
     }
-    private DayOfWeek showDayOfWeekPrompt(){
+
+    /**
+     * Prompt for getting the day of week from a user. Numbers the days of the week and returns the DayOfWeek
+     * object associated with the number.
+     * @return DayOfWeek - the day of the week (Ex: MONDAY, TUESDAY, etc.) the user chose or null if the user enters a
+     * number that is not associated with a DayOfWeek or doesn't enter a number.
+     */
+    public DayOfWeek showDayOfWeekPrompt(){
+        infoMessage("Select day of week: ");
         ArrayList<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
                 DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
         for (int i = 0; i < dayOfWeeks.size(); i++){
             infoMessage(dayOfWeekUtils.dayOfWeekToString(dayOfWeeks.get(i)) + "(" + (i + 1) + ")");
         }
-        Integer response = inputInt("Response (1-7):");
+        Integer response = inputInt("Response (1-7): ");
 
-        if (response != null){
-            return dayOfWeeks.get(response - 1);
-        }
-        return null;
-
+        if (response == null || response < 1 || response > dayOfWeeks.size()){return null;}
+        return dayOfWeeks.get(response - 1);
     }
-
-
-
 
 }

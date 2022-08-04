@@ -89,4 +89,12 @@ public class ClinicManager {
         clinic.addClinicHours(availability);
     }
 
+    /**
+     * Removes clinic hours from a clinic on the given day. If clinic hours do not exist, nothing happens.
+     * @param dayOfWeek DayOfWeek - enum representing a day of the week.
+     */
+    public void removeClinicHours(DayOfWeek dayOfWeek){
+        clinic.removeClinicHours(dayOfWeek);
+    }
+
 }

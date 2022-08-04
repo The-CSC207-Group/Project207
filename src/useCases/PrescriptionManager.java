@@ -71,7 +71,7 @@ public class PrescriptionManager {
     }
 
     /**
-     * Removes prescription from the prescription database. If it does not exist, nothing happens
+     * Removes prescription from the prescription database. If it does not exist, nothing happens.
      * @param prescriptionData PrescriptionData - data pertaining to a prescription in the prescription database.
      */
     public void removePrescription(PrescriptionData prescriptionData){

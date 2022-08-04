@@ -138,11 +138,12 @@ public class SecretaryScreenView extends UserScreenView {
      * @return AppointmentTimeDetails containing time and length of appointment.
      */
     public AppointmentTimeDetails bookAppointmentTimePrompt() {
-        Integer hour = inputInt("Enter your desired hour (HH): ");
+        infoMessage("Booking appointment - Time:");
+        Integer hour = inputInt("Enter hour (HH): ");
         if (hour == null) {return null;}
-        Integer minute = inputInt("Enter your desired minute (MM): ");
+        Integer minute = inputInt("Enter minute (MM): ");
         if (minute == null) {return null;}
-        Integer length = inputInt("Enter your desired length in minutes: ");
+        Integer length = inputInt("Enter duration in minutes: ");
         if (length == null) {return null;}
 
         try {
@@ -255,7 +256,7 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * View a doctor's availabilities
+     * View a doctor's availabilities.
      * @param userContact String representing the username of the doctor who the availabilities belong to.
      * @param availabilityData List<AvailabilityData> of the doctor's availabilities.
      */
@@ -265,13 +266,13 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * View a doctor's availabilities
-     * @param userContact String representing the username of the doctor who the availabilities belong to.
+     * View one of a doctor's availabilities.
+     * @param userContact String representing the username of the doctor who the availability belong to.
      * @param availabilityData AvailabilityData - Availability data for a given day.
      */
     public void viewDoctorAvailability(ContactData userContact, AvailabilityData availabilityData) {
         infoMessage("Viewing availabilities for Dr." + contactView.viewName(userContact) + ":");
-        infoMessage(new AvailabilityView().viewFull(availabilityData));
+        infoMessage(new AvailabilityView().viewFull(availabilityData) + "\n");
     }
 
     /**
