@@ -1,8 +1,11 @@
 package presenters.entityViews;
 
+import dataBundles.AppointmentData;
+import dataBundles.AvailabilityData;
 import dataBundles.ClinicData;
 
-import java.util.ArrayList;
+import java.time.DayOfWeek;
+import java.util.*;
 
 /**
  * The Clinic entity's view.
@@ -64,20 +67,30 @@ public class ClinicView extends EntityView<ClinicData> {
      * @param item ClinicData to view.
      * @return String representing the clinic's hours of operation as a view.
      */
-    public String viewClinicHours(ClinicData item) {
-        ArrayList<String> al = new ArrayList<>();
-        for (int i = 0; i <= 6; i++) {
-            al.add(item.getClinicHours().get(i).getDoctorStartTime().toString());
-            al.add(item.getClinicHours().get(i).getDoctorEndTime().toString());
-        }
-        return "Clinic hours:" +
-                "\nMonday: " + al.get(0) + " to " + al.get(1) +
-                "\nTuesday: " + al.get(2) + " to " + al.get(3) +
-                "\nWednesday: " + al.get(4) + " to " + al.get(5) +
-                "\nThursday: " + al.get(6) + " to " + al.get(7) +
-                "\nFriday: " + al.get(8) + " to " + al.get(9) +
-                "\nSaturday: " + al.get(10) + " to " + al.get(11) +
-                "\nSunday: " + al.get(12) + " to " + al.get(13);
-    }
 
+    public String viewClinicHours(ClinicData item){
+        ArrayList<AvailabilityData> availabilites = item.getClinicHours();
+        StringBuilder out = new StringBuilder("Clinic Hours: \n");
+        LinkedHashMap<String, DayOfWeek> dayMap = new LinkedHashMap<>() {{
+            put("Monday", DayOfWeek.MONDAY);
+            put("Tuesday", DayOfWeek.TUESDAY);
+            put("Wednesday", DayOfWeek.WEDNESDAY);
+            put("Thursday", DayOfWeek.THURSDAY);
+            put("Friday", DayOfWeek.FRIDAY);
+            put("Saturday", DayOfWeek.SATURDAY);
+            put("Sunday", DayOfWeek.SUNDAY);
+        }};
+
+        for (String dayString: dayMap.keySet()){
+            Optional<AvailabilityData> availabilityData = availabilites.stream().
+                    filter(availability -> availability.dayOfWeek().equals(dayMap.get(dayString))).
+                    findFirst();
+            if (availabilityData.isPresent()) {
+                out.append(dayString + ": " + availabilityData.get().startTime() + " to " + availabilityData.get().endTime() + " \n");
+            }else{
+                out.append(dayString + ": No Availability \n");
+            }
+        }
+        return out.toString();
+    }
 }

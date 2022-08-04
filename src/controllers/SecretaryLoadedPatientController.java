@@ -69,11 +69,14 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", Back(secretaryController));
 
-        /* PENDING IMPLEMENTATION IN PHASE 2
+
         commands.put("view appointments", viewAppointments());
+
+        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("reschedule appointment", rescheduleAppointment());
+        */
         commands.put("book appointment", bookAppointment());
-        commands.put("cancel appointment", cancelAppointment()); */
+        commands.put("cancel appointment", cancelAppointment());
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.putAll(super.AllCommands());
@@ -170,7 +173,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
         secretaryScreenView.viewAppointments(doctorContact, appointments);
 
-        secretaryScreenView.viewDoctorAvailability(doctorContact, appointmentManager.getAvailabilityData());
+        secretaryScreenView.viewDoctorAvailability(doctorContact, appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek()));
     }
 
     private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
