@@ -4,6 +4,7 @@ import presenters.response.UserCredentials;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
@@ -106,6 +107,18 @@ public abstract class ScreenView {
         try {
             return LocalDate.of(year, month, day);
         } catch (DateTimeException ignored) {
+            return null;
+        }
+    }
+    protected LocalTime showLocalTimePrompt(){
+        Integer hour = inputInt("Enter 24hr Time (HH): ");
+        if (hour == null){return null;}
+        Integer minute = inputInt("Enter minute: (MM): ");
+        if (minute == null){return null;}
+
+        try{
+            return LocalTime.of(hour, minute);
+        }catch (DateTimeException ignored){
             return null;
         }
     }

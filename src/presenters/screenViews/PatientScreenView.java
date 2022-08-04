@@ -2,7 +2,7 @@ package presenters.screenViews;
 
 import dataBundles.AppointmentData;
 import dataBundles.PrescriptionData;
-import presenters.entityViews.UniversalTimeBlockWithDayView;
+import presenters.entityViews.AppointmentView;
 import presenters.entityViews.PrescriptionView;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class PatientScreenView extends UserScreenView {
 
     private final PrescriptionView prescriptionView = new PrescriptionView();
-    private final UniversalTimeBlockWithDayView universalTimeBlockWithDayView = new UniversalTimeBlockWithDayView();
+    private final AppointmentView appointmentView = new AppointmentView();
 
     /**
      * Shows a list of prescriptions relating to patients.
@@ -57,7 +57,7 @@ public class PatientScreenView extends UserScreenView {
      * @param items List<AppointmentData> of appointments.
      */
     public void viewAppointments(List<AppointmentData> items) {
-        String output = universalTimeBlockWithDayView.viewFullFromList(items);
+        String output = appointmentView.viewFullFromList(items);
         infoMessage("Booked Appointments:");
         infoMessage(output);
     }

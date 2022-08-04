@@ -1,10 +1,23 @@
 package presenters.screenViews;
 
 
+import dataBundles.ClinicData;
+import presenters.entityViews.ClinicView;
+import presenters.response.AvailabilityDetails;
+import utilities.DayOfWeekUtils;
+
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+
+
 /**
  * The Clinic's presenter class.
  */
 public class ClinicScreenView extends ScreenView {
+    DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
     /**
      * Shows the welcome message that is presented at the start of the screen.
      */
@@ -89,5 +102,47 @@ public class ClinicScreenView extends ScreenView {
     public void showSuccessfullyChangedClinicPhoneNumber() {
         successMessage("Successfully changed the clinic's phone number.");
     }
+
+    public void showSuccessfullyChangedAvailability(){
+        successMessage("Successfully changed the clinic's availability.");
+    }
+
+    public void showEnteredInvalidAvailabilityInfoError(){
+        errorMessage("New availability data is incorrect.");
+    }
+
+    public void showClinicHours(ClinicData clinicData){
+        ClinicView clinicView = new ClinicView();
+        clinicView.viewClinicHours(clinicData);
+    }
+    public AvailabilityDetails showChangeClinicHoursPrompt(){
+        infoMessage("Select day of week:");
+        DayOfWeek dayOfWeek = showDayOfWeekPrompt();
+        if (dayOfWeek == null){return null;}
+        infoMessage("Start Time:");
+        LocalTime localStartTime = showLocalTimePrompt();
+        if (localStartTime == null){return null;}
+        infoMessage("End Time:");
+        LocalTime localEndTime = showLocalTimePrompt();
+        if (localEndTime == null){return null;}
+        return new AvailabilityDetails(dayOfWeek, localStartTime, localEndTime);
+    }
+    private DayOfWeek showDayOfWeekPrompt(){
+        ArrayList<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
+                DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
+        for (int i = 0; i < dayOfWeeks.size(); i++){
+            infoMessage(dayOfWeekUtils.dayOfWeekToString(dayOfWeeks.get(i)) + "(" + (i + 1) + ")");
+        }
+        Integer response = inputInt("Response (1-7):");
+
+        if (response != null){
+            return dayOfWeeks.get(response - 1);
+        }
+        return null;
+
+    }
+
+
+
 
 }

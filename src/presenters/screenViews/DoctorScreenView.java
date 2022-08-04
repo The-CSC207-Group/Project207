@@ -2,7 +2,7 @@ package presenters.screenViews;
 
 import dataBundles.*;
 import presenters.entityViews.*;
-import presenters.entityViews.UniversalTimeBlockWithDayView;
+import presenters.entityViews.AppointmentView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
@@ -117,11 +117,7 @@ public class DoctorScreenView extends UserScreenView {
      * @param appointments List<AppointmentData> appointments to be viewed.
      */
     public void viewAppointments(List<AppointmentData> appointments) {
-        infoMessage(new UniversalTimeBlockWithDayView().viewFullFromList(appointments));
-    }
-    public void viewAbsences(List<TimeBlockData> absences){
-        infoMessage("Showing All Scheduled Absences:");
-        infoMessage(new UniversalTimeBlockWithDayView().viewFullFromList(absences));
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
     /**

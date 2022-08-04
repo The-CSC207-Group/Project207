@@ -1,9 +1,13 @@
 package useCases;
 
+import dataBundles.AvailabilityData;
 import dataBundles.ClinicData;
 import database.Database;
+import entities.Availability;
 import entities.Clinic;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.regex.Pattern;
 
 /**
@@ -70,6 +74,19 @@ public class ClinicManager {
     public boolean changeClinicAddress(String newAddress){
         clinic.setAddress(newAddress);
         return true;
+    }
+
+    /**
+     * Changes the clinic hours on the specified day of the week. Assumes there is 1 availability per day of week and
+     * that startTime <= endTime
+     * @param dayOfWeek DayOfWeek - Enum that represents the day of the week.
+     * @param startTime LocalTime - Start time of the availability.
+     * @param endTime LocalTime - End time of the availability.
+     */
+    public void changeClinicHours(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime){
+        Availability availability = new Availability(dayOfWeek, startTime, endTime);
+        clinic.removeClinicHours(dayOfWeek);
+        clinic.addClinicHours(availability);
     }
 
 }

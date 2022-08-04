@@ -50,7 +50,6 @@ public class DoctorController extends UserController<Doctor> {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
         commands.put("view appointments", ViewAppointments());
-//        commands.put("view absences", ViewAbsences());
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("show schedule", ViewSchedule());
@@ -81,31 +80,7 @@ public class DoctorController extends UserController<Doctor> {
             doctorScreenView.viewAppointments(appointments);
         };
     }
-    /**
-     * Frozen until work is finished with absences.
-     */
-//    private Command ViewAbsences(){
-//        return (x) -> {
-//            ArrayList<TimeBlockData> absences = doctorManager.getAbsence(doctorData);
-//            doctorScreenView.viewAbsences(absences);
-//        };
-//    }
 
-//    private Command AddAbsence(){
-//        return (x) -> {
-//            doctorScreenView.addAbsencePrompt();
-//            LocalDateTime startTime = timeUtils()
-//            LocalDateTime endTime;
-//            appointmentManager.addAbsence(doctorData, startTime, endTime);
-//        };
-//    }
-//    private Command RemoveAbsence(){
-//        return (x) -> {
-//            Integer appointmentNumber = doctorScreenView.deleteAbsencePrompt(contactManager.getContactData(doctorData), doctorData.getAbsence());
-//            // DELETE ABSENCE WITH THIS NUMBER
-////            appointmentManager.deleteAbsence(doctorData.getAbsence().get(appointmentNumber));
-//        };
-//    }
 
 /* PENDING IMPLEMENTATION IN PHASE 2
     private Command ViewSchedule(){
