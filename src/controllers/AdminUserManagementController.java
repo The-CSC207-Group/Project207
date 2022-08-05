@@ -119,14 +119,6 @@ public class AdminUserManagementController extends TerminalController {
     }
 
     private boolean deleteUserHelper(String username) {
-//        if (patientManager.deleteUser(username)) {
-//            return true;
-//        } else if (doctorManager.deleteUser(username)) {
-//            return true;
-//        } else if (secretaryManager.deleteUser(username)) {
-//            return true;
-//        } else return adminManager.deleteUser(username);
-//    }
     return patientManager.deleteUser(username) || doctorManager.deleteUser(username) ||
             secretaryManager.deleteUser(username) || adminManager.deleteUser(username);
     }
