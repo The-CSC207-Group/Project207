@@ -26,11 +26,10 @@ public class AdminUserManagementController extends TerminalController {
     /**
      * Creates a new controller for handling the state of the program when an admin wants to create/delete users
      * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *      *                switching between controllers.
+     *                switching between controllers.
      * @param previousController AdminController - stores the previous controller, allows you to easily go back to it
-     *      *                           via the back command.
-     * @param adminData AdminData - a data containing the ID and attributes of the current loaded
-     *      *                    admin user.
+     *                           via the back command.
+     * @param adminData AdminData - a data containing the ID and attributes of the current loaded admin user.
      */
     public AdminUserManagementController(Context context, AdminController previousController, AdminData adminData) {
         super(context);
@@ -66,7 +65,7 @@ public class AdminUserManagementController extends TerminalController {
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerAdminPrompt();
             AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
-            DisplaySuccessOnCreateAccount(admin);
+            displayCreateAccountSuccess(admin);
         };
     }
 
@@ -75,7 +74,7 @@ public class AdminUserManagementController extends TerminalController {
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
             DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
-            DisplaySuccessOnCreateAccount(doctor);
+            displayCreateAccountSuccess(doctor);
         };
     }
 
@@ -84,7 +83,7 @@ public class AdminUserManagementController extends TerminalController {
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerPatientPrompt();
             PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
-            DisplaySuccessOnCreateAccount(patient);
+            displayCreateAccountSuccess(patient);
         };
     }
 
@@ -93,25 +92,14 @@ public class AdminUserManagementController extends TerminalController {
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = secretaryManager.createSecretary(userCred.username(), userCred.password());
-            DisplaySuccessOnCreateAccount(secretary);
+            displayCreateAccountSuccess(secretary);
         };
     }
 
-    private void DisplaySuccessOnCreateAccount(UserData<?> user) {
-        if (user == null) {
-            adminScreenView.showFailedToRegisterUserError();
-        } else {
-            adminScreenView.showRegisterUserSuccess();
-        }
-    }
-    private boolean DeleteUserHelper(String username) {
-        return patientManager.deleteUser(username) || doctorManager.deleteUser(username)
-                || secretaryManager.deleteUser(username) || adminManager.deleteUser(username);
-    }
     private Command DeleteUser() {
         return (x) -> {
             String user = adminScreenView.deleteUserPrompt();
-            if (DeleteUserHelper(user)) {
+            if (deleteUserHelper(user)) {
                 adminScreenView.showDeleteUserSuccess();
                 if (user.equals(adminData.getUsername())) {
                     changeCurrentController(new SignInController(getContext()));
@@ -121,4 +109,23 @@ public class AdminUserManagementController extends TerminalController {
             }
         };
     }
+
+    private void displayCreateAccountSuccess(UserData<?> user) {
+        if (user == null) {
+            adminScreenView.showFailedToRegisterUserError();
+        } else {
+            adminScreenView.showRegisterUserSuccess();
+        }
+    }
+
+    private boolean deleteUserHelper(String username) {
+        if (patientManager.deleteUser(username)) {
+            return true;
+        } else if (doctorManager.deleteUser(username)) {
+            return true;
+        } else if (secretaryManager.deleteUser(username)) {
+            return true;
+        } else return adminManager.deleteUser(username);
+    }
+
 }
