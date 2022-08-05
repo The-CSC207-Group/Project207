@@ -286,7 +286,7 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     public void viewAllReports(ArrayList<ReportData> reportData) {
-        infoMessage(reportView.viewFullAsEnumerationFromList(reportData));
+        infoMessage(reportView.viewAsEnumerationFromList(reportData, reportView::viewHeader));
     }
 
     public Integer viewReportPrompt() {
