@@ -290,11 +290,31 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     public Integer viewReportPrompt() {
-        return inputInt("Enter the index of the report to view in detail ");
+        Integer index = inputInt("Enter the index for the report to view in more detail: ");
+        if (index != null) {
+            return index - 1;
+        } else {
+            return null;
+        }
     }
 
-    public void noReports() {
-        infoMessage("No reports to view, please add a report");
+    public void showNoReportsError() {
+        errorMessage("No reports to view, please create a report");
     }
 
+    public void showOutOfRangeError() {
+        errorMessage("You have inputted an index out of range, please try again.");
+    }
+
+    public void showNotIntegerError() {
+        errorMessage("Please input a valid integer");
+    }
+
+    public void showReportCreationSuccess() {
+        successMessage("Successfully created patient report");
+    }
+
+    public void showReportDeletionSuccess() {
+        successMessage("Successfully deleted patient report");
+    }
 }

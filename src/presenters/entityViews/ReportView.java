@@ -17,7 +17,8 @@ public class ReportView extends EntityView<ReportData> {
     public String viewFull(ReportData item) {
         return viewDateNoted(item) + "\n"
                 + viewHeader(item) + "\n"
-                + viewBody(item);
+                + viewBody(item) + "\n"
+                + viewDoctor(item);
     }
 
     /**
@@ -42,6 +43,10 @@ public class ReportView extends EntityView<ReportData> {
      */
     public String viewBody(ReportData item) {
         return "Report body reads: " + item.getBody();
+    }
+
+    public String viewDoctor(ReportData item) {
+        return "Report was noted by doctor ID: " + item.getDoctorId();
     }
 
 }

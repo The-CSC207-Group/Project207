@@ -28,12 +28,12 @@ public class DoctorLoadedPatientController extends TerminalController {
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
      *
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     * @param context            Context - a reference to the context object, which stores the current controller and allows for
+     *                           switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
-     * @param doctorData DoctorData - a data containing the ID and attributes of the current doctor user.
-     * @param patientData PatientData - a data containing the ID and attributes of the current loaded patient user.
+     * @param doctorData         DoctorData - a data containing the ID and attributes of the current doctor user.
+     * @param patientData        PatientData - a data containing the ID and attributes of the current loaded patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
@@ -105,13 +105,16 @@ public class DoctorLoadedPatientController extends TerminalController {
     private Command ViewPatientReports() {
         return (x) -> {
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
-            if (reportData.size() > 0) {
-                doctorView.viewAllReports(reportData);
-                Integer targetReport = doctorView.viewReportPrompt();
-                doctorView.viewReport(reportData.get(targetReport - 1));
-            } else {
-                doctorView.noReports();
+            if (reportData == null || reportData.size() == 0) {
+                doctorView.showNoReportsError();
+                return;
             }
+            doctorView.viewAllReports(reportData);
+            Integer targetReport = doctorView.viewReportPrompt();
+            if (CheckUserInteger(targetReport, reportData)) {
+                return;
+            }
+            doctorView.viewReport(reportData.get(targetReport));
         };
     }
 
@@ -119,16 +122,40 @@ public class DoctorLoadedPatientController extends TerminalController {
         return (x) -> {
             ReportDetails reportDetails = doctorView.reportDetailsPrompt();
             reportManager.addReport(patientData, doctorData, reportDetails.header(), reportDetails.body());
+            doctorView.showReportCreationSuccess();
         };
     }
 
     private Command DeletePatientReport() {
         return (x) -> {
+
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
+            if (reportData == null) {
+                doctorView.showNoReportsError();
+                return;
+            }
 
             Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
                     .getContactData(patientData), reportData);
+
+            if (CheckUserInteger(deleteIndex, reportData)) {
+                return;
+            }
             reportManager.deleteReport(reportData.get(deleteIndex));
+            doctorView.showReportDeletionSuccess();
+
         };
+    }
+
+    private boolean CheckUserInteger(Integer deleteIndex, ArrayList<ReportData> reportData) {
+        if (deleteIndex == null) {
+            doctorView.showNotIntegerError();
+            return true;
+        }
+        if (deleteIndex < 0 || deleteIndex >= reportData.size()) {
+            doctorView.showOutOfRangeError();
+            return true;
+        }
+        return false;
     }
 }
