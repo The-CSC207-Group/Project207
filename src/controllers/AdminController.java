@@ -2,8 +2,6 @@ package controllers;
 
 import dataBundles.*;
 import entities.Admin;
-import entities.User;
-import presenters.response.PasswordResetDetails;
 import presenters.screenViews.AdminScreenView;
 import useCases.*;
 
@@ -15,9 +13,6 @@ import java.util.LinkedHashMap;
 public class AdminController extends UserController<Admin> {
 
     private final AdminData adminData;
-    private final PatientManager patientManager;
-    private final DoctorManager doctorManager;
-    private final SecretaryManager secretaryManager;
     private final AdminManager adminManager;
     private final AdminScreenView adminScreenView = new AdminScreenView();
     private final AdminController currentController = this;
@@ -31,9 +26,6 @@ public class AdminController extends UserController<Admin> {
     public AdminController(Context context, AdminData adminData) {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
         this.adminData = adminData;
-        this.patientManager = new PatientManager(getDatabase());
-        this.secretaryManager = new SecretaryManager(getDatabase());
-        this.doctorManager = new DoctorManager(getDatabase());
         this.adminManager = new AdminManager(getDatabase());
 
     }
