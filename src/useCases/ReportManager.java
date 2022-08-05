@@ -42,8 +42,8 @@ public class ReportManager {
      *
      * @param patientData PatientData - data associated with a patient.
      * @param doctorData  DoctorData - data associated with a doctor.
-     * @param header      String - header of the report.
-     * @param body        String - body of the report.
+     * @param header String - header of the report.
+     * @param body String - body of the report.
      */
     public void addReport(PatientData patientData, DoctorData doctorData, String header, String body) {
         Report report = new Report(header, body, patientData.getId(), doctorData.getId());
