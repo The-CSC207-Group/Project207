@@ -45,10 +45,10 @@ public class AdminController extends UserController<Admin> {
     @Override
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
+        commands.put("manage users", LoadUserManagement());
         commands.put("change clinic info", changeClinicInformation());
-        commands.put("change user password", changeUserPassword());
         commands.put("delete self", deleteSelf());
-        commands.put("load user management system", LoadUserManagement());
+
         commands.putAll(super.AllCommands());
         return commands;
     }
@@ -68,33 +68,5 @@ public class AdminController extends UserController<Admin> {
 
     private Command changeClinicInformation() {
         return (x) -> changeCurrentController(new ClinicController(getContext(), currentController));
-    }
-
-    private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
-        UserData<T> user = manager.getUserData(name);
-        if (user == null) {
-            return false;
-        }
-        PasswordResetDetails password = adminScreenView.getNewPasswordPrompt();
-        if (!password.password().equals(password.confirmedPassword())) {
-            adminScreenView.passwordMismatchError(new ContactManager(getDatabase()).getContactData(user));
-        } else manager.changeUserPassword(user, password.password());
-        return true;
-    }
-
-    private Command changeUserPassword() {
-        return (x) -> {
-            // NOTE this is can be any user not just the one using it,
-            // so can't use reset password prompt presenter method
-            String name = adminScreenView.getUsersName();
-            if ((changePassword(patientManager, name) |
-                    (changePassword(adminManager, name)) |
-                    (changePassword(secretaryManager, name)) |
-                    (changePassword(doctorManager, name)))){
-                adminScreenView.showResetPasswordSuccessMessage();
-            } else {
-                adminScreenView.userDoesNotExistError(name);
-            }
-        };
     }
 }

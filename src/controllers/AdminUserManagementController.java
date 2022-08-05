@@ -1,12 +1,11 @@
 package controllers;
 
 import dataBundles.*;
+import entities.User;
+import presenters.response.PasswordResetDetails;
 import presenters.response.UserCredentials;
 import presenters.screenViews.AdminScreenView;
-import useCases.AdminManager;
-import useCases.DoctorManager;
-import useCases.PatientManager;
-import useCases.SecretaryManager;
+import useCases.*;
 
 import java.util.LinkedHashMap;
 
@@ -56,6 +55,7 @@ public class AdminUserManagementController extends TerminalController {
         commands.put("create doctor", CreateDoctor());
         commands.put("create patient", CreatePatient());
         commands.put("delete user", DeleteUser());
+        commands.put("change user password", ChangeUserPassword());
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -116,6 +116,34 @@ public class AdminUserManagementController extends TerminalController {
         } else {
             adminScreenView.showRegisterUserSuccess();
         }
+    }
+
+    private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
+        UserData<T> user = manager.getUserData(name);
+        if (user == null) {
+            return false;
+        }
+        PasswordResetDetails password = adminScreenView.getNewPasswordPrompt();
+        if (!password.password().equals(password.confirmedPassword())) {
+            adminScreenView.passwordMismatchError(new ContactManager(getDatabase()).getContactData(user));
+        } else manager.changeUserPassword(user, password.password());
+        return true;
+    }
+
+    private Command ChangeUserPassword() {
+        return (x) -> {
+            // NOTE this is can be any user not just the one using it,
+            // so can't use reset password prompt presenter method
+            String name = adminScreenView.getUsersName();
+            if ((changePassword(patientManager, name) |
+                    (changePassword(adminManager, name)) |
+                    (changePassword(secretaryManager, name)) |
+                    (changePassword(doctorManager, name)))){
+                adminScreenView.showResetPasswordSuccessMessage();
+            } else {
+                adminScreenView.userDoesNotExistError(name);
+            }
+        };
     }
 
     private boolean deleteUserHelper(String username) {
