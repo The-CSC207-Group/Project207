@@ -155,7 +155,7 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Show error when appointment overlaps with absence or unavailability or another appointment.
+     * Show error when appointment overlaps with unavailability or another appointment.
      */
     public void showAppointmentBookingError() {
         errorMessage("Error Booking Appointment.");

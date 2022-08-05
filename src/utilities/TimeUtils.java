@@ -7,7 +7,7 @@ import entities.TimeBlock;
 import java.time.*;
 
 /**
- * Utility class of methods relating to usage of time, used anything related to appointments, absence, availability, and
+ * Utility class of methods relating to usage of time, used anything related to appointments, availability, and
  * time blocks.
  */
 public class TimeUtils {
