@@ -66,13 +66,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", Back(secretaryController));
-
-
         commands.put("view appointments", viewAppointments());
-
-        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("reschedule appointment", rescheduleAppointment());
-        */
         commands.put("book appointment", bookAppointment());
         commands.put("cancel appointment", cancelAppointment());
 
@@ -142,8 +137,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-    /* PENDING IMPLEMENTATION IN PHASE 2
-
     private Command rescheduleAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
@@ -162,7 +155,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-    */
+
 
     private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
         ContactData doctorContact = contactManager.getContactData(doctorData);

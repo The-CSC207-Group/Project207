@@ -14,9 +14,6 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    //private Date date; (optional, default = null)
-    //private Time time; (required)
-    //private Day day; (optional, represents Enum of the days the week, default = null)
 
     /**
      * Creates an instance of TimeBlock.

@@ -157,27 +157,6 @@ public class AppointmentManager {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     /**
-     * Deletes an absence from a doctor's stored Absence ArrayList.
-     * @param doctorData DoctorData - the data representing a specific doctor in the database.
-     * @param absence TimeBlock - a TimeBlock representing the period in time that a doctor would be absent.
-     */
-    public void deleteAbsence(DoctorData doctorData, TimeBlock absence){
-        doctorDatabase.get(doctorData.getId()).removeAbsence(absence);
-    }
-    /**
-     * Add an absence TimeBlock to a doctor's stored Absence ArrayList.
-     * @param doctorData DoctorData - the data representing a specific doctor in the database.
-     * @param startTime LocalDateTime - a LocalDateTime representing the beginning of a new absence.
-     * @param endTime LocalDateTime - a LocalDateTime representing the ending of a new absence.
-     */
-    public void addAbsence(DoctorData doctorData, LocalDateTime startTime, LocalDateTime endTime){
-        TimeBlock proposedTime = new TimeBlock(startTime, endTime);
-        doctorDatabase.get(doctorData.getId()).addAbsence(new TimeBlock(startTime, endTime));
-        getAllAppointments()
-                .filter(x -> overlapsDateAndHours(x, proposedTime))
-                .forEach(this::removeAppointment);
-    }
-    /**
      * Get the availability of a doctor in terms of an ArrayList of AvailabilityData.
      * @return ArrayList<AvailabilityData> - the ArrayList of AvailabilityData that represents the clinic's hours of
      * operation for every day of the week.
@@ -215,10 +194,6 @@ public class AppointmentManager {
 
         return getAppointments().stream()
                 .map(AppointmentData::new);
-    }
-    private boolean doesNotOverlapWithDoctorsAbsence(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData){
-        return doctorManager.getAbsence(doctorData).stream()
-                .anyMatch(x -> overlapsDateAndHours(x, timeBlock));
     }
     private boolean overlapsDateAndHours(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2){
         return overlapHours(day1, day2) && overlapDate(day1, day2);

@@ -73,15 +73,5 @@ public class DoctorManager extends UserManager<Doctor> {
         }
     }
 
-    /**
-     * Returns all absences associated with a doctor. Assumes doctorData is associated with a doctor in the database.
-     * @param doctorData DoctorData - data bundle associated with the doctor.
-     * @return ArrayList<TimeBlockData> - arraylist of doctor absences.
-     */
-    public ArrayList<TimeBlockData> getAbsence(DoctorData doctorData){
-        Doctor doctor = doctorDatabase.get(doctorData.getId());
-        return doctor.getAbsence().stream().map(TimeBlockData::new).collect(Collectors.toCollection(ArrayList::new));
-    }
-
 }
 
