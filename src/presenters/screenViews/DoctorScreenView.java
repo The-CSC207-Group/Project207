@@ -280,15 +280,28 @@ public class DoctorScreenView extends UserScreenView {
         showDeleteNotAnIntegerError("report");
     }
 
+
+    /**
+     * Views report in full detail.
+     * @param report the report to be viewed in full detail.
+     */
     public void viewReport(ReportData report) {
         infoMessage(reportView.viewFull(report));
 
     }
 
+    /**
+     * Displays to the user the header of each report with an index next to it.
+     * @param reportData An arraylist of ReportData
+     */
     public void viewAllReports(ArrayList<ReportData> reportData) {
         infoMessage(reportView.viewAsEnumerationFromList(reportData, reportView::viewHeader));
     }
 
+    /**
+     * Prompts the user to view a certain report in more detail.
+     * @return an Integer of the chosen report to be viewed.
+     */
     public Integer viewReportPrompt() {
         Integer index = inputInt("Enter the index for the report to view in more detail: ");
         if (index != null) {
@@ -298,22 +311,37 @@ public class DoctorScreenView extends UserScreenView {
         }
     }
 
+    /**
+     * Shows the user that an error has occurred due to no reports
+     */
     public void showNoReportsError() {
         errorMessage("No reports to view, please create a report");
     }
 
+    /**
+     * Shows the user that the index they have inputted is out of range.
+     */
     public void showOutOfRangeError() {
         errorMessage("You have inputted an index out of range, please try again.");
     }
 
+    /**
+     * Shows the user that the inputted "index" is not a valid integer.
+     */
     public void showNotIntegerError() {
         errorMessage("Please input a valid integer");
     }
 
+    /**
+     * Shows the user that report has been successfully created.
+     */
     public void showReportCreationSuccess() {
         successMessage("Successfully created patient report");
     }
 
+    /**
+     * Shows the user that report has been successfully deleted.
+     */
     public void showReportDeletionSuccess() {
         successMessage("Successfully deleted patient report");
     }

@@ -45,6 +45,11 @@ public class ReportView extends EntityView<ReportData> {
         return "Report body reads: " + item.getBody();
     }
 
+    /**
+
+     * @param item ReportData bundle to view.
+     * @return String representation of DoctorId as a view.
+     */
     public String viewDoctor(ReportData item) {
         return "Report was noted by doctor ID: " + item.getDoctorId();
     }
