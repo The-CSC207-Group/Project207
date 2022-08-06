@@ -161,6 +161,9 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("Error Booking Appointment.");
     }
 
+    public void showNoUserAppointmentsMessage(){
+        infoMessage("This user has no appointments.");
+    }
     /**
      * Show invalid date error when user inputs the wrong date format.
      */
@@ -243,6 +246,18 @@ public class SecretaryScreenView extends UserScreenView {
      */
     public void showDeleteNotAnIntegerError(String itemType) {
         errorMessage("Could not delete appointment: please input a valid integer.");
+    }
+
+    public void showCancelAppointmentSuccess(){
+        successMessage("Successfully canceled appointment.");
+    }
+
+    /**
+     * Message displayed when booking an appointment and showing clinic's availability on a given day, where there
+     * is no availability.
+     */
+    public void showNoAvailabilityError(ContactData userContact){
+        errorMessage("Can not book today as there is no availability.");
     }
 
     /**

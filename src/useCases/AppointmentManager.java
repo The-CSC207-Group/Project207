@@ -121,9 +121,11 @@ public class AppointmentManager {
      * DayOfWeek.
      */
     public AvailabilityData getAvailabilityFromDayOfWeek(DayOfWeek dayOfWeek){
-        return new AvailabilityData(database.getClinic().getClinicHours().stream()
+        Availability availability = database.getClinic().getClinicHours().stream()
                 .filter(x -> dayOfWeek.equals(x.getDayOfWeek()))
-                .findFirst().get());
+                .findFirst().orElse(null);
+        if (availability == null){return null;}
+        return new AvailabilityData(availability);
     }
     /**
      * Gets all doctor specific appointments in a single day.

@@ -110,7 +110,6 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 
-    // ALL CODE BELOW PENDING FOR PHASE 2
 
     /**
      * View used to view the doctor's appointments that are given.
