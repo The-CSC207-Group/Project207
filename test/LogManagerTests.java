@@ -1,13 +1,13 @@
 import dataBundles.LogData;
 import dataBundles.PatientData;
 import database.Database;
-import entities.Patient;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.LogManager;
+import useCases.PatientManager;
 import utilities.DeleteUtils;
 import java.io.File;
 import java.util.ArrayList;
@@ -18,30 +18,32 @@ public class LogManagerTests {
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
     @Test
-    public void testAddingNewLog(){
+    public void testAddingNewLog() {
         Database database = new Database(databaseFolder.toString());
-        Patient patient = new Patient("dan","dervi", 1);
-        Integer id = database.getPatientDatabase().add(patient);
+        PatientManager patientManager = new PatientManager(database);
+        PatientData patientData = patientManager.createPatient("dan", "dervi");
         LogManager logManager = new LogManager(database);
-        LogData logData = logManager.addLog("testing123", id);
-        Assert.assertEquals("Make sure that the right log is returned to the user", logData.getId(), id);
-        Assert.assertNotNull("Make sure that log actually exists in the database", database.getLogDatabase().get(id));
+        LogData logData = logManager.addLog(patientData, "testing123");
+
+        Assert.assertNotNull("Make sure that log actually exists in the database with the correct ID",
+                database.getLogDatabase().get(logData.getId()));
+        Assert.assertEquals("Make sure the message of the log in the database is the same as the body passed in",
+                database.getLogDatabase().get(logData.getId()).getMessage(), "testing123");
     }
 
     @Test
     public void testGettingUserLogs(){
         Database database = new Database(databaseFolder.toString());
-        Patient patient = new Patient("dan","dervi", 1);
-        Integer id = database.getPatientDatabase().add(patient);
+        PatientManager patientManager = new PatientManager(database);
+        PatientData patientData = patientManager.createPatient("dan", "dervi");
         LogManager logManager = new LogManager(database);
 
 
-        LogData logA = logManager.addLog("testing1", id);
-        LogData logB = logManager.addLog("testing2", id);
-        LogData logC = logManager.addLog("testing3", id);
-        System.out.println(database.getLogDatabase());
+        LogData logA = logManager.addLog(patientData, "testing1");
+        LogData logB = logManager.addLog(patientData, "testing2");
+        LogData logC = logManager.addLog(patientData, "testing3");
 
-        ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
+        ArrayList<LogData> logArrayList = logManager.getUserLogs(patientData);
         Assert.assertFalse("Check if logA is returned to the user as part of" +
                 "the arraylist returned when getting a user's logs", logArrayList.stream().
                 map(LogData::getUserId).
@@ -63,24 +65,10 @@ public class LogManagerTests {
         Assert.assertEquals("Make sure there are only 3 logs in the arraylist. When paired with the other" +
                 "assert statements, the arraylist only consists of logA, logB, logC", 3, logArrayList.size());
     }
-    @Test
-    public void testGettingNonExistentUserLogs(){
-        Database database = new Database(databaseFolder.toString());
-        Patient patient = new Patient("dan","dervi", 1);
-        LogManager logManager = new LogManager(database);
-
-        logManager.addLog("testing1", 1);
-        logManager.addLog("testing2", 1);
-        logManager.addLog("testing3", 1);
-        System.out.println(database.getLogDatabase());
-
-        ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
-        Assert.assertTrue("Since the user doesn't exist, we should get an empty arraylist", logArrayList.isEmpty());
-    }
-
 
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
+
 }
