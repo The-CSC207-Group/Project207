@@ -1,8 +1,10 @@
 package controllers;
 
+import dataBundles.AdminData;
 import dataBundles.ContactData;
 import dataBundles.LogData;
 import dataBundles.UserData;
+import entities.Log;
 import entities.User;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.UserScreenView;
@@ -24,6 +26,7 @@ public abstract class UserController<T extends User> extends TerminalController 
     private final UserData<T> userData;
     private final UserManager<T> userManager;
     private final UserScreenView userScreenView;
+    private final LogManager logManager;
 
     /**
      * Creates a new controller for handling the state of when a user is signed in.
@@ -42,6 +45,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         this.userData = userData;
         this.userManager = userManager;
         this.userScreenView = userScreenView;
+        this.logManager = new LogManager(getDatabase());
     }
 
     @Override
@@ -72,6 +76,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         return (x) -> {
             PasswordResetDetails passwordResetDetails = userScreenView.resetPasswordPrompt();
             if (passwordResetDetails.password().equals(passwordResetDetails.confirmedPassword())) {
+                logManager.addLog(userData, "changed password");
                 userManager.changeUserPassword(userData, passwordResetDetails.password());
                 userScreenView.showResetPasswordSuccessMessage();
             } else {
@@ -81,7 +86,6 @@ public abstract class UserController<T extends User> extends TerminalController 
     }
 
     private Command GetLogs() {
-        LogManager logManager = new LogManager(getDatabase());
         return (x) -> {
             ArrayList<LogData> logs = logManager.getUserLogs(userData);
             userScreenView.viewUserLogs(logs);
@@ -92,7 +96,8 @@ public abstract class UserController<T extends User> extends TerminalController 
         UserController<?> currentController = this;
         ContactManager contactManager = new ContactManager(getDatabase());
         ContactData contactData = contactManager.getContactData(userData);
-        ContactController contactController = new ContactController(getContext(), currentController, contactData);
+        ContactController contactController = new ContactController(getContext(), currentController, contactData,
+                userData);
         return (x) -> changeCurrentController(contactController);
     }
 
@@ -104,7 +109,10 @@ public abstract class UserController<T extends User> extends TerminalController 
     }
 
     private Command SignOut(){
-        return (x) -> changeCurrentController(new SignInController(getContext()));
+        return (x) -> {
+            logManager.addLog(userData, "signed out");
+            changeCurrentController(new SignInController(getContext()));
+        };
     }
 
 }
