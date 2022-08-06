@@ -156,9 +156,9 @@ public class AdminUserManagementController extends TerminalController {
     }
 
     private boolean deleteUserHelper(String username) {
-    return patientManager.deleteUser(username) ||
-            doctorManager.deleteUser(username) ||
-            secretaryManager.deleteUser(username) ||
-            adminManager.deleteUser(username);
+        return patientManager.deleteUser(username) ||
+                doctorManager.deleteUser(username) ||
+                secretaryManager.deleteUser(username) ||
+                adminManager.deleteUser(username);
     }
 }
