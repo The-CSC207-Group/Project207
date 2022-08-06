@@ -5,6 +5,8 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
 
+import java.util.regex.Pattern;
+
 /**
  * Use case class for handling operations and data of admin users.
  */
@@ -27,9 +29,9 @@ public class AdminManager extends UserManager<Admin>{
      * @param password password of new account.
      * @return Admin data if sign in successful, if username exists in the database, return null.
      */
-    public AdminData createAdmin(String username, String password){
+    public AdminData createAdmin(String username, String password) {
         Admin admin = new Admin(username, password);
-        if (adminDatabase.add(admin) != null) {
+        if (Pattern.matches("^a[a-zA-Z0-9]{5,}$", username) && adminDatabase.add(admin) != null) {
             admin.setContactInfoId(newContactInDatabase());
             return new AdminData(admin);
         }

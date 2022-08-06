@@ -24,7 +24,7 @@ public class SecretaryScreenView extends UserScreenView {
      * Create a new patient prompt.
      * @return UserCredentials containing username and password.
      */
-    public UserCredentials registerPatientAccount() {
+    public UserCredentials registerPatientPrompt() {
         return registerAccountPrompt("patient");
     }
 
@@ -32,14 +32,15 @@ public class SecretaryScreenView extends UserScreenView {
      * Show success message when patient is created successfully.
      */
     public void showRegisterPatientSuccess() {
-        successMessage("Patient create successfully!");
+        successMessage("Created patient account successfully!");
     }
 
     /**
      * Show error message when patient cannot be created due to non-unique username.
      */
-    public void showRegisterPatientError() {
-        errorMessage("Could not create patient: a user with this username already exists");
+    public void showFailedToRegisterPatientError() {
+        errorMessage("Failed to register patient account: username must start with the lowercase " +
+                        "letter 'p' and be 6 characters long or username is already in use.");
     }
 
     /**

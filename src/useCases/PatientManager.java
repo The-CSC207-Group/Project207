@@ -5,6 +5,8 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Patient;
 
+import java.util.regex.Pattern;
+
 /**
  * Use case class for handling operations and data of patient users.
  */
@@ -30,7 +32,7 @@ public class PatientManager extends UserManager<Patient> {
      */
     public PatientData createPatient(String username, String password) {
         Patient patient = new Patient(username, password);
-        if (patientDatabase.add(patient) != null) {
+        if (Pattern.matches("^p[a-zA-Z0-9]{5,}$", username) && patientDatabase.add(patient) != null) {
             patient.setContactInfoId(newContactInDatabase());
             return new PatientData(patient);
         }

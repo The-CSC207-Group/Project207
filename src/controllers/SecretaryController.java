@@ -84,19 +84,28 @@ public class SecretaryController extends UserController<Secretary> {
     }
 
     private Command createPatientAccount() {
+        PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
-            if (!patientManager.doesUserExist(userCredentials.username()) &&
-                    !doctorManager.doesUserExist(userCredentials.username()) &&
-                    !adminManager.doesUserExist(userCredentials.username()) &&
-                    !secretaryManager.doesUserExist(userCredentials.username())) {
-                patientManager.createPatient(userCredentials.username(), userCredentials.password());
-                secretaryScreenView.showRegisterPatientSuccess();
+            UserCredentials userCred = secretaryScreenView.registerPatientPrompt();
+            PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
+            if (patient == null) {
+                secretaryScreenView.showFailedToRegisterPatientError();
             } else {
-                secretaryScreenView.showRegisterPatientError();
+                secretaryScreenView.showRegisterPatientSuccess();
             }
-
         };
+//        return (x) -> {
+//            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
+//            if (!patientManager.doesUserExist(userCredentials.username()) &&
+//                    !doctorManager.doesUserExist(userCredentials.username()) &&
+//                    !adminManager.doesUserExist(userCredentials.username()) &&
+//                    !secretaryManager.doesUserExist(userCredentials.username())) {
+//                patientManager.createPatient(userCredentials.username(), userCredentials.password());
+//                secretaryScreenView.showRegisterPatientSuccess();
+//            } else {
+//                secretaryScreenView.showRegisterPatientError();
+//            }
+//        };
     }
 
     private Command deletePatient() {

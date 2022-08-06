@@ -5,6 +5,8 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
 
+import java.util.regex.Pattern;
+
 /**
  * Use case class for handling operations and data of doctor users.
  */
@@ -33,7 +35,7 @@ public class DoctorManager extends UserManager<Doctor> {
         Doctor doctor = new Doctor(username, password);
         // Commented code is pending implementation in phase 2
 //        database.getClinic().getClinicHours().forEach(doctor::addAvailability);
-        if (doctorDatabase.add(doctor) != null) {
+        if (Pattern.matches("^d[a-zA-Z0-9]{5,}$", username) && doctorDatabase.add(doctor) != null) {
             doctor.setContactInfoId(newContactInDatabase());
             return new DoctorData(doctor);
         }

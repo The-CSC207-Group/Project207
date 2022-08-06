@@ -71,7 +71,7 @@ public class AdminController extends UserController<Admin> {
         return (x) -> {
             UserCredentials c = adminScreenView.registerSecretaryPrompt();
             SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
-            displaySuccessOnCreateAccount(secretary);
+            displaySuccessOnCreateAccount(secretary, "secretary");
         };
     }
 
@@ -80,16 +80,15 @@ public class AdminController extends UserController<Admin> {
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerDoctorPrompt();
             DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
-            displaySuccessOnCreateAccount(doctor);
+            displaySuccessOnCreateAccount(doctor, "doctor");
         };
     }
 
     private Command CreateAdmin() {
         return (x) -> {
-
             UserCredentials userCred = adminScreenView.registerAdminPrompt();
             AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
-            displaySuccessOnCreateAccount(admin);
+            displaySuccessOnCreateAccount(admin, "admin");
         };
     }
 
@@ -98,15 +97,15 @@ public class AdminController extends UserController<Admin> {
         return (x) -> {
             UserCredentials userCred = adminScreenView.registerPatientPrompt();
             PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
-            displaySuccessOnCreateAccount(patient);
+            displaySuccessOnCreateAccount(patient, "patient");
         };
     }
 
-    private void displaySuccessOnCreateAccount(UserData<?> user) {
+    private void displaySuccessOnCreateAccount(UserData<?> user, String userType) {
         if (user == null) {
-            adminScreenView.showFailedToRegisterUserError();
+            adminScreenView.showFailedToRegisterUserError(userType);
         } else {
-            adminScreenView.showRegisterUserSuccess();
+            adminScreenView.showRegisterUserSuccess(userType);
         }
     }
 

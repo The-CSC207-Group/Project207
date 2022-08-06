@@ -52,17 +52,19 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Show a failed to create user error that is thrown when username is already used.
+     * Show a failed to create user error that is thrown when username does not start with correct letter
+     * or when username is already used.
      */
-    public void showFailedToRegisterUserError() {
-        errorMessage("Failed to register user account: username already in use");
+    public void showFailedToRegisterUserError(String userType) {
+        errorMessage("Failed to register " + userType + " account: username must start with the lowercase " +
+                "letter '" + userType.charAt(0) + "' and be 6 characters long or username is already in use.");
     }
 
     /**
      * Show success message when admin successfully creates another user.
      */
-    public void showRegisterUserSuccess() {
-        successMessage("Created user account successfully!");
+    public void showRegisterUserSuccess(String userType) {
+        successMessage("Created " + userType + " account successfully!");
     }
 
     /**
