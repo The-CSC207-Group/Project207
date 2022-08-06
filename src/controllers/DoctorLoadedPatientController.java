@@ -8,6 +8,7 @@ import dataBundles.PrescriptionData;
 import presenters.response.PrescriptionDetails;
 import presenters.screenViews.DoctorScreenView;
 import useCases.ContactManager;
+import useCases.LogManager;
 import useCases.PrescriptionManager;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     private final PatientData patientData;
     private final DoctorData doctorData;
     private final PrescriptionManager prescriptionManager;
+    private final LogManager logManager;
     private final DoctorScreenView doctorView = new DoctorScreenView();
     private final DoctorController previousController;
 
@@ -40,6 +42,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         this.patientData = patientData;
         this.doctorData = doctorData;
         this.prescriptionManager = new PrescriptionManager(getDatabase());
+        this.logManager = new LogManager(getDatabase());
         this.previousController = previousController;
     }
 
@@ -72,6 +75,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         return (x) -> {
             PrescriptionDetails prescriptionDetails = doctorView.prescriptionDetailsPrompt();
             if (prescriptionDetails != null) {
+                logManager.addLog(doctorData, "created prescription for patient: " + patientData.getUsername());
                 prescriptionManager.createPrescription(prescriptionDetails.header(), prescriptionDetails.body(),
                         patientData, doctorData, prescriptionDetails.expiryDate());
                 doctorView.showSuccessfullyCreatedPrescription();
@@ -88,6 +92,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         return (x) -> {
             Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
             if (0 <= deleteIndex && deleteIndex < prescriptionDataList.size()) {
+                logManager.addLog(doctorData, "deleted prescription for patient: " + patientData.getUsername());
                 prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
                 doctorView.showSuccessfullyDeletedPrescription();
             } else {

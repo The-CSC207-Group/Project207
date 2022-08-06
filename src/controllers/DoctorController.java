@@ -6,8 +6,10 @@ import entities.Doctor;
 import presenters.screenViews.DoctorScreenView;
 import useCases.ContactManager;
 import useCases.DoctorManager;
+import useCases.LogManager;
 import useCases.PatientManager;
 
+import javax.print.Doc;
 import java.util.LinkedHashMap;
 
 /**
@@ -18,6 +20,7 @@ public class DoctorController extends UserController<Doctor> {
     private final DoctorScreenView doctorScreenView = new DoctorScreenView();
     private final DoctorData doctorData;
     private final DoctorController currentController = this;
+    private final LogManager logManager;
 
     /**
      * Creates a new controller for handling the state of the program when a doctor is signed in.
@@ -28,6 +31,7 @@ public class DoctorController extends UserController<Doctor> {
     public DoctorController(Context context, DoctorData doctorData){
         super(context, doctorData, new DoctorManager(context.getDatabase()), new DoctorScreenView());
         this.doctorData = doctorData;
+        this.logManager = new LogManager(getDatabase());
     }
 
     /**
@@ -59,7 +63,9 @@ public class DoctorController extends UserController<Doctor> {
             String patientUsername = doctorScreenView.loadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null){
-                doctorScreenView.showSuccessLoadingPatient(new ContactManager(getDatabase()).getContactData(loadedPatientData));
+                logManager.addLog(doctorData, "loaded patient: " + patientUsername);
+                doctorScreenView.showSuccessLoadingPatient(
+                        new ContactManager(getDatabase()).getContactData(loadedPatientData));
                 changeCurrentController(new DoctorLoadedPatientController(
                         getContext(), currentController, doctorData, loadedPatientData));
             } else {
