@@ -116,10 +116,8 @@ abstract public class TerminalController {
         }
 
         String correctSpelling = processSpelling(inputtedCommand);
-        if (!Objects.equals(correctSpelling, inputtedCommand)) {
-            if (terminalScreenView.showCorrectSpellingPrompt(correctSpelling)) {
-                return correctSpelling;
-            }
+        if (terminalScreenView.showCorrectSpellingPrompt(correctSpelling)) {
+            return correctSpelling;
         }
 
         return null;
