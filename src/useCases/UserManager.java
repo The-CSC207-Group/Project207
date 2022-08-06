@@ -1,5 +1,6 @@
 package useCases;
 
+import dataBundles.ContactData;
 import dataBundles.UserData;
 import database.DataMapperGateway;
 import database.Database;
@@ -27,7 +28,6 @@ public abstract class UserManager<T extends User> {
         this.typeTDatabase = typeTDatabase;
         this.contactDatabase = database.getContactDatabase();
         this.contactManager = new ContactManager(database);
-        LogManager logManager = new LogManager(database);
     }
 
     /**
@@ -97,6 +97,11 @@ public abstract class UserManager<T extends User> {
      * @return UserData<T> where T extends User - the data representing the specified user.
      */
     public abstract UserData<T> getUserData(String username);
+
+    public ContactData getUserContactData(UserData<T> userData) {
+        Contact contact = contactDatabase.get(userData.getContactInfoId());
+        return new ContactData(contact);
+    }
 
     protected T signInHelper(String username, String password){
         if (canSignIn(username, password)) {
