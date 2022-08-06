@@ -86,13 +86,17 @@ public class DoctorLoadedPatientController extends TerminalController {
         ContactData patientContactData = contactManager.getContactData(patientData);
         ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
         return (x) -> {
-            Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
-            if (0 <= deleteIndex && deleteIndex < prescriptionDataList.size()) {
-                prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
-                doctorView.showSuccessfullyDeletedPrescription();
-            } else {
-                doctorView.showDeletePrescriptionOutOfRangeError();
+            if (prescriptionDataList == null || prescriptionDataList.size() == 0) {
+                doctorView.showNoPrescriptionError();
+                return;
             }
+            Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
+            if (CheckUserInteger(deleteIndex, prescriptionDataList.size())) {
+                doctorView.showDeletePrescriptionOutOfRangeError();
+                return;
+            }
+            prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
+            doctorView.showSuccessfullyDeletedPrescription();
         };
     }
 
@@ -111,7 +115,7 @@ public class DoctorLoadedPatientController extends TerminalController {
             }
             doctorView.viewAllReports(reportData);
             Integer targetReport = doctorView.viewReportPrompt();
-            if (CheckUserInteger(targetReport, reportData)) {
+            if (CheckUserInteger(targetReport, reportData.size())) {
                 return;
             }
             doctorView.viewReport(reportData.get(targetReport));
@@ -138,7 +142,7 @@ public class DoctorLoadedPatientController extends TerminalController {
             Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
                     .getContactData(patientData), reportData);
 
-            if (CheckUserInteger(deleteIndex, reportData)) {
+            if (CheckUserInteger(deleteIndex, reportData.size())) {
                 return;
             }
             reportManager.deleteReport(reportData.get(deleteIndex));
@@ -147,12 +151,12 @@ public class DoctorLoadedPatientController extends TerminalController {
         };
     }
 
-    private boolean CheckUserInteger(Integer deleteIndex, ArrayList<ReportData> reportData) {
+    private boolean CheckUserInteger(Integer deleteIndex, Integer size) {
         if (deleteIndex == null) {
             doctorView.showNotIntegerError();
             return true;
         }
-        if (deleteIndex < 0 || deleteIndex >= reportData.size()) {
+        if (deleteIndex < 0 || deleteIndex >= size) {
             doctorView.showOutOfRangeError();
             return true;
         }

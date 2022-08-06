@@ -345,4 +345,8 @@ public class DoctorScreenView extends UserScreenView {
     public void showReportDeletionSuccess() {
         successMessage("Successfully deleted patient report");
     }
+
+    public void showNoPrescriptionError() {
+        errorMessage("No prescriptions to view, please create a prescription.");
+    }
 }
