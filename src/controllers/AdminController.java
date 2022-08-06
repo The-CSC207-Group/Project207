@@ -50,6 +50,7 @@ public class AdminController extends UserController<Admin> {
             changeCurrentController(new AdminUserManagementController(getContext(), currentController, adminData));
         };
     }
+
     private Command deleteSelf() {
         return (x) -> {
             adminManager.deleteUserByData(adminData);
@@ -57,7 +58,8 @@ public class AdminController extends UserController<Admin> {
         };
     }
 
-    private Command changeClinicInformation() {
+    private Command ChangeClinicInformation() {
         return (x) -> changeCurrentController(new ClinicController(getContext(), currentController));
     }
+
 }
