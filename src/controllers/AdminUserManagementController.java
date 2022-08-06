@@ -144,10 +144,10 @@ public class AdminUserManagementController extends TerminalController {
             // NOTE this is can be any user not just the one using it,
             // so can't use reset password prompt presenter method
             String name = adminScreenView.getUsersName();
-            if ((changePassword(patientManager, name) |
-                    (changePassword(adminManager, name)) |
-                    (changePassword(secretaryManager, name)) |
-                    (changePassword(doctorManager, name)))){
+            if ((changePassword(patientManager, name) ||
+                    (changePassword(adminManager, name)) ||
+                    (changePassword(secretaryManager, name)) ||
+                    (changePassword(doctorManager, name)))) {
                 adminScreenView.showResetPasswordSuccessMessage();
             } else {
                 adminScreenView.userDoesNotExistError(name);
@@ -156,7 +156,9 @@ public class AdminUserManagementController extends TerminalController {
     }
 
     private boolean deleteUserHelper(String username) {
-    return patientManager.deleteUser(username) || doctorManager.deleteUser(username) ||
-            secretaryManager.deleteUser(username) || adminManager.deleteUser(username);
+    return patientManager.deleteUser(username) ||
+            doctorManager.deleteUser(username) ||
+            secretaryManager.deleteUser(username) ||
+            adminManager.deleteUser(username);
     }
 }
