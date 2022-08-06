@@ -8,7 +8,6 @@ import presenters.screenViews.TerminalScreenView;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Controller class for processing the commands passed in to the terminal.
@@ -79,10 +78,10 @@ abstract public class TerminalController {
     }
 
     private String processSpelling(String inputtedCommand) {
-        int maxDistance = (int) Math.ceil(inputtedCommand.length() / 8f);
+        int maxDistance = (int) Math.ceil(inputtedCommand.length() / 6f);
         LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
         int currentMin = Integer.MAX_VALUE;
-        String newCommand = inputtedCommand;
+        String newCommand = null;
         for (String command : AllCommands().keySet()) {
             int dist = levenshteinDistance.apply(command, inputtedCommand);
             if (dist <= maxDistance && dist < currentMin) {
@@ -95,9 +94,13 @@ abstract public class TerminalController {
 
     private Integer processNumber(String inputtedCommand) {
         if (NumberUtils.isParsable(inputtedCommand)){
-            int number = NumberUtils.createInteger(inputtedCommand) - 1;
-            if (number <= AllCommands().size() - 1 & number >= 0) {
-                return number;
+            try {
+                int number = NumberUtils.createInteger(inputtedCommand) - 1;
+                if (number <= AllCommands().size() - 1 & number >= 0) {
+                    return number;
+                }
+            } catch (NumberFormatException ignored) {
+                return null;
             }
         }
         return null;
@@ -114,7 +117,7 @@ abstract public class TerminalController {
         }
 
         String correctSpelling = processSpelling(inputtedCommand);
-        if (terminalScreenView.showCorrectSpellingPrompt(correctSpelling)) {
+        if (correctSpelling != null && terminalScreenView.showCorrectSpellingPrompt(correctSpelling)) {
             return correctSpelling;
         }
 
