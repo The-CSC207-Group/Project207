@@ -5,10 +5,7 @@ import dataBundles.SecretaryData;
 import entities.Secretary;
 import presenters.response.UserCredentials;
 import presenters.screenViews.SecretaryScreenView;
-import useCases.AdminManager;
-import useCases.DoctorManager;
-import useCases.PatientManager;
-import useCases.SecretaryManager;
+import useCases.*;
 
 import java.util.LinkedHashMap;
 
@@ -22,6 +19,8 @@ public class SecretaryController extends UserController<Secretary> {
     private final AdminManager adminManager;
     private final DoctorManager doctorManager;
     private final SecretaryManager secretaryManager;
+    private final SecretaryData secretaryData;
+    private final LogManager logManager;
 
     /* PHASE 2 ATTRIBUTES
      private final AppointmentManager appointmentManager; */
@@ -45,6 +44,8 @@ public class SecretaryController extends UserController<Secretary> {
         this.adminManager = new AdminManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
         this.secretaryManager = new SecretaryManager(getDatabase());
+        this.secretaryData = secretaryData;
+        this.logManager = new LogManager(getDatabase());
     }
 
     /**
@@ -74,6 +75,7 @@ public class SecretaryController extends UserController<Secretary> {
             PatientData patientData = patientManager.getUserData(username);
             SecretaryController currentController = this;
             if (patientData != null) {
+                logManager.addLog(secretaryData, "loaded patient: " + username);
                 secretaryScreenView.showSuccessLoadingPatient(patientData);
                 changeCurrentController(new SecretaryLoadedPatientController(getContext(), currentController,
                         patientData));
@@ -90,19 +92,20 @@ public class SecretaryController extends UserController<Secretary> {
                     !doctorManager.doesUserExist(userCredentials.username()) &&
                     !adminManager.doesUserExist(userCredentials.username()) &&
                     !secretaryManager.doesUserExist(userCredentials.username())) {
+                logManager.addLog(secretaryData, "created patient: " + userCredentials.username());
                 patientManager.createPatient(userCredentials.username(), userCredentials.password());
                 secretaryScreenView.showRegisterPatientSuccess();
             } else {
                 secretaryScreenView.showRegisterPatientError();
             }
-
         };
     }
 
     private Command deletePatient() {
         return (x) -> {
-            String patient = secretaryScreenView.showDeletePatientPrompt();
-            if (patientManager.deleteUser(patient)) {
+            String username = secretaryScreenView.showDeletePatientPrompt();
+            if (patientManager.deleteUser(username)) {
+                logManager.addLog(secretaryData, "deleted patient: " + username);
                 secretaryScreenView.showDeletePatientSuccess();
             } else {
                 secretaryScreenView.showFailedToDeletePatientError();

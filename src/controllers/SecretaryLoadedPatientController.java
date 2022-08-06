@@ -4,6 +4,7 @@ import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.SecretaryScreenView;
+import useCases.LogManager;
 import useCases.PatientManager;
 
 import java.util.LinkedHashMap;
@@ -16,6 +17,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private final PatientData patientData;
     private final SecretaryController previousController;
     private final PatientManager patientManager;
+    private final LogManager logManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     /* PHASE 2 ATTRIBUTES
@@ -37,6 +39,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         this.previousController = secretaryController;
         this.patientData = patientData;
         this.patientManager = new PatientManager(getDatabase());
+        this.logManager = new LogManager(getDatabase());
 
         /* PHASE 2 INSTANTIATIONS
         this.appointmentManager = new AppointmentManager(getDatabase());
@@ -73,6 +76,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPatientPasswordPrompt();
             if (patientManager.changeUserPassword(patientData, passwordResetDetails.password())) {
+                logManager.addLog(patientData, "changed password");
                 secretaryScreenView.showResetPasswordSuccessMessage();
             } else {
                 secretaryScreenView.showResetPasswordMismatchError();
