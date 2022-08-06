@@ -79,7 +79,7 @@ public class DoctorController extends UserController<Doctor> {
     private Command ViewSchedule() {
         return (x) -> {
             LocalDate viewDate = doctorScreenView.viewSchedulePrompt();
-            doctorScreenView.viewAppointments(new AppointmentManager(getDatabase()).getScheduleData(doctorData, viewDate));
+            doctorScreenView.viewAppointments(new AppointmentManager(getDatabase()).getSingleDayAppointment(doctorData, viewDate));
         };
     }
 

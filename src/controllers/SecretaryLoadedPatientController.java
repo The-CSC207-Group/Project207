@@ -167,7 +167,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
         ContactData doctorContact = contactManager.getContactData(doctorData);
 
-        ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(
+        ArrayList<AppointmentData> appointments = appointmentManager.getSingleDayAppointment(
                 doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
 
 
