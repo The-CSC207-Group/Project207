@@ -41,6 +41,15 @@ public class AdminUserManagementController extends TerminalController {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void welcomeMessage() {
+        adminScreenView.showUserManagementWelcomeMessage();
+        super.welcomeMessage();
+    }
+
+    /**
      * Creates a Linked hashmap of all string representations of AdminUserManagement commands mapped to the
      * method that each command calls.
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective

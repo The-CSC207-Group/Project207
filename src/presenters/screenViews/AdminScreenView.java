@@ -69,7 +69,7 @@ public class AdminScreenView extends UserScreenView {
      * Show welcome message when admin is redirected to the User Management Controller
      */
     public void showUserManagementWelcomeMessage() {
-        infoMessage("Welcome to the User Management Terminal");
+        infoMessage("Welcome to the User Management Terminal!");
     }
 
     /**
