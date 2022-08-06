@@ -130,7 +130,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         return (x) -> {
 
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
-            if (reportData == null) {
+            if (reportData == null || reportData.size() == 0) {
                 doctorView.showNoReportsError();
                 return;
             }
