@@ -337,6 +337,57 @@ public class AppointmentManagerTests {
                 originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment2.getAppointmentId()));
     }
 
+    @Test(timeout = 1000)
+    public void testGetPatientAppointments() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+
+        originalDatabase.setClinic(new Clinic("", "", "", "",
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                        LocalTime.of(17, 0))))));
+
+        DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
+        PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
+        AppointmentData appointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData, doctorData,
+                2022, 12, 5, 10, 0, 120);
+        AppointmentData appointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData, doctorData,
+                2022, 12, 5, 14, 0, 120);
+        for (AppointmentData patientAppointment : new AppointmentManager(originalDatabase).getPatientAppointments(patientData)){
+            assertTrue("Each id of a patient appointment from getPatientAppointment should exist in the database",
+                    originalDatabase.getAppointmentDatabase().getAllIds().contains(patientAppointment.getAppointmentId()));
+        }
+        for (Integer appointmentId: originalDatabase.getAppointmentDatabase().getAllIds()){
+            assertTrue("Each appointment in the database relating to the doctor should exist in getDoctorAppointment",
+                    new AppointmentManager(originalDatabase).getPatientAppointments(patientData).stream()
+                            .map(AppointmentData::getAppointmentId)
+                            .anyMatch(x-> x.equals(appointmentId)));
+        }
+    }
+
+    @Test(timeout = 1000)
+    public void testGetDoctorAppointments() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+
+        originalDatabase.setClinic(new Clinic("", "", "", "",
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                        LocalTime.of(17, 0))))));
+
+        DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
+        PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
+        AppointmentData appointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData, doctorData,
+                2022, 12, 5, 10, 0, 120);
+        AppointmentData appointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData, doctorData,
+                2022, 12, 5, 14, 0, 120);
+        for (AppointmentData doctorAppointment : new AppointmentManager(originalDatabase).getDoctorAppointments(doctorData)){
+            assertTrue("Each id of a doctor appointment from getDoctorAppointment should exist in the database",
+                    originalDatabase.getAppointmentDatabase().getAllIds().contains(doctorAppointment.getAppointmentId()));
+        }
+        for (Integer appointmentId: originalDatabase.getAppointmentDatabase().getAllIds()){
+            assertTrue("Each appointment in the database relating to the doctor should exist in getDoctorAppointment",
+                    new AppointmentManager(originalDatabase).getDoctorAppointments(doctorData).stream()
+                            .map(AppointmentData::getAppointmentId)
+                            .anyMatch(x-> x.equals(appointmentId)));
+        }
+    }
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
