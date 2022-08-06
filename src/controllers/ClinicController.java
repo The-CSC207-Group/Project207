@@ -1,8 +1,10 @@
 package controllers;
 
+import dataBundles.UserData;
 import entities.Admin;
 import presenters.screenViews.ClinicScreenView;
 import useCases.ClinicManager;
+import useCases.LogManager;
 
 import java.util.LinkedHashMap;
 
@@ -14,6 +16,8 @@ public class ClinicController extends TerminalController {
     private final ClinicScreenView clinicScreenView;
     private final ClinicManager clinicManager;
     private final UserController<Admin> previousController;
+    private final UserData<Admin> adminData;
+    private final LogManager logManager;
 
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
@@ -22,11 +26,13 @@ public class ClinicController extends TerminalController {
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
      */
-    public ClinicController(Context context, UserController<Admin> previousController) {
+    public ClinicController(Context context, UserController<Admin> previousController, UserData<Admin> adminData) {
         super(context);
         this.clinicManager = new ClinicManager(getDatabase());
         this.clinicScreenView = new ClinicScreenView();
         this.previousController = previousController;
+        this.adminData = adminData;
+        this.logManager = new LogManager(getDatabase());
     }
 
     @Override
@@ -54,6 +60,7 @@ public class ClinicController extends TerminalController {
         return (x) -> {
             String newName = clinicScreenView.showClinicNamePrompt();
             if (clinicManager.changeClinicName(newName)) {
+                logManager.addLog(adminData, "changed clinic name");
                 clinicScreenView.showSuccessfullyChangedClinicName();
             }
             else {
@@ -66,6 +73,7 @@ public class ClinicController extends TerminalController {
         return (x) -> {
             String newPhoneNumber = clinicScreenView.showClinicPhoneNumberPrompt();
             if (clinicManager.changeClinicPhoneNumber(newPhoneNumber)) {
+                logManager.addLog(adminData, "changed clinic phone number");
                 clinicScreenView.showSuccessfullyChangedClinicPhoneNumber();
             }
             else {
@@ -78,6 +86,7 @@ public class ClinicController extends TerminalController {
         return (x) -> {
             String newEmail = clinicScreenView.showClinicEmailPrompt();
             if (clinicManager.changeClinicEmail(newEmail)) {
+                logManager.addLog(adminData, "changed clinic email");
                 clinicScreenView.showSuccessfullyChangedClinicEmail();
             }
             else {
@@ -90,6 +99,7 @@ public class ClinicController extends TerminalController {
         return (x) -> {
             String newAddress = clinicScreenView.showClinicAddressPrompt();
             if (clinicManager.changeClinicAddress(newAddress)) {
+                logManager.addLog(adminData, "changed clinic address");
                 clinicScreenView.showSuccessfullyChangedClinicAddress();
             }
             else {

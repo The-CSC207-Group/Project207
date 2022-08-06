@@ -1,8 +1,11 @@
 package controllers;
 
 import dataBundles.ContactData;
+import dataBundles.UserData;
 import presenters.screenViews.ContactScreenView;
 import useCases.ContactManager;
+import useCases.LogManager;
+import useCases.UserManager;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -16,6 +19,8 @@ public class ContactController extends TerminalController {
     private final ContactScreenView contactScreenView;
     private final ContactManager contactManager;
     private final UserController<?> previousController;
+    private final UserData<?> userData;
+    private final LogManager logManager;
 
     /**
      * Creates a contact controller object that handles the commands a user performs on their contact information.
@@ -23,15 +28,19 @@ public class ContactController extends TerminalController {
      *                switching between controllers.
      * @param previousController UserController<?> - the object of the controller that switched into this contact
      *                           controller object.
-     * @param contactData ContactData - a data  storing the ID and attributes of the contact object associated
+     * @param contactData ContactData - a data bundle storing the ID and attributes of the contact object associated
      *                    with the current user.
+     * @param userData UserData - a data bundle storing the ID and attributes of the user object that this contact
+     *                 information is associated with
      */
     public ContactController(Context context, UserController<?> previousController,
-                             ContactData contactData) {
+                             ContactData contactData, UserData<?> userData) {
         super(context);
         this.previousController = previousController;
         this.contactData = contactData;
+        this.userData = userData;
         this.contactManager = new ContactManager(getDatabase());
+        this.logManager = new LogManager(getDatabase());
         this.contactScreenView = new ContactScreenView();
     }
 
@@ -70,6 +79,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newName = contactScreenView.showNamePrompt(false);
             if (contactManager.changeName(contactData, newName)) {
+                logManager.addLog(userData, "changed name");
                 contactScreenView.showSuccessfullyChangedName(false);
             } else {
                 contactScreenView.showNameFormatError();
@@ -81,6 +91,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newEmail = contactScreenView.showEmailPrompt(false);
             if (contactManager.changeEmail(contactData, newEmail)) {
+                logManager.addLog(userData, "changed email");
                 contactScreenView.showSuccessfullyChangedEmail(false);
             } else {
                 contactScreenView.showEmailFormatError();
@@ -92,6 +103,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newPhoneNumber = contactScreenView.showPhoneNumberPrompt(false);
             if (contactManager.changePhoneNumber(contactData, newPhoneNumber)) {
+                logManager.addLog(userData, "changed phone number");
                 contactScreenView.showSuccessfullyChangedPhoneNumber(false);
             } else {
                 contactScreenView.showPhoneNumberFormatError();
@@ -103,6 +115,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newAddress = contactScreenView.showAddressPrompt();
             if (contactManager.changeAddress(contactData, newAddress)) {
+                logManager.addLog(userData, "changed address");
                 contactScreenView.showSuccessfullyChangedAddress();
             } else {
                 contactScreenView.showAddressFormatError();
@@ -114,6 +127,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             LocalDate newBirthday = contactScreenView.showBirthdayPrompt();
             if (newBirthday != null) {
+                logManager.addLog(userData, "changed birthday");
                 contactManager.changeBirthday(contactData, newBirthday);
                 contactScreenView.showSuccessfullyChangedBirthday();
             } else {
@@ -126,6 +140,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newEmergencyContactName = contactScreenView.showNamePrompt(true);
             if (contactManager.changeEmergencyContactName(contactData, newEmergencyContactName)) {
+                logManager.addLog(userData, "changed emergency contact name");
                 contactScreenView.showSuccessfullyChangedName(true);
             } else {
                 contactScreenView.showNameFormatError();
@@ -137,6 +152,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newEmergencyContactEmail = contactScreenView.showEmailPrompt(true);
             if (contactManager.changeEmergencyContactEmail(contactData, newEmergencyContactEmail)) {
+                logManager.addLog(userData, "changed emergency contact email");
                 contactScreenView.showSuccessfullyChangedEmail(true);
             } else {
                 contactScreenView.showEmailFormatError();
@@ -148,6 +164,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newEmergencyContactPhoneNumber = contactScreenView.showPhoneNumberPrompt(true);
             if (contactManager.changeEmergencyContactPhoneNumber(contactData, newEmergencyContactPhoneNumber)) {
+                logManager.addLog(userData, "changed emergency contact phone number");
                 contactScreenView.showSuccessfullyChangedPhoneNumber(true);
             } else {
                 contactScreenView.showPhoneNumberFormatError();
@@ -159,6 +176,7 @@ public class ContactController extends TerminalController {
         return (x) -> {
             String newEmergencyContactRelationship = contactScreenView.showEmergencyRelationshipPrompt();
             if (contactManager.changeEmergencyRelationship(contactData, newEmergencyContactRelationship)) {
+                logManager.addLog(userData, "changed emergency contact relationship");
                 contactScreenView.showSuccessfullyChangedEmergencyRelationship();
             } else {
                 contactScreenView.showEmergencyRelationshipError();
