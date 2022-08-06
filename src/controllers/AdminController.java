@@ -20,6 +20,7 @@ public class AdminController extends UserController<Admin> {
     private final DoctorManager doctorManager;
     private final SecretaryManager secretaryManager;
     private final AdminManager adminManager;
+    private final LogManager logManager;
     private final AdminScreenView adminScreenView = new AdminScreenView();
     private final AdminController currentController = this;
 
@@ -33,10 +34,10 @@ public class AdminController extends UserController<Admin> {
         super(context, adminData, new AdminManager(context.getDatabase()), new AdminScreenView());
         this.adminData = adminData;
         this.patientManager = new PatientManager(getDatabase());
-        secretaryManager = new SecretaryManager(getDatabase());
-        doctorManager = new DoctorManager(getDatabase());
-        adminManager = new AdminManager(getDatabase());
-
+        this.secretaryManager = new SecretaryManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
+        this.adminManager = new AdminManager(getDatabase());
+        this.logManager = new LogManager(getDatabase());
     }
 
     /**
@@ -67,37 +68,38 @@ public class AdminController extends UserController<Admin> {
     }
 
     private Command CreateSecretary() {
-        SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
-            UserCredentials c = adminScreenView.registerSecretaryPrompt();
-            SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
+            UserCredentials userCredentials = adminScreenView.registerSecretaryPrompt();
+            SecretaryData secretary = secretaryManager.createSecretary(userCredentials.username(),
+                    userCredentials.password());
+            logManager.addLog(adminData, "created secretary: " + userCredentials.username());
             displaySuccessOnCreateAccount(secretary);
         };
     }
 
     private Command CreateDoctor() {
-        DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
-            UserCredentials userCred = adminScreenView.registerDoctorPrompt();
-            DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
+            UserCredentials userCredentials = adminScreenView.registerDoctorPrompt();
+            DoctorData doctor = doctorManager.createDoctor(userCredentials.username(), userCredentials.password());
+            logManager.addLog(adminData, "created doctor: " + userCredentials.username());
             displaySuccessOnCreateAccount(doctor);
         };
     }
 
     private Command CreateAdmin() {
         return (x) -> {
-
-            UserCredentials userCred = adminScreenView.registerAdminPrompt();
-            AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
+            UserCredentials userCredentials = adminScreenView.registerAdminPrompt();
+            AdminData admin = adminManager.createAdmin(userCredentials.username(), userCredentials.password());
+            logManager.addLog(adminData, "created admin: " + userCredentials.username());
             displaySuccessOnCreateAccount(admin);
         };
     }
 
     private Command CreatePatient() {
-        PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            UserCredentials userCred = adminScreenView.registerPatientPrompt();
-            PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
+            UserCredentials userCredentials = adminScreenView.registerPatientPrompt();
+            PatientData patient = patientManager.createPatient(userCredentials.username(), userCredentials.password());
+            logManager.addLog(adminData, "created patient: " + userCredentials.username());
             displaySuccessOnCreateAccount(patient);
         };
     }
@@ -111,7 +113,6 @@ public class AdminController extends UserController<Admin> {
     }
 
     private boolean deleteUserHelper(String username) {
-
         if (patientManager.deleteUser(username)) {
             return true;
         } else if (doctorManager.deleteUser(username)) {
@@ -123,12 +124,13 @@ public class AdminController extends UserController<Admin> {
 
     private Command deleteUser() {
         return (x) -> {
-            String user = adminScreenView.deleteUserPrompt();
-            if (deleteUserHelper(user)) {
+            String username = adminScreenView.deleteUserPrompt();
+            if (deleteUserHelper(username)) {
                 adminScreenView.showDeleteUserSuccess();
-                if (user.equals(adminData.getUsername())) {
+                if (username.equals(adminData.getUsername())) {
                     changeCurrentController(new SignInController(getContext()));
                 }
+                logManager.addLog(adminData, "deleted user: " + username);
             } else {
                 adminScreenView.showFailedToDeleteUserError();
             }
@@ -136,7 +138,7 @@ public class AdminController extends UserController<Admin> {
     }
 
     private Command changeClinicInformation() {
-        return (x) -> changeCurrentController(new ClinicController(getContext(), currentController));
+        return (x) -> changeCurrentController(new ClinicController(getContext(), currentController, adminData));
     }
 
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
@@ -155,15 +157,17 @@ public class AdminController extends UserController<Admin> {
         return (x) -> {
             // NOTE this is can be any user not just the one using it,
             // so can't use reset password prompt presenter method
-            String name = adminScreenView.getUsersName();
-            if ((changePassword(patientManager, name) |
-                    (changePassword(adminManager, name)) |
-                    (changePassword(secretaryManager, name)) |
-                    (changePassword(doctorManager, name)))){
+            String username = adminScreenView.getUsersName();
+            if ((changePassword(patientManager, username) |
+                    (changePassword(adminManager, username)) |
+                    (changePassword(secretaryManager, username)) |
+                    (changePassword(doctorManager, username)))){
+                logManager.addLog(adminData, "changed user " + username + "'s password");
                 adminScreenView.showResetPasswordSuccessMessage();
             } else {
-                adminScreenView.userDoesNotExistError(name);
+                adminScreenView.userDoesNotExistError(username);
             }
         };
     }
+
 }
