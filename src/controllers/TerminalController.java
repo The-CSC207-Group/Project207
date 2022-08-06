@@ -85,11 +85,9 @@ abstract public class TerminalController {
         String newCommand = inputtedCommand;
         for (String command : AllCommands().keySet()) {
             int dist = levenshteinDistance.apply(command, inputtedCommand);
-            if (dist <= maxDistance) {
-                if (dist < currentMin){
-                    newCommand = command;
-                    currentMin = dist;
-                }
+            if (dist <= maxDistance && dist < currentMin) {
+                newCommand = command;
+                currentMin = dist;
             }
         }
         return newCommand;
