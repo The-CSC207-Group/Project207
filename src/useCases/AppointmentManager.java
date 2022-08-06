@@ -83,12 +83,15 @@ public class AppointmentManager {
                                          Integer hour, Integer minute, Integer lengthOfAppointments){
 
         TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute, lengthOfAppointments);
+        Appointment selectedAppointment = appointmentDatabase.get(appointmentData.getAppointmentId());
 
+        database.getAppointmentDatabase().remove(appointmentData.getAppointmentId());
         DoctorData doctorData = new DoctorData(doctorDatabase.get(appointmentData.getDoctorId()));
         if (isValidAppointment(doctorData, proposedTime)){
             appointmentDatabase.add(new Appointment(proposedTime, appointmentData.getDoctorId(), appointmentData.getPatientId()));
             return true;
         }
+        appointmentDatabase.add(selectedAppointment);
         return false;
     }
     /**
