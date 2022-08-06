@@ -19,6 +19,7 @@ public class SignInController extends TerminalController {
     private final AdminManager adminManager;
     private final SecretaryManager secretaryManager;
     private final DoctorManager doctorManager;
+    private final LogManager logManager;
     private final SignInScreenView signInScreenView = new SignInScreenView();
 
     /**
@@ -28,10 +29,11 @@ public class SignInController extends TerminalController {
      */
     public SignInController(Context context) {
         super(context);
-        patientManager = new PatientManager(getDatabase());
-        adminManager = new AdminManager(getDatabase());
-        secretaryManager = new SecretaryManager(getDatabase());
-        doctorManager = new DoctorManager(getDatabase());
+        this.patientManager = new PatientManager(getDatabase());
+        this.adminManager = new AdminManager(getDatabase());
+        this.secretaryManager = new SecretaryManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
+        this.logManager = new LogManager(getDatabase());
     }
 
     @Override
@@ -56,6 +58,7 @@ public class SignInController extends TerminalController {
     private void adminSignIn(String username, String password) {
         AdminData adminData = adminManager.signIn(username, password);
         AdminController adminController = new AdminController(getContext(), adminData);
+        logManager.addLog(adminData, "signed in");
         signInScreenView.showSuccessLogin(adminData.getUsername());
         changeCurrentController(adminController);
     }
@@ -63,6 +66,7 @@ public class SignInController extends TerminalController {
     private void patientSignIn(String username, String password) {
         PatientData patientData = patientManager.signIn(username, password);
         PatientController patientController = new PatientController(getContext(), patientData);
+        logManager.addLog(patientData, "signed in");
         signInScreenView.showSuccessLogin(patientData.getUsername());
         changeCurrentController(patientController);
     }
@@ -70,6 +74,7 @@ public class SignInController extends TerminalController {
     private void doctorSignIn(String username, String password) {
         DoctorData doctorData = doctorManager.signIn(username, password);
         DoctorController doctorController = new DoctorController(getContext(), doctorData);
+        logManager.addLog(doctorData, "signed in");
         signInScreenView.showSuccessLogin(doctorData.getUsername());
         changeCurrentController(doctorController);
     }
@@ -77,6 +82,7 @@ public class SignInController extends TerminalController {
     private void secretarySignIn(String username, String password) {
         SecretaryData secretaryData = secretaryManager.signIn(username, password);
         SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
+        logManager.addLog(secretaryData, "signed in");
         signInScreenView.showSuccessLogin(secretaryData.getUsername());
         changeCurrentController(secretaryController);
     }

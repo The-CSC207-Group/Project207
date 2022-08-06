@@ -17,7 +17,6 @@ public abstract class UserManager<T extends User> {
     private final DataMapperGateway<T> typeTDatabase;
     private final DataMapperGateway<Contact> contactDatabase;
     private final ContactManager contactManager;
-    private final LogManager logManager;
 
     /**
      * Initializes the user manager.
@@ -28,7 +27,7 @@ public abstract class UserManager<T extends User> {
         this.typeTDatabase = typeTDatabase;
         this.contactDatabase = database.getContactDatabase();
         this.contactManager = new ContactManager(database);
-        this.logManager = new LogManager(database);
+        LogManager logManager = new LogManager(database);
     }
 
     /**
@@ -101,9 +100,7 @@ public abstract class UserManager<T extends User> {
 
     protected T signInHelper(String username, String password){
         if (canSignIn(username, password)) {
-            T user = getUser(username);
-            logManager.addLog("signed in", user.getId());
-            return user;
+            return getUser(username);
         } else  {
             return null;
         }
@@ -111,9 +108,9 @@ public abstract class UserManager<T extends User> {
 
     /**
      * Used to see if a combination of username and password can sign in.
-     * @param username a string that represents the unique account username.
-     * @param password a string that represents a key required to log into an account.
-     * @return a boolean representing if the given username and password can log into an account.
+     * @param username String - the unique account username.
+     * @param password String - the key required to log into an account.
+     * @return Boolean - a boolean representing if the given username and password can log into an account.
      */
     public boolean canSignIn(String username, String password) {
         T user = getUser(username);
