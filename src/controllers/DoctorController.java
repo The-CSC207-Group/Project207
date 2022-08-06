@@ -9,7 +9,6 @@ import useCases.DoctorManager;
 import useCases.LogManager;
 import useCases.PatientManager;
 
-import javax.print.Doc;
 import java.util.LinkedHashMap;
 
 /**
@@ -59,13 +58,13 @@ public class DoctorController extends UserController<Doctor> {
 
     private Command LoadPatient() {
         PatientManager patientManager = new PatientManager(getDatabase());
+        ContactManager contactManager = new ContactManager(getDatabase());
         return (x) -> {
             String patientUsername = doctorScreenView.loadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null){
                 logManager.addLog(doctorData, "loaded patient: " + patientUsername);
-                doctorScreenView.showSuccessLoadingPatient(
-                        new ContactManager(getDatabase()).getContactData(loadedPatientData));
+                doctorScreenView.showSuccessLoadingPatient(contactManager.getContactData(loadedPatientData));
                 changeCurrentController(new DoctorLoadedPatientController(
                         getContext(), currentController, doctorData, loadedPatientData));
             } else {

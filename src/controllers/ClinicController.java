@@ -1,6 +1,6 @@
 package controllers;
 
-import dataBundles.UserData;
+import dataBundles.AdminData;
 import entities.Admin;
 import presenters.screenViews.ClinicScreenView;
 import useCases.ClinicManager;
@@ -16,7 +16,7 @@ public class ClinicController extends TerminalController {
     private final ClinicScreenView clinicScreenView;
     private final ClinicManager clinicManager;
     private final UserController<Admin> previousController;
-    private final UserData<Admin> adminData;
+    private final AdminData adminData;
     private final LogManager logManager;
 
     /**
@@ -26,7 +26,7 @@ public class ClinicController extends TerminalController {
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
      */
-    public ClinicController(Context context, UserController<Admin> previousController, UserData<Admin> adminData) {
+    public ClinicController(Context context, UserController<Admin> previousController, AdminData adminData) {
         super(context);
         this.clinicManager = new ClinicManager(getDatabase());
         this.clinicScreenView = new ClinicScreenView();

@@ -1,15 +1,12 @@
 package controllers;
 
-import dataBundles.AdminData;
 import dataBundles.ContactData;
 import dataBundles.LogData;
 import dataBundles.UserData;
-import entities.Log;
 import entities.User;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.UserScreenView;
 import useCases.ClinicManager;
-import useCases.ContactManager;
 import useCases.LogManager;
 import useCases.UserManager;
 
@@ -94,8 +91,7 @@ public abstract class UserController<T extends User> extends TerminalController 
 
     private Command ContactDetails() {
         UserController<?> currentController = this;
-        ContactManager contactManager = new ContactManager(getDatabase());
-        ContactData contactData = contactManager.getContactData(userData);
+        ContactData contactData = userManager.getUserContactData(userData);
         ContactController contactController = new ContactController(getContext(), currentController, contactData,
                 userData);
         return (x) -> changeCurrentController(contactController);
