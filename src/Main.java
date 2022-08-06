@@ -39,7 +39,7 @@ public class Main {
         // Bootstrap database with default clinic and admin
         bootstrapClinic(database);
         AdminManager adminManager = new AdminManager(database);
-        adminManager.createAdmin("aadmin", "aadmin");
+        adminManager.createAdmin("admin1", "12345678");
         database.save();
 
         Context c = new Context(database);

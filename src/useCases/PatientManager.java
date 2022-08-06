@@ -1,8 +1,10 @@
 package useCases;
 
+import dataBundles.AdminData;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
+import entities.Admin;
 import entities.Patient;
 
 import java.util.regex.Pattern;
@@ -31,12 +33,17 @@ public class PatientManager extends UserManager<Patient> {
      * null if username exists in database.
      */
     public PatientData createPatient(String username, String password) {
-        Patient patient = new Patient(username, password);
-        if (Pattern.matches("^p[a-zA-Z0-9]{5,}$", username) && patientDatabase.add(patient) != null) {
-            patient.setContactInfoId(newContactInDatabase());
-            return new PatientData(patient);
+        if (Pattern.matches("^p[a-zA-Z0-9]{5,}$", username) && Pattern.matches("^.{8,}$", password)) {
+            Patient patient = new Patient(username, password);
+            if (patientDatabase.add(patient) != null) {
+                patient.setContactInfoId(newContactInDatabase());
+                return new PatientData(patient);
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 
     /**

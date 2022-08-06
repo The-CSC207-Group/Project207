@@ -36,11 +36,21 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Show error message when patient cannot be created due to non-unique username.
+     * Show a failed to create patient error that is thrown when username or password is in an incorrect format.
      */
-    public void showFailedToRegisterPatientError() {
-        errorMessage("Failed to register patient account: username must start with the lowercase " +
-                        "letter 'p' and be 6 characters long or username is already in use.");
+    public void showIncorrectPatientFormatError() {
+        errorMessage("""
+                Failed to register patient account. Make sure:
+                1. Username starts with the lowercase letter 'p'
+                2. Username is 6 characters long
+                3. Password is 8 characters long""");
+    }
+
+    /**
+     * Show a failed to create patient error that is thrown when username is already in use.
+     */
+    public void showPatientUsernameInUseError() {
+        errorMessage("Failed to register patient account: username is already in use.");
     }
 
     /**

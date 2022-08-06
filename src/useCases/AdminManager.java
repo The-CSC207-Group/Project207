@@ -30,12 +30,17 @@ public class AdminManager extends UserManager<Admin>{
      * @return Admin data if sign in successful, if username exists in the database, return null.
      */
     public AdminData createAdmin(String username, String password) {
-        Admin admin = new Admin(username, password);
-        if (Pattern.matches("^a[a-zA-Z0-9]{5,}$", username) && adminDatabase.add(admin) != null) {
-            admin.setContactInfoId(newContactInDatabase());
-            return new AdminData(admin);
+        if (Pattern.matches("^a[a-zA-Z0-9]{5,}$", username) && Pattern.matches("^.{8,}$", password)) {
+            Admin admin = new Admin(username, password);
+            if (adminDatabase.add(admin) != null) {
+                admin.setContactInfoId(newContactInDatabase());
+                return new AdminData(admin);
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 
     /**

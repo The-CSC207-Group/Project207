@@ -86,26 +86,18 @@ public class SecretaryController extends UserController<Secretary> {
     private Command createPatientAccount() {
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            UserCredentials userCred = secretaryScreenView.registerPatientPrompt();
-            PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
-            if (patient == null) {
-                secretaryScreenView.showFailedToRegisterPatientError();
-            } else {
-                secretaryScreenView.showRegisterPatientSuccess();
+            try {
+                UserCredentials userCred = secretaryScreenView.registerPatientPrompt();
+                PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
+                if (patient == null) {
+                    secretaryScreenView.showPatientUsernameInUseError();
+                } else {
+                    secretaryScreenView.showRegisterPatientSuccess();
+                }
+            } catch (IllegalArgumentException iae) {
+                secretaryScreenView.showIncorrectPatientFormatError();
             }
         };
-//        return (x) -> {
-//            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
-//            if (!patientManager.doesUserExist(userCredentials.username()) &&
-//                    !doctorManager.doesUserExist(userCredentials.username()) &&
-//                    !adminManager.doesUserExist(userCredentials.username()) &&
-//                    !secretaryManager.doesUserExist(userCredentials.username())) {
-//                patientManager.createPatient(userCredentials.username(), userCredentials.password());
-//                secretaryScreenView.showRegisterPatientSuccess();
-//            } else {
-//                secretaryScreenView.showRegisterPatientError();
-//            }
-//        };
     }
 
     private Command deletePatient() {
