@@ -1,6 +1,8 @@
 package controllers;
 
 import database.Database;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import presenters.screenViews.TerminalScreenView;
 
 import java.util.ArrayList;
@@ -75,6 +77,49 @@ abstract public class TerminalController {
         context.exit();
     }
 
+    private String processSpelling(String inputtedCommand) {
+        int maxDistance = (int) Math.ceil(inputtedCommand.length() / 6f);
+        LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
+        int currentMin = Integer.MAX_VALUE;
+        String newCommand = null;
+        for (String command : AllCommands().keySet()) {
+            int dist = levenshteinDistance.apply(command, inputtedCommand);
+            if (dist <= maxDistance && dist < currentMin) {
+                newCommand = command;
+                currentMin = dist;
+            }
+        }
+        return newCommand;
+    }
+
+    private Integer processNumber(String inputtedCommand) {
+        try {
+            int number = NumberUtils.createInteger(inputtedCommand) - 1;
+            if (number <= AllCommands().size() - 1 & number >= 0) {
+                return number;
+            }
+        } catch (NumberFormatException ignored) {}
+        return null;
+    }
+
+    private String getCommand(String inputtedCommand) {
+        if (AllCommands().containsKey(inputtedCommand)) {
+            return inputtedCommand;
+        }
+
+        Integer numberCommand = processNumber(inputtedCommand);
+        if (numberCommand != null) {
+            return new ArrayList<>(AllCommands().keySet()).get(numberCommand);
+        }
+
+        String correctSpelling = processSpelling(inputtedCommand);
+        if (correctSpelling != null && terminalScreenView.showCorrectSpellingPrompt(correctSpelling)) {
+            return correctSpelling;
+        }
+
+        return null;
+    }
+
     private void ProcessCommands() {
         getDatabase().save();
         String command = terminalScreenView.showCommandPrompt();
@@ -83,11 +128,12 @@ abstract public class TerminalController {
             return;
         }
 
-        if (!AllCommands().containsKey(command)) {
-            terminalScreenView.showInvalidCommandError(command);
-        } else {
-            AllCommands().get(command).execute(new ArrayList<>());
+        String correctedCommand = getCommand(command);
+        if (correctedCommand != null) {
+            AllCommands().get(correctedCommand).execute(new ArrayList<>());
             getDatabase().save();
+        } else {
+            terminalScreenView.showInvalidCommandError(command);
         }
     }
 
