@@ -93,16 +93,12 @@ abstract public class TerminalController {
     }
 
     private Integer processNumber(String inputtedCommand) {
-        if (NumberUtils.isParsable(inputtedCommand)){
-            try {
-                int number = NumberUtils.createInteger(inputtedCommand) - 1;
-                if (number <= AllCommands().size() - 1 & number >= 0) {
-                    return number;
-                }
-            } catch (NumberFormatException ignored) {
-                return null;
+        try {
+            int number = NumberUtils.createInteger(inputtedCommand) - 1;
+            if (number <= AllCommands().size() - 1 & number >= 0) {
+                return number;
             }
-        }
+        } catch (NumberFormatException ignored) {}
         return null;
     }
 
