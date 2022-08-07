@@ -92,7 +92,6 @@ public class DoctorLoadedPatientController extends TerminalController {
             }
             Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
             if (CheckUserInteger(deleteIndex, prescriptionDataList.size())) {
-                doctorView.showDeletePrescriptionOutOfRangeError();
                 return;
             }
             prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
