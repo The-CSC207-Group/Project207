@@ -39,11 +39,9 @@ public class SecretaryScreenView extends UserScreenView {
      * Show a failed to create patient error that is thrown when username or password is in an incorrect format.
      */
     public void showIncorrectPatientFormatError() {
-        errorMessage("""
-                Failed to register patient account. Make sure:
-                1. Username starts with the lowercase letter 'p'
-                2. Username is 6 characters long
-                3. Password is 8 characters long""");
+        errorMessage("Failed to register patient account. Make sure:" +
+                "\n1. Username is 6 characters long and only contains letters and numbers." +
+                "\n2. Password is 8 characters long.");
     }
 
     /**

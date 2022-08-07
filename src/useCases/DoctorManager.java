@@ -32,7 +32,7 @@ public class DoctorManager extends UserManager<Doctor> {
      * otherwise returns null.
      */
     public DoctorData createDoctor(String username, String password) {
-        if (Pattern.matches("^d[a-zA-Z0-9]{5,}$", username) && Pattern.matches("^.{8,}$", password)) {
+        if (Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password)) {
             Doctor doctor = new Doctor(username, password);
             // Commented code is pending implementation in phase 2
             //        database.getClinic().getClinicHours().forEach(doctor::addAvailability);

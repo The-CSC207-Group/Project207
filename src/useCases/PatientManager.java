@@ -33,7 +33,7 @@ public class PatientManager extends UserManager<Patient> {
      * null if username exists in database.
      */
     public PatientData createPatient(String username, String password) {
-        if (Pattern.matches("^p[a-zA-Z0-9]{5,}$", username) && Pattern.matches("^.{8,}$", password)) {
+        if (Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password)) {
             Patient patient = new Patient(username, password);
             if (patientDatabase.add(patient) != null) {
                 patient.setContactInfoId(newContactInDatabase());

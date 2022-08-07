@@ -33,7 +33,7 @@ public class SecretaryManager extends UserManager<Secretary> {
      * null if username exists in database.
      */
     public SecretaryData createSecretary(String username, String password) {
-        if (Pattern.matches("^s[a-zA-Z0-9]{5,}$", username) && Pattern.matches("^.{8,}$", password)) {
+        if (Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password)) {
             Secretary secretary = new Secretary(username, password);
             if (secretaryDatabase.add(secretary) != null) {
                 secretary.setContactInfoId(newContactInDatabase());

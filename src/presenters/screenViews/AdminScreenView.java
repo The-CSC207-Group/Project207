@@ -56,9 +56,8 @@ public class AdminScreenView extends UserScreenView {
      */
     public void showIncorrectFormatError(String userType) {
         errorMessage("Failed to register " + userType + " account. Make sure:" +
-                "\n1. Username starts with the lowercase letter '" + userType.charAt(0) + "'" +
-                "\n2. Username is 6 characters long" +
-                "\n3. Password is 8 characters long");
+                "\n1. Username is 6 characters long and only contains letters and numbers." +
+                "\n2. Password is 8 characters long.");
     }
 
     /**
