@@ -28,12 +28,12 @@ public class DoctorLoadedPatientController extends TerminalController {
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
      *
-     * @param context            Context - a reference to the context object, which stores the current controller and allows for
-     *                           switching between controllers.
+     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     *                          switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
-     *                           via the back command.
-     * @param doctorData         DoctorData - a data containing the ID and attributes of the current doctor user.
-     * @param patientData        PatientData - a data containing the ID and attributes of the current loaded patient user.
+     *                                              via the back command.
+     * @param doctorData DoctorData - a data containing the ID and attributes of the current doctor user.
+     * @param patientData PatientData - a data containing the ID and attributes of the current loaded patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
@@ -46,10 +46,11 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     /**
-     * Creates a Linked hashmap of all string representations of doctor loaded patient commands mapped to the method that each
-     * command calls.
+     * Creates a Linked hashmap of all string representations of doctor loaded patient commands mapped to the method
+     * that each command calls.
      *
-     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded patient commands.
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded
+     *                                          patient commands.
      */
     @Override
     public LinkedHashMap<String, Command> AllCommands() {
@@ -132,7 +133,6 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command DeletePatientReport() {
         return (x) -> {
-
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
             if (reportData == null || reportData.size() == 0) {
                 doctorView.showNoReportsError();

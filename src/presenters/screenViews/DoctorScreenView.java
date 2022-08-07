@@ -1,7 +1,6 @@
 package presenters.screenViews;
 
 import dataBundles.*;
-import entities.Report;
 import presenters.entityViews.*;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
@@ -126,14 +125,6 @@ public class DoctorScreenView extends UserScreenView {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeletePrescriptionNotAnIntegerError() {
-        showDeleteNotAnIntegerError("prescription");
-    }
-
     /**
      * View used to delete reports relating to a patient. Show an enumeration of all reports and ask user for
      * integer input corresponding to a selection.
@@ -148,20 +139,6 @@ public class DoctorScreenView extends UserScreenView {
         infoMessage("Viewing patient " + patientName + " reports to delete:");
         infoMessage(new ReportView().viewFullAsEnumerationFromList(reportData));
         return deleteItemFromEnumerationPrompt("report");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data list
-     */
-    public void showDeleteReportOutOfRangeError() {
-        showDeleteOutOfRangeError("report");
-    }
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeleteReportNotAnIntegerError() {
-        showDeleteNotAnIntegerError("report");
     }
 
     /**
