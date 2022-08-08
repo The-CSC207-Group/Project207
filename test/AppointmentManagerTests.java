@@ -37,7 +37,7 @@ public class AppointmentManagerTests {
     @Before
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
-        addStandardAvailability();
+        addStandardAvailabilityAndClinic();
 
         doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -48,7 +48,6 @@ public class AppointmentManagerTests {
      */
     @Test(timeout = 10000)
     public void testBookAppointment() {
-
         checkObjectExistsInDatabase(originalDatabase, false);
 
         LocalDateTime startTime = LocalDateTime.of(2022, 12, 5, 10, 0);
@@ -370,17 +369,15 @@ public class AppointmentManagerTests {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
 
-    private void addStandardAvailability() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
+    private void addStandardAvailabilityAndClinic() {
         Availability availability = new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                 LocalTime.of(17, 0));
+
         originalDatabase.setClinic(new Clinic("", "", "", "",
                 new ArrayList<>(List.of(availability))));
     }
 
     private void checkValidAppointmentExistsInDatabase(Database originalDatabase, AppointmentData validAppointment) {
-
         assertFalse("The valid appointment should exist in the database", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
         assertEquals("The id of the valid appointment and the appointment stored in the database should be the " +
@@ -415,7 +412,7 @@ public class AppointmentManagerTests {
     }
     private void checkObjectExistsInDatabase(Database originalDatabase, boolean desiredResult){
         assertEquals("An object added to the database should result in the databases getAllIds having a " +
-                "size > 1", originalDatabase.getAppointmentDatabase().getAllIds().isEmpty(), desiredResult);
+                "size > 1", originalDatabase.getAppointmentDatabase().getAllIds().isEmpty(), !desiredResult);
     }
     private void addExampleAppointmentsToDatabase(){
         LocalDateTime startTime = LocalDateTime.of(2022, 12, 5, 10, 0);
