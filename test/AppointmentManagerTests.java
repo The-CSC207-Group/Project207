@@ -467,13 +467,7 @@ public class AppointmentManagerTests {
         }
     }
     private void checkObjectExistsInDatabase(Database originalDatabase, boolean desiredResult){
-        if (desiredResult){
-            assertFalse("An object added to to the database should result in the databases getAllIds having a " +
-                    "size > 1", originalDatabase.getAppointmentDatabase().getAllIds().isEmpty());
-        }
-        else {
-            assertTrue("An object added to to the database should result in the databases getAllIds having a " +
-                    "size > 1", originalDatabase.getAppointmentDatabase().getAllIds().isEmpty());
-        }
+        assertEquals("An object added to the database should result in the databases getAllIds having a " +
+                "size > 1", originalDatabase.getAppointmentDatabase().getAllIds().isEmpty(), desiredResult);
     }
 }
