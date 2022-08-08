@@ -10,6 +10,9 @@ import javax.xml.crypto.Data;
 import java.io.File;
 import java.time.LocalDate;
 
+/**
+ * Class of unit tests for ContactManager use case class.
+ */
 public class ContactManagerTests {
 
     /**

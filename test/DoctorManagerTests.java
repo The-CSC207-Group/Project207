@@ -14,6 +14,9 @@ import java.io.File;
 
 import static org.junit.Assert.*;
 
+/**
+ * Class of unit tests for DoctorManager use case class.
+ */
 public class DoctorManagerTests {
 
     /**

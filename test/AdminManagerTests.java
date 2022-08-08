@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;
 
 /**
- * A class that tests AdminManager.
+ * Class of unit tests for AdminManager use case class.
  */
 public class AdminManagerTests {
     Database originalDatabase;

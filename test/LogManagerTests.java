@@ -10,6 +10,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Class of unit tests for LogManager use case class.
+ */
 public class LogManagerTests {
 
     /**

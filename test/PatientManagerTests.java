@@ -13,7 +13,7 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 /**
- *Tests for Patient Manager Class.
+ * Class of unit tests for LogManager use case class.
  */
 public class PatientManagerTests {
     Database originalDatabase;

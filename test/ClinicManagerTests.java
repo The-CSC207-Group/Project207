@@ -18,6 +18,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class of unit tests for ClinicManager use case class.
+ */
 public class ClinicManagerTests {
 
     /**
