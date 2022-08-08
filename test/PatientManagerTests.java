@@ -12,15 +12,25 @@ import utilities.DeleteUtils;
 import java.io.File;
 import static org.junit.Assert.*;
 
+/**
+ *Tests for Patient Manager Class.
+ */
 public class PatientManagerTests {
     Database originalDatabase;
     DataMapperGateway<Patient> patientDatabase;
     PatientManager patientManager;
     Patient patient;
 
+    /**
+     * The variable representing the temporary folder where the databases used in these tests are stored until it is
+     * deleted after the tests.
+     */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
+    /**
+     * Initializes the variables used by all the tests before each unit test.
+     */
     @Before
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
@@ -28,6 +38,11 @@ public class PatientManagerTests {
         patientManager = new PatientManager(originalDatabase);
         patient = new Patient("jeff", "123", 123456789);
     }
+
+    /**
+     * Tests createPatient by ensuring that the values of the patient stored in the database are the same as the
+     * PatientData returned from the function.
+     */
     @Test(timeout = 1000)
     public void testCreatePatientValid() {
         String username = "jeff";
@@ -49,6 +64,10 @@ public class PatientManagerTests {
         assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword(password));
     }
+
+    /**
+     * Tests create patient with an invalid username and password that already exist in the database.
+     */
     @Test(timeout = 1000)
     public void testCreatePatientInvalid() {
         String username = "jeff";
@@ -60,6 +79,9 @@ public class PatientManagerTests {
                 "should return null", patientManager.createPatient(username, password));
     }
 
+    /**
+     * Tests a valid use of deletePatient.
+     */
     @Test(timeout = 1000)
     public void testDeletePatient() {
         Integer patientID = patientDatabase.add(patient);
@@ -72,6 +94,11 @@ public class PatientManagerTests {
         assertNull("A patient object should not be returned after it is deleted ",
                 patientDatabase.get(patientID));
     }
+
+    /**
+     * Tests getUserData by ensuring that the values from the patient stored in the database are the same as the values
+     * stored in the patientData returned from the function.
+     */
     @Test(timeout = 1000)
     public void getUserData() {
         patientDatabase.add(patient);
@@ -89,12 +116,20 @@ public class PatientManagerTests {
         assertTrue("patient and patientData should share the same password",
                 patient.comparePassword("123"));
     }
+
+    /**
+     * Tests an invalid use of getUserData when a username that does not exist in the database is inputted.
+     */
     @Test(timeout = 1000)
     public void getUserDataInvalid() {
         assertNull("trying to get user data of a user that doesn't exist should return null",
                 patientManager.getUserData("jim"));
 
     }
+
+    /**
+     * Tests deleteUserByData but specifically with patient data.
+     */
     @Test(timeout = 1000)
     public void testDeletePatientByData() {
         Integer patientID = patientDatabase.add(patient);
@@ -109,6 +144,9 @@ public class PatientManagerTests {
                 patientDatabase.get(patientID));
     }
 
+    /**
+     * Tests changeUserPassword specifically with patient data.
+     */
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
         Integer patientID = patientDatabase.add(patient);
@@ -124,6 +162,10 @@ public class PatientManagerTests {
                 patientDatabase.get(patientID).comparePassword("456"));
     }
 
+    /**
+     * Tests getUser but specifically with patient data, and ensure the patient stored in the database and the returned
+     * loadedPatient.
+     */
     @Test(timeout = 1000)
     public void testGetPatient() {
         Patient originalPatient = patient;
@@ -146,6 +188,9 @@ public class PatientManagerTests {
                 loadedPatient.comparePassword("123"));
     }
 
+    /**
+     * Tests doesUserExist with the patient username inputted.
+     */
     @Test(timeout = 1000)
     public void testDoesUserExist(){
         Integer patientId = patientDatabase.add(patient);
@@ -155,6 +200,10 @@ public class PatientManagerTests {
         assertTrue("DoesUserExist should return true since the patient is stored in the database",
                 patientManager.doesUserExist(patient.getUsername()));
     }
+
+    /**
+     * Tests does user exist with an invalid username inputted.
+     */
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
         patientDatabase.add(patient);
@@ -163,6 +212,10 @@ public class PatientManagerTests {
                         "inputted username",
                 patientManager.doesUserExist("jim"));
     }
+
+    /**
+     * Tests a valid use of canSignIn with a patient's username and password.
+     */
     @Test(timeout = 1000)
     public void testCanSignInValid(){
         patientDatabase.add(patient);
@@ -170,6 +223,10 @@ public class PatientManagerTests {
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", patientManager.canSignIn("jeff", "123"));
     }
+
+    /**
+     * Tests an invalid use of canSignIn with a patient's username and password that does not exist in the database.
+     */
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
         patientDatabase.add(patient);
@@ -177,6 +234,10 @@ public class PatientManagerTests {
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", patientManager.canSignIn("jim", "password"));
     }
+
+    /**
+     * Tests signIn with an existing patient account.
+     */
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
         patientDatabase.add(patient);
@@ -186,6 +247,9 @@ public class PatientManagerTests {
                 patientManager.signIn(patient.getUsername(), "123").getId(), patientData.getId());
     }
 
+    /**
+     * Tests an invalid use of signIn with a non-existing account.
+     */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
         patientDatabase.add(patient);
@@ -195,6 +259,9 @@ public class PatientManagerTests {
                 "password"));
     }
 
+    /**
+     * Deletes the temporary database folder used to store the database for tests after tests are done.
+     */
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
