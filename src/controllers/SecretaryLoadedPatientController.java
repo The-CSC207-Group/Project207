@@ -199,7 +199,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             return;
         }
 
-        AppointmentData appointmentData = appointmentManager.bookAppointment(patientData, startDateTime, endDateTime);
+        AppointmentData appointmentData = appointmentManager.bookAppointment(patientData, doctorData, startDateTime, endDateTime);
 
         if (appointmentData == null){
             secretaryScreenView.showAppointmentBookingError();
