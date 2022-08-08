@@ -1,13 +1,9 @@
 package useCases;
 
-import dataBundles.AdminData;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Admin;
 import entities.Patient;
-
-import java.util.regex.Pattern;
 
 /**
  * Use case class for handling operations and data of patient users.
@@ -33,7 +29,7 @@ public class PatientManager extends UserManager<Patient> {
      * null if username exists in database.
      */
     public PatientData createPatient(String username, String password) {
-        if (Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password)) {
+        if (super.regexCheck(username, password)) {
             Patient patient = new Patient(username, password);
             if (patientDatabase.add(patient) != null) {
                 patient.setContactInfoId(newContactInDatabase());

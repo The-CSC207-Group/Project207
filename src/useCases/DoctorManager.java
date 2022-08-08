@@ -5,8 +5,6 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
 
-import java.util.regex.Pattern;
-
 /**
  * Use case class for handling operations and data of doctor users.
  */
@@ -32,7 +30,7 @@ public class DoctorManager extends UserManager<Doctor> {
      * otherwise returns null.
      */
     public DoctorData createDoctor(String username, String password) {
-        if (Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password)) {
+        if (super.regexCheck(username, password)) {
             Doctor doctor = new Doctor(username, password);
             // Commented code is pending implementation in phase 2
             //        database.getClinic().getClinicHours().forEach(doctor::addAvailability);

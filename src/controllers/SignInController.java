@@ -99,9 +99,9 @@ public class SignInController extends TerminalController {
     }
 
     private void signIn(String username, String password) {
-        boolean signedIn = adminSignIn(username, password) |
-                            patientSignIn(username, password) |
-                            doctorSignIn(username, password) |
+        boolean signedIn = adminSignIn(username, password) ||
+                            patientSignIn(username, password) ||
+                            doctorSignIn(username, password) ||
                             secretarySignIn(username, password);
         if (!signedIn) {
             signInScreenView.showLoginError();
