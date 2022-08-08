@@ -27,11 +27,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 10000)
     public void testBookAppointment() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -64,15 +60,10 @@ public class AppointmentManagerTests {
         assertEquals("appointment should share the same end time as the appointment in the database",
                 appointment.getTimeBlock().getEndTime(), originalDatabase.getAppointmentDatabase().get(appointment
                         .getAppointmentId()).getTimeBlock().getEndTime());
-
     }
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentStartTimeAvailability() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -91,11 +82,7 @@ public class AppointmentManagerTests {
     }
         @Test(timeout = 100000)
         public void testBookInvalidAppointmentEndTimeAvailability() {
-            Database originalDatabase = new Database(databaseFolder.toString());
-
-            originalDatabase.setClinic(new Clinic("", "", "", "",
-                    new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                            LocalTime.of(17, 0))))));
+            Database originalDatabase = createStandardDatabase();
 
             DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
             PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -110,11 +97,7 @@ public class AppointmentManagerTests {
         }
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentTimeAvailability() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -130,147 +113,108 @@ public class AppointmentManagerTests {
     }
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentTimeExistingAppointment() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
 
         /*test an invalid appointment booked at the exact same time as another appointment.
          */
-        AppointmentData validAppointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        AppointmentData validAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 12, 0, 120);
 
-        assertFalse("The valid appointment should exist in the database", originalDatabase
-                .getAppointmentDatabase().getAllIds().isEmpty());
-        assertEquals(validAppointment1.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(validAppointment1.getAppointmentId()).getId());
-        AppointmentData invalidAppointment4 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        checkValidAppointmentExistsInDatabase(originalDatabase, validAppointment);
+        AppointmentData invalidAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 12, 0, 120);
 
         assertNull("an appointment should be returning null when booking at an invalid time",
-                invalidAppointment4);
+                invalidAppointment);
 
     }
 
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentTimeExistingAppointmentInside() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
 
         /*test an invalid appointment booked at the exact same time as another appointment.
          */
-        AppointmentData validAppointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        AppointmentData validAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 12, 0, 60);
 
-        assertFalse("The valid appointment should exist in the database", originalDatabase
-                .getAppointmentDatabase().getAllIds().isEmpty());
-        assertEquals(validAppointment1.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(validAppointment1.getAppointmentId()).getId());
-        AppointmentData invalidAppointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        checkValidAppointmentExistsInDatabase(originalDatabase, validAppointment);
+        AppointmentData invalidAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 11, 0, 180);
 
         assertNull("an appointment should be returning null when booking at an invalid time",
-                invalidAppointment2);
+                invalidAppointment);
     }
 
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentTimeExistingAppointmentOutside() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
 
         /*test an invalid appointment booked at the exact same time as another appointment.
          */
-        AppointmentData validAppointment1 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        AppointmentData validAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 11, 0, 180);
 
-        assertFalse("The valid appointment should exist in the database", originalDatabase
-                .getAppointmentDatabase().getAllIds().isEmpty());
-        assertEquals(validAppointment1.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(validAppointment1.getAppointmentId()).getId());
-        AppointmentData invalidAppointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        checkValidAppointmentExistsInDatabase(originalDatabase, validAppointment);
+        AppointmentData invalidAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 12, 0, 60);
 
         assertNull("an appointment should be returning null when booking at an invalid time",
-                invalidAppointment2);
+                invalidAppointment);
     }
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentSameEndTime() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
 
         /*test an invalid appointment booked at an end time that conflicts with another appointment as another
          appointment.*/
-        AppointmentData validAppointment2 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        AppointmentData validAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 12, 0, 120);
 
-        assertFalse("The valid appointment should exist in the database", originalDatabase
-                .getAppointmentDatabase().getAllIds().isEmpty());
-        assertEquals(validAppointment2.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(validAppointment2.getAppointmentId()).getId());
-        AppointmentData invalidAppointment5 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        checkValidAppointmentExistsInDatabase(originalDatabase, validAppointment);
+        AppointmentData invalidAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 11, 30, 60);
 
         assertNull("an appointment should be returning null when booking at an invalid time",
-                invalidAppointment5);
+                invalidAppointment);
 
     }
     @Test(timeout = 100000)
     public void testBookInvalidAppointmentsSameStartTime() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
 
                 /*test an invalid appointment booked at a start time that conflicts with another appointment as another
          appointment.*/
-        AppointmentData validAppointment3 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        AppointmentData validAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 12, 0, 120);
 
-        assertFalse("The valid appointment should exist in the database", originalDatabase
-                .getAppointmentDatabase().getAllIds().isEmpty());
-        assertEquals(validAppointment3.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(validAppointment3.getAppointmentId()).getId());
-        AppointmentData invalidAppointment6 = new AppointmentManager(originalDatabase).bookAppointment(patientData,
+        checkValidAppointmentExistsInDatabase(originalDatabase, validAppointment);
+        AppointmentData invalidAppointment = new AppointmentManager(originalDatabase).bookAppointment(patientData,
                 doctorData, 2022, 12, 5, 1, 0, 120);
 
         assertNull("an appointment should be returning null when booking at an invalid time",
-                invalidAppointment6);
+                invalidAppointment);
     }
 
 
     @Test(timeout = 100000)
     public void testRemoveAppointment() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -287,12 +231,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 1000)
     public void testRescheduleAppointmentValid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
-
+        Database originalDatabase = createStandardDatabase();
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
         AppointmentData appointment = new AppointmentManager(originalDatabase).bookAppointment(patientData, doctorData,
@@ -306,11 +245,7 @@ public class AppointmentManagerTests {
     }
     @Test(timeout = 1000)
     public void testRescheduleAppointmentInvalidEndTimeAvailability() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -326,11 +261,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 1000)
     public void testRescheduleAppointmentInvalidStartTimeAvailability() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -346,11 +277,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 1000)
     public void testRescheduleAppointmentInvalidOutsideAvailability() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -366,11 +293,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 1000)
     public void testRescheduleAppointmentInvalidConflictAppointment() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "","",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -390,11 +313,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 1000)
     public void testGetPatientAppointments() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -416,11 +335,7 @@ public class AppointmentManagerTests {
 
     @Test(timeout = 1000)
     public void testGetDoctorAppointments() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0))))));
+        Database originalDatabase = createStandardDatabase();
 
         DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
         PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
@@ -441,15 +356,9 @@ public class AppointmentManagerTests {
     }
     @Test(timeout = 1000)
     public void testGetAvailabilityFromDayOfWeek() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Availability availability= new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                LocalTime.of(17, 0));
-        originalDatabase.setClinic(new Clinic("", "", "", "",
-                new ArrayList<>(List.of(availability))));
-
+        Database originalDatabase = createStandardDatabase();
         /*
-        if start time, end time, and day of week are the same between AvaialbilityData from getDayOfWeek and the Availability
+        if start time, end time, and day of week are the same between AvailabilityData from getDayOfWeek and the Availability
         stored in the database, they are the same.
          */
         assertEquals("getAvailabilityDayOfWeek should return the same availability start time as the one stored" +
@@ -468,4 +377,23 @@ public class AppointmentManagerTests {
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
+
+    private Database createStandardDatabase(){
+        Database originalDatabase = new Database(databaseFolder.toString());
+
+        Availability availability= new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                LocalTime.of(17, 0));
+        originalDatabase.setClinic(new Clinic("", "", "", "",
+                new ArrayList<>(List.of(availability))));
+        return originalDatabase;
+    }
+    private void checkValidAppointmentExistsInDatabase(Database originalDatabase, AppointmentData validAppointment){
+
+        assertFalse("The valid appointment should exist in the database", originalDatabase
+                .getAppointmentDatabase().getAllIds().isEmpty());
+        assertEquals("The id of the valid appointment and the appointment stored in the database should be the " +
+                "same", validAppointment.getAppointmentId(), originalDatabase.getAppointmentDatabase()
+                .get(validAppointment.getAppointmentId()).getId());
+    }
+
 }

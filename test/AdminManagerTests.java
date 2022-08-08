@@ -26,12 +26,6 @@ public class AdminManagerTests {
 
         String username = "jeff";
         String password = "123";
-        LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
-                "12345678", "jeff street", birthday, "jim",
-                "jim@gmail.com", "87654321",
-                "father");
-
         AdminManager adminManager = new AdminManager(originalDatabase);
 
         AdminData adminData = adminManager.createAdmin(username, password);
@@ -57,12 +51,6 @@ public class AdminManagerTests {
 
         String username = "jeff";
         String password = "123";
-        LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
-                "12345678", "jeff street", birthday, "jim",
-                "jim@gmail.com", "87654321",
-                "father");
-
         AdminManager adminManager = new AdminManager(originalDatabase);
 
         AdminData adminData = adminManager.createAdmin(username, password);
@@ -138,7 +126,7 @@ public class AdminManagerTests {
         Integer adminID = adminDatabase.add(admin);
         AdminData userdata = adminManager.getUserData(admin.getUsername());
 
-        assertNotNull("An admin object should be returned before it is deleted ",
+        assertNotNull("An admin object should be returned before it is deleted",
                 adminDatabase.get(adminID));
 
         adminManager.deleteUserByData(userdata);
@@ -160,7 +148,7 @@ public class AdminManagerTests {
         Integer adminID = adminDatabase.add(admin);
         AdminData adminData = new AdminData(admin);
 
-        assertTrue("The password should remain the same before the change ",
+        assertTrue("The password should remain the same before the change",
                 adminDatabase.get(adminID).comparePassword("123"));
 
         adminManager.changeUserPassword(adminData, "456");
@@ -292,4 +280,5 @@ public class AdminManagerTests {
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
+
 }
