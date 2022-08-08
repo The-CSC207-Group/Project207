@@ -27,13 +27,20 @@ import static org.junit.Assert.*;
  */
 public class AppointmentManagerTests {
 
+    /**
+     * The variable representing the temporary folder where the databases used in these tests are stored until it is
+     * deleted after the tests.
+     */
+    @Rule
+    public TemporaryFolder databaseFolder = new TemporaryFolder();
+
     private Database originalDatabase;
     private DoctorData doctorData;
     private PatientData patientData;
 
-    @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
-
+    /**
+     * Initializes the variables used by all the tests before each unit test.
+     */
     @Before
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
@@ -363,7 +370,10 @@ public class AppointmentManagerTests {
                 "in the database", new AppointmentManager(originalDatabase).getAvailabilityFromDayOfWeek(
                 DayOfWeek.of(1)).getDayOfWeek(), originalDatabase.getClinic().getClinicHours().get(0).dayOfWeek());
     }
-
+    
+    /**
+     * Deletes the temporary database folder used to store the database for tests after tests are done.
+     */
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
