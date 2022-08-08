@@ -9,8 +9,10 @@ import useCases.AppointmentManager;
 import useCases.ContactManager;
 import useCases.DoctorManager;
 import useCases.PatientManager;
+import utilities.TimeUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -187,11 +189,10 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {
         AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
         if (appointmentTimeDetails == null) { return null;}
+        LocalDateTime startTime = LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
+                appointmentTimeDetails.time().getHour(), appointmentTimeDetails.time().getMinute());
         return appointmentManager.bookAppointment(
-                    patientData, doctorData, date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
-                    appointmentTimeDetails.time().getHour(),
-                    appointmentTimeDetails.time().getMinute(),
-                    appointmentTimeDetails.length());
+                    patientData, doctorData, startTime, startTime.plusMinutes(appointmentTimeDetails.length()));
     }
 
 }
