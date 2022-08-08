@@ -1,6 +1,7 @@
 package useCases;
 
 import dataBundles.DoctorData;
+import dataBundles.ReportData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
@@ -59,6 +60,14 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorData getUserData(String username) {
         return getUserHelper(username).map(DoctorData::new)
                 .orElse(null);
+    }
+
+    public DoctorData getUserData(Integer id) {
+        Doctor doctor = doctorDatabase.get(id);
+        if (doctor == null) {
+            return null;
+        }
+        return new DoctorData(doctor);
     }
 
     private DoctorData toDoctorData(Doctor doctor) {

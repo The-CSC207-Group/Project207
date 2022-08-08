@@ -21,6 +21,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     private final DoctorScreenView doctorView = new DoctorScreenView();
     private final DoctorController previousController;
     private final ReportManager reportManager;
+    private final DoctorManager doctorManager;
     private final ContactManager contactManager;
 
     /**
@@ -41,6 +42,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         this.previousController = previousController;
         this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.reportManager = new ReportManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
         this.contactManager = new ContactManager(getDatabase());
     }
 
@@ -117,7 +119,7 @@ public class DoctorLoadedPatientController extends TerminalController {
                 return;
             }
             ReportData selectedReport = reportData.get(targetReport);
-            DoctorData reportDoctor = reportManager.getReportDoctor(selectedReport);
+            DoctorData reportDoctor = doctorManager.getUserData(selectedReport.getReportId());
             if (reportDoctor != null) {
                 ContactData doctorContact = contactManager.getContactData(reportDoctor);
                 doctorView.viewReport(selectedReport, doctorContact);

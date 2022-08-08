@@ -64,12 +64,4 @@ public class ReportManager {
                 filter(p -> p.getPatientId().equals(patientData.getId())).map(ReportData::new));
     }
 
-    public DoctorData getReportDoctor(ReportData report) {
-        Doctor doctor = doctorDatabase.get(report.getDoctorId());
-        if (doctor == null) {
-            return null;
-        }
-        return new DoctorData(doctor);
-    }
-
 }
