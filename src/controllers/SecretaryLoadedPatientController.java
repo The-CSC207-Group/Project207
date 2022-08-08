@@ -112,7 +112,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 return;
             }
             viewDoctorSchedule(doctorData, date);
-            if (!isDoctorAvailableOnDay(date)){return;};
+            if (!isDoctorAvailableOnDay(date)){return;}
             AppointmentData appointment = bookAppointmentTime(doctorData, date);
             if (appointment == null) {
                 secretaryScreenView.showAppointmentBookingError();
