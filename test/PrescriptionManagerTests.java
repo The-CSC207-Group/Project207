@@ -54,17 +54,19 @@ public class PrescriptionManagerTests {
                 patientData, doctorData, inactiveLocalExpiryDate);
         activePrescriptionData = prescriptionManager.createPrescription("bad", "very unhealthy",
                 patientData, doctorData, activeLocalExpiryDate);
-
     }
 
     /**
-     * Tests getAllActivePrescription by inputting a valid active prescription, and ensuring the prescription in database
-     * is the same as the one returned.
+     * Tests getAllActivePrescription with a patient that has an active prescription, and ensuring the prescription
+     * in database is the same as the one returned.
      */
     @Test(timeout = 1000)
-    public void testGetPatientActivePrescriptionDataUsingActivePrescription() {
+    public void testGetPatientActivePrescriptionData() {
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getAllActivePrescriptions(patientData);
+
+        assertEquals("Since there is only one non-expired prescriptions, the ArrayList have a length of 1",
+                loadedPrescriptionList.size(), 1);
 
         PrescriptionData loadedPrescriptionData = loadedPrescriptionList.get(0);
 
@@ -86,18 +88,6 @@ public class PrescriptionManagerTests {
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 activePrescriptionData.getExpiryDate().compareTo(loadedPrescriptionData.
                         getExpiryDate()), 0);
-    }
-    /**
-     * Tests getAllActivePrescription by inputting an inactive prescription, and ensuring the is no prescription in the
-     * database.
-     */
-    @Test(timeout = 1000)
-    public void testGetPatientActivePrescriptionDataUsingInactivePrescription() {
-        ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllActivePrescriptions(patientData);
-
-        assertEquals("Since there is only one non expired prescriptions, the ArrayList have a length of 1",
-                loadedPrescriptionList.size(), 1);
     }
 
     /**
