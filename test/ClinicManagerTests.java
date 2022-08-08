@@ -30,23 +30,23 @@ public class ClinicManagerTests {
     private Clinic clinic;
 
     /**
-     * Initializes the variable before each unit test.
+     * Initializes the variables used by all the tests before each unit test.
      */
     @Before
     public void before() {
         Database originalDatabase = new Database(databaseFolder.toString());
-        clinicManager = new ClinicManager(originalDatabase);
         clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0)))));
         originalDatabase.setClinic(clinic);
+        clinicManager = new ClinicManager(originalDatabase);
     }
 
     /**
      * Tests the clinic manager method that changes the clinic's phone number with an input that fails the regex check.
      */
     @Test(timeout = 1000)
-    public void changeClinicPhoneNumberFailsRegex(){
+    public void changeClinicPhoneNumberFailsRegex() {
         assertEquals("The clinic phone should stay same before changing it.",
                clinic.getPhoneNumber(), "4169782011");
 
@@ -60,7 +60,7 @@ public class ClinicManagerTests {
      * Tests the clinic manager method that changes the clinic's phone number with an input that passes the regex check.
      */
     @Test(timeout = 1000)
-    public void changeClinicPhoneNumberPassesRegex(){
+    public void changeClinicPhoneNumberPassesRegex() {
         assertEquals("The clinic phone should stay same before changing it.",
                 clinic.getPhoneNumber(), "4169782011");
 
@@ -116,7 +116,7 @@ public class ClinicManagerTests {
      * Tests the clinic manager method that changes the clinic's email with an input that passes the regex check.
      */
     @Test(timeout = 1000)
-    public void changeClinicEmailAddressPassesRegex(){
+    public void changeClinicEmailAddressPassesRegex() {
         assertEquals("The clinic address should stay same before changing it.",
                 clinic.getEmail(), "abc@gmail.com");
 
