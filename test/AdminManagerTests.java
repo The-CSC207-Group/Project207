@@ -17,10 +17,6 @@ import static org.junit.Assert.assertNull;
  * Class of unit tests for AdminManager use case class.
  */
 public class AdminManagerTests {
-    Database originalDatabase;
-    DataMapperGateway<Admin> adminDatabase;
-    AdminData adminData;
-    AdminManager adminManager;
 
     /**
      * The variable representing the temporary folder where the databases used in these tests are stored until it is
@@ -28,13 +24,16 @@ public class AdminManagerTests {
      */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
+    private DataMapperGateway<Admin> adminDatabase;
+    private AdminData adminData;
+    private AdminManager adminManager;
 
     /**
      * Initializes the variables used by all the tests before each unit test.
      */
     @Before
     public void before(){
-        originalDatabase = new Database(databaseFolder.toString());
+        Database originalDatabase = new Database(databaseFolder.toString());
         adminDatabase = originalDatabase.getAdminDatabase();
         adminManager = new AdminManager(originalDatabase);
         adminData = adminManager.createAdmin("jeff", "123");
