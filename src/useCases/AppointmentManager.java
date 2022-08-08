@@ -4,8 +4,6 @@ import dataBundles.*;
 import database.DataMapperGateway;
 import database.Database;
 import entities.*;
-import utilities.TimeUtils;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,8 +18,6 @@ public class AppointmentManager {
 
     private final DataMapperGateway<Appointment> appointmentDatabase;
     private final DataMapperGateway<Doctor> doctorDatabase;
-
-    private final DoctorManager doctorManager;
     private final Database database;
     private final Clinic clinicData;
 
@@ -33,7 +29,6 @@ public class AppointmentManager {
         this.doctorDatabase = database.getDoctorDatabase();
         this.database = database;
         this.clinicData = database.getClinic();
-        this.doctorManager = new DoctorManager(database);
     }
 
     /**
@@ -73,21 +68,16 @@ public class AppointmentManager {
     }
 
     /**
-     * Reschedule an appointment, adjusting an appointments time block and validating it.
-     *
+     * Reschedule an appointment, adjusting an appointments time block and validating it. startTime and endTime should
+     * be on the same day.
      * @param appointmentData      AppointmentData - data that represents an appointment entity.
-     * @param year                 Integer - an integer value that represents a year.
-     * @param month                Integer - an integer value that represents a month of a year.
-     * @param day                  Integer - an integer value that represents a day of a month.
-     * @param hour                 Integer - an integer value that represents an hour of a day.
-     * @param minute               Integer - an integer value that represents a minute of an hour.
-     * @param lengthOfAppointments Integer - an integer value in minutes that represents the length of an appointment.
+     * @param startTime            startTime - LocalDateTime representing that start time of a proposed appointment.
+     * @param endTime              endTime - LocalDateTime representing that end time of a proposed appointment.
      * @return boolean - a boolean representing if the appointment successfully rescheduled.
      */
-    public boolean rescheduleAppointment(AppointmentData appointmentData, Integer year, Integer month, Integer day,
-                                         Integer hour, Integer minute, Integer lengthOfAppointments) {
+    public boolean rescheduleAppointment(AppointmentData appointmentData, LocalDateTime startTime, LocalDateTime endTime) {
 
-        TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute, lengthOfAppointments);
+        TimeBlock proposedTime = new TimeBlock(startTime, endTime);
         Appointment selectedAppointment = appointmentDatabase.get(appointmentData.getAppointmentId());
 
         database.getAppointmentDatabase().remove(appointmentData.getAppointmentId());
@@ -198,8 +188,5 @@ public class AppointmentManager {
     }
     private boolean strictlyWithinHours(UniversalTimeBlock timeBlock, UniversalTimeBlock timeBlock2) {
         return isWithinHours(timeBlock, timeBlock2.startTime()) && isWithinHours(timeBlock, timeBlock2.endTime());
-    }
-    private boolean isWithinDate(LocalDate time1, LocalDate time2, UniversalTimeBlockWithDay timeBlock) {
-        return time1.isBefore(timeBlock.date()) && time2.isAfter(timeBlock.date());
     }
 }
