@@ -11,6 +11,7 @@ import useCases.DoctorManager;
 import useCases.PatientManager;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -66,13 +67,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", changePatientPassword());
         commands.put("unload patient", Back(secretaryController));
-
-
         commands.put("view appointments", viewAppointments());
-
-        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("reschedule appointment", rescheduleAppointment());
-        */
         commands.put("book appointment", bookAppointment());
         commands.put("cancel appointment", cancelAppointment());
 
@@ -116,6 +112,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 return;
             }
             viewDoctorSchedule(doctorData, date);
+            if (!isDoctorAvailableOnDay(date)){return;}
             AppointmentData appointment = bookAppointmentTime(doctorData, date);
             if (appointment == null) {
                 secretaryScreenView.showAppointmentBookingError();
@@ -131,19 +128,22 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command cancelAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
+            if (data.size() == 0){
+                secretaryScreenView.showNoUserAppointmentsMessage();
+                return;
+            }
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
             if (index == null) {
                 secretaryScreenView.showDeleteNotAnIntegerError("null");
-            } else if (index < 0 || index > data.size()) {
+            }else if (index < 0 || index > data.size()) {
                 secretaryScreenView.showDeleteOutOfRangeError();
             } else {
                 appointmentManager.removeAppointment(data.get(index));
+                secretaryScreenView.showCancelAppointmentSuccess();
             }
         };
     }
-    /* PENDING IMPLEMENTATION IN PHASE 2
-
     private Command rescheduleAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
@@ -162,16 +162,26 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-    */
+
 
     private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
         ContactData doctorContact = contactManager.getContactData(doctorData);
 
-        ArrayList<AppointmentData> appointments = appointmentManager.getScheduleData(
+        ArrayList<AppointmentData> appointments = appointmentManager.getSingleDayAppointment(
                 doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
-        secretaryScreenView.viewAppointments(doctorContact, appointments);
 
-        secretaryScreenView.viewDoctorAvailability(doctorContact, appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek()));
+
+        AvailabilityData availabilityData = appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek());
+        if (availabilityData == null){
+            secretaryScreenView.showNoAvailabilityError(doctorContact);
+        }else {
+            secretaryScreenView.viewAppointments(doctorContact, appointments);
+            secretaryScreenView.viewDoctorAvailability(doctorContact, availabilityData);
+        }
+    }
+    private boolean isDoctorAvailableOnDay(LocalDate date){
+        AvailabilityData availabilityData = appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek());
+        return availabilityData != null;
     }
 
     private AppointmentData bookAppointmentTime(DoctorData doctorData, LocalDate date) {

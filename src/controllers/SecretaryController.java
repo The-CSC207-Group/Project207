@@ -40,10 +40,6 @@ public class SecretaryController extends UserController<Secretary> {
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
 
-        /* PHASE 2 INSTANTIATIONS
-         this.appointmentManager = new AppointmentManager(getDatabase());
-         */
-
         this.doctorManager = new DoctorManager(getDatabase());
         this.adminManager = new AdminManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
@@ -61,11 +57,6 @@ public class SecretaryController extends UserController<Secretary> {
         commands.put("create patient", createPatientAccount());
         commands.put("load patient", LoadPatient());
         commands.put("delete patient", deletePatient());
-
-        /* PENDING IMPLEMENTATION IN PHASE 2
-        commands.put("add availability", addDoctorAvailability());
-        commands.put("delete availability", removeDoctorAvailability());
-        commands.put("add absence", addDoctorAbsence()); */
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -113,47 +104,5 @@ public class SecretaryController extends UserController<Secretary> {
 
         };
     }
-
-    /* PENDING IMPLEMENTATION IN PHASE 2
-    private Command addDoctorAvailability() {
-        return (x) -> {
-            String doctor = secretaryScreenView.getTargetDoctor();
-            DoctorData doctorData = doctorManager.getUserData(doctor);
-            ArrayList<Integer> days = secretaryScreenView.addAvailabilityPrompt();
-            appointmentManager.newAvailability(doctorData,
-                    DayOfWeek.of(days.get(0)),
-                    days.get(1),
-                    days.get(2),
-                    days.get(3));
-        };
-
-    }
-
-    private Command removeDoctorAvailability() {
-        return (x) -> {
-            String doctor = secretaryScreenView.getTargetDoctor();
-            DoctorData doctorData = doctorManager.getUserData(doctor);
-            Integer deleteInteger = secretaryScreenView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
-                    .getContactData(doctorData), new AppointmentManager(getDatabase())
-                    .getAvailabilityData(doctorData));
-            ArrayList<AvailabilityData> availability = doctorData.getAvailability();
-            if (deleteInteger >= 0 & deleteInteger < availability.size()) {
-                new AppointmentManager(getDatabase()).removeAvailability(doctorData,
-                        doctorData.getAvailability().get(deleteInteger));
-            } else {
-                secretaryScreenView.showDeleteOutOfRangeError();
-            }
-        };
-    }
-
-    private Command addDoctorAbsence() {
-        return (x) -> {
-            String doctor = secretaryScreenView.getTargetDoctor();
-            DoctorData doctorData = doctorManager.getUserData(doctor);
-
-            appointmentManager.addAbsence(doctorData, secretaryScreenView.addLocalDateTimeStart(),
-                    secretaryScreenView.addLocalDateTimeEnd());
-        };
-    } */
 
 }

@@ -10,6 +10,7 @@ import presenters.screenViews.DoctorScreenView;
 import useCases.AppointmentManager;
 import useCases.ContactManager;
 import useCases.PrescriptionManager;
+import useCases.ReportManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -57,10 +58,9 @@ public class DoctorLoadedPatientController extends TerminalController {
 
 
         commands.put("view appointments", ViewPatientAppointments());
-        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view reports", getReport());
         commands.put("create report", createReport());
-        commands.put("delete report", deleteReport()); */
+        commands.put("delete report", deleteReport());
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.put("create prescription", CreatePatientPrescription());
@@ -102,7 +102,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
                 .getPatientAppointments(patientData));
     }
-    /* PENDING IMPLEMENTATION IN PHASE 2
+
     private Command getReport() {
         return (x) -> new ReportManager(getDatabase()).getReportData(patientData);
     }
@@ -118,6 +118,6 @@ public class DoctorLoadedPatientController extends TerminalController {
                     .getContactData(patientData), new ReportManager(getDatabase()).getReportData(patientData));
             getDatabase().getReportDatabase().remove(deleteIndex);
         };
-    } */
+    }
 
 }

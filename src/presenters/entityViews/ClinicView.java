@@ -71,7 +71,27 @@ public class ClinicView extends EntityView<ClinicData> {
     public String viewClinicHours(ClinicData item){
         ArrayList<AvailabilityData> availabilities = item.getClinicHours();
         StringBuilder out = new StringBuilder("Clinic Hours: \n");
-        LinkedHashMap<String, DayOfWeek> dayMap = new LinkedHashMap<>() {{
+        LinkedHashMap<String, DayOfWeek> dayMap = getDayMap();
+
+        for (String dayString: dayMap.keySet()){
+            out.append(getSingleDayAvailabilityString(dayString, availabilities, dayMap.get(dayString)) + "\n");
+        }
+
+        return out.toString();
+    }
+    private String getSingleDayAvailabilityString(String dayString, ArrayList<AvailabilityData> availabilities, DayOfWeek dayOfWeek){
+        AvailabilityView availabilityView = new AvailabilityView();
+        Optional<AvailabilityData> availabilityData = availabilities.stream().
+                filter(availability -> availability.dayOfWeek().equals(dayOfWeek)).
+                findFirst();
+        if (availabilityData.isPresent()) {
+            return availabilityView.viewFull(availabilityData.get());
+        }else{
+            return dayString + ": No Availability";
+        }
+    }
+    private LinkedHashMap<String, DayOfWeek> getDayMap(){
+        return new LinkedHashMap<>() {{
             put("Monday", DayOfWeek.MONDAY);
             put("Tuesday", DayOfWeek.TUESDAY);
             put("Wednesday", DayOfWeek.WEDNESDAY);
@@ -80,18 +100,5 @@ public class ClinicView extends EntityView<ClinicData> {
             put("Saturday", DayOfWeek.SATURDAY);
             put("Sunday", DayOfWeek.SUNDAY);
         }};
-        AvailabilityView availabilityView = new AvailabilityView();
-
-        for (String dayString: dayMap.keySet()){
-            Optional<AvailabilityData> availabilityData = availabilities.stream().
-                    filter(availability -> availability.dayOfWeek().equals(dayMap.get(dayString))).
-                    findFirst();
-            if (availabilityData.isPresent()) {
-                out.append(availabilityView.viewFull(availabilityData.get()) + "\n");
-            }else{
-                out.append(dayString + ": No Availability \n");
-            }
-        }
-        return out.toString();
     }
 }

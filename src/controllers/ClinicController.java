@@ -18,8 +18,6 @@ public class ClinicController extends TerminalController {
     private final ClinicManager clinicManager;
     private final UserController<Admin> previousController;
 
-    private final AppointmentManager appointmentManager;
-
 
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
@@ -33,7 +31,6 @@ public class ClinicController extends TerminalController {
         this.clinicManager = new ClinicManager(getDatabase());
         this.clinicScreenView = new ClinicScreenView();
         this.previousController = previousController;
-        this.appointmentManager = new AppointmentManager(getDatabase());
     }
 
     @Override
