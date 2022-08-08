@@ -16,10 +16,6 @@ import static org.junit.Assert.*;
  * Class of unit tests for LogManager use case class.
  */
 public class PatientManagerTests {
-    Database originalDatabase;
-    DataMapperGateway<Patient> patientDatabase;
-    PatientManager patientManager;
-    PatientData patientData;
 
     /**
      * The variable representing the temporary folder where the databases used in these tests are stored until it is
@@ -27,13 +23,16 @@ public class PatientManagerTests {
      */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
+    private DataMapperGateway<Patient> patientDatabase;
+    private PatientManager patientManager;
+    private PatientData patientData;
 
     /**
      * Initializes the variables used by all the tests before each unit test.
      */
     @Before
     public void before(){
-        originalDatabase = new Database(databaseFolder.toString());
+        Database originalDatabase = new Database(databaseFolder.toString());
         patientDatabase = originalDatabase.getPatientDatabase();
         patientManager = new PatientManager(originalDatabase);
         patientData = patientManager.createPatient("jeff", "123");
