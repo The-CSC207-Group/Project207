@@ -13,7 +13,7 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 /**
- * Class of unit tests for LogManager use case class.
+ * Class of unit tests for PatientManager use case class.
  */
 public class PatientManagerTests {
 
@@ -175,8 +175,7 @@ public class PatientManagerTests {
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
-                        "inputted username",
-                patientManager.doesUserExist("jim"));
+                        "inputted username", patientManager.doesUserExist("jim"));
     }
 
     /**
