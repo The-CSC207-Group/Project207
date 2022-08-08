@@ -23,12 +23,6 @@ import static org.junit.Assert.assertEquals;
  * Tests for the PrescriptionManager class.
  */
 public class PrescriptionManagerTests {
-    Database originalDatabase;
-    DataMapperGateway<Prescription> prescriptionDatabase;
-    PatientData patient;
-    DoctorData doctor;
-    PrescriptionManager prescriptionManager;
-
     /**
      * The variable representing the temporary folder where the databases used in these tests are stored until it is
      * deleted after the tests.
