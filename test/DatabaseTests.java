@@ -11,6 +11,9 @@ import java.io.File;
 import java.time.*;
 import java.util.ArrayList;
 
+/**
+ * Class of unit tests for the program's databases.
+ */
 public class DatabaseTests {
 
     /**

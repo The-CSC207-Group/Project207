@@ -13,13 +13,13 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 /**
- *Tests for Patient Manager Class.
+ * Class of unit tests for LogManager use case class.
  */
 public class PatientManagerTests {
     Database originalDatabase;
     DataMapperGateway<Patient> patientDatabase;
     PatientManager patientManager;
-    Patient patient;
+    PatientData patientData;
 
     /**
      * The variable representing the temporary folder where the databases used in these tests are stored until it is
@@ -36,7 +36,7 @@ public class PatientManagerTests {
         originalDatabase = new Database(databaseFolder.toString());
         patientDatabase = originalDatabase.getPatientDatabase();
         patientManager = new PatientManager(originalDatabase);
-        patient = new Patient("jeff", "123", 123456789);
+        patientData = patientManager.createPatient("jeff", "123");
     }
 
     /**
@@ -45,24 +45,19 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testCreatePatientValid() {
-        String username = "jeff";
-        String password = "123";
-
-        PatientData patientData = patientManager.createPatient(username, password);
-
         /* Testing if the return patient data is valid by testing if the fields of are equal to the parameters of
         createPatient */
         assertEquals("The created patient data should have the same name as the parameters of " +
-                "createPatient method", patientData.getUsername(), username);
+                "createPatient method", patientData.getUsername(), "jeff");
 
         Patient loadedPatient = patientDatabase.get(patientData.getId());
 
         /* Testing if the patient object has been correctly added to the database by testing if the fields of the loaded
         patient are equal to the parameters of createPatient */
         assertEquals("Original patient and loaded patient should share the same unique username",
-                loadedPatient.getUsername(), username);
+                loadedPatient.getUsername(), "jeff");
         assertTrue("Original patient and loaded patient should share the same password",
-                loadedPatient.comparePassword(password));
+                loadedPatient.comparePassword("123"));
     }
 
     /**
@@ -70,13 +65,8 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testCreatePatientInvalid() {
-        String username = "jeff";
-        String password = "123";
-
-        patientManager.createPatient(username, password);
-
         assertNull("creating a user with the same name and password already existing in the database " +
-                "should return null", patientManager.createPatient(username, password));
+                "should return null", patientManager.createPatient("jeff", "123"));
     }
 
     /**
@@ -84,15 +74,13 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testDeletePatient() {
-        Integer patientID = patientDatabase.add(patient);
-
         assertNotNull("A patient object should be returned before it is deleted ",
-                patientDatabase.get(patientID));
+                patientDatabase.get(patientData.getId()));
 
-        patientManager.deleteUser(patient.getUsername());
+        patientManager.deleteUser(patientData.getUsername());
 
         assertNull("A patient object should not be returned after it is deleted ",
-                patientDatabase.get(patientID));
+                patientDatabase.get(patientData.getId()));
     }
 
     /**
@@ -101,20 +89,16 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void getUserData() {
-        patientDatabase.add(patient);
-
-        PatientData patientData = patientManager.getUserData(patient.getUsername());
+        PatientData loadedPatientData = patientManager.getUserData(patientData.getUsername());
 
         /* Testing if the patientData and the original patient are equal by testing whether all the fields of both
         objects are equal */
         assertEquals("patient and patientData should share the same Id",
-                patient.getId(), patientData.getId());
+                patientData.getId(), loadedPatientData.getId());
         assertEquals("patient and patientData should share the same unique username",
-                patient.getUsername(), patientData.getUsername());
+                patientData.getUsername(), loadedPatientData.getUsername());
         assertEquals("patient and patientData should share the same contact information",
-                patient.getContactInfoId(), patientData.getContactInfoId());
-        assertTrue("patient and patientData should share the same password",
-                patient.comparePassword("123"));
+                patientData.getContactInfoId(), loadedPatientData.getContactInfoId());
     }
 
     /**
@@ -132,16 +116,13 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testDeletePatientByData() {
-        Integer patientID = patientDatabase.add(patient);
-        PatientData userdata = patientManager.getUserData(patient.getUsername());
-
         assertNotNull("A patient object should be returned before it is deleted ",
-                patientDatabase.get(patientID));
+                patientDatabase.get(patientData.getId()));
 
-        patientManager.deleteUserByData(userdata);
+        patientManager.deleteUserByData(patientData);
 
         assertNull("A patient object should not be returned after it is deleted by data",
-                patientDatabase.get(patientID));
+                patientDatabase.get(patientData.getId()));
     }
 
     /**
@@ -149,17 +130,14 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
-        Integer patientID = patientDatabase.add(patient);
-        PatientData patientData = new PatientData(patient);
-
         assertTrue("The password should remain the same before the change ",
-                patientDatabase.get(patientID).comparePassword("123"));
+                patientDatabase.get(patientData.getId()).comparePassword("123"));
 
         patientManager.changeUserPassword(patientData, "456");
 
         assertTrue("The patient object should have the same password as we inputted into the parameters " +
                         "of the changeUserPassword method ",
-                patientDatabase.get(patientID).comparePassword("456"));
+                patientDatabase.get(patientData.getId()).comparePassword("456"));
     }
 
     /**
@@ -168,22 +146,15 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testGetPatient() {
-        Patient originalPatient = patient;
-
-        Integer patientID = patientDatabase.add(originalPatient);
-
-        assertEquals("Original patient should share the same ID from the database",
-                originalPatient.getId(), patientID);
-
-        Patient loadedPatient = patientDatabase.get(originalPatient.getId());
+        Patient loadedPatient = patientDatabase.get(patientData.getId());
         /* Testing if the loaded patient and the original patient are equal by testing whether all the fields of both
         objects are equal */
         assertEquals("Original patient and loaded patient should share the same Id",
-                originalPatient.getId(), loadedPatient.getId());
+                patientData.getId(), loadedPatient.getId());
         assertEquals("Original patient and loaded patient should share the same unique username",
-                originalPatient.getUsername(), loadedPatient.getUsername());
+                patientData.getUsername(), loadedPatient.getUsername());
         assertEquals("Original patient and loaded patient should share the same contact information",
-                originalPatient.getContactInfoId(), loadedPatient.getContactInfoId());
+                patientData.getContactInfoId(), loadedPatient.getContactInfoId());
         assertTrue("Original patient and loaded patient should share the same password",
                 loadedPatient.comparePassword("123"));
     }
@@ -193,12 +164,10 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testDoesUserExist(){
-        Integer patientId = patientDatabase.add(patient);
-
         assertNotNull("A patient object should be returned when added to the database",
-                patientDatabase.get(patientId));
+                patientDatabase.get(patientData.getId()));
         assertTrue("DoesUserExist should return true since the patient is stored in the database",
-                patientManager.doesUserExist(patient.getUsername()));
+                patientManager.doesUserExist(patientData.getUsername()));
     }
 
     /**
@@ -206,8 +175,6 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
-        patientDatabase.add(patient);
-
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
                         "inputted username",
                 patientManager.doesUserExist("jim"));
@@ -218,8 +185,6 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testCanSignInValid(){
-        patientDatabase.add(patient);
-
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", patientManager.canSignIn("jeff", "123"));
     }
@@ -229,8 +194,6 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
-        patientDatabase.add(patient);
-
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", patientManager.canSignIn("jim", "password"));
     }
@@ -240,11 +203,11 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
-        patientDatabase.add(patient);
-        PatientData patientData = patientManager.getUserData(patient.getUsername());
+        PatientData loadedPatientData = patientManager.getUserData(patientData.getUsername());
 
         assertEquals("A correct account detail sign in should return the respective patientData",
-                patientManager.signIn(patient.getUsername(), "123").getId(), patientData.getId());
+                patientManager.signIn(loadedPatientData.getUsername(), "123").getId(),
+                patientData.getId());
     }
 
     /**
@@ -252,9 +215,6 @@ public class PatientManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
-        patientDatabase.add(patient);
-        patientManager.getUserData(patient.getUsername());
-
         assertNull("an incorrect account detail sign in should return null", patientManager.signIn("jim",
                 "password"));
     }
@@ -266,4 +226,5 @@ public class PatientManagerTests {
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
+
 }
