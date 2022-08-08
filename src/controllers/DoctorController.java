@@ -4,10 +4,8 @@ import dataBundles.*;
 import entities.Doctor;
 import presenters.screenViews.DoctorScreenView;
 import useCases.*;
-import utilities.TimeUtils;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -20,8 +18,6 @@ public class DoctorController extends UserController<Doctor> {
     private final DoctorData doctorData;
     private final DoctorController currentController = this;
     private final AppointmentManager appointmentManager;
-
-    private final TimeUtils timeUtils = new TimeUtils();
 
     /**
      * Creates a new controller for handling the state of the program when a doctor is signed in.
