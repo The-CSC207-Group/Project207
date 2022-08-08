@@ -1,5 +1,4 @@
 import dataBundles.AdminData;
-import dataBundles.ContactData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
@@ -46,13 +45,12 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testCreateAdminInvalid() {
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
 
         String username = "jeff";
         String password = "123";
         AdminManager adminManager = new AdminManager(originalDatabase);
 
-        AdminData adminData = adminManager.createAdmin(username, password);
+        adminManager.createAdmin(username, password);
 
         assertNull("creating a user with the same name and password already existing in the database " +
                 "should return null", adminManager.createAdmin(username, password));
@@ -88,7 +86,7 @@ public class AdminManagerTests {
 
         AdminManager adminManager = new AdminManager(originalDatabase);
 
-        Integer adminID = adminDatabase.add(admin);
+        adminDatabase.add(admin);
 
         AdminData adminData = adminManager.getUserData(admin.getUsername());
 
@@ -165,8 +163,6 @@ public class AdminManagerTests {
         Admin originalAdmin = new
                 Admin("jeff", "123", 123456789);
 
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         Integer adminID = adminDatabase.add(originalAdmin);
 
         assertEquals("Original admin should share the same ID from the database",
@@ -204,13 +200,8 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
         Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
 
         AdminManager adminManager = new AdminManager(originalDatabase);
-        Integer adminId = adminDatabase.add(admin);
 
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
                         "inputted username",
@@ -225,7 +216,7 @@ public class AdminManagerTests {
                 Admin("jeff", "123", 123456789);
 
         AdminManager adminManager = new AdminManager(originalDatabase);
-        Integer adminId = adminDatabase.add(admin);
+        adminDatabase.add(admin);
 
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", adminManager.canSignIn("jeff", "123"));
@@ -239,7 +230,7 @@ public class AdminManagerTests {
                 Admin("jeff", "123", 123456789);
 
         AdminManager adminManager = new AdminManager(originalDatabase);
-        Integer adminId = adminDatabase.add(admin);
+        adminDatabase.add(admin);
 
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", adminManager.canSignIn("jim", "password"));
@@ -253,7 +244,7 @@ public class AdminManagerTests {
                 Admin("jeff", "123", 123456789);
 
         AdminManager adminManager = new AdminManager(originalDatabase);
-        Integer adminId = adminDatabase.add(admin);
+        adminDatabase.add(admin);
         AdminData adminData = adminManager.getUserData(admin.getUsername());
 
         assertEquals("A correct account detail sign in should return the respective adminData",
@@ -269,8 +260,7 @@ public class AdminManagerTests {
                 Admin("jeff", "123", 123456789);
 
         AdminManager adminManager = new AdminManager(originalDatabase);
-        Integer adminId = adminDatabase.add(admin);
-        AdminData adminData = adminManager.getUserData(admin.getUsername());
+        adminDatabase.add(admin);
 
         assertNull("an incorrect account detail sign in should return null", adminManager.signIn("jim",
                 "password"));
