@@ -77,9 +77,6 @@ public class SecretaryManagerTests {
      */
     @Test(timeout = 1000)
     public void testDeleteSecretary() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Secretary> secretaryDatabase = originalDatabase.getSecretaryDatabase();
-
         assertNotNull("A secretary object should be returned before it is deleted ",
                 secretaryDatabase.get(secretaryData.getId()));
 
