@@ -193,7 +193,7 @@ public class SecretaryScreenView extends UserScreenView {
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
-        successMessage("Successfully booked appointment for " + patientName + " with " + doctorName);
+        successMessage("Successfully booked appointment for " + patientName + " with Dr." + doctorName);
     }
 
     /**
@@ -279,8 +279,12 @@ public class SecretaryScreenView extends UserScreenView {
      * @param userContact Contacting info of patient.
      * @param appointments list of appointments.
      */
-    public void viewAppointments(ContactData userContact, List<AppointmentData> appointments) {
+    public void viewPatientAppointments(ContactData userContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
+    public void viewDoctorAppointments(ContactData userContact, List<AppointmentData> appointments) {
+        infoMessage("Viewing appointments for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 

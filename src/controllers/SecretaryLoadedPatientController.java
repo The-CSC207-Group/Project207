@@ -95,7 +95,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             if (appointments.size() == 0){
                 secretaryScreenView.showNoUserAppointmentsMessage();
             }else{
-                secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), appointments);
+                secretaryScreenView.viewPatientAppointments(contactManager.getContactData(patientData), appointments);
             }
         };
     }
@@ -174,7 +174,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         if (appointments.size() == 0){
             secretaryScreenView.showNoDoctorAppointmentsMessage();
         }else{
-            secretaryScreenView.viewAppointments(doctorContact, appointments);
+            secretaryScreenView.viewDoctorAppointments(doctorContact, appointments);
         }
         secretaryScreenView.viewDoctorAvailability(doctorContact, availabilityData);
     }
