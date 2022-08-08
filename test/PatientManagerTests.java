@@ -1,37 +1,37 @@
-import dataBundles.ContactData;
 import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Patient;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.PatientManager;
 import utilities.DeleteUtils;
 import java.io.File;
-import java.time.LocalDate;
 import static org.junit.Assert.*;
 
 public class PatientManagerTests {
+    Database originalDatabase;
+    DataMapperGateway<Patient> patientDatabase;
+    PatientManager patientManager;
+    Patient patient;
 
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
+    @Before
+    public void before(){
+        originalDatabase = new Database(databaseFolder.toString());
+        patientDatabase = originalDatabase.getPatientDatabase();
+        patientManager = new PatientManager(originalDatabase);
+        patient = new Patient("jeff", "123", 123456789);
+    }
     @Test(timeout = 1000)
     public void testCreatePatientValid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
         String username = "jeff";
         String password = "123";
-        LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
-                "12345678", "jeff street", birthday, "jim",
-                "jim@gmail.com", "87654321",
-                "father");
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
 
         PatientData patientData = patientManager.createPatient(username, password);
 
@@ -51,20 +51,10 @@ public class PatientManagerTests {
     }
     @Test(timeout = 1000)
     public void testCreatePatientInvalid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
         String username = "jeff";
         String password = "123";
-        LocalDate birthday = LocalDate.of(2022, 1, 1);
-        ContactData contactData = new ContactData("jeff", "jeff@gmail.com",
-                "12345678", "jeff street", birthday, "jim",
-                "jim@gmail.com", "87654321",
-                "father");
 
-        PatientManager patientManager = new PatientManager(originalDatabase);
-
-        PatientData patientData = patientManager.createPatient(username, password);
+        patientManager.createPatient(username, password);
 
         assertNull("creating a user with the same name and password already existing in the database " +
                 "should return null", patientManager.createPatient(username, password));
@@ -72,14 +62,6 @@ public class PatientManagerTests {
 
     @Test(timeout = 1000)
     public void testDeletePatient() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-
         Integer patientID = patientDatabase.add(patient);
 
         assertNotNull("A patient object should be returned before it is deleted ",
@@ -92,15 +74,7 @@ public class PatientManagerTests {
     }
     @Test(timeout = 1000)
     public void getUserData() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-
-        Integer patientID = patientDatabase.add(patient);
+        patientDatabase.add(patient);
 
         PatientData patientData = patientManager.getUserData(patient.getUsername());
 
@@ -117,23 +91,12 @@ public class PatientManagerTests {
     }
     @Test(timeout = 1000)
     public void getUserDataInvalid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        PatientManager patientManager = new PatientManager(originalDatabase);
-
         assertNull("trying to get user data of a user that doesn't exist should return null",
                 patientManager.getUserData("jim"));
 
     }
     @Test(timeout = 1000)
     public void testDeletePatientByData() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-
         Integer patientID = patientDatabase.add(patient);
         PatientData userdata = patientManager.getUserData(patient.getUsername());
 
@@ -148,14 +111,6 @@ public class PatientManagerTests {
 
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-
         Integer patientID = patientDatabase.add(patient);
         PatientData patientData = new PatientData(patient);
 
@@ -171,13 +126,7 @@ public class PatientManagerTests {
 
     @Test(timeout = 1000)
     public void testGetPatient() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient originalPatient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
+        Patient originalPatient = patient;
 
         Integer patientID = patientDatabase.add(originalPatient);
 
@@ -199,13 +148,6 @@ public class PatientManagerTests {
 
     @Test(timeout = 1000)
     public void testDoesUserExist(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
         Integer patientId = patientDatabase.add(patient);
 
         assertNotNull("A patient object should be returned when added to the database",
@@ -215,14 +157,7 @@ public class PatientManagerTests {
     }
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-        Integer patientId = patientDatabase.add(patient);
+        patientDatabase.add(patient);
 
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
                         "inputted username",
@@ -230,42 +165,21 @@ public class PatientManagerTests {
     }
     @Test(timeout = 1000)
     public void testCanSignInValid(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-        Integer patientId = patientDatabase.add(patient);
+        patientDatabase.add(patient);
 
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", patientManager.canSignIn("jeff", "123"));
     }
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-        Integer patientId = patientDatabase.add(patient);
+        patientDatabase.add(patient);
 
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", patientManager.canSignIn("jim", "password"));
     }
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-        Integer patientId = patientDatabase.add(patient);
+        patientDatabase.add(patient);
         PatientData patientData = patientManager.getUserData(patient.getUsername());
 
         assertEquals("A correct account detail sign in should return the respective patientData",
@@ -274,15 +188,8 @@ public class PatientManagerTests {
 
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Patient> patientDatabase = originalDatabase.getPatientDatabase();
-
-        Patient patient = new
-                Patient("jeff", "123", 123456789);
-
-        PatientManager patientManager = new PatientManager(originalDatabase);
-        Integer patientId = patientDatabase.add(patient);
-        PatientData patientData = patientManager.getUserData(patient.getUsername());
+        patientDatabase.add(patient);
+        patientManager.getUserData(patient.getUsername());
 
         assertNull("an incorrect account detail sign in should return null", patientManager.signIn("jim",
                 "password"));
