@@ -22,9 +22,16 @@ public class AdminManagerTests {
     Admin admin;
     AdminManager adminManager;
 
+    /**
+     * The variable representing the temporary folder where the databases used in these tests are stored until it is
+     * deleted after the tests.
+     */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
+    /**
+     * Initializes the variables used by all the tests before each unit test.
+     */
     @Before
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
@@ -251,6 +258,10 @@ public class AdminManagerTests {
         assertNull("an incorrect account detail sign in should return null", adminManager.signIn("jim",
                 "password"));
     }
+
+    /**
+     * Deletes the temporary database folder used to store the database for tests after tests are done.
+     */
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
