@@ -116,7 +116,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
             viewDoctorSchedule(doctorData, date);
             if (!isDoctorAvailableOnDay(date)){return;}
             bookAppointmentTime(doctorData, date);
-
         };
     }
 
@@ -193,6 +192,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
         LocalDateTime startDateTime = LocalDateTime.of(date, appointmentTimeDetails.time());
         LocalDateTime endDateTime = startDateTime.plusMinutes(appointmentTimeDetails.length());
+
+        if (startDateTime.isAfter(endDateTime)){
+            secretaryScreenView.showInvalidTimeError();
+            return;
+        }
 
         if (spansMultipleDays(startDateTime, endDateTime)){
             secretaryScreenView.showSpanningMultipleDaysError();
