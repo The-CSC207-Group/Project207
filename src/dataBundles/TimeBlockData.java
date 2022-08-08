@@ -38,14 +38,6 @@ public class TimeBlockData implements UniversalTimeBlockWithDay {
         return timeBlock.getEndTime();
     }
 
-    public LocalTime startTimeToLocal(){
-        return timeBlock.startTimeToLocal();
-    }
-
-    public LocalTime endTimeToLocal(){
-        return timeBlock.endTimeToLocal();
-    }
-
     @Override
     public LocalTime startTime() {
         return timeBlock.startTime();

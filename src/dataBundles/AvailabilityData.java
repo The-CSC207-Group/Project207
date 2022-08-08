@@ -33,14 +33,14 @@ public class AvailabilityData implements UniversalTimeBlock {
      * @return LocalTime - the start time of the availability.
      */
     public LocalTime getDoctorStartTime() {
-        return availability.getDoctorStartTime();
+        return availability.startTime();
     }
 
     /**
      * @return LocalTime - the end time of the availability.
      */
     public LocalTime getDoctorEndTime() {
-        return availability.getDoctorEndTime();
+        return availability.endTime();
     }
 
     @Override
