@@ -55,21 +55,6 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
         this.endTime = endTime;
     }
 
-    /**
-     * Converts the LocalDateTime start time to LocalTime.
-     * @return LocalTime representing the time block's start tim.
-     */
-    public LocalTime startTimeToLocal(){
-        return startTime.toLocalTime();
-    }
-
-    /**
-     * Converts the LocalDateTime end time to LocalTime.
-     * @return LocalTime representing the time block's end time.
-     */
-    public LocalTime endTimeToLocal(){
-        return startTime.toLocalTime();
-    }
 
     @Override
     public LocalTime startTime() {

@@ -1,9 +1,13 @@
 package useCases;
 
-import dataBundles.*;
+import dataBundles.AppointmentData;
+import dataBundles.AvailabilityData;
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.*;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,10 +39,11 @@ public class AppointmentManager {
     /**
      * Book a doctor and patient specific appointment and store it in the appointment database. startTime and endTime
      * must be on the same day.
-     * @param patientData          PatientData - data representing a patient entity.
-     * @param doctorData           DoctorData - data representing a doctor entity.
-     * @param startTime            startTime - LocalDateTime representing that start time of a proposed appointment.
-     * @param endTime              endTime - LocalDateTime representing that end time of a proposed appointment.
+     *
+     * @param patientData PatientData - data representing a patient entity.
+     * @param doctorData  DoctorData - data representing a doctor entity.
+     * @param startTime   startTime - LocalDateTime representing that start time of a proposed appointment.
+     * @param endTime     endTime - LocalDateTime representing that end time of a proposed appointment.
      * @return AppointmentData - returns the newly booked appointment in an AppointmentData form. otherwise returns null
      * if invalid time was submitted.
      */
@@ -67,23 +72,22 @@ public class AppointmentManager {
     /**
      * Reschedule an appointment, adjusting an appointments time block and validating it. startTime and endTime should
      * be on the same day.
-     * @param appointmentData      AppointmentData - data that represents an appointment entity.
-     * @param startTime            startTime - LocalDateTime representing that start time of a proposed appointment.
-     * @param endTime              endTime - LocalDateTime representing that end time of a proposed appointment.
+     *
+     * @param appointmentData AppointmentData - data that represents an appointment entity.
+     * @param startTime       startTime - LocalDateTime representing that start time of a proposed appointment.
+     * @param endTime         endTime - LocalDateTime representing that end time of a proposed appointment.
      * @return boolean - a boolean representing if the appointment successfully rescheduled.
      */
-    public boolean rescheduleAppointment(AppointmentData appointmentData, LocalDateTime startTime, LocalDateTime endTime) {
-
+    public boolean rescheduleAppointment(
+            AppointmentData appointmentData, LocalDateTime startTime, LocalDateTime endTime) {
         TimeBlock proposedTime = new TimeBlock(startTime, endTime);
-        Appointment selectedAppointment = appointmentDatabase.get(appointmentData.getAppointmentId());
-
-        database.getAppointmentDatabase().remove(appointmentData.getAppointmentId());
         DoctorData doctorData = new DoctorData(doctorDatabase.get(appointmentData.getDoctorId()));
         if (isValidAppointment(doctorData, proposedTime)) {
-            appointmentDatabase.add(new Appointment(proposedTime, appointmentData.getDoctorId(), appointmentData.getPatientId()));
+            database.getAppointmentDatabase().remove(appointmentData.getAppointmentId());
+            appointmentDatabase.add(
+                    new Appointment(proposedTime, appointmentData.getDoctorId(), appointmentData.getPatientId()));
             return true;
         }
-        appointmentDatabase.add(selectedAppointment);
         return false;
     }
 
@@ -130,6 +134,7 @@ public class AppointmentManager {
         }
         return new AvailabilityData(availability);
     }
+
     /**
      * Gets all doctor specific appointments in a single day.
      *
@@ -171,18 +176,23 @@ public class AppointmentManager {
         }
         return false;
     }
+
     private boolean overlapsDateAndHours(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2) {
         return (overlapHours(day1, day2) || overlapHours(day2, day1)) && overlapDate(day1, day2);
     }
+
     private boolean overlapDate(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2) {
         return day1.date().equals(day2.date());
     }
+
     private boolean overlapHours(UniversalTimeBlock time1, UniversalTimeBlock time2) {
         return isWithinHours(time1, time2.startTime()) || isWithinHours(time1, time2.endTime());
     }
+
     private boolean isWithinHours(UniversalTimeBlock timeBlock, LocalTime time) {
         return !time.isBefore(timeBlock.startTime()) && !time.isAfter(timeBlock.endTime());
     }
+
     private boolean strictlyWithinHours(UniversalTimeBlock timeBlock, UniversalTimeBlock timeBlock2) {
         return isWithinHours(timeBlock, timeBlock2.startTime()) && isWithinHours(timeBlock, timeBlock2.endTime());
     }
