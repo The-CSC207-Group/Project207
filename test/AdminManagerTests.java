@@ -3,6 +3,7 @@ import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -16,9 +17,21 @@ import static org.junit.Assert.assertNull;
  * A class that tests AdminManager.
  */
 public class AdminManagerTests {
+    Database originalDatabase;
+    DataMapperGateway<Admin> adminDatabase;
+    Admin admin;
+    AdminManager adminManager;
 
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
+
+    @Before
+    public void before(){
+        originalDatabase = new Database(databaseFolder.toString());
+        adminDatabase = originalDatabase.getAdminDatabase();
+        admin = new Admin("jeff", "123", 123456789);
+        adminManager = new AdminManager(originalDatabase);
+    }
 
     /**
      * Tests createAdmin by creating an admin in the database, and that admin with the adminData to ensure they
@@ -26,12 +39,8 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testCreateAdminValid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
         String username = "jeff";
         String password = "123";
-        AdminManager adminManager = new AdminManager(originalDatabase);
 
         AdminData adminData = adminManager.createAdmin(username, password);
 
@@ -55,11 +64,8 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testCreateAdminInvalid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
         String username = "jeff";
         String password = "123";
-        AdminManager adminManager = new AdminManager(originalDatabase);
 
         adminManager.createAdmin(username, password);
 
@@ -73,14 +79,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testDeleteAdmin() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         Integer adminID = adminDatabase.add(admin);
 
         assertNotNull("An admin object should be returned before it is deleted ",
@@ -97,14 +95,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void getUserData() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         adminDatabase.add(admin);
 
         AdminData adminData = adminManager.getUserData(admin.getUsername());
@@ -126,12 +116,8 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void getUserDataInvalid() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         assertNull("trying to get user data of a user that doesn't exist should return null",
                 adminManager.getUserData("jim"));
-
     }
 
     /**
@@ -140,14 +126,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testDeleteAdminByData() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         Integer adminID = adminDatabase.add(admin);
         AdminData userdata = adminManager.getUserData(admin.getUsername());
 
@@ -166,14 +144,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         Integer adminID = adminDatabase.add(admin);
         AdminData adminData = new AdminData(admin);
 
@@ -193,12 +163,7 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testGetAdmin() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin originalAdmin = new
-                Admin("jeff", "123", 123456789);
-
+        Admin originalAdmin = admin;
         Integer adminID = adminDatabase.add(originalAdmin);
 
         assertEquals("Original admin should share the same ID from the database",
@@ -222,13 +187,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testDoesUserExist(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
         Integer adminId = adminDatabase.add(admin);
 
         assertNotNull("An admin object should be returned when added to the database",
@@ -236,18 +194,14 @@ public class AdminManagerTests {
         assertTrue("DoesUserExist should return true since the admin is stored in the database",
                 adminManager.doesUserExist(admin.getUsername()));
     }
+
     /**
      * Tests doesUserExist by ensuring an admin exists in the database, then testing if the bool returned is false.
      */
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
-
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
-                        "inputted username",
-                adminManager.doesUserExist("jim"));
+                        "inputted username", adminManager.doesUserExist("jim"));
     }
 
     /**
@@ -256,31 +210,18 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testCanSignInValid(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
         adminDatabase.add(admin);
 
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", adminManager.canSignIn("jeff", "123"));
     }
+
     /**
      * Tests canSignIn by ensuring that if a username and password is not linked to an account in the database, a false
      * boolean should be returned.
      */
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
         adminDatabase.add(admin);
 
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
@@ -292,13 +233,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
         adminDatabase.add(admin);
         AdminData adminData = adminManager.getUserData(admin.getUsername());
 
@@ -312,13 +246,6 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Admin> adminDatabase = originalDatabase.getAdminDatabase();
-
-        Admin admin = new
-                Admin("jeff", "123", 123456789);
-
-        AdminManager adminManager = new AdminManager(originalDatabase);
         adminDatabase.add(admin);
 
         assertNull("an incorrect account detail sign in should return null", adminManager.signIn("jim",
