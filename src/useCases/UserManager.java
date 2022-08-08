@@ -7,6 +7,7 @@ import entities.Contact;
 import entities.User;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * Abstract use case class for handling operations and data of users of all types.
@@ -45,6 +46,16 @@ public abstract class UserManager<T extends User> {
             return true;
         }
         return false;
+    }
+
+    /***
+     * Checks if username and password adhere to regex pattern.
+     * @param username username of new account.
+     * @param password password of new account.
+     * @return boolean whether or not the username and password adhere to the regex pattern.
+     */
+    public boolean regexCheck(String username, String password) {
+        return Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password);
     }
 
     /**
