@@ -12,11 +12,18 @@ import java.io.File;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;
 
+/**
+ * A class that tests AdminManager.
+ */
 public class AdminManagerTests {
 
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
 
+    /**
+     * Tests createAdmin by creating an admin in the database, and that admin with the adminData to ensure they
+     * represent the same entity.
+     */
     @Test(timeout = 1000)
     public void testCreateAdminValid() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -42,6 +49,10 @@ public class AdminManagerTests {
         assertTrue("Original admin and loaded admin should share the same password",
                 loadedAdmin.comparePassword(password));
     }
+
+    /**
+     * Test invalid createAdmin with a username that already exists in the database.
+     */
     @Test(timeout = 1000)
     public void testCreateAdminInvalid() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -56,6 +67,10 @@ public class AdminManagerTests {
                 "should return null", adminManager.createAdmin(username, password));
     }
 
+    /**
+     * Test deleteAdmin by ensuring an admin exists in the database, deleting it, then ensuring that the admin cannot
+     * be access by using its adminID.
+     */
     @Test(timeout = 1000)
     public void testDeleteAdmin() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -76,6 +91,10 @@ public class AdminManagerTests {
         assertNull("An admin object should not be returned after it is deleted ",
                 adminDatabase.get(adminID));
     }
+
+    /**
+     * Testing getUserData by ensuring that the data entity values match up with the values stored in the database.
+     */
     @Test(timeout = 1000)
     public void getUserData() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -101,6 +120,10 @@ public class AdminManagerTests {
         assertTrue("admin and adminData should share the same password",
                 admin.comparePassword("123"));
     }
+
+    /**
+     * Tests an invalid use of getUserData by getting a user that does not exist.
+     */
     @Test(timeout = 1000)
     public void getUserDataInvalid() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -110,6 +133,11 @@ public class AdminManagerTests {
                 adminManager.getUserData("jim"));
 
     }
+
+    /**
+     * Test deleteUserByData specifically with an Admin account, ensuring that the admin cannot be access by using
+     * its adminID.
+     */
     @Test(timeout = 1000)
     public void testDeleteAdminByData() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -132,6 +160,10 @@ public class AdminManagerTests {
                 adminDatabase.get(adminID));
     }
 
+    /**
+     * Tests changeUserPassword for admin accounts, by comparing the password in the database before and after the
+     * change.
+     */
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -155,6 +187,10 @@ public class AdminManagerTests {
                 adminDatabase.get(adminID).comparePassword("456"));
     }
 
+    /**
+     * Tests getAdmin by comparing the values of the entity and the values stored under the admin in the database to
+     * ensure that they represent the same entity.
+     */
     @Test(timeout = 1000)
     public void testGetAdmin() {
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -181,6 +217,9 @@ public class AdminManagerTests {
                 loadedAdmin.comparePassword("123"));
     }
 
+    /**
+     * Tests doesUserExist by ensuring an admin exists in the database, then testing if the bool returned is true.
+     */
     @Test(timeout = 1000)
     public void testDoesUserExist(){
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -197,6 +236,9 @@ public class AdminManagerTests {
         assertTrue("DoesUserExist should return true since the admin is stored in the database",
                 adminManager.doesUserExist(admin.getUsername()));
     }
+    /**
+     * Tests doesUserExist by ensuring an admin exists in the database, then testing if the bool returned is false.
+     */
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -207,6 +249,11 @@ public class AdminManagerTests {
                         "inputted username",
                 adminManager.doesUserExist("jim"));
     }
+
+    /**
+     * Tests canSignIn by ensuring that if a username and password is linked to an account in the database, a true
+     * boolean should be returned.
+     */
     @Test(timeout = 1000)
     public void testCanSignInValid(){
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -221,6 +268,10 @@ public class AdminManagerTests {
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", adminManager.canSignIn("jeff", "123"));
     }
+    /**
+     * Tests canSignIn by ensuring that if a username and password is not linked to an account in the database, a false
+     * boolean should be returned.
+     */
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -235,6 +286,10 @@ public class AdminManagerTests {
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", adminManager.canSignIn("jim", "password"));
     }
+
+    /**
+     * Tests a valid use of the signIn function with an existing account.
+     */
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
         Database originalDatabase = new Database(databaseFolder.toString());
@@ -251,6 +306,10 @@ public class AdminManagerTests {
                 adminManager.signIn(admin.getUsername(), "123").getId(), adminData.getId());
     }
 
+    /**
+     * Tests the signIn function when invalid account username or password is inputted, not matching with an account
+     * in the database.
+     */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
         Database originalDatabase = new Database(databaseFolder.toString());
