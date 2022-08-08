@@ -152,8 +152,10 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
                 LocalDateTime startTime = LocalDateTime.of(day.getYear(), day.getMonthValue(), day.getDayOfMonth(),
                         time.time().getHour(), time.time().getMinute());
-                appointmentManager.rescheduleAppointment(
-                        appointments.get(index), startTime, startTime.plusMinutes(time.length()));
+                if (!appointmentManager.rescheduleAppointment( appointments.get(index), startTime,
+                        startTime.plusMinutes(time.length()))){
+                    secretaryScreenView.showInvalidTimeError();
+                }
             }
         };
     }
