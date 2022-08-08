@@ -71,10 +71,13 @@ public class DoctorController extends UserController<Doctor> {
     private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getDoctorAppointments(doctorData);
-            doctorScreenView.viewAppointments(appointments);
+            if (appointments.size() == 0){
+                doctorScreenView.showNoAppointmentsMessage();
+            }else{
+                doctorScreenView.viewAppointments(appointments);
+            }
         };
     }
-
 
     private Command ViewSchedule() {
         return (x) -> {

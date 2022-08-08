@@ -155,20 +155,34 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Show error when appointment overlaps with unavailability or another appointment.
+     * Show error when appointment does not overlap with availability or another appointment.
      */
     public void showAppointmentBookingError() {
-        errorMessage("Error Booking Appointment.");
+        errorMessage("The doctor is not available during this time.");
     }
 
     public void showNoUserAppointmentsMessage(){
         infoMessage("This user has no appointments.");
     }
+
+    public void showNoDoctorAppointmentsMessage(){infoMessage("No appointments have been scheduled with this doctor.");}
     /**
      * Show invalid date error when user inputs the wrong date format.
      */
     public void showInvalidDateError() {
         errorMessage("Appointment booking error: invalid date.");
+    }
+
+    /**
+     * Show error for incorrectly inputted time info.
+     */
+    public void showInvalidTimeError(){errorMessage("Appointment booking error: invalid time.");}
+
+    /**
+     * Show appointment spanning multiple days error when it does so.
+     */
+    public void showSpanningMultipleDaysError(){
+        errorMessage("Appointment booking error: appointment spans multiple days.");
     }
 
     /**
@@ -257,7 +271,7 @@ public class SecretaryScreenView extends UserScreenView {
      * is no availability.
      */
     public void showNoAvailabilityError(ContactData userContact){
-        errorMessage("Can not book today as there is no availability.");
+        errorMessage("Doctor is not available on this day.");
     }
 
     /**

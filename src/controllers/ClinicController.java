@@ -3,7 +3,6 @@ package controllers;
 import entities.Admin;
 import presenters.response.AvailabilityDetails;
 import presenters.screenViews.ClinicScreenView;
-import useCases.AppointmentManager;
 import useCases.ClinicManager;
 
 import java.time.DayOfWeek;
@@ -40,7 +39,8 @@ public class ClinicController extends TerminalController {
     }
 
     /**
-     * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command calls.
+     * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command
+     * calls.
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
     public LinkedHashMap<String, Command> AllCommands() {
@@ -107,12 +107,20 @@ public class ClinicController extends TerminalController {
     private Command ChangeClinicHours(){
         return (x) -> {
             clinicScreenView.showClinicHours(clinicManager.clinicData());
-            AvailabilityDetails availabilityDetails = clinicScreenView.showChangeClinicHoursPrompt();
-            if (availabilityDetails == null || availabilityDetails.getStartTime().isAfter(availabilityDetails.getEndTime())){
-                clinicScreenView.showEnteredInvalidAvailabilityInfoError();
+            DayOfWeek dayOfWeek = clinicScreenView.showDayOfWeekPrompt();
+
+            if (dayOfWeek == null){
+                clinicScreenView.showInvalidDayOfWeekSelectionError();
                 return;
             }
-            clinicManager.changeClinicHours(availabilityDetails.getDayOfWeek(), availabilityDetails.getStartTime(), availabilityDetails.getEndTime());
+            AvailabilityDetails availabilityDetails = clinicScreenView.showChangeClinicHoursPrompt(dayOfWeek);
+            if (availabilityDetails == null ||
+                    availabilityDetails.startTime().isAfter(availabilityDetails.endTime())){
+                clinicScreenView.showEnteredInvalidTime();
+                return;
+            }
+            clinicManager.changeClinicHours(availabilityDetails.dayOfWeek(), availabilityDetails.startTime(),
+                    availabilityDetails.endTime());
             clinicScreenView.showSuccessfullyChangedAvailability();
         };
     }
@@ -121,7 +129,7 @@ public class ClinicController extends TerminalController {
             clinicScreenView.showClinicHours(clinicManager.clinicData());
             DayOfWeek dayOfWeek = clinicScreenView.showDayOfWeekPrompt();
             if (dayOfWeek == null){
-                clinicScreenView.showInvalidSelectionError();
+                clinicScreenView.showInvalidDayOfWeekSelectionError();
                 return;
             }
             clinicManager.removeClinicHours(dayOfWeek);

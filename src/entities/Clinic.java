@@ -104,7 +104,9 @@ public class Clinic extends JsonSerializable {
      * Sets the clinic's hours of operation.
      * @param clinicHours TimeBlock representing the clinic's new hours of operation.
      */
-    public void addClinicHours(Availability clinicHours) {this.clinicHours.add(clinicHours);}
+    public void addClinicHours(Availability clinicHours) {
+        this.clinicHours.add(clinicHours);
+    }
 
     /**
      * Removes the clinic hours of a certain day. Assumes there is at most 1 availability per day of week.

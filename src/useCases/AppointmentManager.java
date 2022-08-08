@@ -8,7 +8,6 @@ import utilities.TimeUtils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -38,20 +37,24 @@ public class AppointmentManager {
     }
 
     /**
-     * Book a doctor and patient specific appointment and store it in the appointment database. startTime and endTime
-     * must be on the same day.
+     * Book a doctor and patient specific appointment and store it in the appointment database.
+     *
      * @param patientData          PatientData - data representing a patient entity.
      * @param doctorData           DoctorData - data representing a doctor entity.
-     * @param startTime            startTime - LocalDateTime representing that start time of a proposed appointment.
-     * @param endTime              endTime - LocalDateTime representing that end time of a proposed appointment.
+     * @param year                 Integer - an integer value that represents a year.
+     * @param month                Integer - an integer value that represents a month of a year.
+     * @param day                  Integer - an integer value that represents a day of a month.
+     * @param hour                 Integer - an integer value that represents an hour of a day.
+     * @param minute               Integer - an integer value that represents a minute of an hour.
+     * @param lengthOfAppointments an integer value in minutes that represents the length of an appointment.
      * @return AppointmentData - returns the newly booked appointment in an AppointmentData form. otherwise returns null
      * if invalid time was submitted.
      */
-    public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData, LocalDateTime startTime,
-                                           LocalDateTime endTime) {
-
-        TimeBlock proposedTime = new TimeBlock(startTime, endTime);
-
+    public AppointmentData bookAppointment(PatientData patientData, DoctorData doctorData,
+                                           Integer year, Integer month, Integer day, Integer hour, Integer minute,
+                                           Integer lengthOfAppointments) {
+        TimeBlock proposedTime = new TimeUtils().createTimeBlock(year, month, day, hour, minute,
+                lengthOfAppointments);
         if (isValidAppointment(doctorData, proposedTime)) {
             Appointment newApp = new Appointment(proposedTime, doctorData.getId(), patientData.getId());
             appointmentDatabase.add(newApp);

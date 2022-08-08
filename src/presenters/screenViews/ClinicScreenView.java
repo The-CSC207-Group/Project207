@@ -9,8 +9,6 @@ import utilities.DayOfWeekUtils;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 
 
 /**
@@ -113,15 +111,15 @@ public class ClinicScreenView extends ScreenView {
     /**
      * Shows an error message when a user incorrectly enters a field when changing clinic hours.
      */
-    public void showEnteredInvalidAvailabilityInfoError(){
-        errorMessage("Invalid entry.");
+    public void showEnteredInvalidTime(){
+        errorMessage("Invalid Time.");
     }
 
     /**
      * Shows an error when a user selects an invalid day of week when removing availability.
      */
-    public void showInvalidSelectionError(){
-        errorMessage("Invalid selection.");
+    public void showInvalidDayOfWeekSelectionError(){
+        errorMessage("Please choose a number from 1-7.");
     }
 
     /**
@@ -133,9 +131,8 @@ public class ClinicScreenView extends ScreenView {
 
     /**
      * Shows the clinic's hours throughout the week given the clinic data.
-     * @param clinicData
+     * @param clinicData - data bundle associated with the clinic to be displayed.
      */
-
     public void showClinicHours(ClinicData clinicData){
         ClinicView clinicView = new ClinicView();
         clinicView.viewClinicHours(clinicData);
@@ -146,9 +143,7 @@ public class ClinicScreenView extends ScreenView {
      * @return AvailabilityDetails - a response containing DayOfWeek, StartTime and EndTime or returns null
      * if the user enters any invalid info.
      */
-    public AvailabilityDetails showChangeClinicHoursPrompt(){
-        DayOfWeek dayOfWeek = showDayOfWeekPrompt();
-        if (dayOfWeek == null){return null;}
+    public AvailabilityDetails showChangeClinicHoursPrompt(DayOfWeek dayOfWeek){
         infoMessage("Start Time: ");
         LocalTime localStartTime = showLocalTimePrompt();
         if (localStartTime == null){return null;}
@@ -166,8 +161,7 @@ public class ClinicScreenView extends ScreenView {
      */
     public DayOfWeek showDayOfWeekPrompt(){
         infoMessage("Select day of week: ");
-        ArrayList<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
-                DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
+        ArrayList<DayOfWeek> dayOfWeeks = new ArrayList<>(dayOfWeekUtils.getDayOfWeekStringToEnumMap().values());
         for (int i = 0; i < dayOfWeeks.size(); i++){
             infoMessage(dayOfWeekUtils.dayOfWeekToString(dayOfWeeks.get(i)) + "(" + (i + 1) + ")");
         }

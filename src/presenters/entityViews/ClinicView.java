@@ -3,6 +3,7 @@ package presenters.entityViews;
 import dataBundles.AppointmentData;
 import dataBundles.AvailabilityData;
 import dataBundles.ClinicData;
+import utilities.DayOfWeekUtils;
 
 import java.time.DayOfWeek;
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.*;
  * The Clinic entity's view.
  */
 public class ClinicView extends EntityView<ClinicData> {
-
+    DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
     /**
      * @param item ClinicData to view.
      * @return String representing item's full clinic view.
@@ -61,25 +62,23 @@ public class ClinicView extends EntityView<ClinicData> {
         return "This clinic's phone number is " + phoneNumber + ".";
     }
 
-    // ALL CODE BELOW IS FOR PHASE 2
-
     /**
      * @param item ClinicData to view.
      * @return String representing the clinic's hours of operation as a view.
      */
-
     public String viewClinicHours(ClinicData item){
         ArrayList<AvailabilityData> availabilities = item.getClinicHours();
         StringBuilder out = new StringBuilder("Clinic Hours: \n");
-        LinkedHashMap<String, DayOfWeek> dayMap = getDayMap();
+        LinkedHashMap<String, DayOfWeek> dayMap = dayOfWeekUtils.getDayOfWeekStringToEnumMap();
 
         for (String dayString: dayMap.keySet()){
-            out.append(getSingleDayAvailabilityString(dayString, availabilities, dayMap.get(dayString)) + "\n");
+            out.append(getSingleDayAvailabilityString(dayString, availabilities, dayMap.get(dayString))).append("\n");
         }
-
         return out.toString();
     }
-    private String getSingleDayAvailabilityString(String dayString, ArrayList<AvailabilityData> availabilities, DayOfWeek dayOfWeek){
+
+    private String getSingleDayAvailabilityString(String dayString, ArrayList<AvailabilityData> availabilities,
+                                                  DayOfWeek dayOfWeek){
         AvailabilityView availabilityView = new AvailabilityView();
         Optional<AvailabilityData> availabilityData = availabilities.stream().
                 filter(availability -> availability.dayOfWeek().equals(dayOfWeek)).
@@ -90,15 +89,5 @@ public class ClinicView extends EntityView<ClinicData> {
             return dayString + ": No Availability";
         }
     }
-    private LinkedHashMap<String, DayOfWeek> getDayMap(){
-        return new LinkedHashMap<>() {{
-            put("Monday", DayOfWeek.MONDAY);
-            put("Tuesday", DayOfWeek.TUESDAY);
-            put("Wednesday", DayOfWeek.WEDNESDAY);
-            put("Thursday", DayOfWeek.THURSDAY);
-            put("Friday", DayOfWeek.FRIDAY);
-            put("Saturday", DayOfWeek.SATURDAY);
-            put("Sunday", DayOfWeek.SUNDAY);
-        }};
-    }
+
 }

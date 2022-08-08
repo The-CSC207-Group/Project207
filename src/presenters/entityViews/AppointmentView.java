@@ -1,11 +1,6 @@
-// PHASE 2 FILE
-
 package presenters.entityViews;
 
 import dataBundles.AppointmentData;
-import dataBundles.ContactData;
-import entities.UniversalTimeBlockWithDay;
-
 import java.time.LocalTime;
 
 /**

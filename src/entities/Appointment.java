@@ -1,5 +1,3 @@
-// PHASE 2 FILE
-
 package entities;
 
 import utilities.JsonSerializable;

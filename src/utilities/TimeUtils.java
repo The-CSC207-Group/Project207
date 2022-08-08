@@ -1,5 +1,3 @@
-// PHASE 2 FILE
-
 package utilities;
 
 import entities.TimeBlock;

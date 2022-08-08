@@ -22,4 +22,21 @@ public class DayOfWeekUtils {
         }};
         return dayMap.get(dayOfWeek);
     }
+
+    /**
+     * Returns an ordered hashmap from the string representation of a day of week to the enum representation.
+     * @return LinkedHashMap<String, DayOfWeek> - ordered hashmap where the keys are the string representation of a
+     * day of week and the values are the associated DayOfWeek enums.
+     */
+    public LinkedHashMap<String, DayOfWeek> getDayOfWeekStringToEnumMap() {
+        return new LinkedHashMap<>() {{
+            put("Monday", DayOfWeek.MONDAY);
+            put("Tuesday", DayOfWeek.TUESDAY);
+            put("Wednesday", DayOfWeek.WEDNESDAY);
+            put("Thursday", DayOfWeek.THURSDAY);
+            put("Friday", DayOfWeek.FRIDAY);
+            put("Saturday", DayOfWeek.SATURDAY);
+            put("Sunday", DayOfWeek.SUNDAY);
+        }};
+    }
 }

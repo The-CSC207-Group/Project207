@@ -110,6 +110,11 @@ public abstract class ScreenView {
             return null;
         }
     }
+
+    /**
+     * Ask the user to enter a local time.
+     * @return LocalTime if inputted time is valid. null if inputted time is invalid.
+     */
     protected LocalTime showLocalTimePrompt(){
         Integer hour = inputInt("Enter 24hr Time (HH): ");
         if (hour == null){return null;}

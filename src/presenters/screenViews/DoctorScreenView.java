@@ -218,6 +218,11 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
+     * Message showed when the doctor has no appointments scheduled.
+     */
+    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
+
+    /**
      * Error raised when the user input is not an integer.
      */
     public void showDeleteAvailabilityNotAnIntegerError() {
