@@ -44,10 +44,10 @@ public class DoctorController extends UserController<Doctor> {
         commands.put("show schedule", ViewSchedule());
         commands.put("show assigned appointments", ViewAllDoctorAppointments());
         commands.put("show all appointments", ViewAllAppointments());
-        commands.put("create new absence", newAbsence());
-        commands.put("delete absence", deleteAbsence());
-        commands.put("create new availability", newAvailability());
-        commands.put("delete availability", deleteAvailability()); */
+        commands.put("create new absence", NewAbsence());
+        commands.put("delete absence", DeleteAbsence());
+        commands.put("create new availability", NewAvailability());
+        commands.put("delete availability", DeleteAvailability()); */
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -86,7 +86,7 @@ public class DoctorController extends UserController<Doctor> {
 
     }
 
-    private Command newAvailability() {
+    private Command NewAvailability() {
         return (x) -> {
             ArrayList<Integer> availabilityInfo = doctorScreenView.addAvailabilityPrompt();
             new AppointmentManager(getDatabase()).newAvailability(doctorData, DayOfWeek.of(availabilityInfo.get(0)),
@@ -94,7 +94,7 @@ public class DoctorController extends UserController<Doctor> {
         };
     }
 
-    private Command deleteAvailability() {
+    private Command DeleteAvailability() {
         return (x) -> {
             Integer deleteInteger = doctorScreenView.deleteAvailabilityPrompt(new ContactManager(getDatabase())
                     .getContactData(doctorData), new AppointmentManager(getDatabase())
@@ -107,7 +107,7 @@ public class DoctorController extends UserController<Doctor> {
         };
     }
 
-    private Command deleteAbsence() {
+    private Command DeleteAbsence() {
         return (x) -> {
             Integer deleteInteger = doctorScreenView.deleteAbsencePrompt(new ContactManager(getDatabase())
                     .getContactData(doctorData), doctorData.getAbsence().stream()
@@ -117,7 +117,7 @@ public class DoctorController extends UserController<Doctor> {
         };
     }
 
-    private Command newAbsence() {
+    private Command NewAbsence() {
         return (x) -> {
             ArrayList<Integer> absenceData = doctorScreenView.addAbsencePrompt();
             new AppointmentManager(getDatabase()).addAbsence(doctorData, new TimeUtils()

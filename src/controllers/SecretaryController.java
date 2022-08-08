@@ -55,14 +55,14 @@ public class SecretaryController extends UserController<Secretary> {
     @Override
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
-        commands.put("create patient", createPatientAccount());
+        commands.put("create patient", CreatePatientAccount());
         commands.put("load patient", LoadPatient());
-        commands.put("delete patient", deletePatient());
+        commands.put("delete patient", DeletePatient());
 
         /* PENDING IMPLEMENTATION IN PHASE 2
-        commands.put("add availability", addDoctorAvailability());
-        commands.put("delete availability", removeDoctorAvailability());
-        commands.put("add absence", addDoctorAbsence()); */
+        commands.put("add availability", AddDoctorAvailability());
+        commands.put("delete availability", RemoveDoctorAvailability());
+        commands.put("add absence", AddDoctorAbsence()); */
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -83,8 +83,7 @@ public class SecretaryController extends UserController<Secretary> {
         };
     }
 
-    private Command createPatientAccount() {
-        PatientManager patientManager = new PatientManager(getDatabase());
+    private Command CreatePatientAccount() {
         return (x) -> {
             try {
                 UserCredentials userCred = secretaryScreenView.registerPatientPrompt();
@@ -100,7 +99,7 @@ public class SecretaryController extends UserController<Secretary> {
         };
     }
 
-    private Command deletePatient() {
+    private Command DeletePatient() {
         return (x) -> {
             String patient = secretaryScreenView.showDeletePatientPrompt();
             if (patientManager.deleteUser(patient)) {
@@ -113,7 +112,7 @@ public class SecretaryController extends UserController<Secretary> {
     }
 
     /* PENDING IMPLEMENTATION IN PHASE 2
-    private Command addDoctorAvailability() {
+    private Command AddDoctorAvailability() {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
@@ -127,7 +126,7 @@ public class SecretaryController extends UserController<Secretary> {
 
     }
 
-    private Command removeDoctorAvailability() {
+    private Command RemoveDoctorAvailability() {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);
@@ -144,7 +143,7 @@ public class SecretaryController extends UserController<Secretary> {
         };
     }
 
-    private Command addDoctorAbsence() {
+    private Command AddDoctorAbsence() {
         return (x) -> {
             String doctor = secretaryScreenView.getTargetDoctor();
             DoctorData doctorData = doctorManager.getUserData(doctor);

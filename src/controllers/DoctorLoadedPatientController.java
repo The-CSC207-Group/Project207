@@ -1,14 +1,11 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
-import dataBundles.ContactData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
+import dataBundles.*;
 import presenters.response.PrescriptionDetails;
+import presenters.response.ReportDetails;
 import presenters.screenViews.DoctorScreenView;
-import useCases.ContactManager;
-import useCases.PrescriptionManager;
+import useCases.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,30 +20,38 @@ public class DoctorLoadedPatientController extends TerminalController {
     private final PrescriptionManager prescriptionManager;
     private final DoctorScreenView doctorView = new DoctorScreenView();
     private final DoctorController previousController;
+    private final ReportManager reportManager;
+    private final DoctorManager doctorManager;
+    private final ContactManager contactManager;
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
+     *
      * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *                          switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
-     *                           via the back command.
+     *                                              via the back command.
      * @param doctorData DoctorData - a data containing the ID and attributes of the current doctor user.
-     * @param patientData PatientData - a data containing the ID and attributes of the current loaded
-     *                    patient user.
+     * @param patientData PatientData - a data containing the ID and attributes of the current loaded patient user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
         super(context);
         this.patientData = patientData;
         this.doctorData = doctorData;
-        this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.previousController = previousController;
+        this.prescriptionManager = new PrescriptionManager(getDatabase());
+        this.reportManager = new ReportManager(getDatabase());
+        this.doctorManager = new DoctorManager(getDatabase());
+        this.contactManager = new ContactManager(getDatabase());
     }
 
     /**
-     * Creates a Linked hashmap of all string representations of doctor loaded patient commands mapped to the method that each
-     * command calls.
-     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded patient commands.
+     * Creates a Linked hashmap of all string representations of doctor loaded patient commands mapped to the method
+     * that each command calls.
+     *
+     * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor loaded
+     *                                          patient commands.
      */
     @Override
     public LinkedHashMap<String, Command> AllCommands() {
@@ -54,13 +59,10 @@ public class DoctorLoadedPatientController extends TerminalController {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
         commands.put("back", Back(previousController));
-
-        /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", ViewPatientAppointments());
-        commands.put("view reports", getReport());
-        commands.put("create report", createReport());
-        commands.put("delete report", deleteReport()); */
-
+        commands.put("view reports", ViewPatientReports());
+        commands.put("create report", CreatePatientReport());
+        commands.put("delete report", DeletePatientReport());
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.put("create prescription", CreatePatientPrescription());
         commands.put("delete prescription", DeletePatientPrescription());
@@ -82,41 +84,88 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command DeletePatientPrescription() {
-        ContactManager contactManager = new ContactManager(getDatabase());
-        ContactData patientContactData = contactManager.getContactData(patientData);
-        ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
         return (x) -> {
-            Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
-            if (0 <= deleteIndex && deleteIndex < prescriptionDataList.size()) {
-                prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
-                doctorView.showSuccessfullyDeletedPrescription();
-            } else {
-                doctorView.showDeletePrescriptionOutOfRangeError();
+            ContactData patientContactData = contactManager.getContactData(patientData);
+            ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
+            if (prescriptionDataList == null || prescriptionDataList.size() == 0) {
+                doctorView.showNoPrescriptionError();
+                return;
             }
+            Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
+            if (IsValidInput(deleteIndex, prescriptionDataList.size())) {
+                return;
+            }
+            prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
+            doctorView.showSuccessfullyDeletedPrescription();
         };
     }
 
-/* PENDING IMPLEMENTATION IN PHASE 2
+
     private Command ViewPatientAppointments() {
         return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
                 .getPatientAppointments(patientData));
     }
 
-    private Command getReport() {
-        return (x) -> new ReportManager(getDatabase()).getReportData(patientData);
-    }
-
-    private Command createReport() {
-        return (x) -> new ReportManager(getDatabase()).addReport(patientData, doctorData,
-                doctorView.reportDetailsPrompt().header(), doctorView.reportDetailsPrompt().body());
-    }
-
-    private Command deleteReport() {
+    private Command ViewPatientReports() {
         return (x) -> {
-            Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
-                    .getContactData(patientData), new ReportManager(getDatabase()).getReportData(patientData));
-            getDatabase().getReportDatabase().remove(deleteIndex);
+            ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
+            if (reportData == null || reportData.size() == 0) {
+                doctorView.showNoReportsError();
+                return;
+            }
+            doctorView.viewAllReports(reportData);
+            Integer targetReport = doctorView.viewReportPrompt();
+            if (IsValidInput(targetReport, reportData.size())) {
+                return;
+            }
+            ReportData selectedReport = reportData.get(targetReport);
+            DoctorData reportDoctor = doctorManager.getUserData(selectedReport.getReportId());
+            if (reportDoctor != null) {
+                ContactData doctorContact = contactManager.getContactData(reportDoctor);
+                doctorView.viewReport(selectedReport, doctorContact);
+            } else {
+                doctorView.viewReport(selectedReport, null);
+            }
         };
-    } */
+    }
 
+    private Command CreatePatientReport() {
+        return (x) -> {
+            ReportDetails reportDetails = doctorView.reportDetailsPrompt();
+            reportManager.addReport(patientData, doctorData, reportDetails.header(), reportDetails.body());
+            doctorView.showReportCreationSuccess();
+        };
+    }
+
+    private Command DeletePatientReport() {
+        return (x) -> {
+            ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
+            if (reportData == null || reportData.size() == 0) {
+                doctorView.showNoReportsError();
+                return;
+            }
+
+            Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
+                    .getContactData(patientData), reportData);
+
+            if (IsValidInput(deleteIndex, reportData.size())) {
+                return;
+            }
+            reportManager.deleteReport(reportData.get(deleteIndex));
+            doctorView.showReportDeletionSuccess();
+
+        };
+    }
+
+    private boolean IsValidInput(Integer deleteIndex, Integer size) {
+        if (deleteIndex == null) {
+            doctorView.showNotIntegerError();
+            return true;
+        }
+        if (deleteIndex < 0 || deleteIndex >= size) {
+            doctorView.showOutOfRangeError();
+            return true;
+        }
+        return false;
+    }
 }
