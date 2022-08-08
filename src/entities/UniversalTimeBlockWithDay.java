@@ -21,6 +21,4 @@ public interface UniversalTimeBlockWithDay extends UniversalTimeBlock {
     default DayOfWeek dayOfWeek(){
         return date().getDayOfWeek();
     }
-
-
 }

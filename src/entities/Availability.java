@@ -33,12 +33,6 @@ public class Availability implements UniversalTimeBlock {
         return dayOfWeek;
     }
 
-    /**
-     * @return LocalTime representing the start time of this instance of AvailabilityData.
-     */
-    public LocalTime getDoctorStartTime() {
-        return doctorStartTime;
-    }
 
     /**
      * Sets the start time of this instance of AvailabilityData.
@@ -50,14 +44,6 @@ public class Availability implements UniversalTimeBlock {
 
     /**
      * @return LocalTime representing the end time of this instance of AvailabilityData.
-     */
-    public LocalTime getDoctorEndTime() {
-        return doctorEndTime;
-    }
-
-    /**
-     * Sets the end time of this instance of AvailabilityData.
-     * @param endTime LocalTime representing the new end time of this instance of AvailabilityData.
      */
     public void setDoctorEndTime(LocalTime endTime) {
         this.doctorEndTime = endTime;
