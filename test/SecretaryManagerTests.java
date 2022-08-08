@@ -28,6 +28,9 @@ public class SecretaryManagerTests {
     private DataMapperGateway<Secretary> secretaryDatabase;
     private SecretaryManager secretaryManager;
     private SecretaryData secretaryData;
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
+    
     /**
      * Initializes the variables used by all the tests before each unit test.
      */
@@ -36,7 +39,7 @@ public class SecretaryManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         secretaryDatabase = originalDatabase.getSecretaryDatabase();
         secretaryManager = new SecretaryManager(originalDatabase);
-        secretaryData = secretaryManager.createSecretary("jeff", "123");
+        secretaryData = secretaryManager.createSecretary(username, password);
     }
 
     /**
@@ -48,16 +51,16 @@ public class SecretaryManagerTests {
         /* Testing if the return secretary data is valid by testing if the fields of are equal to the parameters of
         createSecretary */
         assertEquals("The created secretary data should have the same name as the parameters of " +
-                "createSecretary method", secretaryData.getUsername(), "jeff");
+                "createSecretary method", secretaryData.getUsername(), username);
 
         Secretary loadedSecretary = secretaryDatabase.get(secretaryData.getId());
 
-        /* Testing if the secretary object has been correctly added to the database by testing if the fields of the loaded
-        secretary are equal to the parameters of createSecretary */
+        /* Testing if the secretary object has been correctly added to the database by testing if the fields of the
+        loaded secretary are equal to the parameters of createSecretary */
         assertEquals("Original secretary and loaded secretary should share the same unique username",
-                loadedSecretary.getUsername(), "jeff");
+                loadedSecretary.getUsername(), username);
         assertTrue("Original secretary and loaded secretary should share the same password",
-                loadedSecretary.comparePassword("123"));
+                loadedSecretary.comparePassword(password));
     }
 
     /**
@@ -66,7 +69,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void testCreateSecretaryInvalid() {
         assertNull("creating a user with the same name and password already existing in the database " +
-                "should return null", secretaryManager.createSecretary("jeff", "123"));
+                "should return null", secretaryManager.createSecretary(username, password));
     }
 
     /**
@@ -111,7 +114,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void getUserDataInvalid() {
         assertNull("trying to get user data of a user that doesn't exist should return null",
-                secretaryManager.getUserData("jim"));
+                secretaryManager.getUserData("jimhalpert"));
 
     }
 
@@ -135,7 +138,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
         assertTrue("The password should remain the same before the change ",
-                secretaryDatabase.get(secretaryData.getId()).comparePassword("123"));
+                secretaryDatabase.get(secretaryData.getId()).comparePassword(password));
 
         secretaryManager.changeUserPassword(secretaryData, "456");
 
@@ -160,7 +163,7 @@ public class SecretaryManagerTests {
         assertEquals("Original secretary and loaded secretary should share the same contact information",
                 secretaryData.getContactInfoId(), loadedSecretary.getContactInfoId());
         assertTrue("Original secretary and loaded secretary should share the same password",
-                loadedSecretary.comparePassword("123"));
+                loadedSecretary.comparePassword(password));
     }
 
     /**
@@ -180,7 +183,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
-                        "inputted username", secretaryManager.doesUserExist("jim"));
+                        "inputted username", secretaryManager.doesUserExist("jimhalpert"));
     }
 
     /**
@@ -189,7 +192,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void testCanSignInValid(){
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
-                "database", secretaryManager.canSignIn("jeff", "123"));
+                "database", secretaryManager.canSignIn(username, password));
     }
 
     /**
@@ -198,7 +201,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
-                "in the database", secretaryManager.canSignIn("jim", "password"));
+                "in the database", secretaryManager.canSignIn("jimhalpert", "password"));
     }
 
     /**
@@ -207,7 +210,7 @@ public class SecretaryManagerTests {
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
         assertEquals("A correct account detail sign in should return the respective secretaryData",
-                secretaryManager.signIn(secretaryData.getUsername(), "123").getId(), secretaryData.getId());
+                secretaryManager.signIn(secretaryData.getUsername(), password).getId(), secretaryData.getId());
     }
 
     /**
@@ -215,8 +218,8 @@ public class SecretaryManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
-        assertNull("an incorrect account detail sign in should return null", secretaryManager.signIn("jim",
-                "password"));
+        assertNull("an incorrect account detail sign in should return null", secretaryManager.signIn(
+                "jimhalpert", "password"));
     }
 
     /**

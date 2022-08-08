@@ -27,6 +27,8 @@ public class AdminManagerTests {
     private DataMapperGateway<Admin> adminDatabase;
     private AdminData adminData;
     private AdminManager adminManager;
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
 
     /**
      * Initializes the variables used by all the tests before each unit test.
@@ -36,7 +38,7 @@ public class AdminManagerTests {
         Database originalDatabase = new Database(databaseFolder.toString());
         adminDatabase = originalDatabase.getAdminDatabase();
         adminManager = new AdminManager(originalDatabase);
-        adminData = adminManager.createAdmin("jeff", "123");
+        adminData = adminManager.createAdmin(username, password);
     }
 
     /**
@@ -48,16 +50,16 @@ public class AdminManagerTests {
         /* Testing if the return admin data is valid by testing if the fields of are equal to the parameters of
         createAdmin */
         assertEquals("The created admin data should have the same name as the parameters of " +
-                "createAdmin method", adminData.getUsername(), "jeff");
+                "createAdmin method", adminData.getUsername(), username);
 
         Admin loadedAdmin = adminDatabase.get(adminData.getId());
 
         /* Testing if the admin object has been correctly added to the database by testing if the fields of the loaded
         admin are equal to the parameters of createAdmin */
         assertEquals("Original admin and loaded admin should share the same unique username",
-                loadedAdmin.getUsername(), "jeff");
+                loadedAdmin.getUsername(), username);
         assertTrue("Original admin and loaded admin should share the same password",
-                loadedAdmin.comparePassword("123"));
+                loadedAdmin.comparePassword(password));
     }
 
     /**
@@ -66,7 +68,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testCreateAdminInvalid() {
         assertNull("creating a user with the same name and password already existing in the database " +
-                "should return null", adminManager.createAdmin("jeff", "123"));
+                "should return null", adminManager.createAdmin(username, password));
     }
 
     /**
@@ -107,7 +109,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void getUserDataInvalid() {
         assertNull("trying to get user data of a user that doesn't exist should return null",
-                adminManager.getUserData("jim"));
+                adminManager.getUserData("jimhalpert"));
     }
 
     /**
@@ -132,7 +134,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
         assertTrue("The password should remain the same before the change",
-                adminDatabase.get(adminData.getId()).comparePassword("123"));
+                adminDatabase.get(adminData.getId()).comparePassword(password));
 
         adminManager.changeUserPassword(adminData, "456");
 
@@ -157,7 +159,7 @@ public class AdminManagerTests {
         assertEquals("Original admin and loaded admin should share the same contact information",
                 adminData.getContactInfoId(), loadedAdmin.getContactInfoId());
         assertTrue("Original admin and loaded admin should share the same password",
-                loadedAdmin.comparePassword("123"));
+                loadedAdmin.comparePassword(password));
     }
 
     /**
@@ -177,7 +179,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testUserDoesNotExist(){
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
-                        "inputted username", adminManager.doesUserExist("jim"));
+                        "inputted username", adminManager.doesUserExist("jimhalpert"));
     }
 
     /**
@@ -187,7 +189,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testCanSignInValid(){
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
-                "database", adminManager.canSignIn("jeff", "123"));
+                "database", adminManager.canSignIn(username, password));
     }
 
     /**
@@ -197,7 +199,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testCanSignInInvalid(){
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
-                "in the database", adminManager.canSignIn("jim", "password"));
+                "in the database", adminManager.canSignIn("jimhalpert", "password"));
     }
 
     /**
@@ -206,7 +208,7 @@ public class AdminManagerTests {
     @Test(timeout = 1000)
     public void testSignInExistingAccount(){
         assertEquals("A correct account detail sign in should return the respective adminData",
-                adminManager.signIn(adminData.getUsername(), "123").getId(), adminData.getId());
+                adminManager.signIn(adminData.getUsername(), password).getId(), adminData.getId());
     }
 
     /**
@@ -215,8 +217,8 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
-        assertNull("an incorrect account detail sign in should return null", adminManager.signIn("jim",
-                "password"));
+        assertNull("an incorrect account detail sign in should return null", adminManager.signIn(
+                "jimhalpert", "password"));
     }
 
     /**

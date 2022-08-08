@@ -33,7 +33,7 @@ public class ContactManagerTests {
         database = new Database(databaseFolder.toString());
         PatientManager patientManager = new PatientManager(database);
         contactManager = new ContactManager(database);
-        patientData = patientManager.createPatient("dan", "iel");
+        patientData = patientManager.createPatient("danieldervy", "123456789");
 
     }
 

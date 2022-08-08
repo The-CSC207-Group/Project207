@@ -28,6 +28,8 @@ public class DoctorManagerTests {
     private DataMapperGateway<Doctor> doctorDatabase;
     private DoctorManager doctorManager;
     private DoctorData doctorData;
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
 
     /**
      * Initializes the variables used by all the tests before each unit test.
@@ -37,7 +39,7 @@ public class DoctorManagerTests {
         Database database = new Database(databaseFolder.toString());
         doctorDatabase = database.getDoctorDatabase();
         doctorManager = new DoctorManager(database);
-        doctorData = doctorManager.createDoctor("jeff", "123");
+        doctorData = doctorManager.createDoctor(username, password);
     }
 
     /**
@@ -48,16 +50,16 @@ public class DoctorManagerTests {
         /* Testing if the return doctor data is valid by testing if the fields of are equal to the parameters of
         createDoctor */
         assertEquals("The created doctor data should have the same name as the parameters of " +
-                "createDoctor method", doctorData.getUsername(), "jeff");
+                "createDoctor method", doctorData.getUsername(), username);
 
         Doctor loadedDoctor = doctorDatabase.get(doctorData.getId());
 
         /* Testing if the doctor object has been correctly added to the database by testing if the fields of the loaded
         doctor are equal to the parameters of createDoctor */
         assertEquals("Original doctor and loaded doctor should share the same unique username",
-                loadedDoctor.getUsername(), "jeff");
+                loadedDoctor.getUsername(), username);
         assertTrue("Original doctor and loaded doctor should share the same password",
-                loadedDoctor.comparePassword("123"));
+                loadedDoctor.comparePassword(password));
     }
 
     /**
@@ -66,7 +68,7 @@ public class DoctorManagerTests {
     @Test(timeout = 1000)
     public void testCreateDoctorInvalidUsername() {
         assertNull("creating a user with the same name and password already existing in the database " +
-                "should return null", doctorManager.createDoctor("jeff", "123"));
+                "should return null", doctorManager.createDoctor(username, password));
     }
 
     /**
@@ -89,7 +91,7 @@ public class DoctorManagerTests {
      */
     @Test(timeout = 1000)
     public void testDeleteDoctorInvalidUsername() {
-        boolean deleteDoctorReturnValue = doctorManager.deleteUser("jim");
+        boolean deleteDoctorReturnValue = doctorManager.deleteUser("jimhalpert");
 
         assertFalse("The method should return false when the username does not exist", deleteDoctorReturnValue);
     }
@@ -117,7 +119,7 @@ public class DoctorManagerTests {
     @Test(timeout = 1000)
     public void getUserDataInvalidUsername() {
         assertNull("trying to get user data of a user that doesn't exist should return null",
-                doctorManager.getUserData("jim"));
+                doctorManager.getUserData("jimhalpert"));
 
     }
 
@@ -143,7 +145,7 @@ public class DoctorManagerTests {
     @Test(timeout = 1000)
     public void testChangeUserPassword() {
         assertTrue("The password should remain the same before the change ",
-                doctorDatabase.get(doctorData.getId()).comparePassword("123"));
+                doctorDatabase.get(doctorData.getId()).comparePassword(password));
 
         doctorManager.changeUserPassword(doctorData, "456");
 
@@ -167,7 +169,7 @@ public class DoctorManagerTests {
         assertEquals("Original doctor and loaded doctor should share the same contact information",
                 doctorData.getContactInfoId(), loadedDoctor.getContactInfoId());
         assertTrue("Original doctor and loaded doctor should share the same password",
-                loadedDoctor.comparePassword("123"));
+                loadedDoctor.comparePassword(password));
     }
 
     /**
@@ -188,7 +190,7 @@ public class DoctorManagerTests {
     public void testUserDoesNotExist(){
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
                         "inputted username",
-                doctorManager.doesUserExist("jim"));
+                doctorManager.doesUserExist("jimhalpert"));
     }
 
     /**
@@ -197,7 +199,7 @@ public class DoctorManagerTests {
     @Test(timeout = 1000)
     public void testCanSignInValidLoginDetails(){
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
-                "database", doctorManager.canSignIn("jeff", "123"));
+                "database", doctorManager.canSignIn(username, password));
     }
 
     /**
@@ -206,7 +208,7 @@ public class DoctorManagerTests {
     @Test(timeout = 1000)
     public void testCanSignInInvalidLoginDetails(){
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
-                "in the database", doctorManager.canSignIn("jim", "password"));
+                "in the database", doctorManager.canSignIn("jimhalpert", "password"));
     }
 
     /**
@@ -217,7 +219,7 @@ public class DoctorManagerTests {
         DoctorData loadedDoctorData = doctorManager.getUserData(doctorData.getUsername());
 
         assertEquals("A correct account detail sign in should return the respective doctorData",
-                doctorManager.signIn(doctorData.getUsername(), "123").getId(), loadedDoctorData.getId());
+                doctorManager.signIn(doctorData.getUsername(), password).getId(), loadedDoctorData.getId());
     }
 
     /**
@@ -225,8 +227,8 @@ public class DoctorManagerTests {
      */
     @Test(timeout = 1000)
     public void testSignInNonExistingAccount(){
-        assertNull("an incorrect account detail sign in should return null", doctorManager.signIn("jim",
-                "password"));
+        assertNull("an incorrect account detail sign in should return null", doctorManager.signIn(
+                "jimhalpert", "password"));
     }
 
     /**

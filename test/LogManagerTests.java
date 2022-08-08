@@ -32,7 +32,7 @@ public class LogManagerTests {
     @Before
     public void before() {
         database = new Database(databaseFolder.toString());
-        patient = new Patient("dan","dervi", 1);
+        patient = new Patient("danieldervy","123456789", 1);
         id = database.getPatientDatabase().add(patient);
         logManager = new LogManager(database);
     }

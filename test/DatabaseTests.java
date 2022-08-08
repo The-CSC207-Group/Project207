@@ -23,6 +23,8 @@ public class DatabaseTests {
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database originalDatabase;
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
 
     /**
      * Initializes the variables used by all the tests before each unit test.
@@ -39,7 +41,7 @@ public class DatabaseTests {
     public void testSaveLoadPatientDatabase() {
         DataMapperGateway<Patient> originalPatientDatabase = originalDatabase.getPatientDatabase();
 
-        Patient originalPatient = new Patient("jeff", "123", 123456789, "5544");
+        Patient originalPatient = new Patient(username, password, 123456789, "5544");
 
         Integer patientID = originalPatientDatabase.add(originalPatient);
         originalPatientDatabase.save();
@@ -60,7 +62,7 @@ public class DatabaseTests {
         assertEquals("Original patient and loaded patient should share the same health numbers",
                 originalPatient.getHealthNumber(), loadedPatient.getHealthNumber());
         assertTrue("Original patient and loaded patient should share the same password",
-                loadedPatient.comparePassword("123"));
+                loadedPatient.comparePassword(password));
     }
 
     /**
@@ -71,7 +73,7 @@ public class DatabaseTests {
         DataMapperGateway<Doctor> originalDoctorDatabase = originalDatabase.getDoctorDatabase();
 
         Doctor originalDoctor = new
-                Doctor("jeff", "123", 123456789);
+                Doctor(username, password, 123456789);
 
         Integer doctorID = originalDoctorDatabase.add(originalDoctor);
         originalDoctorDatabase.save();
@@ -88,7 +90,7 @@ public class DatabaseTests {
         assertEquals("Original doctor and loaded doctor should share the same contact information",
                 originalDoctor.getContactInfoId(), loadedDoctor.getContactInfoId());
         assertTrue("Original doctor and loaded doctor should share the same password",
-                loadedDoctor.comparePassword("123"));
+                loadedDoctor.comparePassword(password));
     }
 
     /**
@@ -99,7 +101,7 @@ public class DatabaseTests {
         DataMapperGateway<Secretary> originalSecretaryDatabase = originalDatabase.getSecretaryDatabase();
 
         Secretary originalSecretary = new
-                Secretary("jeff", "123", 123456789);
+                Secretary(username, password, 123456789);
 
         Integer secretaryID = originalSecretaryDatabase.add(originalSecretary);
         originalSecretaryDatabase.save();
@@ -116,7 +118,7 @@ public class DatabaseTests {
         assertEquals("Original secretary and loaded secretary should share the same contact information",
                 originalSecretary.getContactInfoId(), loadedSecretary.getContactInfoId());
         assertTrue("Original secretary and loaded secretary should share the same password",
-                loadedSecretary.comparePassword("123"));
+                loadedSecretary.comparePassword(password));
     }
 
     /**
@@ -127,7 +129,7 @@ public class DatabaseTests {
         DataMapperGateway<Admin> originalAdminDatabase = originalDatabase.getAdminDatabase();
 
         Admin originalAdmin = new
-                Admin("jeff", "123", 123456789);
+                Admin(username, password, 123456789);
 
         Integer adminID = originalAdminDatabase.add(originalAdmin);
         originalAdminDatabase.save();
@@ -144,7 +146,7 @@ public class DatabaseTests {
         assertEquals("Original admin and loaded admin should share the same contact information",
                 originalAdmin.getContactInfoId(), loadedAdmin.getContactInfoId());
         assertTrue("Original admin and loaded admin should share the same password",
-                loadedAdmin.comparePassword("123"));
+                loadedAdmin.comparePassword(password));
     }
 
     /**
@@ -262,7 +264,7 @@ public class DatabaseTests {
     public void testSaveLoadLogDatabase() {
         DataMapperGateway<Log> originalLogDatabase = originalDatabase.getLogDatabase();
 
-        Log originalLog = new Log(21, "jeff");
+        Log originalLog = new Log(21, username);
 
         Integer logID = originalLogDatabase.add(originalLog);
         originalLogDatabase.save();
@@ -290,7 +292,7 @@ public class DatabaseTests {
         DataMapperGateway<Contact> originalContactDatabase = originalDatabase.getContactDatabase();
 
         LocalDate birthday = LocalDate.of(2022, 1, 1);
-        Contact originalContact = new Contact("jeff", "jeff@gmail.com", "12345678",
+        Contact originalContact = new Contact(username, "jeff@gmail.com", "12345678",
                 "jeff street", birthday, "jim", "jim@gmail.com",
                 "87654321", "father");
 

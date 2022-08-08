@@ -45,8 +45,8 @@ public class PrescriptionManagerTests {
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
         prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-        patientData = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        doctorData = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
+        patientData = new PatientManager(originalDatabase).createPatient("mynamejeff", "123456789");
+        doctorData = new DoctorManager(originalDatabase).createDoctor("mynamejim", "123456789");
         prescriptionManager = new PrescriptionManager(originalDatabase);
         LocalDate inactiveLocalExpiryDate = LocalDate.of(2020, 2, 2);
         LocalDate activeLocalExpiryDate = LocalDate.of(2099, 1, 1);
