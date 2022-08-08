@@ -3,6 +3,7 @@ import entities.Availability;
 import entities.Clinic;
 import org.junit.After;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -18,20 +19,34 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class ClinicManagerTests {
+
+    /**
+     * The variable representing the temporary folder where the databases used in these tests are stored until it is
+     * deleted after the tests.
+     */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
+    private ClinicManager clinicManager;
+    private Clinic clinic;
 
+    /**
+     * Initializes the variable before each unit test.
+     */
+    @Before
+    public void before() {
+        Database originalDatabase = new Database(databaseFolder.toString());
+        clinicManager = new ClinicManager(originalDatabase);
+        clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
+                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
+                        LocalTime.of(17, 0)))));
+        originalDatabase.setClinic(clinic);
+    }
+
+    /**
+     * Tests the clinic manager method that changes the clinic's phone number with an input that fails the regex check.
+     */
     @Test(timeout = 1000)
     public void changeClinicPhoneNumberFailsRegex(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                LocalTime.of(17, 0)))));
-        originalDatabase.setClinic(clinic);
-
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-
         assertEquals("The clinic phone should stay same before changing it.",
                clinic.getPhoneNumber(), "4169782011");
 
@@ -41,17 +56,11 @@ public class ClinicManagerTests {
                clinic.getPhoneNumber(), "4169782011");
     }
 
+    /**
+     * Tests the clinic manager method that changes the clinic's phone number with an input that passes the regex check.
+     */
     @Test(timeout = 1000)
     public void changeClinicPhoneNumberPassesRegex(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0)))));
-        originalDatabase.setClinic(clinic);
-
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-
         assertEquals("The clinic phone should stay same before changing it.",
                 clinic.getPhoneNumber(), "4169782011");
 
@@ -61,17 +70,11 @@ public class ClinicManagerTests {
                 clinic.getPhoneNumber(), "4169782012");
     }
 
+    /**
+     * Tests the clinic manager method that changes the clinic's address.
+     */
     @Test(timeout = 1000)
-    public void changeClinicAddress(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0)))));
-        originalDatabase.setClinic(clinic);
-
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-
+    public void changeClinicAddress() {
         assertEquals("The clinic address should stay same before changing it.",
                 clinic.getAddress(), "address");
 
@@ -81,17 +84,11 @@ public class ClinicManagerTests {
                 clinic.getAddress(), "abcde");
     }
 
+    /**
+     * Tests the clinic manager method that changes the clinic's name.
+     */
     @Test(timeout = 1000)
-    public void changeClinicName(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0)))));
-        originalDatabase.setClinic(clinic);
-
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-
+    public void changeClinicName() {
         assertEquals("The clinic name should stay same before changing it.",
                 clinic.getName(), "ABC");
 
@@ -101,18 +98,11 @@ public class ClinicManagerTests {
                 clinic.getName(), "The Clinic");
     }
 
+    /**
+     * Tests the clinic manager method that changes the clinic's email with an input that fails the regex check.
+     */
     @Test(timeout = 1000)
-    public void changeClinicEmailAddressFailsRegex(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0)))));
-
-        originalDatabase.setClinic(clinic);
-
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-
+    public void changeClinicEmailAddressFailsRegex() {
         assertEquals("The clinic address should stay same before changing it.",
                 clinic.getEmail(), "abc@gmail.com");
 
@@ -122,18 +112,11 @@ public class ClinicManagerTests {
                 clinic.getEmail(), "abc@gmail.com");
     }
 
+    /**
+     * Tests the clinic manager method that changes the clinic's email with an input that passes the regex check.
+     */
     @Test(timeout = 1000)
     public void changeClinicEmailAddressPassesRegex(){
-        Database originalDatabase = new Database(databaseFolder.toString());
-
-        Clinic clinic = new Clinic("ABC", "4169782011", "abc@gmail.com", "address",
-                new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
-                        LocalTime.of(17, 0)))));
-
-        originalDatabase.setClinic(clinic);
-
-        ClinicManager clinicManager = new ClinicManager(originalDatabase);
-
         assertEquals("The clinic address should stay same before changing it.",
                 clinic.getEmail(), "abc@gmail.com");
 
@@ -143,6 +126,9 @@ public class ClinicManagerTests {
                 clinic.getEmail(), "ryanm@gmail.com");
     }
 
+    /**
+     * Deletes the temporary database folder used to store the database for tests after tests are done.
+     */
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
