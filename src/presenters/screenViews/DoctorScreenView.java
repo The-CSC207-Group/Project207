@@ -262,9 +262,14 @@ public class DoctorScreenView extends UserScreenView {
      * Views report in full detail.
      * @param report the report to be viewed in full detail.
      */
-    public void viewReport(ReportData report) {
+    public void viewReport(ReportData report, ContactData doctorContact) {
+        if (doctorContact == null) {
+            warningMessage("Doctor who created the report no longer exists.");
+        } else {
+            String doctorName = contactView.viewName(doctorContact);
+            infoMessage("Report noted by Dr. " + doctorName);
+        }
         infoMessage(reportView.viewFull(report));
-
     }
 
     /**

@@ -5,10 +5,7 @@ import dataBundles.*;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 import presenters.screenViews.DoctorScreenView;
-import useCases.AppointmentManager;
-import useCases.ContactManager;
-import useCases.PrescriptionManager;
-import useCases.ReportManager;
+import useCases.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,6 +21,7 @@ public class DoctorLoadedPatientController extends TerminalController {
     private final DoctorScreenView doctorView = new DoctorScreenView();
     private final DoctorController previousController;
     private final ReportManager reportManager;
+    private final ContactManager contactManager;
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
@@ -40,9 +38,10 @@ public class DoctorLoadedPatientController extends TerminalController {
         super(context);
         this.patientData = patientData;
         this.doctorData = doctorData;
-        this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.previousController = previousController;
+        this.prescriptionManager = new PrescriptionManager(getDatabase());
         this.reportManager = new ReportManager(getDatabase());
+        this.contactManager = new ContactManager(getDatabase());
     }
 
     /**
@@ -83,10 +82,9 @@ public class DoctorLoadedPatientController extends TerminalController {
     }
 
     private Command DeletePatientPrescription() {
-        ContactManager contactManager = new ContactManager(getDatabase());
-        ContactData patientContactData = contactManager.getContactData(patientData);
-        ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
         return (x) -> {
+            ContactData patientContactData = contactManager.getContactData(patientData);
+            ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
             if (prescriptionDataList == null || prescriptionDataList.size() == 0) {
                 doctorView.showNoPrescriptionError();
                 return;
@@ -118,7 +116,14 @@ public class DoctorLoadedPatientController extends TerminalController {
             if (IsValidInput(targetReport, reportData.size())) {
                 return;
             }
-            doctorView.viewReport(reportData.get(targetReport));
+            ReportData selectedReport = reportData.get(targetReport);
+            DoctorData reportDoctor = reportManager.getReportDoctor(selectedReport);
+            if (reportDoctor != null) {
+                ContactData doctorContact = contactManager.getContactData(reportDoctor);
+                doctorView.viewReport(selectedReport, doctorContact);
+            } else {
+                doctorView.viewReport(selectedReport, null);
+            }
         };
     }
 

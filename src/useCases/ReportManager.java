@@ -5,6 +5,7 @@ import dataBundles.PatientData;
 import dataBundles.ReportData;
 import database.DataMapperGateway;
 import database.Database;
+import entities.Doctor;
 import entities.Report;
 import utilities.DatabaseQueryUtility;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class ReportManager {
 
     private final DataMapperGateway<Report> reportDatabase;
+    private final DataMapperGateway<Doctor> doctorDatabase;
     private final DatabaseQueryUtility databaseUtils = new DatabaseQueryUtility();
 
     /**
@@ -25,6 +27,7 @@ public class ReportManager {
      */
     public ReportManager(Database database) {
         this.reportDatabase = database.getReportDatabase();
+        this.doctorDatabase = database.getDoctorDatabase();
     }
 
     /**
@@ -47,7 +50,6 @@ public class ReportManager {
      */
     public void addReport(PatientData patientData, DoctorData doctorData, String header, String body) {
         Report report = new Report(header, body, patientData.getId(), doctorData.getId());
-        report.setDoctorUsername(doctorData.getUsername());
         reportDatabase.add(report);
     }
 
@@ -60,6 +62,14 @@ public class ReportManager {
     public ArrayList<ReportData> getReportData(PatientData patientData) {
         return databaseUtils.toArrayList(reportDatabase.stream().
                 filter(p -> p.getPatientId().equals(patientData.getId())).map(ReportData::new));
+    }
+
+    public DoctorData getReportDoctor(ReportData report) {
+        Doctor doctor = doctorDatabase.get(report.getDoctorId());
+        if (doctor == null) {
+            return null;
+        }
+        return new DoctorData(doctor);
     }
 
 }
