@@ -1,13 +1,9 @@
 package useCases;
 
 import dataBundles.DoctorData;
-import dataBundles.TimeBlockData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
-
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Use case class for handling operations and data of doctor users.
@@ -35,8 +31,6 @@ public class DoctorManager extends UserManager<Doctor> {
      */
     public DoctorData createDoctor(String username, String password) {
         Doctor doctor = new Doctor(username, password);
-        // Commented code is pending implementation in phase 2
-//        database.getClinic().getClinicHours().forEach(doctor::addAvailability);
         if (doctorDatabase.add(doctor) != null) {
             doctor.setContactInfoId(newContactInDatabase());
             return new DoctorData(doctor);
