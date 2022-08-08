@@ -52,17 +52,26 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * Show a failed to create user error that is thrown when username is already used.
+     * Show a failed to create user error that is thrown when username or password is in an incorrect format.
      */
-    public void showFailedToRegisterUserError() {
-        errorMessage("Failed to register user account: username already in use");
+    public void showIncorrectFormatError(String userType) {
+        errorMessage("Failed to register " + userType + " account. Make sure:" +
+                "\n1. Username is 6 characters long and only contains letters and numbers." +
+                "\n2. Password is 8 characters long.");
+    }
+
+    /**
+     * Show a failed to create user error that is thrown when username is already in use.
+     */
+    public void showUsernameInUseError(String userType) {
+        errorMessage("Failed to register " + userType + " account: username is already in use.");
     }
 
     /**
      * Show success message when admin successfully creates another user.
      */
-    public void showRegisterUserSuccess() {
-        successMessage("Created user account successfully!");
+    public void showRegisterUserSuccess(String userType) {
+        successMessage("Created " + userType + " account successfully!");
     }
 
     /**

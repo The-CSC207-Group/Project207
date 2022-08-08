@@ -29,12 +29,17 @@ public class PatientManager extends UserManager<Patient> {
      * null if username exists in database.
      */
     public PatientData createPatient(String username, String password) {
-        Patient patient = new Patient(username, password);
-        if (patientDatabase.add(patient) != null) {
-            patient.setContactInfoId(newContactInDatabase());
-            return new PatientData(patient);
+        if (super.regexCheck(username, password)) {
+            Patient patient = new Patient(username, password);
+            if (patientDatabase.add(patient) != null) {
+                patient.setContactInfoId(newContactInDatabase());
+                return new PatientData(patient);
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 
     /**
