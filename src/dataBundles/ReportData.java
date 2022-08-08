@@ -62,4 +62,8 @@ public class ReportData {
         return report.getId();
     }
 
+    public String getDoctorUsername() {
+        return report.getDoctorUsername();
+    }
+
 }

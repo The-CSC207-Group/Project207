@@ -14,6 +14,7 @@ public abstract class Note extends JsonSerializable {
     private String body;
     private Integer patientId;
     private Integer doctorId;
+    private String doctorUsername;
 
     /**
      * Creates an instance of Note.
@@ -27,6 +28,7 @@ public abstract class Note extends JsonSerializable {
         this.body = body;
         this.patientId = patientId;
         this.doctorId = doctorId;
+        this.doctorUsername = null;
     }
 
     /**
@@ -82,11 +84,27 @@ public abstract class Note extends JsonSerializable {
     }
 
     /**
+     * @return String representing the username of the doctor who created the note.
+     */
+    public String getDoctorUsername() {
+        return doctorUsername;
+    }
+
+    /**
+     * Sets the username of the doctor who created the note.
+     * @param doctorUsername String representing the username of the doctor who the note was created by.
+     */
+    public void setDoctorUsername(String doctorUsername) {
+        this.doctorUsername = doctorUsername;
+    }
+
+    /**
      * @return Integer representing the id of the doctor who created the note.
      */
     public Integer getDoctorId() {
         return doctorId;
     }
+
 
     /**
      * Sets the id of the doctor who created the note.
@@ -95,5 +113,6 @@ public abstract class Note extends JsonSerializable {
     public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
     }
+
 
 }

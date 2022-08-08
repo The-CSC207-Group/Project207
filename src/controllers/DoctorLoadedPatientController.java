@@ -91,7 +91,7 @@ public class DoctorLoadedPatientController extends TerminalController {
                 return;
             }
             Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
-            if (CheckUserInteger(deleteIndex, prescriptionDataList.size())) {
+            if (IsValidInput(deleteIndex, prescriptionDataList.size())) {
                 return;
             }
             prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
@@ -114,7 +114,7 @@ public class DoctorLoadedPatientController extends TerminalController {
             }
             doctorView.viewAllReports(reportData);
             Integer targetReport = doctorView.viewReportPrompt();
-            if (CheckUserInteger(targetReport, reportData.size())) {
+            if (IsValidInput(targetReport, reportData.size())) {
                 return;
             }
             doctorView.viewReport(reportData.get(targetReport));
@@ -141,7 +141,7 @@ public class DoctorLoadedPatientController extends TerminalController {
             Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
                     .getContactData(patientData), reportData);
 
-            if (CheckUserInteger(deleteIndex, reportData.size())) {
+            if (IsValidInput(deleteIndex, reportData.size())) {
                 return;
             }
             reportManager.deleteReport(reportData.get(deleteIndex));
@@ -150,7 +150,7 @@ public class DoctorLoadedPatientController extends TerminalController {
         };
     }
 
-    private boolean CheckUserInteger(Integer deleteIndex, Integer size) {
+    private boolean IsValidInput(Integer deleteIndex, Integer size) {
         if (deleteIndex == null) {
             doctorView.showNotIntegerError();
             return true;

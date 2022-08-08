@@ -47,6 +47,7 @@ public class ReportManager {
      */
     public void addReport(PatientData patientData, DoctorData doctorData, String header, String body) {
         Report report = new Report(header, body, patientData.getId(), doctorData.getId());
+        report.setDoctorUsername(doctorData.getUsername());
         reportDatabase.add(report);
     }
 
