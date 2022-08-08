@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 public class PrescriptionManagerTests {
     Database originalDatabase;
     DataMapperGateway<Prescription> prescriptionDatabase;
-    PatientData patient;
-    DoctorData doctor;
+    PatientData patientData;
+    DoctorData doctorData;
     PrescriptionManager prescriptionManager;
 
     /**
@@ -43,8 +43,8 @@ public class PrescriptionManagerTests {
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
         prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-        patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
+        patientData = new PatientManager(originalDatabase).createPatient("test 4", "test4");
+        doctorData = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
         prescriptionManager = new PrescriptionManager(originalDatabase);
     }
 
@@ -57,10 +57,10 @@ public class PrescriptionManagerTests {
         LocalDate localExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(), doctor.getId(), localExpiryDate);
+                Prescription("medicine", "healthy", patientData.getId(), doctorData.getId(), localExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), localExpiryDate);
+                Prescription("bad", "very unhealthy", patientData.getId(),
+                doctorData.getId(), localExpiryDate);
 
         prescriptionDatabase.add(originalPrescription1);
         prescriptionDatabase.add(originalPrescription2);
@@ -68,7 +68,7 @@ public class PrescriptionManagerTests {
         PrescriptionData originalPrescriptionBundle1 = new PrescriptionData(originalPrescription1);
 
         ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllActivePrescriptions(patient);
+                prescriptionManager.getAllActivePrescriptions(patientData);
 
         PrescriptionData loadedPrescriptionData1 = loadedPrescriptionList.get(0);
 
@@ -100,17 +100,17 @@ public class PrescriptionManagerTests {
         LocalDate localExpiryDate = LocalDate.of(2021, 7, 1);
 
         Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), localExpiryDate);
+                Prescription("medicine", "healthy", patientData.getId(),
+                doctorData.getId(), localExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", doctor.getId(),
-                doctor.getId(), localExpiryDate);
+                Prescription("bad", "very unhealthy", doctorData.getId(),
+                doctorData.getId(), localExpiryDate);
 
         prescriptionDatabase.add(originalPrescription1);
         prescriptionDatabase.add(originalPrescription2);
 
         ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllActivePrescriptions(patient);
+                prescriptionManager.getAllActivePrescriptions(patientData);
 
         assertTrue("Since there are no non expired prescriptions, the ArrayList should be empty",
                 loadedPrescriptionList.isEmpty());
@@ -125,17 +125,17 @@ public class PrescriptionManagerTests {
         LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveLocalExpiryDate);
+                Prescription("medicine", "healthy", patientData.getId(),
+                doctorData.getId(), inactiveLocalExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeLocalExpiryDate);
+                Prescription("bad", "very unhealthy", patientData.getId(),
+                doctorData.getId(), activeLocalExpiryDate);
 
         prescriptionDatabase.add(originalPrescription1);
         prescriptionDatabase.add(originalPrescription2);
 
         ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 2 even though one of " +
                         "the prescriptions is expired", 2, loadedPrescriptionList.size());
@@ -151,8 +151,8 @@ public class PrescriptionManagerTests {
         String header = "medicine";
         String body = "healthy";
 
-        PrescriptionData prescriptionData = prescriptionManager.createPrescription(header, body, patient,
-                doctor, localExpiryDate);
+        PrescriptionData prescriptionData = prescriptionManager.createPrescription(header, body, patientData,
+                doctorData, localExpiryDate);
 
         /* testing if the created prescription data is valid by testing if its fields match with the parameters
         * of the createPrescription method */
@@ -161,9 +161,9 @@ public class PrescriptionManagerTests {
         assertEquals("The created prescription data should have the same body as the " +
                         "parameters of createPrescription method", prescriptionData.getBody(), body);
         assertEquals("The created prescription data should have the same patient ID noted as the " +
-                        "parameters of createPrescription method", prescriptionData.getPatientId(), patient.getId());
+                        "parameters of createPrescription method", prescriptionData.getPatientId(), patientData.getId());
         assertEquals("The created prescription data should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
+                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctorData.getId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 prescriptionData.getExpiryDate().compareTo(localExpiryDate), 0);
 
@@ -176,9 +176,9 @@ public class PrescriptionManagerTests {
         assertEquals("The loaded prescription object should have the same body as the " +
                 "parameters of createPrescription method", loadedPrescription.getBody(), body);
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
-                "parameters of createPrescription method", loadedPrescription.getPatientId(), patient.getId());
+                "parameters of createPrescription method", loadedPrescription.getPatientId(), patientData.getId());
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
+                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctorData.getId());
         assertEquals("The loaded prescription object should have the same expiry as the parameters of " +
                         "createPrescription method", prescriptionData.getExpiryDate().compareTo(localExpiryDate),
                 0);
@@ -193,25 +193,25 @@ public class PrescriptionManagerTests {
         LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveLocalExpiryDate);
+                Prescription("medicine", "healthy", patientData.getId(),
+                doctorData.getId(), inactiveLocalExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeLocalExpiryDate);
+                Prescription("bad", "very unhealthy", patientData.getId(),
+                doctorData.getId(), activeLocalExpiryDate);
 
         prescriptionDatabase.add(originalPrescription1);
         prescriptionDatabase.add(originalPrescription2);
 
-        ArrayList<PrescriptionData> loadedPrescriptionList1 =
-                prescriptionManager.getAllPrescriptions(patient);
+        ArrayList<PrescriptionData> loadedPrescriptionDataList1 =
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 2 before a prescription is removed ",
-                2, loadedPrescriptionList1.size());
+                2, loadedPrescriptionDataList1.size());
 
         prescriptionManager.removePrescription(new PrescriptionData(originalPrescription2));
 
         ArrayList<PrescriptionData> loadedPrescriptionList2 =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 1 after a prescription is removed ",
                 1, loadedPrescriptionList2.size());
@@ -219,7 +219,7 @@ public class PrescriptionManagerTests {
         prescriptionManager.removePrescription(new PrescriptionData(originalPrescription1));
 
         ArrayList<PrescriptionData> loadedPrescriptionList3 =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertTrue("The array list should be empty after all prescriptions are removed",
                 loadedPrescriptionList3.isEmpty());
@@ -236,11 +236,11 @@ public class PrescriptionManagerTests {
         LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
 
         Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveLocalExpiryDate);
+                Prescription("medicine", "healthy", patientData.getId(),
+                doctorData.getId(), inactiveLocalExpiryDate);
         Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeLocalExpiryDate);
+                Prescription("bad", "very unhealthy", patientData.getId(),
+                doctorData.getId(), activeLocalExpiryDate);
 
         prescriptionDatabase.add(originalPrescription1);
         prescriptionDatabase.add(originalPrescription2);
