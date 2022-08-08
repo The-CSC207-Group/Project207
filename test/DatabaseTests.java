@@ -13,19 +13,32 @@ import java.util.ArrayList;
 
 public class DatabaseTests {
 
+    /**
+     * The variable representing the temporary folder where the databases used in these tests are stored until it is
+     * deleted after the tests.
+     */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
+    private Database originalDatabase;
 
+    /**
+     * Initializes the variables used by all the tests before each unit test.
+     */
+    @Before
+    public void before() {
+        originalDatabase = new Database(databaseFolder.toString());
+    }
+
+    /**
+     * Tests the saving and loading functionality of patient databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadPatientDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Patient> originalPatientDatabase = originalDatabase.getPatientDatabase();
 
-        Patient originalPatient = new
-                Patient("jeff", "123", 123456789, "5544");
+        Patient originalPatient = new Patient("jeff", "123", 123456789, "5544");
 
         Integer patientID = originalPatientDatabase.add(originalPatient);
-
         originalPatientDatabase.save();
 
         Database loadedDatabase = new Database(databaseFolder.toString());
@@ -47,9 +60,11 @@ public class DatabaseTests {
                 loadedPatient.comparePassword("123"));
     }
 
+    /**
+     * Tests the saving and loading functionality of doctor databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadDoctorDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Doctor> originalDoctorDatabase = originalDatabase.getDoctorDatabase();
 
         Doctor originalDoctor = new
@@ -73,9 +88,11 @@ public class DatabaseTests {
                 loadedDoctor.comparePassword("123"));
     }
 
+    /**
+     * Tests the saving and loading functionality of secretary databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadSecretaryDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Secretary> originalSecretaryDatabase = originalDatabase.getSecretaryDatabase();
 
         Secretary originalSecretary = new
@@ -99,9 +116,11 @@ public class DatabaseTests {
                 loadedSecretary.comparePassword("123"));
     }
 
+    /**
+     * Tests the saving and loading functionality of admin databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadAdminDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Admin> originalAdminDatabase = originalDatabase.getAdminDatabase();
 
         Admin originalAdmin = new
@@ -125,9 +144,11 @@ public class DatabaseTests {
                 loadedAdmin.comparePassword("123"));
     }
 
+    /**
+     * Tests the saving and loading functionality of prescription databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadPrescriptionDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Prescription> originalPrescriptionDatabase = originalDatabase.getPrescriptionDatabase();
 
         LocalDate localExpiryDate = LocalDate.of(2024, 7, 1);
@@ -162,9 +183,11 @@ public class DatabaseTests {
                 getExpiryDate()), 0);
     }
 
+    /**
+     * Tests the saving and loading functionality of report databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadReportDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Report> originalReportDatabase = originalDatabase.getReportDatabase();
 
         Report originalReport = new
@@ -194,9 +217,11 @@ public class DatabaseTests {
                 originalReport.getDoctorId(), loadedReport.getDoctorId());
     }
 
+    /**
+     * Tests the saving and loading functionality of appointment databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadAppointmentDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Appointment> originalAppointmentDatabase = originalDatabase.getAppointmentDatabase();
 
         LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
@@ -227,9 +252,11 @@ public class DatabaseTests {
                 originalAppointment.getDoctorId(), loadedAppointment.getDoctorId());
     }
 
+    /**
+     * Tests the saving and loading functionality of log databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadLogDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Log> originalLogDatabase = originalDatabase.getLogDatabase();
 
         Log originalLog = new Log(21, "jeff");
@@ -252,9 +279,11 @@ public class DatabaseTests {
                 originalLog.getMessage(), loadedLog.getMessage());
     }
 
+    /**
+     * Tests the saving and loading functionality of contact databases.
+     */
     @Test(timeout = 1000)
     public void testSaveLoadContactDatabase() {
-        Database originalDatabase = new Database(databaseFolder.toString());
         DataMapperGateway<Contact> originalContactDatabase = originalDatabase.getContactDatabase();
 
         LocalDate birthday = LocalDate.of(2022, 1, 1);
@@ -292,10 +321,11 @@ public class DatabaseTests {
                 originalContact.getEmergencyRelationship(), loadedContact.getEmergencyRelationship());
     }
 
+    /**
+     * Tests the getting and setting clinic entity functionality of main database of the program.
+     */
     @Test(timeout = 1000)
     public void testSetGetClinic() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-
         ArrayList<Availability> clinicHours = new ArrayList<>();
         clinicHours.add(new Availability(DayOfWeek.of(1), LocalTime.of(8, 0), LocalTime.of(20, 0)));
         Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "abc@gmail.com",
@@ -324,8 +354,12 @@ public class DatabaseTests {
                         getDoctorEndTime()), 0);
     }
 
+    /**
+     * Deletes the temporary database folder used to store the database for tests after tests are done.
+     */
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
+
 }
