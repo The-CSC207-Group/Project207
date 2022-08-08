@@ -97,8 +97,8 @@ public class PrescriptionManagerTests {
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getAllActivePrescriptions(patientData);
 
-        assertTrue("Since there are no non expired prescriptions, the ArrayList should be empty",
-                loadedPrescriptionList.isEmpty());
+        assertEquals("Since there is only one non expired prescriptions, the ArrayList have a length of 1",
+                loadedPrescriptionList.size(), 1);
     }
 
     /**
