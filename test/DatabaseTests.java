@@ -317,11 +317,11 @@ public class DatabaseTests {
         assertEquals("Original clinic and loaded clinic should share the same address",
                 originalClinic.getAddress(), loadedClinic.getAddress());
         assertEquals("Original clinic and loaded clinic should start at the same time",
-                originalClinic.getClinicHours().get(0).getDoctorStartTime().compareTo(loadedClinic.getClinicHours().get(0).
-                        getDoctorStartTime()), 0); // the compareTo function returns 0 when both dates are equal
+                originalClinic.getClinicHours().get(0).startTime().compareTo(loadedClinic.getClinicHours().get(0).
+                        startTime()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original clinic and loaded clinic should end at the same time",
-                originalClinic.getClinicHours().get(0).getDoctorEndTime().compareTo(loadedClinic.getClinicHours().get(0).
-                        getDoctorEndTime()), 0);
+                originalClinic.getClinicHours().get(0).endTime().compareTo(loadedClinic.getClinicHours().get(0).
+                        endTime()), 0);
     }
 
     @After
