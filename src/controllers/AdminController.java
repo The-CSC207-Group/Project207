@@ -38,7 +38,7 @@ public class AdminController extends UserController<Admin> {
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("manage users", LoadUserManagement());
-        commands.put("change clinic info", changeClinicInformation());
+        commands.put("change clinic info", ChangeClinicInformation());
         commands.put("delete self", deleteSelf());
 
         commands.putAll(super.AllCommands());
