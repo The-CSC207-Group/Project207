@@ -252,7 +252,7 @@ public class AppointmentManagerTests {
         checkObjectExistsInDatabase(originalDatabase, true);
         assertTrue("An reschedule time within a clinic's availability should return true when rescheduling an" +
                 " appointment", new AppointmentManager(originalDatabase).rescheduleAppointment(appointment,
-                2022, 12, 5, 12, 0, 60));
+                startTime.plusHours(2), startTime.plusHours(2).plusMinutes(60)));
     }
 
     /**
@@ -266,7 +266,7 @@ public class AppointmentManagerTests {
 
         assertFalse("A reschedule time that is outside a clinic's end time availability should return false",
                 new AppointmentManager(originalDatabase).rescheduleAppointment(appointment,
-                        2022, 12, 5, 16, 0, 120));
+                        startTime.plusHours(4), startTime.plusHours(4).plusMinutes(120)));
         checkObjectExistsInDatabase(originalDatabase, true);
     }
 
@@ -281,7 +281,7 @@ public class AppointmentManagerTests {
 
         assertFalse("A reschedule time that is outside a clinic's start time availability should return false",
                 new AppointmentManager(originalDatabase).rescheduleAppointment(appointment,
-                        2022, 12, 5, 8, 0, 60));
+                        startTime.minusHours(4), startTime.minusHours(4).plusMinutes(60)));
         checkObjectExistsInDatabase(originalDatabase, true);
     }
 
@@ -297,7 +297,7 @@ public class AppointmentManagerTests {
 
         assertFalse("An reschedule time outside a clinic's availability should return false when rescheduling an" +
                 " appointment", new AppointmentManager(originalDatabase).rescheduleAppointment(appointment,
-                2022, 12, 5, 20, 0, 60));
+                startTime.plusHours(8), startTime.plusHours(8).plusMinutes(60)));
         checkObjectExistsInDatabase(originalDatabase, true);
     }
 
@@ -316,7 +316,7 @@ public class AppointmentManagerTests {
 
         assertFalse("An reschedule time conflicting with another appointment should return false",
                 new AppointmentManager(originalDatabase).rescheduleAppointment(appointment1,
-                        2022, 12, 5, 14, 0, 60));
+                        startTime2, startTime2.plusMinutes(60)));
         assertTrue("Appointment 1 should still exist in the database",
                 originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment1.getAppointmentId()));
 
