@@ -27,9 +27,9 @@ import static org.junit.Assert.*;
  */
 public class AppointmentManagerTests {
 
-    Database originalDatabase;
-    DoctorData doctorData;
-    PatientData patientData;
+    private Database originalDatabase;
+    private DoctorData doctorData;
+    private PatientData patientData;
 
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
