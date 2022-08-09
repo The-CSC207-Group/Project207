@@ -168,6 +168,9 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("The doctor is not available during this time.");
     }
 
+    /**
+     * Show message when user has no appointments.
+     */
     public void showNoUserAppointmentsMessage(){
         infoMessage("This user has no appointments.");
     }
@@ -290,6 +293,12 @@ public class SecretaryScreenView extends UserScreenView {
         infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
+
+    /**
+     * View appointments for a given doctor.
+     * @param userContact ContactData - contact data for a given doctor.
+     * @param appointments List<AppointmentData> list of data relating to all appointments scheduled with a doctor.
+     */
     public void viewDoctorAppointments(ContactData userContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));

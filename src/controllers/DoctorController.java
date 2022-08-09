@@ -78,12 +78,20 @@ public class DoctorController extends UserController<Doctor> {
     private Command ViewSchedule() {
         return (x) -> {
             LocalDate viewDate = doctorScreenView.viewSchedulePrompt();
-            doctorScreenView.viewAppointments(new AppointmentManager(getDatabase()).getSingleDayAppointment(doctorData, viewDate));
-        };
-    }
 
-    private Command ViewAllDoctorAppointments() {
-        return (x) -> doctorScreenView.viewAppointments(new AppointmentManager(getDatabase())
-                .getDoctorAppointments(doctorData));
+            if (viewDate == null) {
+                doctorScreenView.showInvalidDateError();
+                return;
+            }
+
+            ArrayList<AppointmentData> appointments =  new AppointmentManager(getDatabase()).
+                    getSingleDayAppointment(doctorData, viewDate);
+
+            if (appointments.isEmpty()){
+                doctorScreenView.showNoAppointmentsMessage();
+            }else{
+                doctorScreenView.viewAppointments(appointments);
+            }
+        };
     }
 }

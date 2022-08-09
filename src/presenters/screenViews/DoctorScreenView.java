@@ -91,6 +91,11 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
+     * Error message when the user inputs an invalid date.
+     */
+    public void showInvalidDateError(){errorMessage("Invalid date.");}
+
+    /**
      * Load an existing patient.
      *
      * @return patient username inputted by doctor.
