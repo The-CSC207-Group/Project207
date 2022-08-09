@@ -1,23 +1,65 @@
 # CSC207 Project Phase 2
 
-**NOTE TO TA:** To grade our phase 1, please switch to the phase 1 branch:
-<https://github.com/The-CSC207-Group/Project207/tree/phase-1>.
+Table of Contents:
 
-_**PLEASE NOTE: Anything related to appointments, availability, absence, timeblocks and reports have been moved to phase 2 of the project, and should not be graded. This is true for any commented code and attributes as well.**_
+<!-- toc -->
 
-## How to Install The Required Dependencies
+- [The Required Dependencies & Note on Including .idea](#the-required-dependencies--note-on-including-idea)
+- [UML Diagram](#uml-diagram)
+- [Usage of Design Patterns](#usage-of-design-patterns)
+- [Usage of Git and GitHub Features](#usage-of-git-and-github-features)
+- [How to Run The Program](#how-to-run-the-program)
+- [Exiting The Program](#exiting-the-program)
+  * [Bootstrapping an Admin](#bootstrapping-an-admin)
+- [Command List:](#command-list)
+  * [Pre-Login:](#pre-login)
+  * [Admin Post-Login:](#admin-post-login)
+  * [Patient Post-Login:](#patient-post-login)
+  * [Doctor Post-Login:](#doctor-post-login)
+  * [Secretary Post-Login:](#secretary-post-login)
+  * [Patient Loaded Doctor Commands:](#patient-loaded-doctor-commands)
+  * [Patient Loaded Secretary Commands:](#patient-loaded-secretary-commands)
+  * [User Management Terminal](#user-management-terminal)
+  * [Contact Commands:](#contact-commands)
+  * [Clinic Commands:](#clinic-commands)
 
-First make sure you are using java 11: In order to set up the SDK, click `Setup SDK` and then select `coretto-11` (if this
-option isn't available, you'll need to add the SDK to Intellij, there are some tutorials provided by intellij you can
-follow).
+<!-- tocstop -->
+
+## The Required Dependencies & Note on Including .idea
+
+First make sure you are using java 11: In order to set up the SDK, click `Setup SDK` and then select `coretto-11`.
+(if this option isn't available, you'll need to add the SDK to Intellij, there are some tutorials provided by intellij
+you can follow).
 
 All libraries will be automatically installed by intellij when the program first starts up.
 
-The xml metadata for the libraries can be found in: `.idea/libraries`
+The xml metadata for the libraries can be found in: `.idea/libraries`. This is why we chose to include the `.idea`
+folder in our repo. Furthermore, in order to have only the necessary files and folders, a `.gitignore` has been added
+accordingly inside the `.idea` folder.
 
 ## UML Diagram
 
-The uml diagram can be found in the design.pdf file in the Project207 directory.
+The uml diagram can be found in the `design/designdoc1.pdf` file in the Project207 directory.
+
+## Usage of Design Patterns
+
+Please read: `design/designdoc2.pdf`.
+
+## Usage of Git and GitHub Features
+
+We effectively and consistently used many git and GitHub features throughout phase 2.
+
+- Created GitHub issue templates to guide us through creating GitHub issues whenever we encounter a bug in the program.
+  * The GitHub issue templates can be found in `.github/ISSUE_TEMPLATE/`.
+- Added a GitHub action to force the use of the conventional commit specs on our PR titles as part of our continuous
+  integration workflow.
+  * The GitHub action can be found `.github/workflows/`.
+- Secured the `main` branch (using GitHub) from any direct commits and force pushes.
+  * This was done by locking the `main` branch using GitHub settings.
+- Used branches whenever we wanted to change part of the code without directly editing the main branch. Each new
+  feature was implemented in its own branch.
+- Used pull requests and GitHub reviews to review, edit and merge branches into the main branch, and resolve merge
+  conflicts.
 
 ## How to Run The Program
 
@@ -25,79 +67,9 @@ To start the program, Run Main.
 
 Use `help` to see all possible commands at any point of the program. 
 
-## Exiting The Program
+### Bootstrapping an Admin
 
-To properly close the program, use the built-in `exit` command that lives in the user login page in order to save data
-to the UserJsonDatabase. If you already logged into a user, use the `sign out` command and then use the `exit` command.
-
-## GitHub Features Used
-
-* Created a GitHub issues template to guide us through creating a GitHub issue whenever we encounter a bug in the program.
-* Added a GitHub action to force the use of conventional commit specifications on our PR titles as part of our continuous integration workflow.
-* Used branches whenever we wanted to change part of the code without directly editing through the main branch. Each new feature was implemented in its own branch.
-* Used pull requests and reviews to review, edit and merge branches into the main branch.
-
-## Design Patterns
-
-
-### State Pattern
-
-The state of the program is handled via the state pattern. For each possible state the program can be in there exists a
-unique controller. Then, when the state of the program changes, we change the current controller. The current controller
-is stored in the Context and every controller has a link to the context in order to change the current controller.
-The while loop for the program exists completely in the context and the job of each controller is just to proccess a 
-single command and if needed change the current controller.
-
-For example the sign in controller processes the command sign in. If it's an unsuccessful sign in it does nothing
-leave the current controller the same (in this case the sign in controller) if it succeeds it decided which controller
-to swap to. In this case one of the User Controllers.
-
-### Command Pattern
-
-Instead of processing input via a long switch statement we instead do it by storing functions in a hashmap where the
-command input string is the key that is linked to the function we want to run. This provided us with numerous benefits. It allowed easy 
-inheritance of commands just by adding maps to each other. As well as providing easy help functionality that never got
-decoupled from the state of the program.
-
-### Iterator/Stream Pattern and Higher Order Functions
-
-We added the ability to turn every database into a stream. allowing us to process them using higher order functions.
-this simplified a lot of complex code into a more readable alternative, and encouraged the reuse of logic.
-This pattern is very similar to the iterator pattern and in more modern languages is often implemented together with the
-iterator pattern (in rust for example streams are actually called iterators). And in java any stream can be turned into
-an iterator.
-The sole difference is that the stream pattern encourages the use of higher order functions such as map and filter and
-getByCondition instead of manual for loops.
-
-an illustration of the difference can be seen in the following code snippets 
-
-```
-Item getItemByName(String name){
-    return database.getBycondition(x -> x.getname.equals(name));
-}
-List<Appointments> getAppointmentsbyDoctorAndPatient(String patientName, String doctorName){
-    return appointmentdatabase.stream()
-                .filter(x -> x.patientname.eqauls(patientname))
-                .filter(x -> x.doctorname.equals(doctorname))
-
-Item getItemByname(String name) {
-    for (x : database.Iterator){
-        if (x.getname.equals(name)){
-            return x
-            }
-    }
-List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String doctorName){
-    List<Appointments> result = new ArrayList();
-    for (x : apointmentdatabase.iterator){
-        if (x.patientname.equals(patientname) | x.doctorname.equals(doctorname){
-            result.append(x)
-            }
-    return result;
-```
-
-### Admin:
-
-To access admin privileges, use the provided admin account:
+To access admin privileges, use the provided bootstrapped admin account:
 
 username: `admin1`
 
@@ -105,8 +77,11 @@ password: `12345678`
 
 To create another admin account, use the `create admin` command while logged into the `admin1` account.
 
-## Command List:
+## Exiting The Program
 
+To properly close the program, use the built-in `exit` command.
+
+## Command List:
 
 ### Pre-Login:
 
