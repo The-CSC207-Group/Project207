@@ -121,12 +121,6 @@ To create another admin account, use the `create admin` command while logged int
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
-* `change user password` - Change the password of another user's account by inputting the user's unique username and new password.
-* `create doctor` - Create a new doctor account and store it in the JsonDatabase.
-* `create secretary` - Create a new secretary account and store it in the JsonDatabase.
-* `create patient`- Create a new patient account and store it in the Json Database.
-* `delete user` - Delete another user's account permanently by inputting their username.
-* `create admin` - Create a new admin account and store it in the JsonDatabase.
 
 ### Patient Post-Login:
 * `view appointments` - Shows a list of all appointments that the patient has with details such as date and time.
@@ -145,8 +139,8 @@ To create another admin account, use the `create admin` command while logged int
 
 ### Doctor Post-Login:
 * `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
-* `view appointments` - Shows a list of all appointments that the doctor has with details such as date and time.
-* `show schedule` - Shows a 
+* `view appointments` - Shows a list of all appointments that the doctor has with details such as date, duration and time.
+* `show schedule` - Prompts the doctor to enter a date and then shows all the appointments for that date.  
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
@@ -172,7 +166,12 @@ To create another admin account, use the `create admin` command while logged int
 
 ### Patient Loaded Doctor Commands:
 _Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. To all other account types, these commands are unreachable._
-* `unload patient` - Unloads the patient, returning the doctor to the basic doctor command screen. Similar to the `back` command.
+* `unload patient` - Unloads the patient, returning the doctor to the basic doctor command screen. 
+* `back` - Unloads the patient, returning the doctor to the basic doctor command screen. Similar to the `unload patient` command.
+* `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
+* `view reports` -Shows a list of all the reports of the loaded patient.
+* `create report` - Creates a new report related to the loaded patient based on inputted data.
+* `delete report` - Deletes a report related to the loaded patient.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
@@ -185,11 +184,28 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 ### Patient Loaded Secretary Commands:
 _Note: These commands can only be accessed by loading a patient through the `load patient` secretary command. To all other account types, these commands are unreachable._
 * `change patient password` - Changes the password of a patient based on inputted data.
-* `unload patient` - Unloads the patient, returning the secretary to the basic secretary command screen. Similar to the `back` command.
+* `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
+* `reschedule appointment` - Reschedules an appointment related to the loaded patient based on inputted data.
+* `book appointment` - Books an appointment for the loaded patient based on inputted data.
+* `cancel appointment` - Cancels an appointment for the loaded patient based on inputted data.
+* `unload patient` - Unloads the patient, returning the secretary to the basic secretary command screen.
+* `back` - Unloads the patient, returning the secretary to the basic secretary command screen. Similar to the `unload patient` command.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
 * `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
+* `help` - Shows a list of all available commands, available at any point in the program.
+* `exit` - Terminates the program.
+
+### User Management Terminal 
+_Note: These commands can only be accessed by an admin through the `manage users` secretary command. To all other account types, these commands are unreachable._
+* `back` - Returns the admin to the basic admin command screen. 
+* `create admin` - Create a new admin account and store it in the JsonDatabase.
+* `create secretary` - Create a new secretary account and store it in the JsonDatabase.
+* `create doctor` - Create a new doctor account and store it in the JsonDatabase.
+* `create patient`- Create a new patient account and store it in the Json Database.
+* `delete user` - Delete another user's account permanently by inputting their username.
+* `change user password` - Change the password of another user's account by inputting the user's unique username and new password.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
