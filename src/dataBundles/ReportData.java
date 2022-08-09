@@ -1,5 +1,3 @@
-// PHASE 2 FILE
-
 package dataBundles;
 
 import entities.Report;
@@ -15,6 +13,7 @@ public class ReportData {
 
     /**
      * Constructor.
+     *
      * @param report Report - report to be stored.
      */
     public ReportData(Report report) {

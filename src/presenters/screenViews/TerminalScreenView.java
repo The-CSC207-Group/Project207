@@ -13,9 +13,19 @@ public class TerminalScreenView extends ScreenView {
      */
     public void showHelpView(List<String> helpCommands) {
         infoMessage("Available Commands:");
-        for (String command : helpCommands) {
-            infoMessage(command);
+        for (int i = 0; i < helpCommands.size(); i++) {
+            infoMessage((i + 1) + ". " + helpCommands.get(i));
         }
+    }
+
+    /**
+     * Ask user whether user wants its spelling corrected after the command prompt
+     * @param correctSpelling the correct spelling of the word
+     * @return whether user wants its spelling corrected after the command prompt
+     */
+    public boolean showCorrectSpellingPrompt(String correctSpelling) {
+        String confirmation = input("Did you mean: " + correctSpelling + "? (y[n]) ");
+        return confirmation.startsWith("y");
     }
 
     /**

@@ -20,6 +20,7 @@ public class DoctorScreenView extends UserScreenView {
      * The contact view that will be used by the doctor's presenter.
      */
     private final ContactView contactView = new ContactView();
+    private final ReportView reportView = new ReportView();
 
     private void showDeleteOutOfRangeError(String itemType) {
         errorMessage("Could not delete " + itemType + ": index out of range.");
@@ -32,10 +33,11 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * View used to delete prescriptions relating to a patient. Show an enumeration of all prescriptions
      * and ask user for integer input corresponding to a selection.
-     * @param patientContact contact information of patient.
+     *
+     * @param patientContact   contact information of patient.
      * @param prescriptionData a list of PrescriptionData to display.
      * @return an integer, representing the selected PrescriptionData from the list.
-     *         null, if and only if the user input is not an integer.
+     * null, if and only if the user input is not an integer.
      */
     public Integer deletePrescriptionPrompt(ContactData patientContact, List<PrescriptionData> prescriptionData) {
         String patientName = contactView.viewName(patientContact);
@@ -60,6 +62,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Ask doctors for prescription details. Used when creating prescriptions.
+     *
      * @return PrescriptionDetails containing header, body and expiry date of prescription.
      */
     public PrescriptionDetails prescriptionDetailsPrompt() {
@@ -89,6 +92,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Load an existing patient.
+     *
      * @return patient username inputted by doctor.
      */
     public String loadPatientPrompt() {
@@ -104,6 +108,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Shows a success message when loading a patient.
+     *
      * @param patientContact ContactData of the patient being loaded.
      */
     public void showSuccessLoadingPatient(ContactData patientContact) {
@@ -113,6 +118,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * View used to view the doctor's appointments that are given.
+     *
      * @param appointments List<AppointmentData> appointments to be viewed.
      */
     public void viewAppointments(List<AppointmentData> appointments) {
@@ -129,34 +135,22 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * View used to delete reports relating to a patient. Show an enumeration of all reports and ask user for
      * integer input corresponding to a selection.
+     *
      * @param patientContact contact information of patient.
-     * @param reportData a list of reportData to display.
+     * @param reportData     a list of reportData to display.
      * @return an integer, representing the selected PrescriptionData from the list.
-     *         null, if and only if the user input is not an integer.
+     * null, if and only if the user input is not an integer.
      */
     public Integer deleteReportPrompt(ContactData patientContact, List<ReportData> reportData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " reports to delete:");
-        new ReportView().viewFullAsEnumerationFromList(reportData);
+        infoMessage(new ReportView().viewFullAsEnumerationFromList(reportData));
         return deleteItemFromEnumerationPrompt("report");
     }
 
     /**
-     * Error raised when the user inputted integer is outside the size of the given data list
-     */
-    public void showDeleteReportOutOfRangeError() {
-        showDeleteOutOfRangeError("report");
-    }
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeleteReportNotAnIntegerError() {
-        showDeleteNotAnIntegerError("report");
-    }
-
-    /**
      * Ask doctors for report details. Used when creating a report.
+     *
      * @return ReportDetails containing header and body of report.
      */
     public ReportDetails reportDetailsPrompt() {
@@ -167,6 +161,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * View doctor's schedule on a specific day.
+     *
      * @return Return the day inputted.
      */
     public LocalDate viewSchedulePrompt() {
@@ -176,6 +171,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Ask doctors for availability details. Used when creating a new availability time slot.
+     *
      * @return ArrayList<Integer> containing the day of the week as an Integer, the starting hour, starting minute and
      * length of the availability time slot.
      */
@@ -191,7 +187,8 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * View used to delete a doctor's availabilities. Show an enumeration of all availabilities and ask doctor for
      * integer input corresponding to a selection.
-     * @param doctorData ContactData of doctor.
+     *
+     * @param doctorData       ContactData of doctor.
      * @param availabilityData List<AvailabilityData> of availability data to display.
      * @return Integer representing the selected AvailabilityData from the list. null, if and only if the user input
      * is not an integer.
@@ -231,6 +228,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Ask doctors for absence details. Used when creating a new absence time slot.
+     *
      * @return ArrayList<Integer> containing the year, month as an integer, day of month and length of the absence in
      * days.
      */
@@ -244,7 +242,8 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * View used to delete a doctor's absence. Show an enumeration of all absences and ask doctor for
      * integer input corresponding to a selection.
-     * @param doctorData ContactData of doctor.
+     *
+     * @param doctorData    ContactData of doctor.
      * @param timeBlockData List<TimeBlockData> of time block data to display.
      * @return Integer representing the selected TimeBlockData from the list. null, if and only if the user input
      * is not an integer.
@@ -270,4 +269,78 @@ public class DoctorScreenView extends UserScreenView {
         showDeleteNotAnIntegerError("report");
     }
 
+
+    /**
+     * Views report in full detail.
+     * @param report the report to be viewed in full detail.
+     */
+    public void viewReport(ReportData report, ContactData doctorContact) {
+        if (doctorContact == null) {
+            warningMessage("Doctor who created the report no longer exists.");
+        } else {
+            String doctorName = contactView.viewName(doctorContact);
+            infoMessage("Report noted by Dr. " + doctorName);
+        }
+        infoMessage(reportView.viewFull(report));
+    }
+
+    /**
+     * Displays to the user the header of each report with an index next to it.
+     * @param reportData An arraylist of ReportData
+     */
+    public void viewAllReports(ArrayList<ReportData> reportData) {
+        infoMessage(reportView.viewAsEnumerationFromList(reportData, reportView::viewHeader));
+    }
+
+    /**
+     * Prompts the user to view a certain report in more detail.
+     * @return an Integer of the chosen report to be viewed.
+     */
+    public Integer viewReportPrompt() {
+        Integer index = inputInt("Enter the index for the report to view in more detail: ");
+        if (index != null) {
+            return index - 1;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Shows the user that an error has occurred due to no reports
+     */
+    public void showNoReportsError() {
+        errorMessage("No reports to view, please create a report");
+    }
+
+    /**
+     * Shows the user that the index they have inputted is out of range.
+     */
+    public void showOutOfRangeError() {
+        errorMessage("You have inputted an index out of range, please try again.");
+    }
+
+    /**
+     * Shows the user that the inputted "index" is not a valid integer.
+     */
+    public void showNotIntegerError() {
+        errorMessage("Please input a valid integer");
+    }
+
+    /**
+     * Shows the user that report has been successfully created.
+     */
+    public void showReportCreationSuccess() {
+        successMessage("Successfully created patient report");
+    }
+
+    /**
+     * Shows the user that report has been successfully deleted.
+     */
+    public void showReportDeletionSuccess() {
+        successMessage("Successfully deleted patient report");
+    }
+
+    public void showNoPrescriptionError() {
+        errorMessage("No prescriptions to view, please create a prescription.");
+    }
 }
