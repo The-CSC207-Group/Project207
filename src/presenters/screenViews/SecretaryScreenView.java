@@ -169,13 +169,22 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
+     * Inputted date and time is in the past.
+     */
+    public void showDayPassedError(){errorMessage("The date and time inputted has passed.");}
+
+    /**
      * Show message when user has no appointments.
      */
     public void showNoUserAppointmentsMessage(){
         infoMessage("This user has no appointments.");
     }
 
+    /**
+     * Doctor has no appointments scheduled.
+     */
     public void showNoDoctorAppointmentsMessage(){infoMessage("No appointments have been scheduled with this doctor.");}
+
     /**
      * Show invalid date error when user inputs the wrong date format.
      */

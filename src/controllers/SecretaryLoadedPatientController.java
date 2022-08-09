@@ -199,6 +199,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
             return;
         }
 
+        if (startDateTime.isBefore(LocalDateTime.now())){
+            secretaryScreenView.showDayPassedError();
+            return;
+        }
+
         if (spansMultipleDays(startDateTime, endDateTime)){
             secretaryScreenView.showSpanningMultipleDaysError();
             return;
