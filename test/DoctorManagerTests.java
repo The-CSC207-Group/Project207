@@ -43,10 +43,10 @@ public class DoctorManagerTests {
     }
 
     /**
-     * Tests the doctor manager's method that creates a new doctor data bundle with a non-existing username.
+     * Tests createDoctor by creating a doctor in the database using a valid and unused username.
      */
     @Test(timeout = 1000)
-    public void testCreateDoctorValidUsername() {
+    public void testCreateDoctorValidUnused() {
         /* Testing if the return doctor data is valid by testing if the fields of are equal to the parameters of
         createDoctor */
         assertEquals("The created doctor data should have the same name as the parameters of " +
@@ -63,12 +63,22 @@ public class DoctorManagerTests {
     }
 
     /**
-     * Tests the doctor manager's method that creates a new doctor data bundle with an existing username.
+     * Tests createDoctor with a username that already exists in the database.
      */
     @Test(timeout = 1000)
-    public void testCreateDoctorInvalidUsername() {
+    public void testCreateDoctorExistingUsername() {
         assertNull("creating a user with the same name and password already existing in the database " +
                 "should return null", doctorManager.createDoctor(username, password));
+    }
+
+    /**
+     * Tests createDoctor with a format that does pass the regex check.
+     */
+    @Test(timeout = 1000)
+    public void testCreateDoctorInvalidFormat() {
+        assertThrows("creating a user with a non-alphanumeric username and a password shorter than 8 " +
+                        "characters will return an illegal argument exception", IllegalArgumentException.class,
+                () -> doctorManager.createDoctor("!!!", "123"));
     }
 
     /**

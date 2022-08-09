@@ -24,7 +24,6 @@ public class SecretaryManagerTests {
      */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
-
     private DataMapperGateway<Secretary> secretaryDatabase;
     private SecretaryManager secretaryManager;
     private SecretaryData secretaryData;
@@ -43,11 +42,10 @@ public class SecretaryManagerTests {
     }
 
     /**
-     * Tests createSecretary by ensuring that the values of the patient stored in the database are the same as the
-     * secretaryData returned from the function.
+     * Tests createSecretary by creating a secretary in the database using a valid and unused username.
      */
     @Test(timeout = 1000)
-    public void testCreateSecretaryValid() {
+    public void testCreateSecretaryValidUnused() {
         /* Testing if the return secretary data is valid by testing if the fields of are equal to the parameters of
         createSecretary */
         assertEquals("The created secretary data should have the same name as the parameters of " +
@@ -64,12 +62,22 @@ public class SecretaryManagerTests {
     }
 
     /**
-     * Tests create secretary with an invalid username and password that already exist in the database.
+     * Tests create secretary with a username that already exists in the database.
      */
     @Test(timeout = 1000)
-    public void testCreateSecretaryInvalid() {
+    public void testCreateSecretaryExistingUsername() {
         assertNull("creating a user with the same name and password already existing in the database " +
                 "should return null", secretaryManager.createSecretary(username, password));
+    }
+
+    /**
+     * Tests create secretary with a format that does pass the regex check.
+     */
+    @Test(timeout = 1000)
+    public void testCreateSecretaryInvalidFormat() {
+        assertThrows("creating a user with a non-alphanumeric username and a password shorter than 8 " +
+                "characters will return an illegal argument exception", IllegalArgumentException.class,
+                () -> secretaryManager.createSecretary("!!!", "123"));
     }
 
     /**
@@ -92,7 +100,6 @@ public class SecretaryManagerTests {
      */
     @Test(timeout = 1000)
     public void getUserData() {
-
         SecretaryData secretaryData1 = secretaryManager.getUserData(secretaryData.getUsername());
 
         /* Testing if the secretaryData and the original secretary are equal by testing whether all the fields of both

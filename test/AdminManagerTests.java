@@ -42,11 +42,10 @@ public class AdminManagerTests {
     }
 
     /**
-     * Tests createAdmin by creating an admin in the database, and that admin with the adminData to ensure they
-     * represent the same entity.
+     * Tests createAdmin by creating an admin in the database using a valid and unused username.
      */
     @Test(timeout = 1000)
-    public void testCreateAdminValid() {
+    public void testCreateAdminValidNonExistent() {
         /* Testing if the return admin data is valid by testing if the fields of are equal to the parameters of
         createAdmin */
         assertEquals("The created admin data should have the same name as the parameters of " +
@@ -62,13 +61,23 @@ public class AdminManagerTests {
                 loadedAdmin.comparePassword(password));
     }
 
-    /**
-     * Test invalid createAdmin with a username that already exists in the database.
-     */
+     /**
+      * Tests createAdmin with a username that already exists in the database.
+      */
     @Test(timeout = 1000)
-    public void testCreateAdminInvalid() {
+    public void testCreateAdminExistingUsername() {
         assertNull("creating a user with the same name and password already existing in the database " +
                 "should return null", adminManager.createAdmin(username, password));
+    }
+
+    /**
+     * Tests createAdmin with a format that does pass the regex check.
+     */
+    @Test(timeout = 1000)
+    public void testCreateAdminInvalidFormat() {
+        assertThrows("creating a user with a non-alphanumeric username and a password shorter than 8 " +
+                        "characters will return an illegal argument exception", IllegalArgumentException.class,
+                () -> adminManager.createAdmin("!!!", "123"));
     }
 
     /**

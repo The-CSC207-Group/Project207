@@ -41,11 +41,10 @@ public class PatientManagerTests {
     }
 
     /**
-     * Tests createPatient by ensuring that the values of the patient stored in the database are the same as the
-     * PatientData returned from the function.
+     * Tests createPatient by creating an patient in the database using a valid and unused username.
      */
     @Test(timeout = 1000)
-    public void testCreatePatientValid() {
+    public void testCreatePatientValidUnused() {
         /* Testing if the return patient data is valid by testing if the fields of are equal to the parameters of
         createPatient */
         assertEquals("The created patient data should have the same name as the parameters of " +
@@ -62,12 +61,22 @@ public class PatientManagerTests {
     }
 
     /**
-     * Tests create patient with an invalid username and password that already exist in the database.
+     * Tests createPatient with a username that already exists in the database.
      */
     @Test(timeout = 1000)
-    public void testCreatePatientInvalid() {
+    public void testCreatePatientExistingUsername() {
         assertNull("creating a user with the same name and password already existing in the database " +
                 "should return null", patientManager.createPatient(username, password));
+    }
+
+    /**
+     * Tests createPatient with a format that does pass the regex check.
+     */
+    @Test(timeout = 1000)
+    public void testCreatePatientInvalidFormat() {
+        assertThrows("creating a user with a non-alphanumeric username and a password shorter than 8 " +
+                        "characters will return an illegal argument exception", IllegalArgumentException.class,
+                () -> patientManager.createPatient("!!!", "123"));
     }
 
     /**
