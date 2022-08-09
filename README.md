@@ -81,9 +81,9 @@ To create another admin account, use the `create admin` command while logged int
 
 To properly close the program, use the built-in `exit` command.
 
-## Command List:
+## Command List
 
-### Pre-Login:
+### Pre-Login
 
 *Note: Only a secretaries and admins can create Patient and Doctor accounts, and only an Admin can create secretary accounts; reference the admin section below.*
 * `sign in` - Log into a pre-existing account saved in the Json Database.
@@ -91,7 +91,7 @@ To properly close the program, use the built-in `exit` command.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Admin Post-Login:
+### Admin Post-Login
 * `manage users` - Loads a new screen which has commands that allow the admin to create/delete users and change their passwords
 * `change clinic info` - access the Clinic screen, with new commands relevant to the clinic. see Clinic Screen below.
 * `delete self` - Delete the current user account permanently.
@@ -104,7 +104,7 @@ To properly close the program, use the built-in `exit` command.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Patient Post-Login:
+### Patient Post-Login
 * `view appointments` - Shows a list of all appointments that the patient has with details such as date and time.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
@@ -119,7 +119,7 @@ To properly close the program, use the built-in `exit` command.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Doctor Post-Login:
+### Doctor Post-Login
 * `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
 * `view appointments` - Shows a list of all appointments that the doctor has with details such as date, duration and time.
 * `show schedule` - Prompts the doctor to enter a date and then shows all the appointments for that date.  
@@ -132,7 +132,7 @@ To properly close the program, use the built-in `exit` command.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Secretary Post-Login:
+### Secretary Post-Login
 * `create patient` - Create a patient and store it in the Json Database.
 * `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Secretary Commands** below.
 * `delete patient` - Deletes a patient user account from the Json Database based on inputted username.
@@ -145,8 +145,7 @@ To properly close the program, use the built-in `exit` command.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-
-### Patient Loaded Doctor Commands:
+### Patient Loaded Doctor Commands
 _Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. To all other account types, these commands are unreachable._
 * `unload patient` - Unloads the patient, returning the doctor to the basic doctor command screen. 
 * `back` - Unloads the patient, returning the doctor to the basic doctor command screen. Similar to the `unload patient` command.
@@ -163,7 +162,7 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Patient Loaded Secretary Commands:
+### Patient Loaded Secretary Commands
 _Note: These commands can only be accessed by loading a patient through the `load patient` secretary command. To all other account types, these commands are unreachable._
 * `change patient password` - Changes the password of a patient based on inputted data.
 * `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
@@ -179,7 +178,7 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### User Management Terminal 
+### User Management Terminal Commands
 _Note: These commands can only be accessed by an admin through the `manage users` secretary command. To all other account types, these commands are unreachable._
 * `back` - Returns the admin to the basic admin command screen. 
 * `create admin` - Create a new admin account and store it in the JsonDatabase.
@@ -191,7 +190,7 @@ _Note: These commands can only be accessed by an admin through the `manage users
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Contact Commands:
+### Contact Commands
 _Note: These commands can only be accessed by running the `contact details` command. These commands are available to all account types._
 * `view contact information` - Shows the name, email, phone number, address, date of birth, and the emergency contact name, email, phone number, and relationship.
 * `change name` - Changes the stored name related to the user based on inputted data.
@@ -207,7 +206,7 @@ _Note: These commands can only be accessed by running the `contact details` comm
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Clinic Commands:
+### Clinic Commands
 _Note: These commands can only be accessed by running the `change clinic info` command. These commands are only available to admin account types._
 * `change clinic name` - Changes the stored name related to the clinic based on inputted data.
 * `change clinic email` - Changes the stored email address related to the clinic based on inputted data.
@@ -218,4 +217,3 @@ _Note: These commands can only be accessed by running the `change clinic info` c
 * `back` - Returns to the previous screen in which the `contact details` command was called.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
-
