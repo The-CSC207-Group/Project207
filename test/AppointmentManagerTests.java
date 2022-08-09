@@ -316,6 +316,22 @@ public class AppointmentManagerTests {
     }
 
     /**
+     * Test rescheduling an appointment at the same time as itself. This should pass as a valid use.
+     */
+    @Test(timeout = 1000)
+    public void testRescheduleAppointmentNoConflictWithSelf() {
+        LocalDateTime startTime1 = LocalDateTime.of(2022, 12, 5, 10, 0);
+        AppointmentData appointment1 = appointmentManager.bookAppointment(patientData, doctorData,
+                startTime1, startTime1.plusMinutes(120));
+
+        assertTrue("An reschedule time conflicting with another appointment should return false",
+                appointmentManager.rescheduleAppointment(appointment1,
+                        startTime1, startTime1.plusMinutes(120)));
+        assertTrue("Appointment 1 should still exist in the database",
+                originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment1.getAppointmentId()));
+    }
+
+    /**
      * Tests that getPatientAppointments returns appointments that are in the database, and vice versa.
      */
     @Test(timeout = 1000)
