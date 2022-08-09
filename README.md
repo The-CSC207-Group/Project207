@@ -92,9 +92,9 @@ List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String 
 
 To access admin privileges, use the provided admin account:
 
-username: `root`
+username: `admin1`
 
-password: `root`
+password: `12345678`
 
 To create another admin account, use the `create admin` command while logged into the `root` account.
 
@@ -110,23 +110,26 @@ To create another admin account, use the `create admin` command while logged int
 * `exit` - Terminates the program.
 
 ### Admin Post-Login:
-* `create admin` - Create a new admin account and store it in the JsonDatabase.
-* `create secretary` - Create a new secretary account and store it in the JsonDatabase.
-* `create doctor` - Create a new doctor account and store it in the JsonDatabase.
-* `create patient`- Create a new patient account and store it in the Json Database.
+* `manage users` - Loads a new screen which has commands that allow the admin to create/delete users and change their passwords
 * `change clinic info` - access the Clinic screen, with new commands relevant to the clinic. see Clinic Screen below.
-* `change user password` - Change the password of another user's account by inputting the user's unique username and new password.
-* `delete user` - Delete another user's account permanently by inputting their username.
 * `delete self` - Delete the current user account permanently.
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - access the contact screen, which new commands relevant to contact. see Contact Screen below.
 * `view clinic info` - Shows a list of information relating to the clinic.
+* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes).
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
+* `change user password` - Change the password of another user's account by inputting the user's unique username and new password.
+* `create doctor` - Create a new doctor account and store it in the JsonDatabase.
+* `create secretary` - Create a new secretary account and store it in the JsonDatabase.
+* `create patient`- Create a new patient account and store it in the Json Database.
+* `delete user` - Delete another user's account permanently by inputting their username.
+* `create admin` - Create a new admin account and store it in the JsonDatabase.
 
 ### Patient Post-Login:
+* `view appointments` - Shows a list of all appointments that the patient has with details such as date and time.
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
@@ -135,17 +138,20 @@ To create another admin account, use the `create admin` command while logged int
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
 * `view clinic info` - Shows a list of information relating to the clinic.
-* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes).
+* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
-* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
 
 ### Doctor Post-Login:
 * `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
+* `view appointments` - Shows a list of all appointments that the doctor has with details such as date and time.
+* `show schedule` - Shows a 
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
 * `view clinic info` - Shows a list of information relating to the clinic.
+* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes). 
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
@@ -158,6 +164,7 @@ To create another admin account, use the `create admin` command while logged int
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
 * `view clinic info` - Shows a list of information relating to the clinic.
+* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes).
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
