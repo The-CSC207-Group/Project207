@@ -324,6 +324,7 @@ public class AppointmentManagerTests {
 
         checkGetAppointmentWithDatabase(originalDatabase, patientData);
     }
+    
     /**
      * Tests that getDoctorAppointments returns appointments that are in the database, and vice versa.
      */
@@ -345,15 +346,15 @@ public class AppointmentManagerTests {
          */
         assertEquals("getAvailabilityDayOfWeek should return the same availability start time as the one stored" +
                 "in the database", appointmentManager.getAvailabilityFromDayOfWeek(
-                DayOfWeek.of(1)).startTime(), originalDatabase.getClinic().getClinicHours().get(0).startTime());
+                DayOfWeek.of(1)).getStartTime(), originalDatabase.getClinic().getClinicHours().get(0).getStartTime());
 
         assertEquals("getAvailabilityDayOfWeek should return the same availability end time as the one stored" +
                 "in the database", appointmentManager.getAvailabilityFromDayOfWeek(
-                DayOfWeek.of(1)).endTime(), originalDatabase.getClinic().getClinicHours().get(0).endTime());
+                DayOfWeek.of(1)).getEndTime(), originalDatabase.getClinic().getClinicHours().get(0).getEndTime());
 
         assertEquals("getAvailabilityDayOfWeek should return the same availability dayOfWeek as the one stored" +
                 "in the database", appointmentManager.getAvailabilityFromDayOfWeek(
-                DayOfWeek.of(1)).getDayOfWeek(), originalDatabase.getClinic().getClinicHours().get(0).dayOfWeek());
+                DayOfWeek.of(1)).getDayOfWeek(), originalDatabase.getClinic().getClinicHours().get(0).getDayOfWeek());
     }
     
     /**
