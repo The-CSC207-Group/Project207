@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -82,8 +83,9 @@ public class AppointmentManager {
             AppointmentData appointmentData, LocalDateTime startTime, LocalDateTime endTime) {
         TimeBlock proposedTime = new TimeBlock(startTime, endTime);
         DoctorData doctorData = new DoctorData(doctorDatabase.get(appointmentData.getDoctorId()));
-        if (isValidAppointment(doctorData, proposedTime)) {
-            database.getAppointmentDatabase().remove(appointmentData.getAppointmentId());
+        Appointment appointment = appointmentDatabase.get(appointmentData.getAppointmentId());
+        if (isValidAppointment(doctorData, proposedTime, appointment)) {
+            database.getAppointmentDatabase().remove(appointment.getId());
             appointmentDatabase.add(
                     new Appointment(proposedTime, appointmentData.getDoctorId(), appointmentData.getPatientId()));
             return true;
@@ -156,11 +158,19 @@ public class AppointmentManager {
     }
 
     private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock) {
-        return doesNotOverlapWithDoctorsAppointments(timeBlock, doctorData) && strictlyOverlapsWithClinicHours(timeBlock);
+        return doesNotOverlapWithAppointments(timeBlock, getDoctorAppointments(doctorData)) && strictlyOverlapsWithClinicHours(timeBlock);
     }
 
-    private boolean doesNotOverlapWithDoctorsAppointments(UniversalTimeBlockWithDay timeBlock, DoctorData doctorData) {
-        return getDoctorAppointments(doctorData).stream()
+    private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock, Appointment excludedAppointment){
+        ArrayList<AppointmentData> appointments = getDoctorAppointments(doctorData).stream().
+                filter(a -> !Objects.equals(a.getAppointmentId(), excludedAppointment.getId())).
+                collect(Collectors.toCollection(ArrayList::new));
+        return doesNotOverlapWithAppointments(timeBlock, appointments) && strictlyOverlapsWithClinicHours(timeBlock);
+    }
+
+
+    private boolean doesNotOverlapWithAppointments(UniversalTimeBlockWithDay timeBlock, ArrayList<AppointmentData> appointments) {
+        return appointments.stream()
                 .noneMatch(x -> overlapsDateAndHours(x.getTimeBlock(), timeBlock));
     }
 
