@@ -231,6 +231,8 @@ _Note: These commands can only be accessed by running the `change clinic info` c
 * `change clinic email` - Changes the stored email address related to the clinic based on inputted data.
 * `change clinic phone number` - Changes the stored phone number related to the clinic based on inputted data.
 * `change clinic address` - Changes the stored address related to the clinic based on inputted data.
+* `change clinic hours` - Changes the stored clinic hours related to the clinic based on inputted data.
+* `remove clinic hours` - Removes the stored clinic hours related to the clinic based on inputted data. 
 * `back` - Returns to the previous screen in which the `contact details` command was called.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
