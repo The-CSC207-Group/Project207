@@ -7,6 +7,8 @@ import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +72,7 @@ public class DoctorScreenView extends UserScreenView {
         String body = input("Enter your prescription body: ");
         infoMessage("Enter the expiry date:");
         LocalDate expiryDate = showLocalDatePrompt();
-        if (expiryDate == null) {
+        if (expiryDate == null || expiryDate.isBefore(ChronoLocalDate.from(LocalDateTime.now()))) {
             return null;
         }
         return new PrescriptionDetails(header, body, expiryDate);
