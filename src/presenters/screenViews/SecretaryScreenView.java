@@ -24,7 +24,7 @@ public class SecretaryScreenView extends UserScreenView {
      * Create a new patient prompt.
      * @return UserCredentials containing username and password.
      */
-    public UserCredentials registerPatientAccount() {
+    public UserCredentials registerPatientPrompt() {
         return registerAccountPrompt("patient");
     }
 
@@ -32,14 +32,23 @@ public class SecretaryScreenView extends UserScreenView {
      * Show success message when patient is created successfully.
      */
     public void showRegisterPatientSuccess() {
-        successMessage("Patient create successfully!");
+        successMessage("Created patient account successfully!");
     }
 
     /**
-     * Show error message when patient cannot be created due to non-unique username.
+     * Show a failed to create patient error that is thrown when username or password is in an incorrect format.
      */
-    public void showRegisterPatientError() {
-        errorMessage("Could not create patient: a user with this username already exists");
+    public void showIncorrectPatientFormatError() {
+        errorMessage("Failed to register patient account. Make sure:" +
+                "\n1. Username is 6 characters long and only contains letters and numbers." +
+                "\n2. Password is 8 characters long.");
+    }
+
+    /**
+     * Show a failed to create patient error that is thrown when username is already in use.
+     */
+    public void showPatientUsernameInUseError() {
+        errorMessage("Failed to register patient account: username is already in use.");
     }
 
     /**
@@ -193,7 +202,7 @@ public class SecretaryScreenView extends UserScreenView {
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
-        successMessage("Successfully booked appointment for " + patientName + " with " + doctorName);
+        successMessage("Successfully booked appointment for " + patientName + " with Dr." + doctorName);
     }
 
     /**
@@ -279,8 +288,12 @@ public class SecretaryScreenView extends UserScreenView {
      * @param userContact Contacting info of patient.
      * @param appointments list of appointments.
      */
-    public void viewAppointments(ContactData userContact, List<AppointmentData> appointments) {
+    public void viewPatientAppointments(ContactData userContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
+    public void viewDoctorAppointments(ContactData userContact, List<AppointmentData> appointments) {
+        infoMessage("Viewing appointments for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 

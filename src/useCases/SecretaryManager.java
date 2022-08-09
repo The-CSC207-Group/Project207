@@ -29,12 +29,17 @@ public class SecretaryManager extends UserManager<Secretary> {
      * null if username exists in database.
      */
     public SecretaryData createSecretary(String username, String password) {
-        Secretary secretary = new Secretary(username, password);
-        if (secretaryDatabase.add(secretary) != null) {
-            secretary.setContactInfoId(newContactInDatabase());
-            return new SecretaryData(secretary);
+        if (super.regexCheck(username, password)) {
+            Secretary secretary = new Secretary(username, password);
+            if (secretaryDatabase.add(secretary) != null) {
+                secretary.setContactInfoId(newContactInDatabase());
+                return new SecretaryData(secretary);
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 
     /**

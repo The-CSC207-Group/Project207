@@ -62,6 +62,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         commands.put("get logs", GetLogs());
         commands.put("contact details", ContactDetails());
         commands.put("view clinic info", ViewClinicInformation());
+        commands.put("back", SignOut());
         commands.put("sign out", SignOut());
         commands.putAll(super.AllCommands());
         return commands;

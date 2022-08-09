@@ -22,16 +22,12 @@ import java.util.LinkedHashMap;
 public class SecretaryLoadedPatientController extends TerminalController {
 
     private final PatientData patientData;
-    private final SecretaryController secretaryController;
+    private final SecretaryController previousController;
     private final PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
-
-
     private final AppointmentManager appointmentManager;
     private final ContactManager contactManager;
-
     private final DoctorManager doctorManager;
-
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
@@ -44,15 +40,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
     public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
                                             PatientData patientData) {
         super(context);
-        this.secretaryController = secretaryController;
+        this.previousController = secretaryController;
         this.patientData = patientData;
         this.patientManager = new PatientManager(getDatabase());
-
-
         this.appointmentManager = new AppointmentManager(getDatabase());
-
         this.contactManager = new ContactManager(getDatabase());
-
         this.doctorManager = new DoctorManager(getDatabase());
     }
 
@@ -66,19 +58,20 @@ public class SecretaryLoadedPatientController extends TerminalController {
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
-        commands.put("change patient password", changePatientPassword());
-        commands.put("unload patient", Back(secretaryController));
-        commands.put("view appointments", viewAppointments());
-        commands.put("reschedule appointment", rescheduleAppointment());
-        commands.put("book appointment", bookAppointment());
-        commands.put("cancel appointment", cancelAppointment());
+        commands.put("change patient password", ChangePatientPassword());
+        commands.put("view appointments", ViewAppointments());
+        commands.put("reschedule appointment", RescheduleAppointment());
+        commands.put("book appointment", BookAppointment());
+        commands.put("cancel appointment", CancelAppointment());
+        commands.put("unload patient", Back(previousController));
+        commands.put("back", Back(previousController));
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.putAll(super.AllCommands());
         return commands;
     }
 
-    private Command changePatientPassword() {
+    private Command ChangePatientPassword() {
         return (x) -> {
             PasswordResetDetails passwordResetDetails = secretaryScreenView.resetPatientPasswordPrompt();
             if (patientManager.changeUserPassword(patientData, passwordResetDetails.password())) {
@@ -89,18 +82,18 @@ public class SecretaryLoadedPatientController extends TerminalController {
         };
     }
 
-    private Command viewAppointments() {
+    private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             if (appointments.size() == 0){
                 secretaryScreenView.showNoUserAppointmentsMessage();
             }else{
-                secretaryScreenView.viewAppointments(contactManager.getContactData(patientData), appointments);
+                secretaryScreenView.viewPatientAppointments(contactManager.getContactData(patientData), appointments);
             }
         };
     }
 
-    private Command bookAppointment() {
+    private Command BookAppointment() {
         return (x) -> {
             LocalDate date = secretaryScreenView.bookAppointmentDayPrompt();
             if (date == null) {
@@ -116,11 +109,10 @@ public class SecretaryLoadedPatientController extends TerminalController {
             viewDoctorSchedule(doctorData, date);
             if (!isDoctorAvailableOnDay(date)){return;}
             bookAppointmentTime(doctorData, date);
-
         };
     }
 
-    private Command cancelAppointment() {
+    private Command CancelAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> data = appointmentManager.getPatientAppointments(patientData);
             if (data.size() == 0){
@@ -139,7 +131,8 @@ public class SecretaryLoadedPatientController extends TerminalController {
             }
         };
     }
-    private Command rescheduleAppointment() {
+
+    private Command RescheduleAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
             ContactData contactData = contactManager.getContactData(patientData);
@@ -153,8 +146,10 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 AppointmentTimeDetails time = secretaryScreenView.bookAppointmentTimePrompt();
                 LocalDateTime startTime = LocalDateTime.of(day.getYear(), day.getMonthValue(), day.getDayOfMonth(),
                         time.time().getHour(), time.time().getMinute());
-                appointmentManager.rescheduleAppointment(
-                        appointments.get(index), startTime, startTime.plusMinutes(time.length()));
+                if (!appointmentManager.rescheduleAppointment( appointments.get(index), startTime,
+                        startTime.plusMinutes(time.length()))){
+                    secretaryScreenView.showInvalidTimeError();
+                }
             }
         };
     }
@@ -174,7 +169,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         if (appointments.size() == 0){
             secretaryScreenView.showNoDoctorAppointmentsMessage();
         }else{
-            secretaryScreenView.viewAppointments(doctorContact, appointments);
+            secretaryScreenView.viewDoctorAppointments(doctorContact, appointments);
         }
         secretaryScreenView.viewDoctorAvailability(doctorContact, availabilityData);
     }
@@ -193,6 +188,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
         LocalDateTime startDateTime = LocalDateTime.of(date, appointmentTimeDetails.time());
         LocalDateTime endDateTime = startDateTime.plusMinutes(appointmentTimeDetails.length());
+
+        if (startDateTime.isAfter(endDateTime)){
+            secretaryScreenView.showInvalidTimeError();
+            return;
+        }
 
         if (spansMultipleDays(startDateTime, endDateTime)){
             secretaryScreenView.showSpanningMultipleDaysError();

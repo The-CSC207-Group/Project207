@@ -26,9 +26,6 @@ public class SecretaryController extends UserController<Secretary> {
     private final DoctorManager doctorManager;
     private final SecretaryManager secretaryManager;
 
-    /* PHASE 2 ATTRIBUTES
-     private final AppointmentManager appointmentManager; */
-
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
      *
@@ -54,9 +51,9 @@ public class SecretaryController extends UserController<Secretary> {
     @Override
     public LinkedHashMap<String, Command> AllCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
-        commands.put("create patient", createPatientAccount());
+        commands.put("create patient", CreatePatientAccount());
         commands.put("load patient", LoadPatient());
-        commands.put("delete patient", deletePatient());
+        commands.put("delete patient", DeletePatient());
 
         commands.putAll(super.AllCommands());
         return commands;
@@ -77,23 +74,23 @@ public class SecretaryController extends UserController<Secretary> {
         };
     }
 
-    private Command createPatientAccount() {
+    private Command CreatePatientAccount() {
         return (x) -> {
-            UserCredentials userCredentials = secretaryScreenView.registerPatientAccount();
-            if (!patientManager.doesUserExist(userCredentials.username()) &&
-                    !doctorManager.doesUserExist(userCredentials.username()) &&
-                    !adminManager.doesUserExist(userCredentials.username()) &&
-                    !secretaryManager.doesUserExist(userCredentials.username())) {
-                patientManager.createPatient(userCredentials.username(), userCredentials.password());
-                secretaryScreenView.showRegisterPatientSuccess();
-            } else {
-                secretaryScreenView.showRegisterPatientError();
+            try {
+                UserCredentials userCred = secretaryScreenView.registerPatientPrompt();
+                PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
+                if (patient == null) {
+                    secretaryScreenView.showPatientUsernameInUseError();
+                } else {
+                    secretaryScreenView.showRegisterPatientSuccess();
+                }
+            } catch (IllegalArgumentException iae) {
+                secretaryScreenView.showIncorrectPatientFormatError();
             }
-
         };
     }
 
-    private Command deletePatient() {
+    private Command DeletePatient() {
         return (x) -> {
             String patient = secretaryScreenView.showDeletePatientPrompt();
             if (patientManager.deleteUser(patient)) {

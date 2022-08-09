@@ -9,6 +9,7 @@ import presenters.screenViews.SignInScreenView;
 import useCases.*;
 
 import java.util.LinkedHashMap;
+import java.util.regex.Pattern;
 
 /**
  * Controller class that processes the commands that users pass in before signing in to their accounts.
@@ -53,32 +54,58 @@ public class SignInController extends TerminalController {
         return commands;
     }
 
-    private void adminSignIn(String username, String password) {
-        AdminData adminData = adminManager.signIn(username, password);
-        AdminController adminController = new AdminController(getContext(), adminData);
-        signInScreenView.showSuccessLogin(adminData.getUsername());
-        changeCurrentController(adminController);
+    private boolean adminSignIn(String username, String password) {
+        if (adminManager.canSignIn(username, password)) {
+            AdminData adminData = adminManager.signIn(username, password);
+            AdminController adminController = new AdminController(getContext(), adminData);
+            signInScreenView.showSuccessLogin(adminData.getUsername());
+            changeCurrentController(adminController);
+            return true;
+        }
+        return false;
     }
 
-    private void patientSignIn(String username, String password) {
-        PatientData patientData = patientManager.signIn(username, password);
-        PatientController patientController = new PatientController(getContext(), patientData);
-        signInScreenView.showSuccessLogin(patientData.getUsername());
-        changeCurrentController(patientController);
+    private boolean patientSignIn(String username, String password) {
+        if (patientManager.canSignIn(username, password)) {
+            PatientData patientData = patientManager.signIn(username, password);
+            PatientController patientController = new PatientController(getContext(), patientData);
+            signInScreenView.showSuccessLogin(patientData.getUsername());
+            changeCurrentController(patientController);
+            return true;
+        }
+        return false;
     }
 
-    private void doctorSignIn(String username, String password) {
-        DoctorData doctorData = doctorManager.signIn(username, password);
-        DoctorController doctorController = new DoctorController(getContext(), doctorData);
-        signInScreenView.showSuccessLogin(doctorData.getUsername());
-        changeCurrentController(doctorController);
+    private boolean doctorSignIn(String username, String password) {
+        if (doctorManager.canSignIn(username, password)) {
+            DoctorData doctorData = doctorManager.signIn(username, password);
+            DoctorController doctorController = new DoctorController(getContext(), doctorData);
+            signInScreenView.showSuccessLogin(doctorData.getUsername());
+            changeCurrentController(doctorController);
+            return true;
+        }
+        return false;
     }
 
-    private void secretarySignIn(String username, String password) {
-        SecretaryData secretaryData = secretaryManager.signIn(username, password);
-        SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
-        signInScreenView.showSuccessLogin(secretaryData.getUsername());
-        changeCurrentController(secretaryController);
+    private boolean secretarySignIn(String username, String password) {
+        if (secretaryManager.canSignIn(username, password)) {
+            SecretaryData secretaryData = secretaryManager.signIn(username, password);
+            SecretaryController secretaryController = new SecretaryController(getContext(), secretaryData);
+            signInScreenView.showSuccessLogin(secretaryData.getUsername());
+            changeCurrentController(secretaryController);
+            return true;
+        }
+        return false;
+    }
+
+    private void signIn(String username, String password) {
+        boolean signedIn = adminSignIn(username, password) ||
+                            patientSignIn(username, password) ||
+                            doctorSignIn(username, password) ||
+                            secretarySignIn(username, password);
+        if (!signedIn) {
+            signInScreenView.showLoginError();
+        }
     }
 
     private Command SignInCommand() {
@@ -87,17 +114,7 @@ public class SignInController extends TerminalController {
             String username = userCredentials.username();
             String password = userCredentials.password();
 
-            if (adminManager.canSignIn(username, password)) {
-                adminSignIn(username, password);
-            } else if (patientManager.canSignIn(username, password)) {
-                patientSignIn(username, password);
-            } else if (doctorManager.canSignIn(username, password)) {
-                doctorSignIn(username, password);
-            } else if (secretaryManager.canSignIn(username, password)) {
-                secretarySignIn(username, password);
-            } else {
-                signInScreenView.showLoginError();
-            }
+            signIn(username, password);
         };
     }
 
