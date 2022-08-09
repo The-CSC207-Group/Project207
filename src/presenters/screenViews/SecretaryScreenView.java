@@ -227,7 +227,7 @@ public class SecretaryScreenView extends UserScreenView {
     public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " appointments to reschedule:");
-        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        infoMessage(new AppointmentView().viewFullAsEnumerationFromList(appointmentData));
         return rescheduleAppointmentFromEnumerationPrompt();
     }
 
@@ -238,7 +238,7 @@ public class SecretaryScreenView extends UserScreenView {
      */
     private Integer rescheduleAppointmentFromEnumerationPrompt() {
         warningMessage("This action cannot be undone!");
-        return inputInt("Input appointment number to reschedule: ");
+        return inputInt("Input appointment number to reschedule: ") - 1;
     }
 
     /**

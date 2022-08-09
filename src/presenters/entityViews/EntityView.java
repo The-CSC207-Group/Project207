@@ -77,7 +77,7 @@ public abstract class EntityView<T> {
     public String viewAsEnumerationFromList(List<? extends T> items, ViewMethod<T> function) {
         StringBuilder appendedOutput = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
-            appendedOutput.append(i + 1).append(":\n");
+            appendedOutput.append(i + 1).append(": ");
             appendedOutput.append(function.view(items.get(i)));
             if (i != items.size() - 1) {
                 appendedOutput.append("\n");
