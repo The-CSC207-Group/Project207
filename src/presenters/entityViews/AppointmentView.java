@@ -14,10 +14,10 @@ public class AppointmentView extends EntityView<AppointmentData> {
      */
     @Override
     public String viewFull(AppointmentData item) {
-        LocalTime startTime = item.getTimeBlock().getStartTime().toLocalTime();
-        LocalTime endTime = item.getTimeBlock().getEndTime().toLocalTime();
+        LocalTime startTime = item.getTimeBlock().getStartDateTime().toLocalTime();
+        LocalTime endTime = item.getTimeBlock().getEndDateTime().toLocalTime();
         return "Appointment starting at " + startTime
-                + " and ending at " + endTime + " on " + item.date() +
+                + " and ending at " + endTime + " on " + item.getLocalDate() +
                 ".";
     }
 

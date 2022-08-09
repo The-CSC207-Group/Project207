@@ -70,11 +70,11 @@ public class AppointmentManagerTests {
                 appointment.getDoctorId(), originalDatabase.getAppointmentDatabase().get(appointment
                         .getAppointmentId()).getDoctorId());
         assertEquals("appointment should share the same start time as the appointment in the database",
-                appointment.getTimeBlock().getStartTime(), originalDatabase.getAppointmentDatabase().get(appointment
-                        .getAppointmentId()).getTimeBlock().getStartTime());
+                appointment.getTimeBlock().getStartDateTime(), originalDatabase.getAppointmentDatabase().get(appointment
+                        .getAppointmentId()).getTimeBlock().getStartDateTime());
         assertEquals("appointment should share the same end time as the appointment in the database",
-                appointment.getTimeBlock().getEndTime(), originalDatabase.getAppointmentDatabase().get(appointment
-                        .getAppointmentId()).getTimeBlock().getEndTime());
+                appointment.getTimeBlock().getEndDateTime(), originalDatabase.getAppointmentDatabase().get(appointment
+                        .getAppointmentId()).getTimeBlock().getEndDateTime());
     }
 
     /**
@@ -353,15 +353,15 @@ public class AppointmentManagerTests {
          */
         assertEquals("getAvailabilityDayOfWeek should return the same availability start time as the one stored" +
                 "in the database", new AppointmentManager(originalDatabase).getAvailabilityFromDayOfWeek(
-                DayOfWeek.of(1)).startTime(), originalDatabase.getClinic().getClinicHours().get(0).startTime());
+                DayOfWeek.of(1)).getStartTime(), originalDatabase.getClinic().getClinicHours().get(0).getStartTime());
 
         assertEquals("getAvailabilityDayOfWeek should return the same availability end time as the one stored" +
                 "in the database", new AppointmentManager(originalDatabase).getAvailabilityFromDayOfWeek(
-                DayOfWeek.of(1)).endTime(), originalDatabase.getClinic().getClinicHours().get(0).endTime());
+                DayOfWeek.of(1)).getEndTime(), originalDatabase.getClinic().getClinicHours().get(0).getEndTime());
 
         assertEquals("getAvailabilityDayOfWeek should return the same availability dayOfWeek as the one stored" +
                 "in the database", new AppointmentManager(originalDatabase).getAvailabilityFromDayOfWeek(
-                DayOfWeek.of(1)).getDayOfWeek(), originalDatabase.getClinic().getClinicHours().get(0).dayOfWeek());
+                DayOfWeek.of(1)).getDayOfWeek(), originalDatabase.getClinic().getClinicHours().get(0).getDayOfWeek());
     }
 
     @After

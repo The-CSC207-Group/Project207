@@ -112,7 +112,7 @@ public class Clinic extends JsonSerializable {
      * Removes the clinic hours of a certain day. Assumes there is at most 1 availability per day of week.
      */
     public void removeClinicHours(DayOfWeek dayOfWeek){
-        clinicHours.removeIf(availability -> availability.dayOfWeek().equals(dayOfWeek));
+        clinicHours.removeIf(availability -> availability.getDayOfWeek().equals(dayOfWeek));
     }
 
 }

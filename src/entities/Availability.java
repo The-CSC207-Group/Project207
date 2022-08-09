@@ -24,12 +24,6 @@ public class Availability implements UniversalTimeBlock {
         this.doctorEndTime = doctorEndTime;
     }
 
-    /**
-     * @return DayOfWeek of this instance of AvailabilityData.
-     */
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
 
 
     /**
@@ -48,17 +42,17 @@ public class Availability implements UniversalTimeBlock {
     }
 
     @Override
-    public LocalTime startTime() {
+    public LocalTime getStartTime() {
         return doctorStartTime;
     }
 
     @Override
-    public LocalTime endTime() {
+    public LocalTime getEndTime() {
         return doctorEndTime;
     }
 
     @Override
-    public DayOfWeek dayOfWeek() {
+    public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 }

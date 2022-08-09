@@ -28,7 +28,7 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
     /**
      * @return LocalDateTime representing the time block's start time.
      */
-    public LocalDateTime getStartTime() {
+    public LocalDateTime getStartDateTime() {
         return startTime;
     }
 
@@ -43,7 +43,7 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
     /**
      * @return LocalDateTime representing the time block's end time.
      */
-    public LocalDateTime getEndTime() {
+    public LocalDateTime getEndDateTime() {
         return endTime;
     }
 
@@ -57,21 +57,21 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
 
 
     @Override
-    public LocalTime startTime() {
+    public LocalTime getStartTime() {
         return startTime.toLocalTime();
     }
 
     @Override
-    public LocalTime endTime() {
+    public LocalTime getEndTime() {
         return endTime.toLocalTime();
     }
 
     @Override
-    public LocalDate date() {
+    public LocalDate getLocalDate() {
         return startTime.toLocalDate();
     }
     @Override
-    public DayOfWeek dayOfWeek() {
+    public DayOfWeek getDayOfWeek() {
         return startTime.getDayOfWeek();
     }
 }

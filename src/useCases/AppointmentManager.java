@@ -144,7 +144,7 @@ public class AppointmentManager {
      */
     public ArrayList<AppointmentData> getSingleDayAppointment(DoctorData doctorData, LocalDate selectedDay) {
         return getDoctorAppointments(doctorData).stream()
-                .filter(x -> x.date().equals(selectedDay))
+                .filter(x -> x.getLocalDate().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -170,7 +170,7 @@ public class AppointmentManager {
 
     private boolean strictlyOverlapsWithClinicHours(UniversalTimeBlock timeBlock) {
         for (Availability i : clinicData.getClinicHours()) {
-            if (i.dayOfWeek().equals(timeBlock.dayOfWeek()) && strictlyWithinHours(i, timeBlock)) {
+            if (i.getDayOfWeek().equals(timeBlock.getDayOfWeek()) && strictlyWithinHours(i, timeBlock)) {
                 return true;
             }
         }
@@ -182,18 +182,18 @@ public class AppointmentManager {
     }
 
     private boolean overlapDate(UniversalTimeBlockWithDay day1, UniversalTimeBlockWithDay day2) {
-        return day1.date().equals(day2.date());
+        return day1.getLocalDate().equals(day2.getLocalDate());
     }
 
     private boolean overlapHours(UniversalTimeBlock time1, UniversalTimeBlock time2) {
-        return isWithinHours(time1, time2.startTime()) || isWithinHours(time1, time2.endTime());
+        return isWithinHours(time1, time2.getStartTime()) || isWithinHours(time1, time2.getEndTime());
     }
 
     private boolean isWithinHours(UniversalTimeBlock timeBlock, LocalTime time) {
-        return !time.isBefore(timeBlock.startTime()) && !time.isAfter(timeBlock.endTime());
+        return !time.isBefore(timeBlock.getStartTime()) && !time.isAfter(timeBlock.getEndTime());
     }
 
     private boolean strictlyWithinHours(UniversalTimeBlock timeBlock, UniversalTimeBlock timeBlock2) {
-        return isWithinHours(timeBlock, timeBlock2.startTime()) && isWithinHours(timeBlock, timeBlock2.endTime());
+        return isWithinHours(timeBlock, timeBlock2.getStartTime()) && isWithinHours(timeBlock, timeBlock2.getEndTime());
     }
 }

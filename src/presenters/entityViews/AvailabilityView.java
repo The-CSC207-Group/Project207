@@ -15,7 +15,7 @@ public class AvailabilityView extends EntityView<AvailabilityData> {
     @Override
     public String viewFull(AvailabilityData item) {
         return dayOfWeekUtils.dayOfWeekToString(item.getDayOfWeek()) + ": " +
-                item.startTime() + " to " + item.endTime();
+                item.getStartTime() + " to " + item.getEndTime();
     }
 
 }

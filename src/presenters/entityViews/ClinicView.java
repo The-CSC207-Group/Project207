@@ -1,6 +1,5 @@
 package presenters.entityViews;
 
-import dataBundles.AppointmentData;
 import dataBundles.AvailabilityData;
 import dataBundles.ClinicData;
 import utilities.DayOfWeekUtils;
@@ -81,7 +80,7 @@ public class ClinicView extends EntityView<ClinicData> {
                                                   DayOfWeek dayOfWeek){
         AvailabilityView availabilityView = new AvailabilityView();
         Optional<AvailabilityData> availabilityData = availabilities.stream().
-                filter(availability -> availability.dayOfWeek().equals(dayOfWeek)).
+                filter(availability -> availability.getDayOfWeek().equals(dayOfWeek)).
                 findFirst();
         if (availabilityData.isPresent()) {
             return availabilityView.viewFull(availabilityData.get());

@@ -72,16 +72,16 @@ public class Appointment extends JsonSerializable implements UniversalTimeBlockW
     }
 
     @Override
-    public LocalTime startTime() {
-        return timeBlock.startTime();
+    public LocalTime getStartTime() {
+        return timeBlock.getStartTime();
     }
     @Override
-    public LocalTime endTime() {
-        return timeBlock.endTime();
+    public LocalTime getEndTime() {
+        return timeBlock.getEndTime();
     }
 
     @Override
-    public LocalDate date() {
-        return timeBlock.date();
+    public LocalDate getLocalDate() {
+        return timeBlock.getLocalDate();
     }
 }

@@ -25,30 +25,30 @@ public class TimeBlockData implements UniversalTimeBlockWithDay {
     /**
      * @return LocalDateTime - start time of the time block.
      */
-    public LocalDateTime getStartTime(){
-        return timeBlock.getStartTime();
+    public LocalDateTime getStartDateTime(){
+        return timeBlock.getStartDateTime();
     }
 
     /**
      * @return LocalDateTime - end time of the time block.
      */
-    public LocalDateTime getEndTime(){
+    public LocalDateTime getEndDateTime(){
+        return timeBlock.getEndDateTime();
+    }
+
+    @Override
+    public LocalTime getStartTime() {
+        return timeBlock.getStartTime();
+    }
+
+    @Override
+    public LocalTime getEndTime() {
         return timeBlock.getEndTime();
     }
 
     @Override
-    public LocalTime startTime() {
-        return timeBlock.startTime();
-    }
-
-    @Override
-    public LocalTime endTime() {
-        return timeBlock.endTime();
-    }
-
-    @Override
-    public LocalDate date() {
-        return timeBlock.date();
+    public LocalDate getLocalDate() {
+        return timeBlock.getLocalDate();
     }
 }
 

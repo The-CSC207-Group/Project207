@@ -23,36 +23,34 @@ public class AvailabilityData implements UniversalTimeBlock {
     /**
      * @return DayOfWeek associated with the stored availability object.
      */
-    public DayOfWeek getDayOfWeek() {
-        return availability.getDayOfWeek();
-    }
+
 
     /**
      * @return LocalTime - the start time of the availability.
      */
     public LocalTime getDoctorStartTime() {
-        return availability.startTime();
+        return availability.getStartTime();
     }
 
     /**
      * @return LocalTime - the end time of the availability.
      */
     public LocalTime getDoctorEndTime() {
-        return availability.endTime();
+        return availability.getEndTime();
     }
 
     @Override
-    public LocalTime startTime() {
-        return availability.startTime();
+    public LocalTime getStartTime() {
+        return availability.getStartTime();
     }
 
     @Override
-    public LocalTime endTime() {
-        return availability.endTime();
+    public LocalTime getEndTime() {
+        return availability.getEndTime();
     }
 
     @Override
-    public DayOfWeek dayOfWeek() {
-        return availability.dayOfWeek();
+    public DayOfWeek getDayOfWeek() {
+        return availability.getDayOfWeek();
     }
 }
