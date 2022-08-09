@@ -324,7 +324,7 @@ public class AppointmentManagerTests {
 
         checkGetAppointmentWithDatabase(originalDatabase, patientData);
     }
-    
+
     /**
      * Tests that getDoctorAppointments returns appointments that are in the database, and vice versa.
      */
