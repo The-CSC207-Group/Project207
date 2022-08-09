@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
@@ -209,14 +210,20 @@ public class SecretaryLoadedPatientController extends TerminalController {
             } else if (index < 0 || index > appointments.size()) {
                 secretaryScreenView.showRescheduleOutOfRangeError();
             } else {
+                AppointmentData appointmentData = appointments.get(index);
+
+                // check if doctor still exists
+                DoctorData doctorData = doctorManager.getUserData(appointments.get(index).getDoctorId());
+                if (doctorData == null) {
+                    secretaryScreenView.showDoctorNoLongerExists();
+                    return;
+                }
+
                 // getting the booking date
                 LocalDate date = getAppointmentBookingDateWithErrorMessages();
                 if (date == null){return;}
 
-                // getting the doctor and checking if they are available.
-                DoctorData doctorData = getDoctorDataWithErrorMessages();
-                if (doctorData == null){return;}
-                viewDoctorSchedule(doctorData, date);
+                viewDoctorSchedule(doctorData, date, appointmentData);
                 if (!isDoctorAvailableOnDay(date)){return;}
 
                 // getting appointment start and end DateTimes
@@ -225,21 +232,33 @@ public class SecretaryLoadedPatientController extends TerminalController {
                 LocalDateTime startTime = startEndTimes.getStartDateTime();
                 LocalDateTime endTime = startEndTimes.getEndDateTime();
 
-                if (!appointmentManager.rescheduleAppointment( appointments.get(index), startTime,
-                        endTime)){
-                    secretaryScreenView.showInvalidTimeError();
+                if (appointmentManager.rescheduleAppointment(appointmentData, startTime, endTime)){
+                    secretaryScreenView.showRescheduleAppointmentSuccess();
+                }else{
+                    secretaryScreenView.showRescheduleAppointmentError();
                 }
             }
         };
     }
 
     private void viewDoctorSchedule(DoctorData doctorData, LocalDate date) {
-        ContactData doctorContact = contactManager.getContactData(doctorData);
-
         ArrayList<AppointmentData> appointments = appointmentManager.getSingleDayAppointment(
                 doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+        viewDoctorScheduleGivenAppointments(doctorData, date, appointments);
+    }
 
+    private void viewDoctorSchedule(DoctorData doctorData, LocalDate date, AppointmentData excludedAppointment) {
+        ArrayList<AppointmentData> appointments = appointmentManager.getSingleDayAppointment(
+                doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
+        appointments = appointments.stream().
+                filter(a -> !a.getAppointmentId().equals(excludedAppointment.getAppointmentId())).
+                collect(Collectors.toCollection(ArrayList::new));
+        viewDoctorScheduleGivenAppointments(doctorData, date, appointments);
+    }
 
+    private void viewDoctorScheduleGivenAppointments(DoctorData doctorData, LocalDate date,
+                                                     ArrayList<AppointmentData> appointments){
+        ContactData doctorContact = contactManager.getContactData(doctorData);
         AvailabilityData availabilityData = appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek());
         if (availabilityData == null){
             secretaryScreenView.showNoAvailabilityError(doctorContact);
@@ -252,6 +271,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
         }
         secretaryScreenView.viewDoctorAvailability(doctorContact, availabilityData);
     }
+
     private boolean isDoctorAvailableOnDay(LocalDate date){
         AvailabilityData availabilityData = appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek());
         return availabilityData != null;

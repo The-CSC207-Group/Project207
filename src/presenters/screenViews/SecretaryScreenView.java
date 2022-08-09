@@ -120,7 +120,11 @@ public class SecretaryScreenView extends UserScreenView {
      * Show doctor does not exist error when booking appointment.
      */
     public void showDoctorDoesNotExistError() {
-        errorMessage("Appointment booking error: a doctor with that username does not exist.");
+        errorMessage("Error: a doctor with that username does not exist.");
+    }
+
+    public void showDoctorNoLongerExists(){
+        errorMessage("The doctor with whom the appointment was scheduled is no longer a part of the clinic.");
     }
 
     /**
@@ -189,19 +193,31 @@ public class SecretaryScreenView extends UserScreenView {
      * Show invalid date error when user inputs the wrong date format.
      */
     public void showInvalidDateError() {
-        errorMessage("Appointment booking error: invalid date.");
+        errorMessage("Error: invalid date.");
     }
 
     /**
      * Show error for incorrectly inputted time info.
      */
-    public void showInvalidTimeError(){errorMessage("Appointment booking error: invalid time.");}
+    public void showInvalidTimeError(){errorMessage("Error: invalid time.");}
+
+    /**
+     * Success message shown when appointment is rescheduled.
+     */
+    public void showRescheduleAppointmentSuccess(){successMessage("Successfully rescheduled appointment.");}
+
+    /**
+     * Error message shown when appointment can not be scheduled due to conflicts with another appointment on not
+     * falling within availability.
+     */
+    public void showRescheduleAppointmentError(){errorMessage("Failed to reschedule appointment as the doctor is not" +
+            " available during this time");}
 
     /**
      * Show appointment spanning multiple days error when it does so.
      */
     public void showSpanningMultipleDaysError(){
-        errorMessage("Appointment booking error: appointment spans multiple days.");
+        errorMessage("Error: appointment spans multiple days.");
     }
 
     /**
