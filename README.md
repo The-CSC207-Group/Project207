@@ -99,7 +99,7 @@ To properly close the program, use the built-in `exit` command.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - access the contact screen, which new commands relevant to contact. see Contact Screen below.
 * `view clinic info` - Shows a list of information relating to the clinic.
-* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes).
+* `back` - Back is an alias for the `sign out` command (ease of access purposes).
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
@@ -114,7 +114,7 @@ To properly close the program, use the built-in `exit` command.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
 * `view clinic info` - Shows a list of information relating to the clinic.
-* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes).
+* `back` - Back is an alias for the `sign out` command (ease of access purposes).
 * `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
@@ -127,7 +127,7 @@ To properly close the program, use the built-in `exit` command.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
 * `view clinic info` - Shows a list of information relating to the clinic.
-* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes). 
+* `back` - Back is an alias for the `sign out` command (ease of access purposes).
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
@@ -140,7 +140,7 @@ To properly close the program, use the built-in `exit` command.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
 * `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
 * `view clinic info` - Shows a list of information relating to the clinic.
-* `back` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page. Back is an alias for sign out (ease of access purposes).
+* `back` - Back is an alias for the `sign out` command (ease of access purposes).
 * `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
@@ -148,7 +148,7 @@ To properly close the program, use the built-in `exit` command.
 ### Patient Loaded Doctor Commands
 _Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. To all other account types, these commands are unreachable._
 * `unload patient` - Unloads the patient, returning the doctor to the basic doctor command screen. 
-* `back` - Unloads the patient, returning the doctor to the basic doctor command screen. Similar to the `unload patient` command.
+* `back` - Back is an alias for the `unload patient` command (ease of access purposes). 
 * `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
 * `view reports` -Shows a list of all the reports of the loaded patient.
 * `create report` - Creates a new report related to the loaded patient based on inputted data.
@@ -170,7 +170,7 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 * `book appointment` - Books an appointment for the loaded patient based on inputted data.
 * `cancel appointment` - Cancels an appointment for the loaded patient based on inputted data.
 * `unload patient` - Unloads the patient, returning the secretary to the basic secretary command screen.
-* `back` - Unloads the patient, returning the secretary to the basic secretary command screen. Similar to the `unload patient` command.
+* `back` - Back is an alias for the `unload patient` command (ease of access purposes).
 * `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
