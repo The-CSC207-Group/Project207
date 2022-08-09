@@ -101,8 +101,24 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
     private Command BookAppointment() {
         return (x) -> {
+            // getting the booking date
+            LocalDate date = getAppointmentBookingDateWithErrorMessages();
+            if (date == null){return;}
 
-            AppointmentData appointmentData = bookAppointment();
+            // getting the doctor and checking if they are available.
+            DoctorData doctorData = getDoctorDataWithErrorMessages();
+            if (doctorData == null){return;}
+            viewDoctorSchedule(doctorData, date);
+            if (!isDoctorAvailableOnDay(date)){return;}
+
+            // getting appointment start and end DateTimes
+            TimeBlockData startEndTimes = getStartEndTimeBlockWithErrorMessages(date);
+            if (startEndTimes == null){return;}
+            LocalDateTime startTime = startEndTimes.getStartDateTime();
+            LocalDateTime endTime = startEndTimes.getEndDateTime();
+
+            AppointmentData appointmentData = appointmentManager.bookAppointment(patientData, doctorData, startTime, endTime);
+
             if (appointmentData == null){
                 secretaryScreenView.showAppointmentBookingError();
             }else{
@@ -110,26 +126,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
                         contactManager.getContactData(doctorManager.getUserData(appointmentData.getDoctorId())));
             }
         };
-    }
-
-    private AppointmentData bookAppointment(){
-        // getting the booking date
-        LocalDate date = getAppointmentBookingDateWithErrorMessages();
-        if (date == null){return null;}
-
-        // getting the doctor and checking if they are available.
-        DoctorData doctorData = getDoctorDataWithErrorMessages();
-        viewDoctorSchedule(doctorData, date);
-        if (!isDoctorAvailableOnDay(date)){return null;}
-
-        // getting appointment start and end DateTimes
-        TimeBlockData startEndTimes = getStartEndTimeBlockWithErrorMessages(date);
-        if (startEndTimes == null){return null;}
-        LocalDateTime startTime = startEndTimes.getStartDateTime();
-        LocalDateTime endTime = startEndTimes.getEndDateTime();
-
-        // booking an appointment
-        return appointmentManager.bookAppointment(patientData, doctorData, startTime, endTime);
     }
 
     private LocalDate getAppointmentBookingDateWithErrorMessages(){
@@ -210,7 +206,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
             Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
             if (index == null) {
                 secretaryScreenView.showRescheduleNotAnIntegerError("null");
-            } else if (index >= 0 && index > appointments.size()) {
+            } else if (index < 0 || index > appointments.size()) {
                 secretaryScreenView.showRescheduleOutOfRangeError();
             } else {
                 // getting the booking date
@@ -219,6 +215,7 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
                 // getting the doctor and checking if they are available.
                 DoctorData doctorData = getDoctorDataWithErrorMessages();
+                if (doctorData == null){return;}
                 viewDoctorSchedule(doctorData, date);
                 if (!isDoctorAvailableOnDay(date)){return;}
 
