@@ -108,8 +108,6 @@ public class SecretaryScreenView extends UserScreenView {
         successMessage("Success loading patient: " + patientData.getUsername());
     }
 
-    // ALL METHODS BELOW ARE PENDING PHASE 2 IMPLEMENTATION
-
     /**
      * Ask for doctor username to book appointment.
      * @return String representing the doctor's username.

@@ -58,8 +58,6 @@ public abstract class ScreenView {
      * @param message the text to be printed.
      */
     protected void warningMessage(String message) {
-        // Note: in phase 1, we only use this for a single message type, but we are keeping this method to make warning
-        // messages extensible in phase 2
         System.out.println("⚠ " + message);
     }
 

@@ -91,8 +91,6 @@ public class Clinic extends JsonSerializable {
         this.address = address;
     }
 
-    // ALL CODE BELOW IS FOR PHASE 2
-
     /**
      * @return TimeBlock representing the clinic's hours of operation.
      */
