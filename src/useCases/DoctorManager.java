@@ -1,6 +1,7 @@
 package useCases;
 
 import dataBundles.DoctorData;
+import dataBundles.ReportData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
@@ -30,14 +31,19 @@ public class DoctorManager extends UserManager<Doctor> {
      * otherwise returns null.
      */
     public DoctorData createDoctor(String username, String password) {
-        Doctor doctor = new Doctor(username, password);
-        // Commented code is pending implementation in phase 2
-//        database.getClinic().getClinicHours().forEach(doctor::addAvailability);
-        if (doctorDatabase.add(doctor) != null) {
-            doctor.setContactInfoId(newContactInDatabase());
-            return new DoctorData(doctor);
+        if (super.regexCheck(username, password)) {
+            Doctor doctor = new Doctor(username, password);
+            // Commented code is pending implementation in phase 2
+            //        database.getClinic().getClinicHours().forEach(doctor::addAvailability);
+            if (doctorDatabase.add(doctor) != null) {
+                doctor.setContactInfoId(newContactInDatabase());
+                return new DoctorData(doctor);
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-        return null;
     }
 
     /**
@@ -59,6 +65,14 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorData getUserData(String username) {
         return getUserHelper(username).map(DoctorData::new)
                 .orElse(null);
+    }
+
+    public DoctorData getUserData(Integer id) {
+        Doctor doctor = doctorDatabase.get(id);
+        if (doctor == null) {
+            return null;
+        }
+        return new DoctorData(doctor);
     }
 
     private DoctorData toDoctorData(Doctor doctor) {

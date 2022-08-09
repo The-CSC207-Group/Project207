@@ -72,37 +72,61 @@ public class AdminUserManagementController extends TerminalController {
 
     private Command CreateAdmin(){
         return (x) -> {
-            UserCredentials userCred = adminScreenView.registerAdminPrompt();
-            AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
-            displayCreateAccountSuccess(admin);
+            try {
+                UserCredentials userCred = adminScreenView.registerAdminPrompt();
+                AdminData admin = adminManager.createAdmin(userCred.username(), userCred.password());
+                displaySuccessOnCreateAccount(admin, "admin");
+            } catch (IllegalArgumentException iae) {
+                adminScreenView.showIncorrectFormatError("admin");
+            }
         };
     }
 
     private Command CreateDoctor(){
         DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
-            UserCredentials userCred = adminScreenView.registerDoctorPrompt();
-            DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
-            displayCreateAccountSuccess(doctor);
+            try {
+                UserCredentials userCred = adminScreenView.registerDoctorPrompt();
+                DoctorData doctor = doctorManager.createDoctor(userCred.username(), userCred.password());
+                displaySuccessOnCreateAccount(doctor, "doctor");
+            } catch (IllegalArgumentException iae) {
+                adminScreenView.showIncorrectFormatError("doctor");
+            }
         };
     }
 
     private Command CreatePatient(){
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
-            UserCredentials userCred = adminScreenView.registerPatientPrompt();
-            PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
-            displayCreateAccountSuccess(patient);
+            try {
+                UserCredentials userCred = adminScreenView.registerPatientPrompt();
+                PatientData patient = patientManager.createPatient(userCred.username(), userCred.password());
+                displaySuccessOnCreateAccount(patient, "patient");
+            } catch (IllegalArgumentException iae) {
+                adminScreenView.showIncorrectFormatError("patient");
+            }
         };
     }
 
     private Command CreateSecretary(){
         SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
-            UserCredentials userCred = adminScreenView.registerSecretaryPrompt();
-            SecretaryData secretary = secretaryManager.createSecretary(userCred.username(), userCred.password());
-            displayCreateAccountSuccess(secretary);
+            try {
+                UserCredentials c = adminScreenView.registerSecretaryPrompt();
+                SecretaryData secretary = secretaryManager.createSecretary(c.username(), c.password());
+                displaySuccessOnCreateAccount(secretary, "secretary");
+            } catch (IllegalArgumentException iae) {
+                adminScreenView.showIncorrectFormatError("secretary");
+            }
         };
+    }
+
+    private void displaySuccessOnCreateAccount(UserData<?> user, String userType) {
+        if (user == null) {
+            adminScreenView.showUsernameInUseError(userType);
+        } else {
+            adminScreenView.showRegisterUserSuccess(userType);
+        }
     }
 
     private Command DeleteUser() {
@@ -117,14 +141,6 @@ public class AdminUserManagementController extends TerminalController {
                 adminScreenView.showFailedToDeleteUserError();
             }
         };
-    }
-
-    private void displayCreateAccountSuccess(UserData<?> user) {
-        if (user == null) {
-            adminScreenView.showFailedToRegisterUserError();
-        } else {
-            adminScreenView.showRegisterUserSuccess();
-        }
     }
 
     private <T extends User> boolean changePassword(UserManager<T> manager, String name) {
