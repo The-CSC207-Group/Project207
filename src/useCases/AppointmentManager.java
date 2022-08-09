@@ -99,7 +99,8 @@ public class AppointmentManager {
      * Appointments.
      */
     public ArrayList<AppointmentData> getPatientAppointments(PatientData patientData) {
-        return getAllPatientAppointments(patientData.getId())
+        return getAppointments().stream()
+                .filter(x -> x.getPatientId().equals(patientData.getId()))
                 .map(AppointmentData::new)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -146,11 +147,6 @@ public class AppointmentManager {
         return getDoctorAppointments(doctorData).stream()
                 .filter(x -> x.getLocalDate().equals(selectedDay))
                 .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    private Stream<Appointment> getAllPatientAppointments(Integer patientId) {
-        return getAppointments().stream()
-                .filter(x -> x.getPatientId().equals(patientId));
     }
 
     private ArrayList<Appointment> getAppointments() {

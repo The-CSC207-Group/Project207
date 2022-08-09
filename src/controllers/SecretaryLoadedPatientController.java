@@ -137,6 +137,9 @@ public class SecretaryLoadedPatientController extends TerminalController {
     private Command RescheduleAppointment() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
+            if (appointments.size() == 0){
+                secretaryScreenView.showNoDoctorAppointmentsMessage();
+            }
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
             if (index == null) {
