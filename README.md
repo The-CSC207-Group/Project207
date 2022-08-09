@@ -30,6 +30,13 @@ Use `help` to see all possible commands at any point of the program.
 To properly close the program, use the built-in `exit` command that lives in the user login page in order to save data
 to the UserJsonDatabase. If you already logged into a user, use the `sign out` command and then use the `exit` command.
 
+## GitHub Features Used
+
+* Created a GitHub issues template to guide us through creating a GitHub issue whenever we encounter a bug in the program.
+* Added a GitHub action to force the use of conventional commit specifications on our PR titles as part of our continuous integration workflow.
+* Used branches whenever we wanted to change part of the code without directly editing through the main branch. Each new feature was implemented in its own branch.
+* Used pull requests and reviews to review, edit and merge branches into the main branch.
+
 ## Design Patterns
 
 
@@ -92,11 +99,11 @@ List<Appointments> getAppointmentsbyDoctorAndPateint(String patientName, String 
 
 To access admin privileges, use the provided admin account:
 
-username: `root`
+username: `admin1`
 
-password: `root`
+password: `12345678`
 
-To create another admin account, use the `create admin` command while logged into the `root` account.
+To create another admin account, use the `create admin` command while logged into the `admin1` account.
 
 ## Command List:
 
