@@ -75,9 +75,15 @@ public class SecretaryManagerTests {
      */
     @Test(timeout = 1000)
     public void testCreateSecretaryInvalidFormat() {
-        assertThrows("creating a user with a non-alphanumeric username and a password shorter than 8 " +
-                "characters will return an illegal argument exception", IllegalArgumentException.class,
-                () -> secretaryManager.createSecretary("!!!", "123"));
+        assertThrows("creating a user with a non-alphanumeric username characters will return an illegal " +
+                        "argument exception", IllegalArgumentException.class,
+                () -> secretaryManager.createSecretary("newuser!", "123456789"));
+        assertThrows("creating a user with a username shorter than 6 characters will return an illegal " +
+                        "argument exception", IllegalArgumentException.class,
+                () -> secretaryManager.createSecretary("newu", "123456789"));
+        assertThrows("creating a user with a password shorter than 8 characters will return an illegal " +
+                        "argument exception", IllegalArgumentException.class,
+                () -> secretaryManager.createSecretary("newuser1", "1234567"));
     }
 
     /**

@@ -75,9 +75,15 @@ public class AdminManagerTests {
      */
     @Test(timeout = 1000)
     public void testCreateAdminInvalidFormat() {
-        assertThrows("creating a user with a non-alphanumeric username and a password shorter than 8 " +
-                        "characters will return an illegal argument exception", IllegalArgumentException.class,
-                () -> adminManager.createAdmin("!!!", "123"));
+        assertThrows("creating a user with a non-alphanumeric username characters will return an illegal " +
+                        "argument exception", IllegalArgumentException.class,
+                () -> adminManager.createAdmin("newuser!", "123456789"));
+        assertThrows("creating a user with a username shorter than 6 characters will return an illegal " +
+                        "argument exception", IllegalArgumentException.class,
+                () -> adminManager.createAdmin("newu", "123456789"));
+        assertThrows("creating a user with a password shorter than 8 characters will return an illegal " +
+                        "argument exception", IllegalArgumentException.class,
+                () -> adminManager.createAdmin("newuser1", "1234567"));
     }
 
     /**
