@@ -175,7 +175,7 @@ public class PrescriptionManagerTests {
     @Test(timeout = 1000)
     public void testGetPatientsPrescriptionsWhenTheyHaveNone() {
         PatientData newPatientData = new PatientManager(originalDatabase).createPatient(
-                "new", "new");
+                "newpatient", "123456789");
         ArrayList<PrescriptionData> loadedPrescriptionList =
                 prescriptionManager.getAllPrescriptions(newPatientData);
 

@@ -33,8 +33,10 @@ public class AppointmentManagerTests {
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0))))));
 
-        DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
-        PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
+        DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("testdoctor",
+                "123456789");
+        PatientData patientData = new PatientManager(originalDatabase).createPatient("testpatient",
+                "123456789");
 
         assertTrue("An appointment object should not exist in the database before booking one",
                 originalDatabase.getAppointmentDatabase().getAllIds().isEmpty());
@@ -163,8 +165,10 @@ public class AppointmentManagerTests {
                 new ArrayList<>(List.of(new Availability(DayOfWeek.of(1), LocalTime.of(8, 30),
                         LocalTime.of(17, 0))))));
 
-        DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
-        PatientData patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
+        DoctorData doctorData = new DoctorManager(originalDatabase).createDoctor("testdoctor",
+                "123456789");
+        PatientData patientData = new PatientManager(originalDatabase).createPatient("testpatient",
+                "123456789");
         AppointmentData appointment = new AppointmentManager(originalDatabase).bookAppointment(patientData, doctorData,
                 2022, 12, 1, 10, 0, 120);
 
