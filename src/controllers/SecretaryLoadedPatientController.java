@@ -63,10 +63,12 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("reschedule appointment", RescheduleAppointment());
         commands.put("book appointment", BookAppointment());
         commands.put("cancel appointment", CancelAppointment());
+
+        prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
+
         commands.put("unload patient", Back(previousController));
         commands.put("back", Back(previousController));
 
-        prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
         commands.putAll(super.AllCommands());
         return commands;
     }
@@ -194,6 +196,11 @@ public class SecretaryLoadedPatientController extends TerminalController {
 
         if (startDateTime.isAfter(endDateTime)){
             secretaryScreenView.showInvalidTimeError();
+            return;
+        }
+
+        if (startDateTime.isBefore(LocalDateTime.now())){
+            secretaryScreenView.showDayPassedError();
             return;
         }
 

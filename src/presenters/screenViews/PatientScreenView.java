@@ -60,4 +60,9 @@ public class PatientScreenView extends UserScreenView {
         infoMessage(output);
     }
 
+    /**
+     * Message showed when the doctor has no appointments scheduled.
+     */
+    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
+
 }

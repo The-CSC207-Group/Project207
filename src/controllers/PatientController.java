@@ -54,7 +54,11 @@ public class PatientController extends UserController<Patient> {
     private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            patientScreenView.viewAppointments(appointments);
+            if (appointments.size() == 0){
+                patientScreenView.showNoAppointmentsMessage();
+            }else{
+                patientScreenView.viewAppointments(appointments);
+            }
         };
     }
 
