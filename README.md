@@ -63,7 +63,7 @@ We effectively and consistently used many git and GitHub features throughout pha
 
 ## How to Run The Program
 
-To start the program, Run Main.
+To start the program, run Main.
 
 Use `help` to see all possible commands at any point of the program. 
 
@@ -85,7 +85,7 @@ To properly close the program, use the built-in `exit` command.
 
 ### Pre-Login
 
-*Note: Only a secretaries and admins can create Patient and Doctor accounts, and only an Admin can create secretary accounts; reference the admin section below.*
+*Note: Only secretaries and admins can create Patient and Doctor accounts, and only an Admin can create secretary accounts; reference the admin section below.*
 * `sign in` - Log into a pre-existing account saved in the Json Database.
 * `view clinic info` - Shows a list of information relating to specific clinic.
 * `help` - Shows a list of all available commands, available at any point in the program.
@@ -179,7 +179,7 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 * `exit` - Terminates the program.
 
 ### User Management Terminal Commands
-_Note: These commands can only be accessed by an admin through the `manage users` secretary command. To all other account types, these commands are unreachable._
+_Note: These commands can only be accessed by an admin through the `manage users` admin command. To all other account types, these commands are unreachable._
 * `back` - Returns the admin to the basic admin command screen. 
 * `create admin` - Create a new admin account and store it in the JsonDatabase.
 * `create secretary` - Create a new secretary account and store it in the JsonDatabase.
