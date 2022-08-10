@@ -2,7 +2,6 @@ package controllers;
 
 import controllers.common.PrescriptionListCommands;
 import dataBundles.*;
-import entities.Appointment;
 import presenters.response.AppointmentTimeDetails;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.SecretaryScreenView;
@@ -14,7 +13,6 @@ import utilities.TimeUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
