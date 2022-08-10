@@ -20,30 +20,27 @@ import java.util.stream.Collectors;
 /**
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
  */
-public class SecretaryLoadedPatientController extends TerminalController {
+public class SecretaryLoadedPatientController extends MenuLoadedPatientController {
 
     private final PatientData patientData;
-    private final SecretaryController previousController;
     private final PatientManager patientManager;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final AppointmentManager appointmentManager;
     private final ContactManager contactManager;
     private final DoctorManager doctorManager;
-
     private final TimeUtils timeUtils = new TimeUtils();
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
-     * @param secretaryController SecretaryController - the previous controller object, allowing you to easily go back.
+     * @param previousController SecretaryController - the previous controller object, allowing you to easily go back.
      * @param patientData PatientData - a data containing the ID and attributes of the current loaded
      *                    patient user.
      */
-    public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
+    public SecretaryLoadedPatientController(Context context, SecretaryController previousController,
                                             PatientData patientData) {
-        super(context);
-        this.previousController = secretaryController;
+        super(context, previousController);
         this.patientData = patientData;
         this.patientManager = new PatientManager(getDatabase());
         this.appointmentManager = new AppointmentManager(getDatabase());
@@ -68,9 +65,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
         commands.put("cancel appointment", CancelAppointment());
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
-
-        commands.put("unload patient", Back(previousController));
-        commands.put("back", Back(previousController));
 
         commands.putAll(super.AllCommands());
         return commands;
