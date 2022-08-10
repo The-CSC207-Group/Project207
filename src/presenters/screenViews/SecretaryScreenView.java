@@ -228,7 +228,7 @@ public class SecretaryScreenView extends UserScreenView {
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
-        successMessage("Successfully booked appointment for " + patientName + " with Dr ." + doctorName);
+        successMessage("Successfully booked appointment for " + patientName + " with Dr. " + doctorName);
     }
 
     /**
