@@ -70,7 +70,7 @@ public class DoctorScreenView extends UserScreenView {
         String body = input("Enter your prescription body: ");
         infoMessage("Enter the expiry date:");
         LocalDate expiryDate = showLocalDatePrompt();
-        if (expiryDate == null) {
+        if (expiryDate == null || expiryDate.isBefore(LocalDate.now())) {
             return null;
         }
         return new PrescriptionDetails(header, body, expiryDate);
