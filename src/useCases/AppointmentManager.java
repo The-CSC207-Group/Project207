@@ -159,7 +159,8 @@ public class AppointmentManager {
     }
 
     private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock) {
-        return doesNotOverlapWithAppointments(timeBlock, getDoctorAppointments(doctorData)) && strictlyOverlapsWithClinicHours(timeBlock);
+        return doesNotOverlapWithAppointments(timeBlock, getDoctorAppointments(doctorData)) &&
+                strictlyOverlapsWithClinicHours(timeBlock);
     }
 
     private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock, Appointment excludedAppointment) {
@@ -170,7 +171,8 @@ public class AppointmentManager {
     }
 
 
-    private boolean doesNotOverlapWithAppointments(UniversalTimeBlockWithDay timeBlock, ArrayList<AppointmentData> appointments) {
+    private boolean doesNotOverlapWithAppointments(UniversalTimeBlockWithDay timeBlock,
+                                                   ArrayList<AppointmentData> appointments) {
         return appointments.stream()
                 .noneMatch(x -> overlapsDateAndHours(x.getTimeBlock(), timeBlock));
     }

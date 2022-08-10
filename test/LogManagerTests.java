@@ -1,10 +1,10 @@
 import dataBundles.LogData;
 import dataBundles.PatientData;
 import database.Database;
-import entities.Patient;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 import useCases.LogManager;
+import useCases.PatientManager;
 import utilities.DeleteUtils;
 
 import java.io.File;
@@ -23,8 +23,7 @@ public class LogManagerTests {
     @Rule
     public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database database;
-    private Patient patient;
-    private Integer id;
+    private PatientData patientData;
     private LogManager logManager;
 
     /**
@@ -33,8 +32,7 @@ public class LogManagerTests {
     @Before
     public void before() {
         database = new Database(databaseFolder.toString());
-        patient = new Patient("danieldervy", "123456789", 1);
-        id = database.getPatientDatabase().add(patient);
+        patientData = new PatientManager(database).createPatient("ryan12345", "123456789");
         logManager = new LogManager(database);
     }
 
@@ -43,10 +41,10 @@ public class LogManagerTests {
      */
     @Test
     public void testAddingNewLog() {
-        LogData logData = logManager.addLog("testing123", id);
-        Assert.assertEquals("Make sure that the right log is returned to the user", logData.getId(), id);
+        LogData logData = logManager.addLog(patientData, "testing123");
+        Assert.assertEquals("Make sure that the right log is returned to the user", logData.getId(), patientData.getId());
         Assert.assertNotNull("Make sure that log actually exists in the database",
-                database.getLogDatabase().get(id));
+                database.getLogDatabase().get(patientData.getId()));
     }
 
     /**
@@ -54,11 +52,11 @@ public class LogManagerTests {
      */
     @Test
     public void testGettingExistingUserLogs() {
-        LogData logA = logManager.addLog("testing1", id);
-        LogData logB = logManager.addLog("testing2", id);
-        LogData logC = logManager.addLog("testing3", id);
+        LogData logA = logManager.addLog(patientData, "testing1");
+        LogData logB = logManager.addLog(patientData, "testing2");
+        LogData logC = logManager.addLog(patientData, "testing3");
 
-        ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
+        ArrayList<LogData> logArrayList = logManager.getUserLogs(patientData);
         Assert.assertFalse("Check if logA is returned to the user as part of" +
                 "the arraylist returned when getting a user's logs", logArrayList.stream().
                 map(LogData::getUserId).
@@ -79,20 +77,6 @@ public class LogManagerTests {
                 isEmpty());
         Assert.assertEquals("Make sure there are only 3 logs in the arraylist. When paired with the other" +
                 "assert statements, the arraylist only consists of logA, logB, logC", 3, logArrayList.size());
-    }
-
-    /**
-     * Tests the log manager getter method that returns a user's logs with a non-existent user.
-     */
-    @Test
-    public void testGettingNonExistentUserLogs() {
-        logManager.addLog("testing1", 1);
-        logManager.addLog("testing2", 1);
-        logManager.addLog("testing3", 1);
-
-        ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
-        Assert.assertTrue("Since the user doesn't exist, we should get an empty arraylist",
-                logArrayList.isEmpty());
     }
 
     /**

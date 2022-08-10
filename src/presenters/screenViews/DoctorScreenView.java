@@ -1,7 +1,13 @@
 package presenters.screenViews;
 
-import dataBundles.*;
-import presenters.entityViews.*;
+import dataBundles.AppointmentData;
+import dataBundles.ContactData;
+import dataBundles.PrescriptionData;
+import dataBundles.ReportData;
+import presenters.entityViews.AppointmentView;
+import presenters.entityViews.ContactView;
+import presenters.entityViews.PrescriptionView;
+import presenters.entityViews.ReportView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 

@@ -67,7 +67,7 @@ abstract public class TerminalController {
      *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective commands.
      */
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("help", Help());
         commands.put("exit", Exit());
@@ -78,7 +78,7 @@ abstract public class TerminalController {
      * Runs the process of the related controller.
      */
     public void run() {
-        ProcessCommands();
+        processCommands();
     }
 
     private void exit() {
@@ -90,7 +90,7 @@ abstract public class TerminalController {
         LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
         int currentMin = Integer.MAX_VALUE;
         String newCommand = null;
-        for (String command : AllCommands().keySet()) {
+        for (String command : allCommands().keySet()) {
             int dist = levenshteinDistance.apply(command, inputtedCommand);
             if (dist <= maxDistance && dist < currentMin) {
                 newCommand = command;
@@ -103,7 +103,7 @@ abstract public class TerminalController {
     private Integer processNumber(String inputtedCommand) {
         try {
             int number = NumberUtils.createInteger(inputtedCommand) - 1;
-            if (number <= AllCommands().size() - 1 & number >= 0) {
+            if (number <= allCommands().size() - 1 & number >= 0) {
                 return number;
             }
         } catch (NumberFormatException ignored) {
@@ -112,13 +112,13 @@ abstract public class TerminalController {
     }
 
     private String getCommand(String inputtedCommand) {
-        if (AllCommands().containsKey(inputtedCommand)) {
+        if (allCommands().containsKey(inputtedCommand)) {
             return inputtedCommand;
         }
 
         Integer numberCommand = processNumber(inputtedCommand);
         if (numberCommand != null) {
-            return new ArrayList<>(AllCommands().keySet()).get(numberCommand);
+            return new ArrayList<>(allCommands().keySet()).get(numberCommand);
         }
 
         String correctSpelling = processSpelling(inputtedCommand);
@@ -129,7 +129,7 @@ abstract public class TerminalController {
         return null;
     }
 
-    private void ProcessCommands() {
+    private void processCommands() {
         getDatabase().save();
         String command = terminalScreenView.showCommandPrompt();
 
@@ -139,7 +139,7 @@ abstract public class TerminalController {
 
         String correctedCommand = getCommand(command);
         if (correctedCommand != null) {
-            AllCommands().get(correctedCommand).execute(new ArrayList<>());
+            allCommands().get(correctedCommand).execute(new ArrayList<>());
             getDatabase().save();
         } else {
             terminalScreenView.showInvalidCommandError(command);
@@ -155,7 +155,7 @@ abstract public class TerminalController {
 
     private Command Help() {
         return (x) -> {
-            List<String> helpCommands = new ArrayList<>(AllCommands().keySet());
+            List<String> helpCommands = new ArrayList<>(allCommands().keySet());
             terminalScreenView.showHelpView(helpCommands);
         };
     }

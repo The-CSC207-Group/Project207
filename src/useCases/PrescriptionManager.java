@@ -66,8 +66,8 @@ public class PrescriptionManager {
      * @param expiryDate  LocalDate - date the prescription expires.
      * @return PrescriptionData - prescription data that stores the information passed in.
      */
-    public PrescriptionData createPrescription(String header, String body, PatientData patientData, DoctorData doctorData,
-                                               LocalDate expiryDate) {
+    public PrescriptionData createPrescription(String header, String body, PatientData patientData,
+                                               DoctorData doctorData, LocalDate expiryDate) {
         Prescription prescription = new Prescription(header, body, patientData.getId(), doctorData.getId(), expiryDate);
         prescriptionsDatabase.add(prescription);
         return new PrescriptionData(prescription);

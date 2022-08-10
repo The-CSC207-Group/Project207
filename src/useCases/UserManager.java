@@ -39,8 +39,8 @@ public abstract class UserManager<T extends User> {
      *
      * @param userData<T> where T extends User - the data associated with a user.
      * @param password    String - new password of the user.
-     * @return boolean - true if the user exists in the database and operation is carried out, false if the user associated
-     * with the userId stored in userData does not exist in the database.
+     * @return boolean - true if the user exists in the database and operation is carried out, false if the user
+     * associated with the userId stored in userData does not exist in the database.
      */
     public boolean changeUserPassword(UserData<T> userData, String password) {
         T user = typeTDatabase.get(userData.getId());
@@ -66,8 +66,8 @@ public abstract class UserManager<T extends User> {
      * Delete a user from their respective database. Their contact info is also removed from the database.
      *
      * @param username String - username of the user to be deleted.
-     * @return boolean - true if the user exists in the database and operation is carried out, false if the user associated
-     * with the userId stored in userData does not exist in the database.
+     * @return boolean - true if the user exists in the database and operation is carried out, false if the user
+     * associated with the userId stored in userData does not exist in the database.
      */
     public Boolean deleteUser(String username) {
         T user = getUser(username);
@@ -120,7 +120,7 @@ public abstract class UserManager<T extends User> {
     protected T signInHelper(String username, String password) {
         if (canSignIn(username, password)) {
             T user = getUser(username);
-            logManager.addLog("signed in", user.getId());
+            logManager.addLog(getUserData(username), "signed in");
             return user;
         } else {
             return null;

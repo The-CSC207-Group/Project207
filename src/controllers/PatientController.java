@@ -40,14 +40,14 @@ public class PatientController extends UserController<Patient> {
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective patient commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
 
         commands.put("view appointments", ViewAppointments());
 
         PrescriptionListCommands prescriptionController = new PrescriptionListCommands(getDatabase(), patientData);
         prescriptionController.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

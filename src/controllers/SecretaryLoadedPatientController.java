@@ -57,7 +57,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
      * patient commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", ChangePatientPassword());
@@ -68,7 +68,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
 
         prescriptionListCommands.AllCommands().forEach((x, y) -> commands.put("view " + x, y));
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 
@@ -120,7 +120,8 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
             LocalDateTime startTime = startEndTimes.getStartDateTime();
             LocalDateTime endTime = startEndTimes.getEndDateTime();
 
-            AppointmentData appointmentData = appointmentManager.bookAppointment(patientData, doctorData, startTime, endTime);
+            AppointmentData appointmentData = appointmentManager.bookAppointment(
+                    patientData, doctorData, startTime, endTime);
 
             if (appointmentData == null) {
                 secretaryScreenView.showAppointmentBookingError();
@@ -291,6 +292,5 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
     private boolean spansMultipleDays(LocalDateTime starTime, LocalDateTime endTime) {
         return starTime.getDayOfYear() != endTime.getDayOfYear();
     }
-
 
 }

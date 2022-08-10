@@ -29,8 +29,8 @@ public abstract class UserController<T extends User> extends TerminalController 
     /**
      * Creates a new controller for handling the state of when a user is signed in.
      *
-     * @param context        Context - a reference to the context object, which stores the current controller and allows for
-     *                       switching between controllers.
+     * @param context        Context - a reference to the context object, which stores the current controller and allows
+     *                       for switching between controllers.
      * @param userData       UserData<T> where T extends User - a data containing the ID and attributes of the current
      *                       user.
      * @param userManager    UserManager<T> where T extends User - a manager for handling the user data (is generic
@@ -58,7 +58,7 @@ public abstract class UserController<T extends User> extends TerminalController 
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective user commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("change password", ChangePassword());
         commands.put("get logs", GetLogs());
@@ -66,7 +66,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         commands.put("view clinic info", ViewClinicInformation());
         commands.put("back", SignOut());
         commands.put("sign out", SignOut());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

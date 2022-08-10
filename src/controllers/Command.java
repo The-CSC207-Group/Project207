@@ -3,7 +3,7 @@ package controllers;
 import java.util.ArrayList;
 
 /**
- * interface for all commands as part of the command pattern.
+ * Interface for all commands as part of the command pattern.
  */
 public interface Command {
     /**

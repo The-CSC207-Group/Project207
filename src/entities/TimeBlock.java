@@ -38,21 +38,33 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
         return endTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getStartTime() {
         return startTime.toLocalTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return endTime.toLocalTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalDate getLocalDate() {
         return startTime.toLocalDate();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DayOfWeek getDayOfWeek() {
         return startTime.getDayOfWeek();

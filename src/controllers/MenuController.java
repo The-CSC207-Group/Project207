@@ -27,10 +27,10 @@ abstract public class MenuController extends TerminalController {
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective menu commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("back", Back(previousController));
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

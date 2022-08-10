@@ -52,7 +52,6 @@ public class PrescriptionListCommands {
             if (active) {
                 prescriptions = prescriptionManager.getAllActivePrescriptions(patientData);
                 patientScreenView.viewActivePrescriptions(prescriptions, detail);
-
             } else {
                 prescriptions = prescriptionManager.getAllPrescriptions(patientData);
                 patientScreenView.viewPrescriptionHistory(prescriptions, detail);

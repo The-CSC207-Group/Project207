@@ -20,8 +20,8 @@ public class ClinicController extends MenuController {
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
      *
-     * @param context            Context - a reference to the context object, which stores the current controller and allows for
-     *                           switching between controllers.
+     * @param context            Context - a reference to the context object, which stores the current controller and
+     *                           allows for switching between controllers.
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
      */
@@ -43,7 +43,7 @@ public class ClinicController extends MenuController {
      *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("change clinic name", ChangeClinicName());
         commands.put("change clinic email", ChangeClinicEmail());
@@ -51,7 +51,7 @@ public class ClinicController extends MenuController {
         commands.put("change clinic address", ChangeClinicAddress());
         commands.put("change clinic hours", ChangeClinicHours());
         commands.put("remove clinic hours", RemoveClinicHours());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

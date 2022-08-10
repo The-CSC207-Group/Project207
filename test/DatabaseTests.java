@@ -23,14 +23,14 @@ import static org.junit.Assert.assertTrue;
  */
 public class DatabaseTests {
 
-    private final String username = "mynamejeff";
-    private final String password = "123456789";
     /**
      * The variable representing the temporary folder where the databases used in these tests are stored until it is
      * deleted after the tests.
      */
     @Rule
     public final TemporaryFolder databaseFolder = new TemporaryFolder();
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
     private Database originalDatabase;
 
     /**
