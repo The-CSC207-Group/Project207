@@ -92,89 +92,89 @@ To properly close the program, use the built-in `exit` command.
 * `exit` - Terminates the program.
 
 ### Admin Post-Login
-* `manage users` - Loads a new screen which has commands that allow the admin to create/delete users and change their passwords
-* `change clinic info` - access the Clinic screen, with new commands relevant to the clinic. see Clinic Screen below.
+* `manage users` - Loads a new screen which has commands that allow the admin to create/delete users and change their passwords. See **User Management Terminal Commands** below.
+* `change clinic info` - Access the Clinic screen, with new commands relevant to the clinic. See **Clinic Commands** below.
 * `delete self` - Delete the current user account permanently.
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - access the contact screen, which new commands relevant to contact. see Contact Screen below.
+* `contact details` - Access the contact screen, which new commands relevant to contact. See **Contact Commands** below.
 * `view clinic info` - Shows a list of information relating to the clinic.
 * `back` - Back is an alias for the `sign out` command (ease of access purposes).
-* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `sign out` - Exits the post-login screen. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
 ### Patient Post-Login
 * `view appointments` - Shows a list of all appointments that the patient has with details such as date and time.
-* `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
+* `view all prescriptions detailed` - Shows a list of all expired and active prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the patient, including the prescription header, body, date noted, and expiration date.
-* `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
+* `view all prescriptions` - Shows a list of all expired and active prescriptions' headers related to a user.
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
+* `contact details` - Access the contact commands screen, with new commands relevant to contact. See **Contact Commands** below.
 * `view clinic info` - Shows a list of information relating to the clinic.
 * `back` - Back is an alias for the `sign out` command (ease of access purposes).
-* `sign out` - Exits the post-login screen and saves and new data to the Json Database, this will bring you back to the login page.
+* `sign out` - Exits the post-login screen. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
 ### Doctor Post-Login
-* `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Doctor** Commands below.
+* `load patient` - Loads a patient, allowing the doctor to access commands related to the patient loaded; See **Doctor Loaded Patient** Commands below.
 * `view appointments` - Shows a list of all appointments that the doctor has with details such as date, duration and time.
-* `show schedule` - Prompts the doctor to enter a date and then shows all the appointments for that date.  
+* `show schedule` - Prompts the doctor to enter a date and then shows all their appointments for that date.  
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
+* `contact details` - Access the contact commands screen, with new commands relevant to contact. see **Contact Commands** below.
 * `view clinic info` - Shows a list of information relating to the clinic.
 * `back` - Back is an alias for the `sign out` command (ease of access purposes).
-* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `sign out` - Exits the post-login screen. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
 ### Secretary Post-Login
 * `create patient` - Create a patient and store it in the Json Database.
-* `load patient` - Loads a patient, allowing the user to access commands related to the patient loaded; See **patient Loaded Secretary Commands** below.
+* `load patient` - Loads a patient, allowing the secretary to access commands related to the patient loaded; See **Secretary Loaded Patient Commands** below.
 * `delete patient` - Deletes a patient user account from the Json Database based on inputted username.
 * `change password` - Change this user's login password.
 * `get logs` - Shows a list of logs that represents the current user's login dates.
-* `contact details` - Access the contact commands screen, with new commands relevant to contact. see Contact Commands below.
+* `contact details` - Access the Contact Commands screen, with new commands related to contact. See **Contact Commands** below.
 * `view clinic info` - Shows a list of information relating to the clinic.
 * `back` - Back is an alias for the `sign out` command (ease of access purposes).
-* `sign out` - Exits the post-login screen and saves new data to the Json Database. This will bring you back to the login page.
+* `sign out` - Exits the post-login screen. This will bring you back to the login page.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Patient Loaded Doctor Commands
+### Doctor Loaded Patient Commands
 _Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. To all other account types, these commands are unreachable._
-* `unload patient` - Unloads the patient, returning the doctor to the basic doctor command screen. 
+* `unload patient` - Unloads the patient, returning the doctor to the doctor post-login screen. 
 * `back` - Back is an alias for the `unload patient` command (ease of access purposes). 
 * `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
-* `view reports` -Shows a list of all the reports of the loaded patient.
+* `view reports` - Shows a list of all the reports of the loaded patient.
 * `create report` - Creates a new report related to the loaded patient based on inputted data.
 * `delete report` - Deletes a report related to the loaded patient.
-* `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
+* `view all prescriptions detailed` - Shows a list of all expired and active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
-* `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
+* `view all prescriptions` - Shows a list of all expired and active prescriptions' headers related to a user.
 * `create prescription` - Creates a new prescription related to the loaded patient based on inputted data.
 * `delete prescription` - Deletes a prescription related to the loaded patient.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
-### Patient Loaded Secretary Commands
+### Secretary Loaded Patient Commands
 _Note: These commands can only be accessed by loading a patient through the `load patient` secretary command. To all other account types, these commands are unreachable._
 * `change patient password` - Changes the password of a patient based on inputted data.
 * `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
 * `reschedule appointment` - Reschedules an appointment related to the loaded patient based on inputted data.
 * `book appointment` - Books an appointment for the loaded patient based on inputted data.
 * `cancel appointment` - Cancels an appointment for the loaded patient based on inputted data.
-* `unload patient` - Unloads the patient, returning the secretary to the basic secretary command screen.
-* `back` - Back is an alias for the `unload patient` command (ease of access purposes).
-* `view all prescriptions detailed` - Shows a list of all past and present prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
+* `view all prescriptions detailed` - Shows a list of all expired and active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
 * `view active prescriptions` - Shows a list of the headers of all active prescriptions belonging to a user.
 * `view active prescriptions detailed` - Shows a list of presently active prescriptions related to the loaded patient, including the prescription header, body, date noted, and expiration date.
-* `view all prescriptions` - Shows a list of all past and present prescriptions' headers related to a user.
+* `view all prescriptions` - Shows a list of all expired and active prescriptions' headers related to a user.
+* `unload patient` - Unloads the patient, returning the secretary to the secretary post-login screen.
+* `back` - Back is an alias for the `unload patient` command (ease of access purposes).
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
@@ -198,7 +198,7 @@ _Note: These commands can only be accessed by running the `contact details` comm
 * `change phone number` - Changes the stored phone number related to the user based on inputted data.
 * `change address` - Changes the stored address related to the user based on inputted data.
 * `change birthday` - Changes the stored birthday related to the user based on inputted data.
-* `change emergency contact name` - Changes the stored emergency contact data related to the user based on inputted data.
+* `change emergency contact name` - Changes the stored emergency contact name related to the user based on inputted data.
 * `change emergency contact email` - Changes the stored emergency contact email related to the user based on inputted data.
 * `change emergency contact phone number` - Changes the stored emergency contact phone number related to the user based on inputted data.
 * `change emergency contact relationship` - Changes the stored emergency contact relationship related to the user based on inputted data.
@@ -212,8 +212,8 @@ _Note: These commands can only be accessed by running the `change clinic info` c
 * `change clinic email` - Changes the stored email address related to the clinic based on inputted data.
 * `change clinic phone number` - Changes the stored phone number related to the clinic based on inputted data.
 * `change clinic address` - Changes the stored address related to the clinic based on inputted data.
-* `change clinic hours` - Changes the stored clinic hours related to the clinic based on inputted data.
-* `remove clinic hours` - Removes the stored clinic hours related to the clinic based on inputted data. 
+* `change clinic hours` - Changes the stored clinic hours on a given day based on inputted data.
+* `remove clinic hours` - Removes the stored clinic hours on a given day based on inputted data. 
 * `back` - Returns to the previous screen in which the `contact details` command was called.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
