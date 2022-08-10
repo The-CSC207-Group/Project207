@@ -11,11 +11,10 @@ import java.util.LinkedHashMap;
 /**
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
  */
-public class SecretaryLoadedPatientController extends MenuController {
+public class SecretaryLoadedPatientController extends MenuLoadedPatientController {
 
     private final PatientData patientData;
     private final PatientManager patientManager;
-    private final SecretaryController previousController;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     /* PHASE 2 ATTRIBUTES
@@ -35,7 +34,6 @@ public class SecretaryLoadedPatientController extends MenuController {
                                             PatientData patientData) {
         super(context, previousController);
         this.patientData = patientData;
-        this.previousController = previousController;
         this.patientManager = new PatientManager(getDatabase());
 
         /* PHASE 2 INSTANTIATIONS
@@ -55,7 +53,6 @@ public class SecretaryLoadedPatientController extends MenuController {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", ChangePatientPassword());
-        commands.put("unload patient", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", ViewAppointments());
