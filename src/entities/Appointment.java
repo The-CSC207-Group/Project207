@@ -1,13 +1,14 @@
-// PHASE 2 FILE
-
 package entities;
 
 import utilities.JsonSerializable;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Represents an appointment.
  */
-public class Appointment extends JsonSerializable {
+public class Appointment extends JsonSerializable implements UniversalTimeBlockWithDay {
 
     private TimeBlock timeBlock;
     private Integer doctorId;
@@ -68,5 +69,19 @@ public class Appointment extends JsonSerializable {
      */
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+    }
+
+    @Override
+    public LocalTime getStartTime() {
+        return timeBlock.getStartTime();
+    }
+    @Override
+    public LocalTime getEndTime() {
+        return timeBlock.getEndTime();
+    }
+
+    @Override
+    public LocalDate getLocalDate() {
+        return timeBlock.getLocalDate();
     }
 }

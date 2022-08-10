@@ -1,9 +1,7 @@
-// PHASE 2 FILE
-
 package presenters.entityViews;
 
 import dataBundles.AppointmentData;
-import dataBundles.TimeBlockData;
+import java.time.LocalTime;
 
 /**
  * The Appointment entity's view.
@@ -16,8 +14,11 @@ public class AppointmentView extends EntityView<AppointmentData> {
      */
     @Override
     public String viewFull(AppointmentData item) {
-        TimeBlockData timeBlock = item.getTimeBlock();
-        return "Appointment starting at " + timeBlock.getStartTime() + " and ending at " + timeBlock.getEndTime() + ".";
+        LocalTime startTime = item.getTimeBlock().getStartDateTime().toLocalTime();
+        LocalTime endTime = item.getTimeBlock().getEndDateTime().toLocalTime();
+        return "Appointment starting at " + startTime
+                + " and ending at " + endTime + " on " + item.getLocalDate() +
+                ".";
     }
 
 }

@@ -55,8 +55,6 @@ public class ClinicData {
         return clinic.getId();
     }
 
-    // ALL CODE BELOW IS FOR PHASE 2
-
     /**
      * @return TimeBlock - hours of operations of the clinic stored.
      */

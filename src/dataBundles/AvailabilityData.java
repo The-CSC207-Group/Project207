@@ -1,8 +1,7 @@
-// PHASE 2 FILE
-
 package dataBundles;
 
 import entities.Availability;
+import entities.UniversalTimeBlock;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -10,7 +9,7 @@ import java.time.LocalTime;
 /**
  * Wrapper class for Availability entity.
  */
-public class AvailabilityData {
+public class AvailabilityData implements UniversalTimeBlock {
 
     private final Availability availability;
     /**
@@ -22,24 +21,26 @@ public class AvailabilityData {
     }
 
     /**
-     * @return DayOfWeek associated with the stored availability object.
-     */
-    public DayOfWeek getDayOfWeek() {
-        return availability.getDayOfWeek();
-    }
-
-    /**
      * @return LocalTime - the start time of the availability.
      */
-    public LocalTime getDoctorStartTime() {
-        return availability.getDoctorStartTime();
+    @Override
+    public LocalTime getStartTime() {
+        return availability.getStartTime();
     }
 
     /**
      * @return LocalTime - the end time of the availability.
      */
-    public LocalTime getDoctorEndTime() {
-        return availability.getDoctorEndTime();
+    @Override
+    public LocalTime getEndTime() {
+        return availability.getEndTime();
     }
 
+    /**
+     * @return DayOfWeek - the day of the week in availability.
+     */
+    @Override
+    public DayOfWeek getDayOfWeek() {
+        return availability.getDayOfWeek();
+    }
 }

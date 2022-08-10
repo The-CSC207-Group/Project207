@@ -18,11 +18,12 @@ public class DoctorLoadedPatientController extends TerminalController {
     private final PatientData patientData;
     private final DoctorData doctorData;
     private final PrescriptionManager prescriptionManager;
-    private final DoctorScreenView doctorView = new DoctorScreenView();
+    private final DoctorScreenView doctorScreenView = new DoctorScreenView();
     private final DoctorController previousController;
     private final ReportManager reportManager;
     private final DoctorManager doctorManager;
     private final ContactManager contactManager;
+
 
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
@@ -72,13 +73,13 @@ public class DoctorLoadedPatientController extends TerminalController {
 
     private Command CreatePatientPrescription() {
         return (x) -> {
-            PrescriptionDetails prescriptionDetails = doctorView.prescriptionDetailsPrompt();
+            PrescriptionDetails prescriptionDetails = doctorScreenView.prescriptionDetailsPrompt();
             if (prescriptionDetails != null) {
                 prescriptionManager.createPrescription(prescriptionDetails.header(), prescriptionDetails.body(),
                         patientData, doctorData, prescriptionDetails.expiryDate());
-                doctorView.showSuccessfullyCreatedPrescription();
+                doctorScreenView.showSuccessfullyCreatedPrescription();
             } else {
-                doctorView.showInvalidPrescriptionDateError();
+                doctorScreenView.showInvalidPrescriptionDateError();
             }
         };
     }
@@ -88,52 +89,58 @@ public class DoctorLoadedPatientController extends TerminalController {
             ContactData patientContactData = contactManager.getContactData(patientData);
             ArrayList<PrescriptionData> prescriptionDataList = prescriptionManager.getAllPrescriptions(patientData);
             if (prescriptionDataList == null || prescriptionDataList.size() == 0) {
-                doctorView.showNoPrescriptionError();
+                doctorScreenView.showNoPrescriptionError();
                 return;
             }
-            Integer deleteIndex = doctorView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
+            Integer deleteIndex = doctorScreenView.deletePrescriptionPrompt(patientContactData, prescriptionDataList);
             if (IsValidInput(deleteIndex, prescriptionDataList.size())) {
                 return;
             }
             prescriptionManager.removePrescription(prescriptionDataList.get(deleteIndex));
-            doctorView.showSuccessfullyDeletedPrescription();
+            doctorScreenView.showSuccessfullyDeletedPrescription();
         };
     }
 
 
     private Command ViewPatientAppointments() {
-        return (x) -> doctorView.viewAppointments(new AppointmentManager(getDatabase())
-                .getPatientAppointments(patientData));
+        return (x) -> {
+            ArrayList<AppointmentData> appointments = new AppointmentManager(getDatabase()).getPatientAppointments(patientData);
+            if (appointments.size() == 0){
+                doctorScreenView.showNoAppointmentsMessage();
+            }else{
+                doctorScreenView.viewAppointments(appointments);
+            }
+        };
     }
 
     private Command ViewPatientReports() {
         return (x) -> {
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
             if (reportData == null || reportData.size() == 0) {
-                doctorView.showNoReportsError();
+                doctorScreenView.showNoReportsError();
                 return;
             }
-            doctorView.viewAllReports(reportData);
-            Integer targetReport = doctorView.viewReportPrompt();
+            doctorScreenView.viewAllReports(reportData);
+            Integer targetReport = doctorScreenView.viewReportPrompt();
             if (IsValidInput(targetReport, reportData.size())) {
                 return;
             }
             ReportData selectedReport = reportData.get(targetReport);
-            DoctorData reportDoctor = doctorManager.getUserData(selectedReport.getReportId());
+            DoctorData reportDoctor = doctorManager.getUserData(selectedReport.getDoctorId());
             if (reportDoctor != null) {
                 ContactData doctorContact = contactManager.getContactData(reportDoctor);
-                doctorView.viewReport(selectedReport, doctorContact);
+                doctorScreenView.viewReport(selectedReport, doctorContact);
             } else {
-                doctorView.viewReport(selectedReport, null);
+                doctorScreenView.viewReport(selectedReport, null);
             }
         };
     }
 
     private Command CreatePatientReport() {
         return (x) -> {
-            ReportDetails reportDetails = doctorView.reportDetailsPrompt();
+            ReportDetails reportDetails = doctorScreenView.reportDetailsPrompt();
             reportManager.addReport(patientData, doctorData, reportDetails.header(), reportDetails.body());
-            doctorView.showReportCreationSuccess();
+            doctorScreenView.showReportCreationSuccess();
         };
     }
 
@@ -141,29 +148,29 @@ public class DoctorLoadedPatientController extends TerminalController {
         return (x) -> {
             ArrayList<ReportData> reportData = reportManager.getReportData(patientData);
             if (reportData == null || reportData.size() == 0) {
-                doctorView.showNoReportsError();
+                doctorScreenView.showNoReportsError();
                 return;
             }
 
-            Integer deleteIndex = doctorView.deleteReportPrompt(new ContactManager(getDatabase())
+            Integer deleteIndex = doctorScreenView.deleteReportPrompt(new ContactManager(getDatabase())
                     .getContactData(patientData), reportData);
 
             if (IsValidInput(deleteIndex, reportData.size())) {
                 return;
             }
             reportManager.deleteReport(reportData.get(deleteIndex));
-            doctorView.showReportDeletionSuccess();
+            doctorScreenView.showReportDeletionSuccess();
 
         };
     }
 
     private boolean IsValidInput(Integer deleteIndex, Integer size) {
         if (deleteIndex == null) {
-            doctorView.showNotIntegerError();
+            doctorScreenView.showNotIntegerError();
             return true;
         }
         if (deleteIndex < 0 || deleteIndex >= size) {
-            doctorView.showOutOfRangeError();
+            doctorScreenView.showOutOfRangeError();
             return true;
         }
         return false;

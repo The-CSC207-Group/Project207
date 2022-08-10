@@ -1,5 +1,3 @@
-// PHASE 2 FILE
-
 package presenters.entityViews;
 
 import dataBundles.DoctorData;

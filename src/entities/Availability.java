@@ -1,5 +1,3 @@
-// PHASE 2 FILE
-
 package entities;
 
 import java.time.DayOfWeek;
@@ -8,7 +6,7 @@ import java.time.LocalTime;
 /**
  * Represents a doctor's availability days and times.
  */
-public class Availability {
+public class Availability implements UniversalTimeBlock {
 
     private final DayOfWeek dayOfWeek;
     private LocalTime doctorStartTime;
@@ -26,19 +24,7 @@ public class Availability {
         this.doctorEndTime = doctorEndTime;
     }
 
-    /**
-     * @return DayOfWeek of this instance of AvailabilityData.
-     */
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
 
-    /**
-     * @return LocalTime representing the start time of this instance of AvailabilityData.
-     */
-    public LocalTime getDoctorStartTime() {
-        return doctorStartTime;
-    }
 
     /**
      * Sets the start time of this instance of AvailabilityData.
@@ -51,16 +37,22 @@ public class Availability {
     /**
      * @return LocalTime representing the end time of this instance of AvailabilityData.
      */
-    public LocalTime getDoctorEndTime() {
-        return doctorEndTime;
-    }
-
-    /**
-     * Sets the end time of this instance of AvailabilityData.
-     * @param endTime LocalTime representing the new end time of this instance of AvailabilityData.
-     */
     public void setDoctorEndTime(LocalTime endTime) {
         this.doctorEndTime = endTime;
     }
 
+    @Override
+    public LocalTime getStartTime() {
+        return doctorStartTime;
+    }
+
+    @Override
+    public LocalTime getEndTime() {
+        return doctorEndTime;
+    }
+
+    @Override
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
 }

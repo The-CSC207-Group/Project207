@@ -2,6 +2,7 @@ package presenters.screenViews;
 
 import dataBundles.*;
 import presenters.entityViews.*;
+import presenters.entityViews.AppointmentView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
@@ -69,7 +70,7 @@ public class DoctorScreenView extends UserScreenView {
         String body = input("Enter your prescription body: ");
         infoMessage("Enter the expiry date:");
         LocalDate expiryDate = showLocalDatePrompt();
-        if (expiryDate == null) {
+        if (expiryDate == null || expiryDate.isBefore(LocalDate.now())) {
             return null;
         }
         return new PrescriptionDetails(header, body, expiryDate);
@@ -88,6 +89,11 @@ public class DoctorScreenView extends UserScreenView {
     public void showInvalidPrescriptionDateError() {
         errorMessage("Cannot create prescription: invalid expiry date.");
     }
+
+    /**
+     * Error message when the user inputs an invalid date.
+     */
+    public void showInvalidDateError(){errorMessage("Invalid date.");}
 
     /**
      * Load an existing patient.
@@ -114,7 +120,6 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 
-    // ALL CODE BELOW PENDING FOR PHASE 2
 
     /**
      * View used to view the doctor's appointments that are given.
@@ -123,6 +128,13 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void viewAppointments(List<AppointmentData> appointments) {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
+
+    /**
+     * Error raised when the user input is not an integer.
+     */
+    public void showDeletePrescriptionNotAnIntegerError() {
+        showDeleteNotAnIntegerError("prescription");
     }
 
     /**
@@ -206,6 +218,11 @@ public class DoctorScreenView extends UserScreenView {
     public void showDeleteAvailabilityOutOfRangeError() {
         showDeleteOutOfRangeError("availability");
     }
+
+    /**
+     * Message showed when the doctor has no appointments scheduled.
+     */
+    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
 
     /**
      * Error raised when the user input is not an integer.

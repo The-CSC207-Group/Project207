@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
  */
 public class DoctorData extends UserData<Doctor> {
 
-    private final Doctor doctor;
-
     /**
      * Initializes the doctor class and its super class with the doctor entity. Doctor entity is stored in the parent
      * class and this one.
@@ -20,23 +18,6 @@ public class DoctorData extends UserData<Doctor> {
      */
     public DoctorData(Doctor doctor) {
         super(doctor);
-        this.doctor = doctor;
-    }
-
-    // ALL CODE BELOW IS FOR PHASE 2
-
-    /**
-     * Get the doctor's availability stored in the doctor entity
-     * @return ArrayList<Availability>
-     */
-    public ArrayList<AvailabilityData> getAvailability(){
-        return doctor.getAvailability().stream().
-                map(AvailabilityData::new).
-                collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public ArrayList<TimeBlock> getAbsence(){
-        return doctor.getAbsence();
     }
 
 }
