@@ -1,16 +1,16 @@
-// PHASE 2 FILE
-
 package dataBundles;
 
 import entities.TimeBlock;
+import entities.UniversalTimeBlockWithDay;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
  * Wrapper class for a TimeBlock entity.
  */
-public class TimeBlockData {
+public class TimeBlockData implements UniversalTimeBlockWithDay {
 
     private final TimeBlock timeBlock;
 
@@ -25,24 +25,30 @@ public class TimeBlockData {
     /**
      * @return LocalDateTime - start time of the time block.
      */
-    public LocalDateTime getStartTime(){
-        return timeBlock.getStartTime();
+    public LocalDateTime getStartDateTime(){
+        return timeBlock.getStartDateTime();
     }
 
     /**
      * @return LocalDateTime - end time of the time block.
      */
-    public LocalDateTime getEndTime(){
+    public LocalDateTime getEndDateTime(){
+        return timeBlock.getEndDateTime();
+    }
+
+    @Override
+    public LocalTime getStartTime() {
+        return timeBlock.getStartTime();
+    }
+
+    @Override
+    public LocalTime getEndTime() {
         return timeBlock.getEndTime();
     }
 
-    public LocalTime startTimeToLocal(){
-        return timeBlock.startTimeToLocal();
+    @Override
+    public LocalDate getLocalDate() {
+        return timeBlock.getLocalDate();
     }
-
-    public LocalTime endTimeToLocal(){
-        return timeBlock.endTimeToLocal();
-    }
-
 }
 

@@ -4,6 +4,7 @@ import presenters.response.UserCredentials;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
@@ -57,8 +58,6 @@ public abstract class ScreenView {
      * @param message the text to be printed.
      */
     protected void warningMessage(String message) {
-        // Note: in phase 1, we only use this for a single message type, but we are keeping this method to make warning
-        // messages extensible in phase 2
         System.out.println("⚠ " + message);
     }
 
@@ -106,6 +105,23 @@ public abstract class ScreenView {
         try {
             return LocalDate.of(year, month, day);
         } catch (DateTimeException ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Ask the user to enter a local time.
+     * @return LocalTime if inputted time is valid. null if inputted time is invalid.
+     */
+    protected LocalTime showLocalTimePrompt(){
+        Integer hour = inputInt("Enter 24hr Time (HH): ");
+        if (hour == null){return null;}
+        Integer minute = inputInt("Enter minute: (MM): ");
+        if (minute == null){return null;}
+
+        try{
+            return LocalTime.of(hour, minute);
+        }catch (DateTimeException ignored){
             return null;
         }
     }

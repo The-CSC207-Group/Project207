@@ -1,20 +1,17 @@
-// PHASE 2 FILE
-
 package entities;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
  * Represents a time block.
  */
-public class TimeBlock {
+public class TimeBlock implements UniversalTimeBlockWithDay {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    //private Date date; (optional, default = null)
-    //private Time time; (required)
-    //private Day day; (optional, represents Enum of the days the week, default = null)
 
     /**
      * Creates an instance of TimeBlock.
@@ -29,7 +26,7 @@ public class TimeBlock {
     /**
      * @return LocalDateTime representing the time block's start time.
      */
-    public LocalDateTime getStartTime() {
+    public LocalDateTime getStartDateTime() {
         return startTime;
     }
 
@@ -44,7 +41,7 @@ public class TimeBlock {
     /**
      * @return LocalDateTime representing the time block's end time.
      */
-    public LocalDateTime getEndTime() {
+    public LocalDateTime getEndDateTime() {
         return endTime;
     }
 
@@ -56,21 +53,25 @@ public class TimeBlock {
         this.endTime = endTime;
     }
 
-    /**
-     * Converts the LocalDateTime start time to LocalTime.
-     * @return LocalTime representing the time block's start tim.
-     */
-    public LocalTime startTimeToLocal(){
+
+    @Override
+    public LocalTime getStartTime() {
         return startTime.toLocalTime();
     }
 
-    /**
-     * Converts the LocalDateTime end time to LocalTime.
-     * @return LocalTime representing the time block's end time.
-     */
-    public LocalTime endTimeToLocal(){
-        return startTime.toLocalTime();
+    @Override
+    public LocalTime getEndTime() {
+        return endTime.toLocalTime();
     }
 
+    @Override
+    public LocalDate getLocalDate() {
+        return startTime.toLocalDate();
+    }
+    @Override
+    public DayOfWeek getDayOfWeek() {
+        return startTime.getDayOfWeek();
+    }
 }
+
 

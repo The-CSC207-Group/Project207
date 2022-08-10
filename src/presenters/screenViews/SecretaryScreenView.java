@@ -108,8 +108,6 @@ public class SecretaryScreenView extends UserScreenView {
         successMessage("Success loading patient: " + patientData.getUsername());
     }
 
-    // ALL METHODS BELOW ARE PENDING PHASE 2 IMPLEMENTATION
-
     /**
      * Ask for doctor username to book appointment.
      * @return String representing the doctor's username.
@@ -122,7 +120,11 @@ public class SecretaryScreenView extends UserScreenView {
      * Show doctor does not exist error when booking appointment.
      */
     public void showDoctorDoesNotExistError() {
-        errorMessage("Appointment booking error: a doctor with that username does not exist.");
+        errorMessage("Error: a doctor with that username does not exist.");
+    }
+
+    public void showDoctorNoLongerExists(){
+        errorMessage("The doctor with whom the appointment was scheduled is no longer a part of the clinic.");
     }
 
     /**
@@ -147,11 +149,12 @@ public class SecretaryScreenView extends UserScreenView {
      * @return AppointmentTimeDetails containing time and length of appointment.
      */
     public AppointmentTimeDetails bookAppointmentTimePrompt() {
-        Integer hour = inputInt("Enter your desired hour (HH): ");
+        infoMessage("Booking appointment - Time:");
+        Integer hour = inputInt("Enter hour (HH): ");
         if (hour == null) {return null;}
-        Integer minute = inputInt("Enter your desired minute (MM): ");
+        Integer minute = inputInt("Enter minute (MM): ");
         if (minute == null) {return null;}
-        Integer length = inputInt("Enter your desired length in minutes: ");
+        Integer length = inputInt("Enter duration in minutes: ");
         if (length == null) {return null;}
 
         try {
@@ -163,17 +166,58 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * Show error when appointment overlaps with absence or unavailability or another appointment.
+     * Show error when appointment does not overlap with availability or another appointment.
      */
-    public void showAppointmentConflictError() {
-        errorMessage("Appointment booking error: time period unavailability.");
+    public void showAppointmentBookingError() {
+        errorMessage("The doctor is not available during this time.");
     }
+
+    /**
+     * Inputted date and time is in the past.
+     */
+    public void showDayPassedError(){errorMessage("The date/time inputted has passed.");}
+
+    /**
+     * Show message when user has no appointments.
+     */
+    public void showNoUserAppointmentsMessage(){
+        infoMessage("This user has no appointments.");
+    }
+
+    /**
+     * Doctor has no appointments scheduled.
+     */
+    public void showNoDoctorAppointmentsMessage(){infoMessage("No appointments have been scheduled with this doctor.");}
 
     /**
      * Show invalid date error when user inputs the wrong date format.
      */
     public void showInvalidDateError() {
-        errorMessage("Appointment booking error: invalid date.");
+        errorMessage("Error: invalid date.");
+    }
+
+    /**
+     * Show error for incorrectly inputted time info.
+     */
+    public void showInvalidTimeError(){errorMessage("Error: invalid time.");}
+
+    /**
+     * Success message shown when appointment is rescheduled.
+     */
+    public void showRescheduleAppointmentSuccess(){successMessage("Successfully rescheduled appointment.");}
+
+    /**
+     * Error message shown when appointment can not be scheduled due to conflicts with another appointment on not
+     * falling within availability.
+     */
+    public void showRescheduleAppointmentError(){errorMessage("Failed to reschedule appointment as the doctor is not" +
+            " available during this time");}
+
+    /**
+     * Show appointment spanning multiple days error when it does so.
+     */
+    public void showSpanningMultipleDaysError(){
+        errorMessage("Error: appointment spans multiple days.");
     }
 
     /**
@@ -184,7 +228,7 @@ public class SecretaryScreenView extends UserScreenView {
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
-        successMessage("Successfully booked appointment for " + patientName + " with " + doctorName);
+        successMessage("Successfully booked appointment for " + patientName + " with Dr. " + doctorName);
     }
 
     /**
@@ -197,7 +241,7 @@ public class SecretaryScreenView extends UserScreenView {
     public Integer deleteAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " appointments to delete:");
-        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        infoMessage(new AppointmentView().viewFullAsEnumerationFromList(appointmentData));
         return deleteItemFromEnumerationPrompt("appointment");
     }
 
@@ -211,7 +255,7 @@ public class SecretaryScreenView extends UserScreenView {
     public Integer rescheduleAppointmentPrompt(ContactData patientContact, List<AppointmentData> appointmentData) {
         String patientName = contactView.viewName(patientContact);
         infoMessage("Viewing patient " + patientName + " appointments to reschedule:");
-        new AppointmentView().viewFullAsEnumerationFromList(appointmentData);
+        infoMessage(new AppointmentView().viewFullAsEnumerationFromList(appointmentData));
         return rescheduleAppointmentFromEnumerationPrompt();
     }
 
@@ -222,7 +266,7 @@ public class SecretaryScreenView extends UserScreenView {
      */
     private Integer rescheduleAppointmentFromEnumerationPrompt() {
         warningMessage("This action cannot be undone!");
-        return inputInt("Input appointment number to reschedule: ");
+        return inputInt("Input appointment number to reschedule: ") - 1;
     }
 
     /**
@@ -253,24 +297,56 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
+    public void showCancelAppointmentSuccess(){
+        successMessage("Successfully canceled appointment.");
+    }
+
+    /**
+     * Message displayed when booking an appointment and showing clinic's availability on a given day, where there
+     * is no availability.
+     */
+    public void showNoAvailabilityError(ContactData userContact){
+        errorMessage("Doctor is not available on this day.");
+    }
+
     /**
      * View appointments relating to doctor or patient.
      * @param userContact Contacting info of patient.
      * @param appointments list of appointments.
      */
-    public void viewAppointments(ContactData userContact, List<AppointmentData> appointments) {
+    public void viewPatientAppointments(ContactData userContact, List<AppointmentData> appointments) {
         infoMessage("Viewing appointments for " + contactView.viewName(userContact) + ":");
         infoMessage(new AppointmentView().viewFullFromList(appointments));
     }
 
     /**
-     * View a doctor's availabilities
-     * @param doctorUsername String representing the username of the doctor who the availabilities belong to.
+     * View appointments for a given doctor.
+     * @param userContact ContactData - contact data for a given doctor.
+     * @param appointments List<AppointmentData> list of data relating to all appointments scheduled with a doctor.
+     */
+    public void viewDoctorAppointments(ContactData userContact, List<AppointmentData> appointments) {
+        infoMessage("Viewing appointments for Dr. " + contactView.viewName(userContact) + ":");
+        infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
+
+    /**
+     * View a doctor's availabilities.
+     * @param userContact String representing the username of the doctor who the availabilities belong to.
      * @param availabilityData List<AvailabilityData> of the doctor's availabilities.
      */
-    public void viewDoctorAvailability(String doctorUsername, List<AvailabilityData> availabilityData) {
-        infoMessage("Viewing availabilities for Dr." + doctorUsername + ":");
+    public void viewDoctorAvailability(ContactData userContact, List<AvailabilityData> availabilityData) {
+        infoMessage("Viewing availabilities for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
+    }
+
+    /**
+     * View one of a doctor's availabilities.
+     * @param userContact String representing the username of the doctor who the availability belong to.
+     * @param availabilityData AvailabilityData - Availability data for a given day.
+     */
+    public void viewDoctorAvailability(ContactData userContact, AvailabilityData availabilityData) {
+        infoMessage("Viewing availabilities for Dr. " + contactView.viewName(userContact) + ":");
+        infoMessage(new AvailabilityView().viewFull(availabilityData) + "\n");
     }
 
     /**

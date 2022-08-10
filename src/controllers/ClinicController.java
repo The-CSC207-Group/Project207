@@ -1,9 +1,11 @@
 package controllers;
 
 import entities.Admin;
+import presenters.response.AvailabilityDetails;
 import presenters.screenViews.ClinicScreenView;
 import useCases.ClinicManager;
 
+import java.time.DayOfWeek;
 import java.util.LinkedHashMap;
 
 /**
@@ -14,6 +16,7 @@ public class ClinicController extends TerminalController {
     private final ClinicScreenView clinicScreenView;
     private final ClinicManager clinicManager;
     private final UserController<Admin> previousController;
+
 
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
@@ -36,7 +39,8 @@ public class ClinicController extends TerminalController {
     }
 
     /**
-     * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command calls.
+     * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command
+     * calls.
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
     public LinkedHashMap<String, Command> AllCommands() {
@@ -45,6 +49,8 @@ public class ClinicController extends TerminalController {
         commands.put("change clinic email", ChangeClinicEmail());
         commands.put("change clinic phone number", ChangeClinicPhoneNumber());
         commands.put("change clinic address", ChangeClinicAddress());
+        commands.put("change clinic hours", ChangeClinicHours());
+        commands.put("remove clinic hours", RemoveClinicHours());
         commands.put("back", Back(previousController));
         commands.putAll(super.AllCommands());
         return commands;
@@ -95,6 +101,39 @@ public class ClinicController extends TerminalController {
             else {
                 clinicScreenView.showClinicAddressFormatError();
             }
+        };
+    }
+
+    private Command ChangeClinicHours(){
+        return (x) -> {
+            clinicScreenView.showClinicHours(clinicManager.clinicData());
+            DayOfWeek dayOfWeek = clinicScreenView.showDayOfWeekPrompt();
+
+            if (dayOfWeek == null){
+                clinicScreenView.showInvalidDayOfWeekSelectionError();
+                return;
+            }
+            AvailabilityDetails availabilityDetails = clinicScreenView.showChangeClinicHoursPrompt(dayOfWeek);
+            if (availabilityDetails == null ||
+                    availabilityDetails.startTime().isAfter(availabilityDetails.endTime())){
+                clinicScreenView.showEnteredInvalidTime();
+                return;
+            }
+            clinicManager.changeClinicHours(availabilityDetails.dayOfWeek(), availabilityDetails.startTime(),
+                    availabilityDetails.endTime());
+            clinicScreenView.showSuccessfullyChangedAvailability();
+        };
+    }
+    private Command RemoveClinicHours(){
+        return (x) -> {
+            clinicScreenView.showClinicHours(clinicManager.clinicData());
+            DayOfWeek dayOfWeek = clinicScreenView.showDayOfWeekPrompt();
+            if (dayOfWeek == null){
+                clinicScreenView.showInvalidDayOfWeekSelectionError();
+                return;
+            }
+            clinicManager.removeClinicHours(dayOfWeek);
+            clinicScreenView.showSuccessfullyDeletedAvailability();
         };
     }
 

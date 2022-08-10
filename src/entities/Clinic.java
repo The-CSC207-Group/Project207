@@ -2,6 +2,7 @@ package entities;
 
 import utilities.JsonSerializable;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 
 /**
@@ -90,8 +91,6 @@ public class Clinic extends JsonSerializable {
         this.address = address;
     }
 
-    // ALL CODE BELOW IS FOR PHASE 2
-
     /**
      * @return TimeBlock representing the clinic's hours of operation.
      */
@@ -105,6 +104,13 @@ public class Clinic extends JsonSerializable {
      */
     public void addClinicHours(Availability clinicHours) {
         this.clinicHours.add(clinicHours);
+    }
+
+    /**
+     * Removes the clinic hours of a certain day. Assumes there is at most 1 availability per day of week.
+     */
+    public void removeClinicHours(DayOfWeek dayOfWeek){
+        clinicHours.removeIf(availability -> availability.getDayOfWeek().equals(dayOfWeek));
     }
 
 }

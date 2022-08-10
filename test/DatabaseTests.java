@@ -216,11 +216,11 @@ public class DatabaseTests {
         /* Testing if the loaded appointment and the original appointment are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original appointment and loaded appointment should start at the same time",
-                originalAppointment.getTimeBlock().getStartTime().compareTo(loadedAppointment.getTimeBlock().
-                        getStartTime()), 0); // the compareTo function returns 0 when both dates are equal
+                originalAppointment.getTimeBlock().getStartDateTime().compareTo(loadedAppointment.getTimeBlock().
+                        getStartDateTime()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original appointment and loaded appointment should end at the same time",
-                originalAppointment.getTimeBlock().getEndTime().compareTo(loadedAppointment.getTimeBlock().
-                        getEndTime()), 0);
+                originalAppointment.getTimeBlock().getEndDateTime().compareTo(loadedAppointment.getTimeBlock().
+                        getEndDateTime()), 0);
         assertEquals("Original appointment and loaded appointment should share the same patient ID",
                 originalAppointment.getPatientId(), loadedAppointment.getPatientId());
         assertEquals("Original appointment and loaded appointment should share the same doctor ID",
@@ -317,11 +317,11 @@ public class DatabaseTests {
         assertEquals("Original clinic and loaded clinic should share the same address",
                 originalClinic.getAddress(), loadedClinic.getAddress());
         assertEquals("Original clinic and loaded clinic should start at the same time",
-                originalClinic.getClinicHours().get(0).getDoctorStartTime().compareTo(loadedClinic.getClinicHours().get(0).
-                        getDoctorStartTime()), 0); // the compareTo function returns 0 when both dates are equal
+                originalClinic.getClinicHours().get(0).getStartTime().compareTo(loadedClinic.getClinicHours().get(0).
+                        getStartTime()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original clinic and loaded clinic should end at the same time",
-                originalClinic.getClinicHours().get(0).getDoctorEndTime().compareTo(loadedClinic.getClinicHours().get(0).
-                        getDoctorEndTime()), 0);
+                originalClinic.getClinicHours().get(0).getEndTime().compareTo(loadedClinic.getClinicHours().get(0).
+                        getEndTime()), 0);
     }
 
     @After

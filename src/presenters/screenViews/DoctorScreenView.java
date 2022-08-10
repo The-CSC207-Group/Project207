@@ -2,6 +2,7 @@ package presenters.screenViews;
 
 import dataBundles.*;
 import presenters.entityViews.*;
+import presenters.entityViews.AppointmentView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
@@ -90,6 +91,11 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
+     * Error message when the user inputs an invalid date.
+     */
+    public void showInvalidDateError(){errorMessage("Invalid date.");}
+
+    /**
      * Load an existing patient.
      *
      * @return patient username inputted by doctor.
@@ -114,7 +120,6 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Success loading patient: " + contactView.viewName(patientContact));
     }
 
-    // ALL CODE BELOW PENDING FOR PHASE 2
 
     /**
      * View used to view the doctor's appointments that are given.
@@ -123,6 +128,13 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void viewAppointments(List<AppointmentData> appointments) {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
+    }
+
+    /**
+     * Error raised when the user input is not an integer.
+     */
+    public void showDeletePrescriptionNotAnIntegerError() {
+        showDeleteNotAnIntegerError("prescription");
     }
 
     /**
@@ -206,6 +218,11 @@ public class DoctorScreenView extends UserScreenView {
     public void showDeleteAvailabilityOutOfRangeError() {
         showDeleteOutOfRangeError("availability");
     }
+
+    /**
+     * Message showed when the doctor has no appointments scheduled.
+     */
+    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
 
     /**
      * Error raised when the user input is not an integer.

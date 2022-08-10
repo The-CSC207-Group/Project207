@@ -50,8 +50,6 @@ public class PatientScreenView extends UserScreenView {
         viewPrescriptions(items, details);
     }
 
-    // ALL METHODS BELOW ARE PENDING PHASE 2 IMPLEMENTATION
-
     /**
      * View all appointments of a patient.
      * @param items List<AppointmentData> of appointments.
@@ -61,5 +59,10 @@ public class PatientScreenView extends UserScreenView {
         infoMessage("Booked Appointments:");
         infoMessage(output);
     }
+
+    /**
+     * Message showed when the doctor has no appointments scheduled.
+     */
+    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
 
 }

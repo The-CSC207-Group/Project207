@@ -1,7 +1,6 @@
 package useCases;
 
 import dataBundles.DoctorData;
-import dataBundles.ReportData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
@@ -33,8 +32,6 @@ public class DoctorManager extends UserManager<Doctor> {
     public DoctorData createDoctor(String username, String password) {
         if (super.regexCheck(username, password)) {
             Doctor doctor = new Doctor(username, password);
-            // Commented code is pending implementation in phase 2
-            //        database.getClinic().getClinicHours().forEach(doctor::addAvailability);
             if (doctorDatabase.add(doctor) != null) {
                 doctor.setContactInfoId(newContactInDatabase());
                 return new DoctorData(doctor);
