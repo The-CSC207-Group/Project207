@@ -3,6 +3,9 @@ package utilities;
 import java.time.DayOfWeek;
 import java.util.LinkedHashMap;
 
+/**
+ * Utility class containing universally applicable methods relating to the DayOfWeek enum.
+ */
 public class DayOfWeekUtils {
 
     /**
