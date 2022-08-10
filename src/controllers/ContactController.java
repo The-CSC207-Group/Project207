@@ -10,12 +10,11 @@ import java.util.LinkedHashMap;
 /**
  * Controller class that processes the commands that a user performs on their contact information.
  */
-public class ContactController extends TerminalController {
+public class ContactController extends MenuController {
 
     private final ContactData contactData;
     private final ContactScreenView contactScreenView;
     private final ContactManager contactManager;
-    private final UserController<?> previousController;
 
     /**
      * Creates a contact controller object that handles the commands a user performs on their contact information.
@@ -28,8 +27,7 @@ public class ContactController extends TerminalController {
      */
     public ContactController(Context context, UserController<?> previousController,
                              ContactData contactData) {
-        super(context);
-        this.previousController = previousController;
+        super(context, previousController);
         this.contactData = contactData;
         this.contactManager = new ContactManager(getDatabase());
         this.contactScreenView = new ContactScreenView();
@@ -57,7 +55,6 @@ public class ContactController extends TerminalController {
         commands.put("change emergency contact email", ChangeEmergencyContactEmail());
         commands.put("change emergency contact phone number", ChangeEmergencyContactPhoneNumber());
         commands.put("change emergency contact relationship", ChangeEmergencyContactRelationship());
-        commands.put("back", Back(previousController));
         commands.putAll(super.AllCommands());
         return commands;
     }
