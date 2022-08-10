@@ -15,7 +15,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Use case class for handling operations and data pertaining to appointments.
@@ -161,7 +160,7 @@ public class AppointmentManager {
         return doesNotOverlapWithAppointments(timeBlock, getDoctorAppointments(doctorData)) && strictlyOverlapsWithClinicHours(timeBlock);
     }
 
-    private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock, Appointment excludedAppointment){
+    private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock, Appointment excludedAppointment) {
         ArrayList<AppointmentData> appointments = getDoctorAppointments(doctorData).stream().
                 filter(a -> !Objects.equals(a.getAppointmentId(), excludedAppointment.getId())).
                 collect(Collectors.toCollection(ArrayList::new));

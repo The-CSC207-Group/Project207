@@ -2,7 +2,6 @@ package presenters.screenViews;
 
 import dataBundles.*;
 import presenters.entityViews.*;
-import presenters.entityViews.AppointmentView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
@@ -93,7 +92,9 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * Error message when the user inputs an invalid date.
      */
-    public void showInvalidDateError(){errorMessage("Invalid date.");}
+    public void showInvalidDateError() {
+        errorMessage("Invalid date.");
+    }
 
     /**
      * Load an existing patient.
@@ -222,7 +223,9 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * Message showed when the doctor has no appointments scheduled.
      */
-    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
+    public void showNoAppointmentsMessage() {
+        infoMessage("No appointments scheduled.");
+    }
 
     /**
      * Error raised when the user input is not an integer.
@@ -277,6 +280,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Views report in full detail.
+     *
      * @param report the report to be viewed in full detail.
      */
     public void viewReport(ReportData report, ContactData doctorContact) {
@@ -291,6 +295,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Displays to the user the header of each report with an index next to it.
+     *
      * @param reportData An arraylist of ReportData
      */
     public void viewAllReports(ArrayList<ReportData> reportData) {
@@ -299,6 +304,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Prompts the user to view a certain report in more detail.
+     *
      * @return an Integer of the chosen report to be viewed.
      */
     public Integer viewReportPrompt() {

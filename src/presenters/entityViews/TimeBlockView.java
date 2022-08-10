@@ -24,6 +24,7 @@ public class TimeBlockView extends EntityView<TimeBlockData> {
     public String viewStartTime(TimeBlockData item) {
         return "This time block's start time is " + item.getStartDateTime() + ".";
     }
+
     /**
      * @param item TimeBlockData bundle to view.
      * @return String representing the time block's end time as a view.

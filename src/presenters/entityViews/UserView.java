@@ -4,6 +4,7 @@ import dataBundles.UserData;
 
 /**
  * The User entity's view.
+ *
  * @param <T> The User data bundle that the user view will use.
  */
 public abstract class UserView<T extends UserData<?>> extends EntityView<T> {

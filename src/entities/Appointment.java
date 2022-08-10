@@ -16,8 +16,9 @@ public class Appointment extends JsonSerializable implements UniversalTimeBlockW
 
     /**
      * Creates an instance of Appointment.
+     *
      * @param timeBlock TimeBlock corresponding to the appointment.
-     * @param doctorId Integer representing the id of the appointment's doctor.
+     * @param doctorId  Integer representing the id of the appointment's doctor.
      * @param patientId Integer representing the id of the appointment's patient.
      */
     public Appointment(TimeBlock timeBlock, Integer doctorId, Integer patientId) {
@@ -35,6 +36,7 @@ public class Appointment extends JsonSerializable implements UniversalTimeBlockW
 
     /**
      * Sets the appointment's time block.
+     *
      * @param timeBlock The new TimeBlock for the appointment.
      */
     public void setTimeBlock(TimeBlock timeBlock) {
@@ -50,6 +52,7 @@ public class Appointment extends JsonSerializable implements UniversalTimeBlockW
 
     /**
      * Sets the appointment's doctor id.
+     *
      * @param doctorId The Integer representing the id of the appointment's new doctor.
      */
     public void setDoctorId(Integer doctorId) {
@@ -65,6 +68,7 @@ public class Appointment extends JsonSerializable implements UniversalTimeBlockW
 
     /**
      * Sets the appointment's patient id.
+     *
      * @param patientId The Integer representing the id of the appointment's new patient.
      */
     public void setPatientId(Integer patientId) {
@@ -75,6 +79,7 @@ public class Appointment extends JsonSerializable implements UniversalTimeBlockW
     public LocalTime getStartTime() {
         return timeBlock.getStartTime();
     }
+
     @Override
     public LocalTime getEndTime() {
         return timeBlock.getEndTime();

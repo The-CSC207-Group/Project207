@@ -15,8 +15,9 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
 
     /**
      * Creates an instance of TimeBlock.
+     *
      * @param startTime LocalDateTime representing the time block's start time.
-     * @param endTime LocalDateTime representing the time block's end time.
+     * @param endTime   LocalDateTime representing the time block's end time.
      */
     public TimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
@@ -31,32 +32,24 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
     }
 
     /**
-     * Sets the time block's start time.
-     * @param startTime LocalDateTime representing the time block's new start time.
-     */
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
      * @return LocalDateTime representing the time block's end time.
      */
     public LocalDateTime getEndDateTime() {
         return endTime;
     }
 
-    /**
-     * Sets the time block's end time.
-     * @param endTime LocalDateTime representing the time block's new end time.
-     */
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-
     @Override
     public LocalTime getStartTime() {
         return startTime.toLocalTime();
+    }
+
+    /**
+     * Sets the time block's start time.
+     *
+     * @param startTime LocalDateTime representing the time block's new start time.
+     */
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
     @Override
@@ -64,10 +57,20 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
         return endTime.toLocalTime();
     }
 
+    /**
+     * Sets the time block's end time.
+     *
+     * @param endTime LocalDateTime representing the time block's new end time.
+     */
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public LocalDate getLocalDate() {
         return startTime.toLocalDate();
     }
+
     @Override
     public DayOfWeek getDayOfWeek() {
         return startTime.getDayOfWeek();

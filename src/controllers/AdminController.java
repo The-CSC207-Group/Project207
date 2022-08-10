@@ -1,9 +1,9 @@
 package controllers;
 
-import dataBundles.*;
+import dataBundles.AdminData;
 import entities.Admin;
 import presenters.screenViews.AdminScreenView;
-import useCases.*;
+import useCases.AdminManager;
 
 import java.util.LinkedHashMap;
 
@@ -19,8 +19,9 @@ public class AdminController extends UserController<Admin> {
 
     /**
      * Creates an admin controller object that handles the commands used by the current admin user.
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *
+     * @param context   Context - a reference to the context object, which stores the current controller and allows for
+     *                  switching between controllers.
      * @param adminData AdminData - a data containing the ID and attributes of the current admin user.
      */
     public AdminController(Context context, AdminData adminData) {
@@ -32,6 +33,7 @@ public class AdminController extends UserController<Admin> {
 
     /**
      * Creates a Linked hashmap of all string representations of admin commands mapped to the method that each command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective admin commands.
      */
     @Override
@@ -45,7 +47,7 @@ public class AdminController extends UserController<Admin> {
         return commands;
     }
 
-    private Command LoadUserManagement(){
+    private Command LoadUserManagement() {
         return (x) -> {
             changeCurrentController(new AdminUserManagementController(getContext(), currentController, adminData));
         };

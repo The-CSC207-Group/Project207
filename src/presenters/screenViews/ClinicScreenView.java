@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class ClinicScreenView extends ScreenView {
     DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
+
     /**
      * Shows the welcome message that is presented at the start of the screen.
      */
@@ -25,9 +26,12 @@ public class ClinicScreenView extends ScreenView {
 
     /**
      * Shows the clinic name input, taking in text from the user.
+     *
      * @return String representing the text inputted.
      */
-    public String showClinicNamePrompt() {return input("Enter the name of the clinic: ");}
+    public String showClinicNamePrompt() {
+        return input("Enter the name of the clinic: ");
+    }
 
     /**
      * Shows an error related to name formatting.
@@ -39,10 +43,13 @@ public class ClinicScreenView extends ScreenView {
     /**
      * Shows a success message for changing the clinic name.
      */
-    public void showSuccessfullyChangedClinicName() {successMessage("Successfully changed the clinic's name.");}
+    public void showSuccessfullyChangedClinicName() {
+        successMessage("Successfully changed the clinic's name.");
+    }
 
     /**
      * Shows the clinic address input, taking in text from the user.
+     *
      * @return a String representing the text inputted.
      */
     public String showClinicAddressPrompt() {
@@ -59,16 +66,22 @@ public class ClinicScreenView extends ScreenView {
     /**
      * Shows a success message for changing a clinic address.
      */
-    public void showSuccessfullyChangedClinicAddress() {successMessage("Successfully changed the clinic's address.");}
+    public void showSuccessfullyChangedClinicAddress() {
+        successMessage("Successfully changed the clinic's address.");
+    }
 
     /**
      * Shows the clinic phone number input, taking in text from the user.
+     *
      * @return a String representing the text inputted.
      */
-    public String showClinicPhoneNumberPrompt() {return input("Enter the clinic's phone number: ");}
+    public String showClinicPhoneNumberPrompt() {
+        return input("Enter the clinic's phone number: ");
+    }
 
     /**
      * Shows the clinic email input, taking in text from the user.
+     *
      * @return a String representing the text inputted.
      */
     public String showClinicEmailPrompt() {
@@ -85,7 +98,9 @@ public class ClinicScreenView extends ScreenView {
     /**
      * Shows a success message for changing a clinic email address.
      */
-    public void showSuccessfullyChangedClinicEmail() {successMessage("Successfully changed the clinic's email.");}
+    public void showSuccessfullyChangedClinicEmail() {
+        successMessage("Successfully changed the clinic's email.");
+    }
 
     /**
      * Shows an error related to phone number formatting.
@@ -104,70 +119,79 @@ public class ClinicScreenView extends ScreenView {
     /**
      * Shows a success message when clinic hours are changed.
      */
-    public void showSuccessfullyChangedAvailability(){
+    public void showSuccessfullyChangedAvailability() {
         successMessage("Successfully changed the clinic's availability.");
     }
 
     /**
      * Shows an error message when a user incorrectly enters a field when changing clinic hours.
      */
-    public void showEnteredInvalidTime(){
+    public void showEnteredInvalidTime() {
         errorMessage("Invalid Time.");
     }
 
     /**
      * Shows an error when a user selects an invalid day of week when removing availability.
      */
-    public void showInvalidDayOfWeekSelectionError(){
+    public void showInvalidDayOfWeekSelectionError() {
         errorMessage("Please choose a number from 1-7.");
     }
 
     /**
      * Shows a success message when availability is removed from clinic hours.
      */
-    public void showSuccessfullyDeletedAvailability(){
+    public void showSuccessfullyDeletedAvailability() {
         successMessage("Availability removed successfully.");
     }
 
     /**
      * Shows the clinic's hours throughout the week given the clinic data.
+     *
      * @param clinicData - data bundle associated with the clinic to be displayed.
      */
-    public void showClinicHours(ClinicData clinicData){
+    public void showClinicHours(ClinicData clinicData) {
         ClinicView clinicView = new ClinicView();
         clinicView.viewClinicHours(clinicData);
     }
 
     /**
      * Shows a prompt for changing the hours of a clinic on a certain day.
+     *
      * @return AvailabilityDetails - a response containing DayOfWeek, StartTime and EndTime or returns null
      * if the user enters any invalid info.
      */
-    public AvailabilityDetails showChangeClinicHoursPrompt(DayOfWeek dayOfWeek){
+    public AvailabilityDetails showChangeClinicHoursPrompt(DayOfWeek dayOfWeek) {
         infoMessage("Start Time: ");
         LocalTime localStartTime = showLocalTimePrompt();
-        if (localStartTime == null){return null;}
+        if (localStartTime == null) {
+            return null;
+        }
         infoMessage("End Time: ");
         LocalTime localEndTime = showLocalTimePrompt();
-        if (localEndTime == null){return null;}
+        if (localEndTime == null) {
+            return null;
+        }
         return new AvailabilityDetails(dayOfWeek, localStartTime, localEndTime);
     }
 
     /**
      * Prompt for getting the day of week from a user. Numbers the days of the week and returns the DayOfWeek
      * object associated with the number.
+     *
      * @return DayOfWeek - the day of the week (Ex: MONDAY, TUESDAY, etc.) the user chose or null if the user enters a
      * number that is not associated with a DayOfWeek or doesn't enter a number.
      */
-    public DayOfWeek showDayOfWeekPrompt(){
+    public DayOfWeek showDayOfWeekPrompt() {
         infoMessage("Select day of week: ");
         ArrayList<DayOfWeek> dayOfWeeks = new ArrayList<>(dayOfWeekUtils.getDayOfWeekStringToEnumMap().values());
-        for (int i = 0; i < dayOfWeeks.size(); i++){
+        for (int i = 0; i < dayOfWeeks.size(); i++) {
             infoMessage(dayOfWeekUtils.dayOfWeekToString(dayOfWeeks.get(i)) + "(" + (i + 1) + ")");
         }
         Integer response = inputInt("Response (1-7): ");
 
-        if (response == null || response < 1 || response > dayOfWeeks.size()){return null;}
+        if (response == null || response < 1 || response > dayOfWeeks.size()) {
+            return null;
+        }
         return dayOfWeeks.get(response - 1);
     }
 

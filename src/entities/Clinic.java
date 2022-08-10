@@ -10,17 +10,18 @@ import java.util.ArrayList;
  */
 public class Clinic extends JsonSerializable {
 
+    private final ArrayList<Availability> clinicHours;
     private String name;
     private String phoneNumber;
     private String email;
     private String address;
-    private final ArrayList<Availability> clinicHours;
 
     /**
      * Creates an instance of Clinic
-     * @param name String representing the name of the clinic.
+     *
+     * @param name        String representing the name of the clinic.
      * @param phoneNumber String representing the phone number of the clinic.
-     * @param address String representing the address of the clinic.
+     * @param address     String representing the address of the clinic.
      * @param clinicHours TimeBlock representing the clinic's hours of operation.
      */
     public Clinic(String name, String phoneNumber, String email, String address, ArrayList<Availability> clinicHours) {
@@ -40,6 +41,7 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the name of the clinic.
+     *
      * @param name The new name of the clinic as String.
      */
     public void setName(String name) {
@@ -55,6 +57,7 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the phone number of the clinic.
+     *
      * @param phoneNumber The new phone number of the clinic as String.
      */
     public void setPhoneNumber(String phoneNumber) {
@@ -70,6 +73,7 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the email of the clinic.
+     *
      * @param email The new email of the clinic as String.
      */
     public void setEmail(String email) {
@@ -85,6 +89,7 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the address of the clinic.
+     *
      * @param address The new address of the clinic as String.
      */
     public void setAddress(String address) {
@@ -100,6 +105,7 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Sets the clinic's hours of operation.
+     *
      * @param clinicHours TimeBlock representing the clinic's new hours of operation.
      */
     public void addClinicHours(Availability clinicHours) {
@@ -109,7 +115,7 @@ public class Clinic extends JsonSerializable {
     /**
      * Removes the clinic hours of a certain day. Assumes there is at most 1 availability per day of week.
      */
-    public void removeClinicHours(DayOfWeek dayOfWeek){
+    public void removeClinicHours(DayOfWeek dayOfWeek) {
         clinicHours.removeIf(availability -> availability.getDayOfWeek().equals(dayOfWeek));
     }
 

@@ -13,6 +13,7 @@ import useCases.AppointmentManager;
 import useCases.DoctorManager;
 import useCases.PatientManager;
 import utilities.DeleteUtils;
+
 import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class AppointmentManagerTests {
      * Initializes the variables used by all the tests before each unit test.
      */
     @Before
-    public void before(){
+    public void before() {
         originalDatabase = new Database(databaseFolder.toString());
         addStandardAvailabilityAndClinic();
         doctorData = new DoctorManager(originalDatabase).createDoctor("test12", "test1234");
@@ -164,7 +165,7 @@ public class AppointmentManagerTests {
     }
 
     /**
-     *Tests booking an invalid appointment that would result in a pre-existing appointment being inside it's start
+     * Tests booking an invalid appointment that would result in a pre-existing appointment being inside it's start
      * time and end time.
      */
     @Test(timeout = 100000)
@@ -372,7 +373,7 @@ public class AppointmentManagerTests {
                 "in the database", appointmentManager.getAvailabilityFromDayOfWeek(
                 DayOfWeek.of(1)).getDayOfWeek(), originalDatabase.getClinic().getClinicHours().get(0).getDayOfWeek());
     }
-    
+
     /**
      * Deletes the temporary database folder used to store the database for tests after tests are done.
      */
@@ -424,7 +425,7 @@ public class AppointmentManagerTests {
         }
     }
 
-    private void checkObjectExistsInDatabase(Database originalDatabase, boolean desiredResult){
+    private void checkObjectExistsInDatabase(Database originalDatabase, boolean desiredResult) {
         assertEquals("An object added to the database should result in the databases getAllIds having a " +
                 "size > 1", originalDatabase.getAppointmentDatabase().getAllIds().isEmpty(), !desiredResult);
     }

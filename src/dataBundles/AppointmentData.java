@@ -15,6 +15,7 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
 
     /**
      * Constructor.
+     *
      * @param appointment Appointment - appointment entity.
      */
     public AppointmentData(Appointment appointment) {
@@ -23,6 +24,7 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
 
     /**
      * Get the TimeBlockData associated with an appointment.
+     *
      * @return TimeBlockData - the stored appointment's timeblock.
      */
     public TimeBlockData getTimeBlock() {
@@ -31,6 +33,7 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
 
     /**
      * Get the doctor id associated with an appointment.
+     *
      * @return Integer - the doctor associated with the appointment's id.
      */
     public Integer getDoctorId() {
@@ -39,6 +42,7 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
 
     /**
      * Get the patient id associated with an appointment.
+     *
      * @return Integer - the patient associated with the appointment's id.
      */
     public Integer getPatientId() {
@@ -47,6 +51,7 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
 
     /**
      * Get the stored appointment's id.
+     *
      * @return Integer - the appointment's id.
      */
     public Integer getAppointmentId() {

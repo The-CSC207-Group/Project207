@@ -19,6 +19,7 @@ abstract public class TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program where commands are being passed into the terminal.
+     *
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
      */
@@ -32,6 +33,7 @@ abstract public class TerminalController {
 
     /**
      * Gets the context (necessary for the state command).
+     *
      * @return Context - reference to the context object, which stores the current controller and allows for switching
      * between controllers.
      */
@@ -41,14 +43,16 @@ abstract public class TerminalController {
 
     /**
      * Changes the current controller in the context to new controller.
+     *
      * @param newController TerminalController - the controller we are switching to.
      */
-    public void changeCurrentController(TerminalController newController){
+    public void changeCurrentController(TerminalController newController) {
         context.changeController(newController);
     }
 
     /**
      * Returns the database.
+     *
      * @return Database - collection of all the entity databases of the program.
      */
     public Database getDatabase() {
@@ -57,6 +61,7 @@ abstract public class TerminalController {
 
     /**
      * Creates a Linked hashmap of the string representations of commands mapped to the method that each command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective commands.
      */
     public LinkedHashMap<String, Command> AllCommands() {
@@ -98,7 +103,8 @@ abstract public class TerminalController {
             if (number <= AllCommands().size() - 1 & number >= 0) {
                 return number;
             }
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) {
+        }
         return null;
     }
 
@@ -137,7 +143,7 @@ abstract public class TerminalController {
         }
     }
 
-    protected Command Back(TerminalController previousController){
+    protected Command Back(TerminalController previousController) {
         return (x) -> changeCurrentController(previousController);
     }
 

@@ -13,8 +13,9 @@ public abstract class User extends JsonSerializable {
 
     /**
      * Creates an instance of User.
-     * @param username String representing the user's username.
-     * @param password String representing the user's password.
+     *
+     * @param username      String representing the user's username.
+     * @param password      String representing the user's password.
      * @param contactInfoId Integer representing the id of the user's Contact object.
      */
     public User(String username, String password, Integer contactInfoId) {
@@ -36,6 +37,7 @@ public abstract class User extends JsonSerializable {
 
     /**
      * Compares this user's password to comparedPassword.
+     *
      * @param comparedPassword String representing the password to be compared.
      * @return boolean true if this user's password is the same as comparedPassword. Returns false otherwise.
      */
@@ -45,6 +47,7 @@ public abstract class User extends JsonSerializable {
 
     /**
      * Sets the user's password.
+     *
      * @param password String representing the user's new password.
      */
     public void setPassword(String password) {
@@ -60,6 +63,7 @@ public abstract class User extends JsonSerializable {
 
     /**
      * Updates this user's Contact object id to a new Contact object id.
+     *
      * @param contactInfoId Integer representing the id of this user's new Contact object.
      */
     public void setContactInfoId(Integer contactInfoId) {

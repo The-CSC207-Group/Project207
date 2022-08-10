@@ -12,8 +12,10 @@ import java.time.LocalTime;
 public class AvailabilityData implements UniversalTimeBlock {
 
     private final Availability availability;
+
     /**
      * Constructor.
+     *
      * @param availability Availability - availability entity.
      */
     public AvailabilityData(Availability availability) {

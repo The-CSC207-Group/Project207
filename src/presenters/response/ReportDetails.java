@@ -12,8 +12,9 @@ public final class ReportDetails {
 
     /**
      * Creates an instance of ReportDetails.
+     *
      * @param header String representing this report's header.
-     * @param body String representing this report's body.
+     * @param body   String representing this report's body.
      */
     public ReportDetails(String header, String body) {
         this.header = header;
@@ -46,6 +47,7 @@ public final class ReportDetails {
         return Objects.equals(this.header, that.header) &&
                 Objects.equals(this.body, that.body);
     }
+
     /**
      * @return int representing the hash code value for this instance of ReportDetails.
      */

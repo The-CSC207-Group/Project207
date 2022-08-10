@@ -4,12 +4,13 @@ import java.util.List;
 
 /**
  * The generic entity view.
+ *
  * @param <T> The data bundle that the entity view will use.
  */
 public abstract class EntityView<T> {
 
     /**
-     * @param string String to be returned if a string is inputted.
+     * @param string        String to be returned if a string is inputted.
      * @param defaultString String to be returned if no string or a blank string was inputted in string.
      * @return String string or defaultString depending on the value of string.
      */
@@ -54,7 +55,7 @@ public abstract class EntityView<T> {
     }
 
     /**
-     * @param items The list of generic data bundles to view.
+     * @param items    The list of generic data bundles to view.
      * @param function The view function to be used.
      * @return Returns an entity view of all items in items using the view function function.
      */
@@ -70,7 +71,7 @@ public abstract class EntityView<T> {
     }
 
     /**
-     * @param items The list of generic data bundles to view.
+     * @param items    The list of generic data bundles to view.
      * @param function The view function to be used.
      * @return Returns an entity view as an enumeration of all items in items using the view function function.
      */

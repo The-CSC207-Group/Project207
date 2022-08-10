@@ -11,6 +11,7 @@ public class DeleteUtils {
 
     /**
      * Deletes a local file.
+     *
      * @param directoryToBeDeleted File - the file object of the file that is to be deleted.
      */
     public static void deleteDirectory(File directoryToBeDeleted) {

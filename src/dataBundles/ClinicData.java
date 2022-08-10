@@ -14,6 +14,7 @@ public class ClinicData {
 
     /**
      * Constructor.
+     *
      * @param clinic Clinic - Clinic entity.
      */
     public ClinicData(Clinic clinic) {
@@ -23,14 +24,14 @@ public class ClinicData {
     /**
      * @return String - address of the clinic stored.
      */
-    public String getAddress(){
+    public String getAddress() {
         return clinic.getAddress();
     }
 
     /**
      * @return String - address of the clinic stored.
      */
-    public String getEmail(){
+    public String getEmail() {
         return clinic.getEmail();
     }
 
@@ -58,7 +59,7 @@ public class ClinicData {
     /**
      * @return TimeBlock - hours of operations of the clinic stored.
      */
-    public ArrayList<AvailabilityData> getClinicHours(){
+    public ArrayList<AvailabilityData> getClinicHours() {
         return clinic.getClinicHours().stream()
                 .map(AvailabilityData::new)
                 .collect(Collectors.toCollection(ArrayList::new));

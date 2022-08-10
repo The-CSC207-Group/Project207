@@ -15,7 +15,8 @@ public class Log extends JsonSerializable {
 
     /**
      * Creates an instance of Log.
-     * @param userId Integer representing the id of the user that the log corresponds to.
+     *
+     * @param userId  Integer representing the id of the user that the log corresponds to.
      * @param message String representing the message to be displayed by the log.
      */
     public Log(Integer userId, String message) {

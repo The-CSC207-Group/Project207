@@ -18,12 +18,13 @@ public class ContactController extends MenuController {
 
     /**
      * Creates a contact controller object that handles the commands a user performs on their contact information.
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *
+     * @param context            Context - a reference to the context object, which stores the current controller and allows for
+     *                           switching between controllers.
      * @param previousController UserController<?> - the object of the controller that switched into this contact
      *                           controller object.
-     * @param contactData ContactData - a data  storing the ID and attributes of the contact object associated
-     *                    with the current user.
+     * @param contactData        ContactData - a data  storing the ID and attributes of the contact object associated
+     *                           with the current user.
      */
     public ContactController(Context context, UserController<?> previousController,
                              ContactData contactData) {
@@ -41,6 +42,7 @@ public class ContactController extends MenuController {
 
     /**
      * Creates a linked hashmap of all string representations of contact commands mapped to the method that each command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
     public LinkedHashMap<String, Command> AllCommands() {

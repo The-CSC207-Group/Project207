@@ -12,7 +12,8 @@ public final class AppointmentTimeDetails {
 
     /**
      * Creates an instance of AppointmentTimeDetails.
-     * @param time LocalTime representing the time of the appointment.
+     *
+     * @param time   LocalTime representing the time of the appointment.
      * @param length Integer representing the length of the appointment in minutes.
      */
     public AppointmentTimeDetails(LocalTime time, Integer length) {

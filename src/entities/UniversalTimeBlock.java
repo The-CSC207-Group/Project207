@@ -10,18 +10,21 @@ import java.time.LocalTime;
 public interface UniversalTimeBlock {
     /**
      * returns the start time of the timeblock
+     *
      * @return LocalTime
      */
     LocalTime getStartTime();
 
     /**
      * returns the end time of the timeblock
+     *
      * @return LocalTime
      */
     LocalTime getEndTime();
 
     /**
      * returns the day of week of the appointment
+     *
      * @return LocalTime
      */
     DayOfWeek getDayOfWeek();

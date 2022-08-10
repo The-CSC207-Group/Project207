@@ -20,6 +20,7 @@ abstract public class MenuLoadedPatientController extends controllers.MenuContro
     /**
      * Creates a Linked hashmap of all string representations of menu loaded patient commands mapped to the method that
      * each command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective menu loaded
      * patient commands.
      */

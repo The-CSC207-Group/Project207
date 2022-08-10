@@ -10,10 +10,11 @@ public class DayOfWeekUtils {
 
     /**
      * Converts day of week enum to a string. Ex: MONDAY -> "Monday".
+     *
      * @param dayOfWeek DayOfWeek - Enum representing a day of the week.
      * @return String - string representation of the day of week associated with the dayOfWeek variable.
      */
-    public String dayOfWeekToString(DayOfWeek dayOfWeek){
+    public String dayOfWeekToString(DayOfWeek dayOfWeek) {
         LinkedHashMap<DayOfWeek, String> dayMap = new LinkedHashMap<>() {{
             put(DayOfWeek.MONDAY, "Monday");
             put(DayOfWeek.TUESDAY, "Tuesday");
@@ -28,6 +29,7 @@ public class DayOfWeekUtils {
 
     /**
      * Returns an ordered hashmap from the string representation of a day of week to the enum representation.
+     *
      * @return LinkedHashMap<String, DayOfWeek> - ordered hashmap where the keys are the string representation of a
      * day of week and the values are the associated DayOfWeek enums.
      */

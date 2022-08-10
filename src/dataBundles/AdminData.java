@@ -9,6 +9,7 @@ public class AdminData extends UserData<Admin> {
 
     /**
      * Constructor for adminData data bundle.
+     *
      * @param admin Admin - admin entity.
      */
     public AdminData(Admin admin) {

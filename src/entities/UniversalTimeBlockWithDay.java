@@ -9,16 +9,16 @@ import java.time.LocalDate;
 public interface UniversalTimeBlockWithDay extends UniversalTimeBlock {
     /**
      * returns the date of the time block
+     *
      * @return LocalDate
      */
     LocalDate getLocalDate();
 
     /**
-     *
      * {@inheritDoc}
      */
     @Override
-    default DayOfWeek getDayOfWeek(){
+    default DayOfWeek getDayOfWeek() {
         return getLocalDate().getDayOfWeek();
     }
 }

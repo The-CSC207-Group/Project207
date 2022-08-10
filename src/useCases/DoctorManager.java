@@ -45,6 +45,7 @@ public class DoctorManager extends UserManager<Doctor> {
 
     /**
      * Creates and returns a data of the doctor associated with the login details passed in.
+     *
      * @param userName String - the username of the doctor that wants to sign in.
      * @return PatientData - the data of the doctor that wants to sign in.
      */
@@ -55,6 +56,7 @@ public class DoctorManager extends UserManager<Doctor> {
 
     /**
      * Creates and returns a data of the doctor associated with the username passed in.
+     *
      * @param username String - username of the specified user.
      * @return PatientData - data of the doctor associated with the username passed in.
      */

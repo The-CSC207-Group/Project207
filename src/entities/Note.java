@@ -17,10 +17,11 @@ public abstract class Note extends JsonSerializable {
 
     /**
      * Creates an instance of Note.
-     * @param header String representing the header of the note.
-     * @param body String representing the body of the note.
+     *
+     * @param header    String representing the header of the note.
+     * @param body      String representing the body of the note.
      * @param patientId Integer representing the id of the patient who the note was created for.
-     * @param doctorId Integer representing the id of the doctor who created the note.
+     * @param doctorId  Integer representing the id of the doctor who created the note.
      */
     public Note(String header, String body, Integer patientId, Integer doctorId) {
         this.header = header;
@@ -45,6 +46,7 @@ public abstract class Note extends JsonSerializable {
 
     /**
      * Sets the header of the note.
+     *
      * @param header String representing the new header of the note.
      */
     public void setHeader(String header) {
@@ -60,6 +62,7 @@ public abstract class Note extends JsonSerializable {
 
     /**
      * Sets the body of the note.
+     *
      * @param body String representing the new body of the note.
      */
     public void setBody(String body) {
@@ -75,6 +78,7 @@ public abstract class Note extends JsonSerializable {
 
     /**
      * Sets the id of the patient who the note was created for.
+     *
      * @param patientId Integer representing the new id of the patient who the note was created for.
      */
     public void setPatientId(Integer patientId) {
@@ -90,6 +94,7 @@ public abstract class Note extends JsonSerializable {
 
     /**
      * Sets the id of the doctor who created the note.
+     *
      * @param doctorId Integer representing the new id of the doctor who created the note.
      */
     public void setDoctorId(Integer doctorId) {

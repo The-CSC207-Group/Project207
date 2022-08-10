@@ -3,7 +3,6 @@ package dataBundles;
 import entities.Prescription;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Wrapper class for Prescription entity.
@@ -14,9 +13,10 @@ public class PrescriptionData {
 
     /**
      * Constructor.
+     *
      * @param prescription Prescription - prescription to be stored.
      */
-    public PrescriptionData(Prescription prescription){
+    public PrescriptionData(Prescription prescription) {
         this.prescription = prescription;
     }
 

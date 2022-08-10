@@ -13,6 +13,7 @@ public class LogData {
 
     /**
      * Constructor.
+     *
      * @param log Log - log to be stored.
      */
     public LogData(Log log) {
@@ -43,6 +44,8 @@ public class LogData {
     /**
      * @return Integer - id of the user the log belongs to.
      */
-    public Integer getUserId(){return log.getUserId();}
+    public Integer getUserId() {
+        return log.getUserId();
+    }
 
 }

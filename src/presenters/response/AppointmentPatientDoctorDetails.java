@@ -12,8 +12,9 @@ public final class AppointmentPatientDoctorDetails {
 
     /**
      * Creates an instance of AppointmentPatientDoctorDetails.
+     *
      * @param patientUsername String representing the appointment's patient's username.
-     * @param doctorUsername String representing the appointment's doctor's username.
+     * @param doctorUsername  String representing the appointment's doctor's username.
      */
     public AppointmentPatientDoctorDetails(String patientUsername, String doctorUsername) {
         this.patientUsername = patientUsername;

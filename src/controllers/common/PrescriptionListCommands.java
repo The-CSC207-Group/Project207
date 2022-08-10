@@ -21,7 +21,8 @@ public class PrescriptionListCommands {
 
     /**
      * Initializes the prescription list commands class
-     * @param database Database - collection of all entity databases in the program
+     *
+     * @param database    Database - collection of all entity databases in the program
      * @param patientData PatientData - data bundle consisting of the information of the patient whose prescriptions
      *                    are to be listed by this class
      */
@@ -33,6 +34,7 @@ public class PrescriptionListCommands {
     /**
      * Creates a hashmap of all string representations of prescription list commands mapped to the method that each
      * command calls.
+     *
      * @return HashMap<String, Command> - HashMap of strings mapped to their respective prescription list commands.
      */
     public HashMap<String, Command> AllCommands() {
@@ -44,7 +46,7 @@ public class PrescriptionListCommands {
         return commands;
     }
 
-    private Command ViewPrescriptions(boolean active, boolean detail){
+    private Command ViewPrescriptions(boolean active, boolean detail) {
         return (x) -> {
             ArrayList<PrescriptionData> prescriptions;
             if (active) {

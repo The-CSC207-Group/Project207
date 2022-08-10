@@ -6,6 +6,7 @@ import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 import useCases.LogManager;
 import utilities.DeleteUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ public class LogManagerTests {
     @Before
     public void before() {
         database = new Database(databaseFolder.toString());
-        patient = new Patient("danieldervy","123456789", 1);
+        patient = new Patient("danieldervy", "123456789", 1);
         id = database.getPatientDatabase().add(patient);
         logManager = new LogManager(database);
     }

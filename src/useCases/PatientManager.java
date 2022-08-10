@@ -14,6 +14,7 @@ public class PatientManager extends UserManager<Patient> {
 
     /**
      * Initializes the patient manager.
+     *
      * @param database Database - collection of all entity databases in the program.
      */
     public PatientManager(Database database) {
@@ -23,6 +24,7 @@ public class PatientManager extends UserManager<Patient> {
 
     /**
      * Creates a new patient and stores it in the database.
+     *
      * @param username String - username of the new patient, cannot exist in the database yet.
      * @param password String password for the user.
      * @return PatientData - data consisting of information for this patient,
@@ -44,6 +46,7 @@ public class PatientManager extends UserManager<Patient> {
 
     /**
      * Creates and returns a data of the patient associated with the login details passed in.
+     *
      * @param userName String - the username of the patient that wants to sign in.
      * @return PatientData - the data of the patient that wants to sign in.
      */
@@ -55,6 +58,7 @@ public class PatientManager extends UserManager<Patient> {
 
     /**
      * Creates and returns a data of the patient associated with the username passed in.
+     *
      * @param username String - username of the specified user.
      * @return PatientData - data of the patient associated with the username passed in.
      */

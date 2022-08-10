@@ -21,15 +21,16 @@ public class Contact extends JsonSerializable {
 
     /**
      * Creates an instance of Contact.
-     * @param name String representing the name of the contact.
-     * @param email String representing the  email of the contact.
-     * @param phoneNumber String representing the phone number of the contact.
-     * @param address String representing the address of the contact.
-     * @param birthday LocalDate representing the birthday of the contact.
-     * @param emergencyContactName String representing the emergency contact name of the contact.
-     * @param emergencyContactEmail String representing the emergency contact email of the contact.
+     *
+     * @param name                        String representing the name of the contact.
+     * @param email                       String representing the  email of the contact.
+     * @param phoneNumber                 String representing the phone number of the contact.
+     * @param address                     String representing the address of the contact.
+     * @param birthday                    LocalDate representing the birthday of the contact.
+     * @param emergencyContactName        String representing the emergency contact name of the contact.
+     * @param emergencyContactEmail       String representing the emergency contact email of the contact.
      * @param emergencyContactPhoneNumber String representing the emergency contact phone number of the contact.
-     * @param emergencyRelationship String representing the emergency contact's relationship to the contact.
+     * @param emergencyRelationship       String representing the emergency contact's relationship to the contact.
      */
     public Contact(String name, String email, String phoneNumber, String address, LocalDate birthday,
                    String emergencyContactName, String emergencyContactEmail,
@@ -48,7 +49,8 @@ public class Contact extends JsonSerializable {
     /**
      * Creates an empty instance of Contact.
      */
-    public Contact(){}
+    public Contact() {
+    }
 
     /**
      * @return String representing the name of the contact.
@@ -59,6 +61,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the name of the contact.
+     *
      * @param name String representing the new name of the contact.
      */
     public void setName(String name) {
@@ -74,6 +77,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the email of the contact.
+     *
      * @param email String representing the new email of the contact.
      */
     public void setEmail(String email) {
@@ -89,6 +93,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the phone number of the contact.
+     *
      * @param phoneNumber String representing the new phone number of the contact.
      */
     public void setPhoneNumber(String phoneNumber) {
@@ -104,6 +109,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the address of the contact.
+     *
      * @param address String representing the new address of the contact.
      */
     public void setAddress(String address) {
@@ -119,6 +125,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the date of birth of the contact.
+     *
      * @param birthday LocalDate representing the new date of birth of the contact.
      */
     public void setBirthday(LocalDate birthday) {
@@ -134,6 +141,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the emergency contact's name.
+     *
      * @param emergencyContactName String representing the new emergency contact's name.
      */
     public void setEmergencyContactName(String emergencyContactName) {
@@ -149,6 +157,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the emergency contact's email.
+     *
      * @param emergencyContactEmail String representing the new emergency contact's email.
      */
     public void setEmergencyContactEmail(String emergencyContactEmail) {
@@ -164,6 +173,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the emergency contact's phone number
+     *
      * @param emergencyContactPhoneNumber String representing the new emergency contact's phone number.
      */
     public void setEmergencyContactPhoneNumber(String emergencyContactPhoneNumber) {
@@ -179,6 +189,7 @@ public class Contact extends JsonSerializable {
 
     /**
      * Sets the emergency contact's relationship to this contact.
+     *
      * @param emergencyRelationship String representing the new emergency contact's relationship to this contact.
      */
     public void setEmergencyRelationship(String emergencyRelationship) {

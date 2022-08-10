@@ -5,13 +5,16 @@ import dataBundles.ClinicData;
 import utilities.DayOfWeekUtils;
 
 import java.time.DayOfWeek;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Optional;
 
 /**
  * The Clinic entity's view.
  */
 public class ClinicView extends EntityView<ClinicData> {
     DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
+
     /**
      * @param item ClinicData to view.
      * @return String representing item's full clinic view.
@@ -65,26 +68,26 @@ public class ClinicView extends EntityView<ClinicData> {
      * @param item ClinicData to view.
      * @return String representing the clinic's hours of operation as a view.
      */
-    public String viewClinicHours(ClinicData item){
+    public String viewClinicHours(ClinicData item) {
         ArrayList<AvailabilityData> availabilities = item.getClinicHours();
         StringBuilder out = new StringBuilder("Clinic Hours: \n");
         LinkedHashMap<String, DayOfWeek> dayMap = dayOfWeekUtils.getDayOfWeekStringToEnumMap();
 
-        for (String dayString: dayMap.keySet()){
+        for (String dayString : dayMap.keySet()) {
             out.append(getSingleDayAvailabilityString(dayString, availabilities, dayMap.get(dayString))).append("\n");
         }
         return out.toString();
     }
 
     private String getSingleDayAvailabilityString(String dayString, ArrayList<AvailabilityData> availabilities,
-                                                  DayOfWeek dayOfWeek){
+                                                  DayOfWeek dayOfWeek) {
         AvailabilityView availabilityView = new AvailabilityView();
         Optional<AvailabilityData> availabilityData = availabilities.stream().
                 filter(availability -> availability.getDayOfWeek().equals(dayOfWeek)).
                 findFirst();
         if (availabilityData.isPresent()) {
             return availabilityView.viewFull(availabilityData.get());
-        }else{
+        } else {
             return dayString + ": No Availability";
         }
     }

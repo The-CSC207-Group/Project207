@@ -14,20 +14,21 @@ public class Availability implements UniversalTimeBlock {
 
     /**
      * Creates an instance of Availability.
-     * @param dayOfWeek DayOfWeek that the doctor is available.
+     *
+     * @param dayOfWeek       DayOfWeek that the doctor is available.
      * @param doctorStartTime LocalTime representing the start time of the doctor's availability on day dayOfWeek.
-     * @param doctorEndTime LocalTime representing the end time of the doctor's availability on day dayOfWeek.
+     * @param doctorEndTime   LocalTime representing the end time of the doctor's availability on day dayOfWeek.
      */
-    public Availability(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime){
+    public Availability(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime) {
         this.dayOfWeek = dayOfWeek;
         this.doctorStartTime = doctorStartTime;
         this.doctorEndTime = doctorEndTime;
     }
 
 
-
     /**
      * Sets the start time of this instance of AvailabilityData.
+     *
      * @param startTime LocalTime representing the new start time of this instance of AvailabilityData.
      */
     public void setDoctorStartTime(LocalTime startTime) {

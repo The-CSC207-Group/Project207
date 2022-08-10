@@ -17,9 +17,8 @@ import java.util.LinkedHashMap;
 public class PatientController extends UserController<Patient> {
 
     private final PatientScreenView patientScreenView = new PatientScreenView();
-    AppointmentManager appointmentManager = new AppointmentManager(getDatabase());
-
     private final PatientData patientData;
+    private final AppointmentManager appointmentManager;
 
     /**
      * Creates a new controller for handling the state of the program when a patient is signed in.
@@ -31,6 +30,7 @@ public class PatientController extends UserController<Patient> {
     public PatientController(Context context, PatientData patientData) {
         super(context, patientData, new PatientManager(context.getDatabase()), new PatientScreenView());
         this.patientData = patientData;
+        this.appointmentManager = new AppointmentManager(getDatabase());
     }
 
     /**
@@ -54,9 +54,9 @@ public class PatientController extends UserController<Patient> {
     private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getPatientAppointments(patientData);
-            if (appointments.size() == 0){
+            if (appointments.size() == 0) {
                 patientScreenView.showNoAppointmentsMessage();
-            }else{
+            } else {
                 patientScreenView.viewAppointments(appointments);
             }
         };

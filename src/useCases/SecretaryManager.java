@@ -14,6 +14,7 @@ public class SecretaryManager extends UserManager<Secretary> {
 
     /**
      * Initializes the secretary manager. Stores secretary and contact databases.
+     *
      * @param database - collection of entity databases in the program.
      */
     public SecretaryManager(Database database) {
@@ -23,6 +24,7 @@ public class SecretaryManager extends UserManager<Secretary> {
 
     /**
      * Creates a new secretary and stores it in the database.
+     *
      * @param username String - username of the new secretary, cannot exist in the database yet.
      * @param password String password for the user.
      * @return SecretaryData - data consisting of information for this secretary,
@@ -44,6 +46,7 @@ public class SecretaryManager extends UserManager<Secretary> {
 
     /**
      * Creates and returns a data of the secretary associated with the login details passed in.
+     *
      * @param userName String - the username of the secretary that wants to sign in.
      * @return SecretaryData - the data of the secretary that wants to sign in.
      */
@@ -55,6 +58,7 @@ public class SecretaryManager extends UserManager<Secretary> {
 
     /**
      * Creates and returns a data of the secretary associated with the username passed in.
+     *
      * @param username String - username of the specified user.
      * @return SecretaryData - data of the secretary associated with the username passed in.
      */
@@ -63,8 +67,8 @@ public class SecretaryManager extends UserManager<Secretary> {
         return getUserHelper(username).map(SecretaryData::new).orElse(null);
     }
 
-    private SecretaryData toSecretaryData(Secretary secretary){
-        if (secretary == null){
+    private SecretaryData toSecretaryData(Secretary secretary) {
+        if (secretary == null) {
             return null;
         } else {
             return new SecretaryData(secretary);

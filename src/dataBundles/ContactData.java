@@ -13,15 +13,16 @@ public class ContactData {
 
     /**
      * Constructor. Creates and stores a contact entity within this class. It is not added to the database.
-     * @param name The name of the contact.
-     * @param email The email of the contact.
-     * @param phoneNumber The phone number of the contact.
-     * @param address The address of the contact.
-     * @param birthday The birthday of the contact.
-     * @param emergencyContactName The emergency contact name of the contact.
-     * @param emergencyContactEmail The emergency contact email of the contact.
+     *
+     * @param name                        The name of the contact.
+     * @param email                       The email of the contact.
+     * @param phoneNumber                 The phone number of the contact.
+     * @param address                     The address of the contact.
+     * @param birthday                    The birthday of the contact.
+     * @param emergencyContactName        The emergency contact name of the contact.
+     * @param emergencyContactEmail       The emergency contact email of the contact.
      * @param emergencyContactPhoneNumber The emergency contact phone number of the contact.
-     * @param emergencyRelationship The emergency contact's relationship to the contact.
+     * @param emergencyRelationship       The emergency contact's relationship to the contact.
      */
     public ContactData(String name, String email, String phoneNumber, String address, LocalDate birthday,
                        String emergencyContactName, String emergencyContactEmail,
@@ -34,6 +35,7 @@ public class ContactData {
 
     /**
      * Constructor.
+     *
      * @param contact Contact - Contact entity.
      */
     public ContactData(Contact contact) {

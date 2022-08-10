@@ -1,7 +1,5 @@
 package controllers;
 
-import dataBundles.AppointmentData;
-import dataBundles.DoctorData;
 import dataBundles.PatientData;
 import dataBundles.SecretaryData;
 import entities.Secretary;
@@ -12,7 +10,6 @@ import useCases.DoctorManager;
 import useCases.PatientManager;
 import useCases.SecretaryManager;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -29,7 +26,7 @@ public class SecretaryController extends UserController<Secretary> {
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
      *
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
+     * @param context       Context - a reference to the context object, which stores the current controller and allows for
      *                      switching between controllers.
      * @param secretaryData SecretaryData - a data containing the ID and attributes of the current secretary
      *                      user.
@@ -46,6 +43,7 @@ public class SecretaryController extends UserController<Secretary> {
     /**
      * Creates a linked hashmap of all string representations of secretary commands mapped to the method that each
      * command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective secretary commands.
      */
     @Override

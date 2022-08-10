@@ -35,6 +35,7 @@ public class Database {
 
     /**
      * Constructor used to initialize Database with a give folder name.
+     *
      * @param dataDirectoryName Folder name.
      */
     public Database(String dataDirectoryName) {
@@ -57,11 +58,12 @@ public class Database {
         clinicDatabase = new JsonDatabase<>(Clinic.class, rootFolder);
 
         databaseList = Arrays.asList(patientDatabase, doctorDatabase, secretaryDatabase, adminDatabase,
-            prescriptionDatabase, reportDatabase, appointmentDatabase, logDatabase, contactDatabase, clinicDatabase);
+                prescriptionDatabase, reportDatabase, appointmentDatabase, logDatabase, contactDatabase, clinicDatabase);
     }
 
     /**
      * Patient database access.
+     *
      * @return a DataMapperGateway of type Patient.
      */
     public DataMapperGateway<Patient> getPatientDatabase() {
@@ -70,6 +72,7 @@ public class Database {
 
     /**
      * Doctor database access.
+     *
      * @return a DataMapperGateway of type Doctor.
      */
     public DataMapperGateway<Doctor> getDoctorDatabase() {
@@ -78,6 +81,7 @@ public class Database {
 
     /**
      * Secretary database access.
+     *
      * @return a DataMapperGateway of type Secretary.
      */
     public DataMapperGateway<Secretary> getSecretaryDatabase() {
@@ -86,6 +90,7 @@ public class Database {
 
     /**
      * Admin database access.
+     *
      * @return a DataMapperGateway of type Admin.
      */
     public DataMapperGateway<Admin> getAdminDatabase() {
@@ -94,6 +99,7 @@ public class Database {
 
     /**
      * Prescription database access.
+     *
      * @return a DataMapperGateway of type Prescription.
      */
     public DataMapperGateway<Prescription> getPrescriptionDatabase() {
@@ -102,6 +108,7 @@ public class Database {
 
     /**
      * Report database access.
+     *
      * @return a DataMapperGateway of type Report.
      */
     public DataMapperGateway<Report> getReportDatabase() {
@@ -110,6 +117,7 @@ public class Database {
 
     /**
      * Appointment database access.
+     *
      * @return a DataMapperGateway of type Appointment.
      */
     public DataMapperGateway<Appointment> getAppointmentDatabase() {
@@ -118,6 +126,7 @@ public class Database {
 
     /**
      * Log database access.
+     *
      * @return a DataMapperGateway of type Log.
      */
     public DataMapperGateway<Log> getLogDatabase() {
@@ -126,6 +135,7 @@ public class Database {
 
     /**
      * Contact database access.
+     *
      * @return a DataMapperGateway of type Contact.
      */
     public DataMapperGateway<Contact> getContactDatabase() {
@@ -134,6 +144,7 @@ public class Database {
 
     /**
      * Get the current Clinic
+     *
      * @return Clinic, or null if not clinic has been set.
      */
     public Clinic getClinic() {
@@ -143,6 +154,7 @@ public class Database {
 
     /**
      * Set the current Clinic
+     *
      * @param clinic the Clinic entity to set as the current clinic.
      */
     public void setClinic(Clinic clinic) {

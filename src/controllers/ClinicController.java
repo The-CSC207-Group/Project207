@@ -19,8 +19,9 @@ public class ClinicController extends MenuController {
 
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *
+     * @param context            Context - a reference to the context object, which stores the current controller and allows for
+     *                           switching between controllers.
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
      */
@@ -39,6 +40,7 @@ public class ClinicController extends MenuController {
     /**
      * Creates a linked hashmap of all string representations of clinic commands mapped to the method that each command
      * calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
     public LinkedHashMap<String, Command> AllCommands() {
@@ -58,8 +60,7 @@ public class ClinicController extends MenuController {
             String newName = clinicScreenView.showClinicNamePrompt();
             if (clinicManager.changeClinicName(newName)) {
                 clinicScreenView.showSuccessfullyChangedClinicName();
-            }
-            else {
+            } else {
                 clinicScreenView.showClinicNameFormatError();
             }
         };
@@ -70,8 +71,7 @@ public class ClinicController extends MenuController {
             String newPhoneNumber = clinicScreenView.showClinicPhoneNumberPrompt();
             if (clinicManager.changeClinicPhoneNumber(newPhoneNumber)) {
                 clinicScreenView.showSuccessfullyChangedClinicPhoneNumber();
-            }
-            else {
+            } else {
                 clinicScreenView.showClinicPhoneNumberFormatError();
             }
         };
@@ -82,8 +82,7 @@ public class ClinicController extends MenuController {
             String newEmail = clinicScreenView.showClinicEmailPrompt();
             if (clinicManager.changeClinicEmail(newEmail)) {
                 clinicScreenView.showSuccessfullyChangedClinicEmail();
-            }
-            else {
+            } else {
                 clinicScreenView.showClinicEmailFormatError();
             }
         };
@@ -94,25 +93,24 @@ public class ClinicController extends MenuController {
             String newAddress = clinicScreenView.showClinicAddressPrompt();
             if (clinicManager.changeClinicAddress(newAddress)) {
                 clinicScreenView.showSuccessfullyChangedClinicAddress();
-            }
-            else {
+            } else {
                 clinicScreenView.showClinicAddressFormatError();
             }
         };
     }
 
-    private Command ChangeClinicHours(){
+    private Command ChangeClinicHours() {
         return (x) -> {
             clinicScreenView.showClinicHours(clinicManager.clinicData());
             DayOfWeek dayOfWeek = clinicScreenView.showDayOfWeekPrompt();
 
-            if (dayOfWeek == null){
+            if (dayOfWeek == null) {
                 clinicScreenView.showInvalidDayOfWeekSelectionError();
                 return;
             }
             AvailabilityDetails availabilityDetails = clinicScreenView.showChangeClinicHoursPrompt(dayOfWeek);
             if (availabilityDetails == null ||
-                    availabilityDetails.startTime().isAfter(availabilityDetails.endTime())){
+                    availabilityDetails.startTime().isAfter(availabilityDetails.endTime())) {
                 clinicScreenView.showEnteredInvalidTime();
                 return;
             }
@@ -121,11 +119,12 @@ public class ClinicController extends MenuController {
             clinicScreenView.showSuccessfullyChangedAvailability();
         };
     }
-    private Command RemoveClinicHours(){
+
+    private Command RemoveClinicHours() {
         return (x) -> {
             clinicScreenView.showClinicHours(clinicManager.clinicData());
             DayOfWeek dayOfWeek = clinicScreenView.showDayOfWeekPrompt();
-            if (dayOfWeek == null){
+            if (dayOfWeek == null) {
                 clinicScreenView.showInvalidDayOfWeekSelectionError();
                 return;
             }

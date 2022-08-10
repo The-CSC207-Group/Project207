@@ -21,6 +21,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register a secretary account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerSecretaryPrompt() {
@@ -29,6 +30,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register a doctor account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerDoctorPrompt() {
@@ -37,6 +39,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register a patient account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerPatientPrompt() {
@@ -45,6 +48,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register an admin account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerAdminPrompt() {
@@ -83,6 +87,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Ask admin for a user to delete.
+     *
      * @return String username to delete.
      */
     public String deleteUserPrompt() {
@@ -115,15 +120,17 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Asks admin for a user to change password.
+     *
      * @return String username of user to change password.
      */
-    public String getUsersName(){
+    public String getUsersName() {
         infoMessage("You are about to change another user's password!");
         return input("Enter username: ");
     }
 
     /**
      * Asks admin for the new password and confirmed new password.
+     *
      * @return PasswordResetDetails containing password and confirmedPassword as String.
      */
     public PasswordResetDetails getNewPasswordPrompt() {
@@ -134,6 +141,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a failed to change password method that is thrown when new password and confirmed password do not match.
+     *
      * @param userContact The contact data of the user changing their password.
      */
     public void passwordMismatchError(ContactData userContact) {
@@ -143,9 +151,10 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a user does not exist error when the user is not present in database.
+     *
      * @param user The inputted username of the user that does not exist.
      */
-    public void userDoesNotExistError(String user){
+    public void userDoesNotExistError(String user) {
         errorMessage(user + " is not a valid user");
     }
 

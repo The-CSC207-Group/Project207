@@ -9,6 +9,7 @@ public class TerminalScreenView extends ScreenView {
 
     /**
      * Shows list of available command.
+     *
      * @param helpCommands List of strings representing command
      */
     public void showHelpView(List<String> helpCommands) {
@@ -20,6 +21,7 @@ public class TerminalScreenView extends ScreenView {
 
     /**
      * Ask user whether user wants its spelling corrected after the command prompt
+     *
      * @param correctSpelling the correct spelling of the word
      * @return whether user wants its spelling corrected after the command prompt
      */
@@ -30,6 +32,7 @@ public class TerminalScreenView extends ScreenView {
 
     /**
      * Ask user to input command.
+     *
      * @return string representing stripped input.
      */
     public String showCommandPrompt() {
@@ -38,6 +41,7 @@ public class TerminalScreenView extends ScreenView {
 
     /**
      * Display error when the command user types is not in command list.
+     *
      * @param command A command represented as a string.
      */
     public void showInvalidCommandError(String command) {
