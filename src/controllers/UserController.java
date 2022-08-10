@@ -27,7 +27,6 @@ public abstract class UserController<T extends User> extends TerminalController 
 
     /**
      * Creates a new controller for handling the state of when a user is signed in.
-     *
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                       switching between controllers.
      * @param userData UserData<T> where T extends User - a data containing the ID and attributes of the current

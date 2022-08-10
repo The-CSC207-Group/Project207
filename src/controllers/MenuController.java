@@ -2,10 +2,16 @@ package controllers;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Controller class for processing commands that a user passes in while on a menu screen.
+ */
 abstract public class MenuController extends TerminalController {
 
     private final UserController<?> previousController;
 
+    /**
+     * Creates a new controller for handling the state of when a user on a menu screen.
+     */
     public MenuController(Context context, UserController<?> previousController) {
         super(context);
         this.previousController = previousController;
