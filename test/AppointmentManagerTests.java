@@ -45,8 +45,8 @@ public class AppointmentManagerTests {
     public void before(){
         originalDatabase = new Database(databaseFolder.toString());
         addStandardAvailabilityAndClinic();
-        doctorData = new DoctorManager(originalDatabase).createDoctor("test1", "test1");
-        patientData = new PatientManager(originalDatabase).createPatient("test2", "test2");
+        doctorData = new DoctorManager(originalDatabase).createDoctor("test12", "test1234");
+        patientData = new PatientManager(originalDatabase).createPatient("test2345", "test2345");
         appointmentManager = new AppointmentManager(originalDatabase);
     }
 
@@ -324,11 +324,11 @@ public class AppointmentManagerTests {
         AppointmentData appointment1 = appointmentManager.bookAppointment(patientData, doctorData,
                 startTime1, startTime1.plusMinutes(120));
 
-        assertTrue("An reschedule time conflicting with another appointment should return false",
+        assertTrue("An reschedule time that only conflicts with the previous time should return true",
                 appointmentManager.rescheduleAppointment(appointment1,
                         startTime1, startTime1.plusMinutes(120)));
-        assertTrue("Appointment 1 should still exist in the database",
-                originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment1.getAppointmentId()));
+        assertFalse("Appointment 1 should still exist in the database",
+                originalDatabase.getAppointmentDatabase().getAllIds().isEmpty());
     }
 
     /**
