@@ -7,6 +7,8 @@ Table of Contents:
 - [The Required Dependencies & Note on Including .idea](#the-required-dependencies--note-on-including-idea)
 - [UML Diagram](#uml-diagram)
 - [Usage of Design Patterns](#usage-of-design-patterns)
+- [Features added in phase 2](#features-added-in-phase-2)
+- [The 7 Principles of Universal Design](#the-7-principles-of-universal-design)
 - [Usage of Git and GitHub Features](#usage-of-git-and-github-features)
 - [How to Run The Program](#how-to-run-the-program)
   * [Bootstrapping an Admin](#bootstrapping-an-admin)
@@ -44,6 +46,18 @@ The uml diagram can be found in the `design/designdoc1.pdf` file in the Project2
 ## Usage of Design Patterns
 
 Please read: `design/designdoc2.pdf`.
+
+## Features added in phase 2
+
+This document contains a list of decisions and explanations about how our code has improved since Phase 1.
+
+Please read: `design/designdoc3.pdf`
+
+## The 7 Principles of Universal Design
+
+This document contains a description of how our program does or could follow the 7 principles of universal design.
+
+Please read: `design/designdoc4.pdf`
 
 ## Usage of Git and GitHub Features
 
