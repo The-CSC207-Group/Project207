@@ -11,7 +11,8 @@ public final class PasswordResetDetails {
 
     /**
      * Creates an instance of PasswordResetDetails.
-     * @param password String representing the user's inputted password.
+     *
+     * @param password          String representing the user's inputted password.
      * @param confirmedPassword String representing the user's inputted confirmed password.
      */
     public PasswordResetDetails(String password, String confirmedPassword) {

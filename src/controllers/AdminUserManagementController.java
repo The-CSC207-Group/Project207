@@ -23,11 +23,12 @@ public class AdminUserManagementController extends MenuController {
 
     /**
      * Creates a new controller for handling the state of the program when an admin wants to create/delete users
-     * @param context Context - a reference to the context object, which stores the current controller and allows for
-     *                switching between controllers.
+     *
+     * @param context            Context - a reference to the context object, which stores the current controller and
+     *                           allows for switching between controllers.
      * @param previousController AdminController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
-     * @param adminData AdminData - a data containing the ID and attributes of the current loaded admin user.
+     * @param adminData          AdminData - a data containing the ID and attributes of the current loaded admin user.
      */
     public AdminUserManagementController(Context context, AdminController previousController, AdminData adminData) {
         super(context, previousController);
@@ -50,11 +51,12 @@ public class AdminUserManagementController extends MenuController {
     /**
      * Creates a Linked hashmap of all string representations of AdminUserManagement commands mapped to the
      * method that each command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective
      * AdminUserManagement commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands (){
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("create admin", CreateAdmin());
         commands.put("create secretary", CreateSecretary());
@@ -63,11 +65,11 @@ public class AdminUserManagementController extends MenuController {
         commands.put("delete user", DeleteUser());
         commands.put("change user password", ChangeUserPassword());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 
-    private Command CreateAdmin(){
+    private Command CreateAdmin() {
         return (x) -> {
             try {
                 UserCredentials userCred = adminScreenView.registerAdminPrompt();
@@ -79,7 +81,7 @@ public class AdminUserManagementController extends MenuController {
         };
     }
 
-    private Command CreateDoctor(){
+    private Command CreateDoctor() {
         DoctorManager doctorManager = new DoctorManager(getDatabase());
         return (x) -> {
             try {
@@ -92,7 +94,7 @@ public class AdminUserManagementController extends MenuController {
         };
     }
 
-    private Command CreatePatient(){
+    private Command CreatePatient() {
         PatientManager patientManager = new PatientManager(getDatabase());
         return (x) -> {
             try {
@@ -105,7 +107,7 @@ public class AdminUserManagementController extends MenuController {
         };
     }
 
-    private Command CreateSecretary(){
+    private Command CreateSecretary() {
         SecretaryManager secretaryManager = new SecretaryManager(getDatabase());
         return (x) -> {
             try {

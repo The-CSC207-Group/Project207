@@ -19,6 +19,7 @@ public class SignInScreenView extends ScreenView {
     /**
      * Ask user for his username and password.
      * Used for login.
+     *
      * @return UserCredentials containing username and password.
      */
     public UserCredentials userLoginPrompt() {
@@ -29,6 +30,7 @@ public class SignInScreenView extends ScreenView {
 
     /**
      * View information about the clinic without login in.
+     *
      * @param clinic clinic data bundle.
      */
     public void viewClinicInfo(ClinicData clinic) {
@@ -44,6 +46,7 @@ public class SignInScreenView extends ScreenView {
 
     /**
      * Shows a success message that the user logged in.
+     *
      * @param user String representing the username of the user logging in.
      */
     public void showSuccessLogin(String user) {

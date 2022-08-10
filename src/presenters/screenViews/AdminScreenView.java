@@ -1,13 +1,9 @@
 package presenters.screenViews;
 
 import dataBundles.ContactData;
-import dataBundles.LogData;
 import presenters.entityViews.ContactView;
-import presenters.entityViews.LogView;
 import presenters.response.PasswordResetDetails;
 import presenters.response.UserCredentials;
-
-import java.util.List;
 
 /**
  * The Admin's presenter class.
@@ -21,6 +17,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register a secretary account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerSecretaryPrompt() {
@@ -29,6 +26,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register a doctor account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerDoctorPrompt() {
@@ -37,6 +35,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register a patient account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerPatientPrompt() {
@@ -45,6 +44,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Register an admin account.
+     *
      * @return UserCredentials containing username and password as String.
      */
     public UserCredentials registerAdminPrompt() {
@@ -53,6 +53,8 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a failed to create user error that is thrown when username or password is in an incorrect format.
+     *
+     * @param userType String - Type of the user as a string.
      */
     public void showIncorrectFormatError(String userType) {
         errorMessage("Failed to register " + userType + " account. Make sure:" +
@@ -62,6 +64,8 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a failed to create user error that is thrown when username is already in use.
+     *
+     * @param userType String - Type of the user as a string.
      */
     public void showUsernameInUseError(String userType) {
         errorMessage("Failed to register " + userType + " account: username is already in use.");
@@ -69,6 +73,8 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show success message when admin successfully creates another user.
+     *
+     * @param userType String - Type of the user as a string.
      */
     public void showRegisterUserSuccess(String userType) {
         successMessage("Created " + userType + " account successfully!");
@@ -83,6 +89,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Ask admin for a user to delete.
+     *
      * @return String username to delete.
      */
     public String deleteUserPrompt() {
@@ -105,25 +112,18 @@ public class AdminScreenView extends UserScreenView {
     }
 
     /**
-     * View all logs by all users.
-     */
-    public void viewAllLogs(List<LogData> items) {
-        LogView logView = new LogView();
-        infoMessage("All Logs:");
-        infoMessage(logView.viewFullFromList(items));
-    }
-
-    /**
      * Asks admin for a user to change password.
+     *
      * @return String username of user to change password.
      */
-    public String getUsersName(){
+    public String getUsersName() {
         infoMessage("You are about to change another user's password!");
         return input("Enter username: ");
     }
 
     /**
      * Asks admin for the new password and confirmed new password.
+     *
      * @return PasswordResetDetails containing password and confirmedPassword as String.
      */
     public PasswordResetDetails getNewPasswordPrompt() {
@@ -134,6 +134,7 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a failed to change password method that is thrown when new password and confirmed password do not match.
+     *
      * @param userContact The contact data of the user changing their password.
      */
     public void passwordMismatchError(ContactData userContact) {
@@ -143,9 +144,10 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a user does not exist error when the user is not present in database.
+     *
      * @param user The inputted username of the user that does not exist.
      */
-    public void userDoesNotExistError(String user){
+    public void userDoesNotExistError(String user) {
         errorMessage(user + " is not a valid user");
     }
 

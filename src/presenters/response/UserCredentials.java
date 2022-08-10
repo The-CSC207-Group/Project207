@@ -12,6 +12,7 @@ public final class UserCredentials {
 
     /**
      * Creates an instance of UserCredentials.
+     *
      * @param username String representing this user's username.
      * @param password String representing this user's password.
      */

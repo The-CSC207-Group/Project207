@@ -9,48 +9,41 @@ import java.time.LocalTime;
 public class Availability implements UniversalTimeBlock {
 
     private final DayOfWeek dayOfWeek;
-    private LocalTime doctorStartTime;
-    private LocalTime doctorEndTime;
+    private final LocalTime doctorStartTime;
+    private final LocalTime doctorEndTime;
 
     /**
      * Creates an instance of Availability.
-     * @param dayOfWeek DayOfWeek that the doctor is available.
+     *
+     * @param dayOfWeek       DayOfWeek that the doctor is available.
      * @param doctorStartTime LocalTime representing the start time of the doctor's availability on day dayOfWeek.
-     * @param doctorEndTime LocalTime representing the end time of the doctor's availability on day dayOfWeek.
+     * @param doctorEndTime   LocalTime representing the end time of the doctor's availability on day dayOfWeek.
      */
-    public Availability(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime){
+    public Availability(DayOfWeek dayOfWeek, LocalTime doctorStartTime, LocalTime doctorEndTime) {
         this.dayOfWeek = dayOfWeek;
         this.doctorStartTime = doctorStartTime;
         this.doctorEndTime = doctorEndTime;
     }
 
-
-
     /**
-     * Sets the start time of this instance of AvailabilityData.
-     * @param startTime LocalTime representing the new start time of this instance of AvailabilityData.
+     * {@inheritDoc}
      */
-    public void setDoctorStartTime(LocalTime startTime) {
-        this.doctorStartTime = startTime;
-    }
-
-    /**
-     * @return LocalTime representing the end time of this instance of AvailabilityData.
-     */
-    public void setDoctorEndTime(LocalTime endTime) {
-        this.doctorEndTime = endTime;
-    }
-
     @Override
     public LocalTime getStartTime() {
         return doctorStartTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return doctorEndTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;

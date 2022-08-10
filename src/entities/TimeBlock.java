@@ -10,13 +10,14 @@ import java.time.LocalTime;
  */
 public class TimeBlock implements UniversalTimeBlockWithDay {
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
 
     /**
      * Creates an instance of TimeBlock.
+     *
      * @param startTime LocalDateTime representing the time block's start time.
-     * @param endTime LocalDateTime representing the time block's end time.
+     * @param endTime   LocalDateTime representing the time block's end time.
      */
     public TimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
@@ -31,14 +32,6 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
     }
 
     /**
-     * Sets the time block's start time.
-     * @param startTime LocalDateTime representing the time block's new start time.
-     */
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
      * @return LocalDateTime representing the time block's end time.
      */
     public LocalDateTime getEndDateTime() {
@@ -46,28 +39,32 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
     }
 
     /**
-     * Sets the time block's end time.
-     * @param endTime LocalDateTime representing the time block's new end time.
+     * {@inheritDoc}
      */
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-
     @Override
     public LocalTime getStartTime() {
         return startTime.toLocalTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return endTime.toLocalTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalDate getLocalDate() {
         return startTime.toLocalDate();
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DayOfWeek getDayOfWeek() {
         return startTime.getDayOfWeek();

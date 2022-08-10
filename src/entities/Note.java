@@ -10,17 +10,18 @@ import java.time.LocalDate;
 public abstract class Note extends JsonSerializable {
 
     private final LocalDate dateNoted = LocalDate.now();
-    private String header;
-    private String body;
-    private Integer patientId;
-    private Integer doctorId;
+    private final String header;
+    private final String body;
+    private final Integer patientId;
+    private final Integer doctorId;
 
     /**
      * Creates an instance of Note.
-     * @param header String representing the header of the note.
-     * @param body String representing the body of the note.
+     *
+     * @param header    String representing the header of the note.
+     * @param body      String representing the body of the note.
      * @param patientId Integer representing the id of the patient who the note was created for.
-     * @param doctorId Integer representing the id of the doctor who created the note.
+     * @param doctorId  Integer representing the id of the doctor who created the note.
      */
     public Note(String header, String body, Integer patientId, Integer doctorId) {
         this.header = header;
@@ -44,26 +45,10 @@ public abstract class Note extends JsonSerializable {
     }
 
     /**
-     * Sets the header of the note.
-     * @param header String representing the new header of the note.
-     */
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
-    /**
      * @return String representing the body of the note.
      */
     public String getBody() {
         return body;
-    }
-
-    /**
-     * Sets the body of the note.
-     * @param body String representing the new body of the note.
-     */
-    public void setBody(String body) {
-        this.body = body;
     }
 
     /**
@@ -74,26 +59,10 @@ public abstract class Note extends JsonSerializable {
     }
 
     /**
-     * Sets the id of the patient who the note was created for.
-     * @param patientId Integer representing the new id of the patient who the note was created for.
-     */
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
-    }
-
-    /**
      * @return Integer representing the id of the doctor who created the note.
      */
     public Integer getDoctorId() {
         return doctorId;
-    }
-
-    /**
-     * Sets the id of the doctor who created the note.
-     * @param doctorId Integer representing the new id of the doctor who created the note.
-     */
-    public void setDoctorId(Integer doctorId) {
-        this.doctorId = doctorId;
     }
 
 }

@@ -9,19 +9,22 @@ public class Patient extends User {
 
     /**
      * Creates an instance of Patient with contact info.
-     * @param username String representing the patient's username.
-     * @param password String representing the patient's password.
+     *
+     * @param username      String representing the patient's username.
+     * @param password      String representing the patient's password.
      * @param contactInfoId Integer representing the id of the patient's Contact object.
-     * @param healthNumber String representing the patient's health number.
+     * @param healthNumber  String representing the patient's health number.
      */
     public Patient(String username, String password, Integer contactInfoId, String healthNumber) {
         super(username, password, contactInfoId);
         this.healthNumber = healthNumber;
     }
+
     /**
      * Creates an instance of Patient with contact info.
-     * @param username String representing the patient's username.
-     * @param password String representing the patient's password.
+     *
+     * @param username      String representing the patient's username.
+     * @param password      String representing the patient's password.
      * @param contactInfoId Integer representing the id of the patient's Contact object.
      */
     public Patient(String username, String password, Integer contactInfoId) {
@@ -30,10 +33,11 @@ public class Patient extends User {
 
     /**
      * Creates an instance of Patient without contact info.
+     *
      * @param username String representing the patient's username.
      * @param password String representing the patient's password.
      */
-    public Patient(String username, String password){
+    public Patient(String username, String password) {
         super(username, password);
     }
 
@@ -42,14 +46,6 @@ public class Patient extends User {
      */
     public String getHealthNumber() {
         return healthNumber;
-    }
-
-    /**
-     * Sets the patient's health number.
-     * @param healthNumber String representing the patient's new health number.
-     */
-    public void setHealthNumber(String healthNumber) {
-        this.healthNumber = healthNumber;
     }
 
 }

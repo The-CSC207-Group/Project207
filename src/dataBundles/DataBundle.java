@@ -11,15 +11,15 @@ public abstract class DataBundle {
 
     /**
      * Constructor. Stores the entity as a private attribute in the class.
+     *
      * @param entity JsonSerializable - some entity.
      */
-    public DataBundle(JsonSerializable entity){
+    public DataBundle(JsonSerializable entity) {
         this.entity = entity;
     }
 
     /**
-     *
-     * @return Integer - id of the entity. Id can be null when the controller creates a data bundle manually instead
+     * @return Integer - id of the entity. ID can be null when the controller creates a data bundle manually instead
      * of through use cases.
      */
     public Integer getId() {

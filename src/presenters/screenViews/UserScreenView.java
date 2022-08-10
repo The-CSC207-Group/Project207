@@ -1,7 +1,10 @@
 package presenters.screenViews;
 
-import dataBundles.*;
-import presenters.entityViews.*;
+import dataBundles.ClinicData;
+import dataBundles.LogData;
+import dataBundles.UserData;
+import presenters.entityViews.ClinicView;
+import presenters.entityViews.LogView;
 import presenters.response.PasswordResetDetails;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public abstract class UserScreenView extends ScreenView {
 
     /**
      * Show user a password reset prompt with a confirmation.
+     *
      * @return PasswordResetDetails containing new password and confirmed new password.
      */
     public PasswordResetDetails resetPasswordPrompt() {
@@ -38,6 +42,8 @@ public abstract class UserScreenView extends ScreenView {
 
     /**
      * View logs specific to the current user.
+     *
+     * @param items List<LogData> - list of the user's logs.
      */
     public void viewUserLogs(List<LogData> items) {
         LogView logView = new LogView();
@@ -48,6 +54,7 @@ public abstract class UserScreenView extends ScreenView {
 
     /**
      * Displays clinic information to users.
+     *
      * @param clinicData ClinicData - data consisting of the information about the clinic associated
      *                   with this program
      */
@@ -56,10 +63,21 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(clinicView.viewFull(clinicData));
     }
 
+    /**
+     * Shows a welcome message to the user.
+     *
+     * @param user UserData<?> - data relating to the user.
+     */
     public void showWelcomeUserMessage(UserData<?> user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
     }
 
+    /**
+     * Prompt for deleting an item from an enumeration.
+     *
+     * @param itemType String - type of the item listed.
+     * @return Integer - returns the index inputted by the user.
+     */
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
         Integer index = inputInt("Input " + itemType + " number to delete: ");

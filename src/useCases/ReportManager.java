@@ -5,7 +5,6 @@ import dataBundles.PatientData;
 import dataBundles.ReportData;
 import database.DataMapperGateway;
 import database.Database;
-import entities.Doctor;
 import entities.Report;
 import utilities.DatabaseQueryUtility;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 public class ReportManager {
 
     private final DataMapperGateway<Report> reportDatabase;
-    private final DataMapperGateway<Doctor> doctorDatabase;
     private final DatabaseQueryUtility databaseUtils = new DatabaseQueryUtility();
 
     /**
@@ -27,7 +25,6 @@ public class ReportManager {
      */
     public ReportManager(Database database) {
         this.reportDatabase = database.getReportDatabase();
-        this.doctorDatabase = database.getDoctorDatabase();
     }
 
     /**
@@ -45,8 +42,8 @@ public class ReportManager {
      *
      * @param patientData PatientData - data associated with a patient.
      * @param doctorData  DoctorData - data associated with a doctor.
-     * @param header String - header of the report.
-     * @param body String - body of the report.
+     * @param header      String - header of the report.
+     * @param body        String - body of the report.
      */
     public void addReport(PatientData patientData, DoctorData doctorData, String header, String body) {
         Report report = new Report(header, body, patientData.getId(), doctorData.getId());

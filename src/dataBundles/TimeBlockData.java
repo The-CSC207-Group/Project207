@@ -16,6 +16,7 @@ public class TimeBlockData implements UniversalTimeBlockWithDay {
 
     /**
      * Constructor.
+     *
      * @param timeBlock TimeBlock - time block to be stored.
      */
     public TimeBlockData(TimeBlock timeBlock) {
@@ -25,27 +26,36 @@ public class TimeBlockData implements UniversalTimeBlockWithDay {
     /**
      * @return LocalDateTime - start time of the time block.
      */
-    public LocalDateTime getStartDateTime(){
+    public LocalDateTime getStartDateTime() {
         return timeBlock.getStartDateTime();
     }
 
     /**
      * @return LocalDateTime - end time of the time block.
      */
-    public LocalDateTime getEndDateTime(){
+    public LocalDateTime getEndDateTime() {
         return timeBlock.getEndDateTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getStartTime() {
         return timeBlock.getStartTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return timeBlock.getEndTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalDate getLocalDate() {
         return timeBlock.getLocalDate();

@@ -1,15 +1,22 @@
-import entities.*;
-import org.junit.*;
-import static org.junit.Assert.*;
-import org.junit.rules.TemporaryFolder;
-
-import database.Database;
 import database.DataMapperGateway;
+import database.Database;
+import entities.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import utilities.DeleteUtils;
 
 import java.io.File;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class of unit tests for the program's databases.
@@ -21,10 +28,10 @@ public class DatabaseTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
-    private Database originalDatabase;
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private final String username = "mynamejeff";
     private final String password = "123456789";
+    private Database originalDatabase;
 
     /**
      * Initializes the variables used by all the tests before each unit test.
@@ -173,7 +180,7 @@ public class DatabaseTests {
         /* Testing if the loaded prescription and the original prescription are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original prescription and loaded prescription should be have been noted " +
-                        "on the same date", originalPrescription.getDateNoted().compareTo(loadedPrescription.
+                "on the same date", originalPrescription.getDateNoted().compareTo(loadedPrescription.
                 getDateNoted()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original prescription and loaded prescription should share the same header",
                 originalPrescription.getHeader(), loadedPrescription.getHeader());
@@ -185,7 +192,7 @@ public class DatabaseTests {
                 originalPrescription.getDoctorId(), loadedPrescription.getDoctorId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
                 originalPrescription.getExpiryDate().compareTo(loadedPrescription.
-                getExpiryDate()), 0);
+                        getExpiryDate()), 0);
     }
 
     /**
@@ -229,11 +236,11 @@ public class DatabaseTests {
     public void testSaveLoadAppointmentDatabase() {
         DataMapperGateway<Appointment> originalAppointmentDatabase = originalDatabase.getAppointmentDatabase();
 
-        LocalDateTime localStartTime = LocalDateTime.of(2022,7,1,4,3);
-        LocalDateTime localEndTime = LocalDateTime.of(2022,7,1,6,3);
+        LocalDateTime localStartTime = LocalDateTime.of(2022, 7, 1, 4, 3);
+        LocalDateTime localEndTime = LocalDateTime.of(2022, 7, 1, 6, 3);
         TimeBlock timeBlock = new TimeBlock(localStartTime, localEndTime);
 
-        Appointment originalAppointment = new Appointment(timeBlock,  123, 456);
+        Appointment originalAppointment = new Appointment(timeBlock, 123, 456);
 
         Integer appointmentID = originalAppointmentDatabase.add(originalAppointment);
         originalAppointmentDatabase.save();
@@ -333,7 +340,7 @@ public class DatabaseTests {
     public void testSetGetClinic() {
         ArrayList<Availability> clinicHours = new ArrayList<>();
         clinicHours.add(new Availability(DayOfWeek.of(1), LocalTime.of(8, 0), LocalTime.of(20, 0)));
-        Clinic originalClinic = new Clinic("jeff clinic",  "12345678", "abc@gmail.com",
+        Clinic originalClinic = new Clinic("jeff clinic", "12345678", "abc@gmail.com",
                 "21 jump street", clinicHours);
 
         originalDatabase.setClinic(originalClinic);

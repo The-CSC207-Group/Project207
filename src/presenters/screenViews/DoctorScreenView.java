@@ -1,14 +1,18 @@
 package presenters.screenViews;
 
-import dataBundles.*;
-import presenters.entityViews.*;
+import dataBundles.AppointmentData;
+import dataBundles.ContactData;
+import dataBundles.PrescriptionData;
+import dataBundles.ReportData;
 import presenters.entityViews.AppointmentView;
+import presenters.entityViews.ContactView;
+import presenters.entityViews.PrescriptionView;
+import presenters.entityViews.ReportView;
 import presenters.response.PrescriptionDetails;
 import presenters.response.ReportDetails;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,14 +25,6 @@ public class DoctorScreenView extends UserScreenView {
      */
     private final ContactView contactView = new ContactView();
     private final ReportView reportView = new ReportView();
-
-    private void showDeleteOutOfRangeError(String itemType) {
-        errorMessage("Could not delete " + itemType + ": index out of range.");
-    }
-
-    private void showDeleteNotAnIntegerError(String itemType) {
-        errorMessage("Could not delete " + itemType + ": please input a valid integer.");
-    }
 
     /**
      * View used to delete prescriptions relating to a patient. Show an enumeration of all prescriptions
@@ -51,13 +47,6 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void showSuccessfullyDeletedPrescription() {
         successMessage("Successfully deleted prescription.");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data bundle list
-     */
-    public void showDeletePrescriptionOutOfRangeError() {
-        showDeleteOutOfRangeError("prescription");
     }
 
     /**
@@ -93,7 +82,9 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * Error message when the user inputs an invalid date.
      */
-    public void showInvalidDateError(){errorMessage("Invalid date.");}
+    public void showInvalidDateError() {
+        errorMessage("Invalid date.");
+    }
 
     /**
      * Load an existing patient.
@@ -128,13 +119,6 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void viewAppointments(List<AppointmentData> appointments) {
         infoMessage(new AppointmentView().viewFullFromList(appointments));
-    }
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeletePrescriptionNotAnIntegerError() {
-        showDeleteNotAnIntegerError("prescription");
     }
 
     /**
@@ -175,109 +159,19 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Ask doctors for availability details. Used when creating a new availability time slot.
-     *
-     * @return ArrayList<Integer> containing the day of the week as an Integer, the starting hour, starting minute and
-     * length of the availability time slot.
-     */
-    public ArrayList<Integer> addAvailabilityPrompt() {
-        Integer day = inputInt("Enter the day of the week you would like to add your availability " +
-                "time as an integer with 1 being Monday and 7 being Sunday: ");
-        Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
-        Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
-        Integer length = inputInt("Enter the length in minute that you are available: ");
-        return new ArrayList<>(Arrays.asList(day, hour, minute, length));
-    }
-
-    /**
-     * View used to delete a doctor's availabilities. Show an enumeration of all availabilities and ask doctor for
-     * integer input corresponding to a selection.
-     *
-     * @param doctorData       ContactData of doctor.
-     * @param availabilityData List<AvailabilityData> of availability data to display.
-     * @return Integer representing the selected AvailabilityData from the list. null, if and only if the user input
-     * is not an integer.
-     */
-    public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
-        String doctorName = contactView.viewName(doctorData);
-        infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
-        new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
-        return deleteItemFromEnumerationPrompt("availability");
-    }
-
-    /**
-     * Success message when doctor successfully deletes an availability.
-     */
-    public void showSuccessfullyDeletedAvailability() {
-        successMessage("Successfully deleted availability.");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data list.
-     */
-    public void showDeleteAvailabilityOutOfRangeError() {
-        showDeleteOutOfRangeError("availability");
-    }
-
-    /**
      * Message showed when the doctor has no appointments scheduled.
      */
-    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeleteAvailabilityNotAnIntegerError() {
-        showDeleteNotAnIntegerError("availability");
-    }
-
-    /**
-     * Ask doctors for absence details. Used when creating a new absence time slot.
-     *
-     * @return ArrayList<Integer> containing the year, month as an integer, day of month and length of the absence in
-     * days.
-     */
-    public ArrayList<Integer> addAbsencePrompt() {
-        infoMessage("When is the first day of your absence?");
-        LocalDate date = showLocalDatePrompt();
-        Integer length = inputInt("How many days will you be absent?: ");
-        return new ArrayList<>(Arrays.asList(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), length));
-    }
-
-    /**
-     * View used to delete a doctor's absence. Show an enumeration of all absences and ask doctor for
-     * integer input corresponding to a selection.
-     *
-     * @param doctorData    ContactData of doctor.
-     * @param timeBlockData List<TimeBlockData> of time block data to display.
-     * @return Integer representing the selected TimeBlockData from the list. null, if and only if the user input
-     * is not an integer.
-     */
-    public Integer deleteAbsencePrompt(ContactData doctorData, List<TimeBlockData> timeBlockData) {
-        String doctorName = contactView.viewName(doctorData);
-        infoMessage("Viewing doctor " + doctorName + " absences to delete:");
-        new TimeBlockView().viewFullAsEnumerationFromList(timeBlockData);
-        return deleteItemFromEnumerationPrompt("absence");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data list.
-     */
-    public void showDeleteAbsenceOutOfRangeError() {
-        showDeleteOutOfRangeError("report");
-    }
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeleteAbsenceNotAnIntegerError() {
-        showDeleteNotAnIntegerError("report");
+    public void showNoAppointmentsMessage() {
+        infoMessage("No appointments scheduled.");
     }
 
 
     /**
      * Views report in full detail.
-     * @param report the report to be viewed in full detail.
+     *
+     * @param report ReportDate - The report to be viewed in full detail.
+     *
+     * @param doctorContact ContactData - The contact data of the doctor.
      */
     public void viewReport(ReportData report, ContactData doctorContact) {
         if (doctorContact == null) {
@@ -291,6 +185,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Displays to the user the header of each report with an index next to it.
+     *
      * @param reportData An arraylist of ReportData
      */
     public void viewAllReports(ArrayList<ReportData> reportData) {
@@ -299,6 +194,7 @@ public class DoctorScreenView extends UserScreenView {
 
     /**
      * Prompts the user to view a certain report in more detail.
+     *
      * @return an Integer of the chosen report to be viewed.
      */
     public Integer viewReportPrompt() {
@@ -345,6 +241,9 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Successfully deleted patient report");
     }
 
+    /**
+     * Shows the user an error when there are no prescriptions to view.
+     */
     public void showNoPrescriptionError() {
         errorMessage("No prescriptions to view, please create a prescription.");
     }

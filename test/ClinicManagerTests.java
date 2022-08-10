@@ -2,7 +2,6 @@ import database.Database;
 import entities.Availability;
 import entities.Clinic;
 import org.junit.After;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +27,7 @@ public class ClinicManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private ClinicManager clinicManager;
     private Clinic clinic;
 
@@ -51,12 +50,12 @@ public class ClinicManagerTests {
     @Test(timeout = 1000)
     public void changeClinicPhoneNumberFailsRegex() {
         assertEquals("The clinic phone should stay same before changing it.",
-               clinic.getPhoneNumber(), "4169782011");
+                clinic.getPhoneNumber(), "4169782011");
 
         clinicManager.changeClinicPhoneNumber("(416) 978-2012");
 
         assertEquals("The clinic phone number stays the same despite being changed",
-               clinic.getPhoneNumber(), "4169782011");
+                clinic.getPhoneNumber(), "4169782011");
     }
 
     /**

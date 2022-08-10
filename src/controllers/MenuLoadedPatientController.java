@@ -11,7 +11,11 @@ abstract public class MenuLoadedPatientController extends controllers.MenuContro
 
     /**
      * Creates a new controller for handling the state of when a user has loaded a patient.
+     *
+     * @param context            Context - Context class.
+     * @param previousController UserController<?> - The previous controller.
      */
+
     public MenuLoadedPatientController(Context context, UserController<?> previousController) {
         super(context, previousController);
         this.previousController = previousController;
@@ -20,14 +24,15 @@ abstract public class MenuLoadedPatientController extends controllers.MenuContro
     /**
      * Creates a Linked hashmap of all string representations of menu loaded patient commands mapped to the method that
      * each command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective menu loaded
      * patient commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

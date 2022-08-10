@@ -11,13 +11,12 @@ import useCases.PatientManager;
 import useCases.PrescriptionManager;
 import utilities.DeleteUtils;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the PrescriptionManager class.
@@ -28,7 +27,7 @@ public class PrescriptionManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database originalDatabase;
     private DataMapperGateway<Prescription> prescriptionDatabase;
     private PatientData patientData;
@@ -42,7 +41,7 @@ public class PrescriptionManagerTests {
      * Initializes the variables used by all the tests before each unit test.
      */
     @Before
-    public void before(){
+    public void before() {
         originalDatabase = new Database(databaseFolder.toString());
         prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
         patientData = new PatientManager(originalDatabase).createPatient("mynamejeff", "123456789");
@@ -99,7 +98,7 @@ public class PrescriptionManagerTests {
                 prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 2 even though one of " +
-                        "the prescriptions is expired", 2, loadedPrescriptionList.size());
+                "the prescriptions is expired", 2, loadedPrescriptionList.size());
     }
 
     /**
@@ -110,9 +109,9 @@ public class PrescriptionManagerTests {
     public void testCreatePrescription() {
         LocalDate activeLocalExpiryDate = LocalDate.of(2099, 1, 1);
         /* testing if the created prescription data is valid by testing if its fields match with the parameters
-        * of the createPrescription method */
+         * of the createPrescription method */
         assertEquals("The created prescription data should have the same header as the " +
-                        "parameters of createPrescription method", activePrescriptionData.getHeader(), "bad");
+                "parameters of createPrescription method", activePrescriptionData.getHeader(), "bad");
         assertEquals("The created prescription data should have the same body as the " +
                         "parameters of createPrescription method", activePrescriptionData.getBody(),
                 "very unhealthy");

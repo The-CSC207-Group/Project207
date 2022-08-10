@@ -18,6 +18,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Displays the various contact information stored in contact data.
+     *
      * @param contactData data representing a contact entity.
      */
     public void displayContactInfo(ContactData contactData) {
@@ -27,6 +28,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Shows the name input, which can be used for user's name or emergency contact name dependent on a boolean.
+     *
      * @param emergencyContact a boolean that represents whether the prompt is for emergency contact name or not.
      * @return a String of the inputted name.
      */
@@ -47,6 +49,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show a success message relating to changing a name.
+     *
      * @param emergencyContact a boolean that represents whether the name change was that of an emergency contact or not.
      */
     public void showSuccessfullyChangedName(boolean emergencyContact) {
@@ -59,6 +62,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Shows the email input, taking in text from the user.
+     *
      * @param emergencyContact a boolean that represents whether the email change was that of an emergency contact
      *                         or not.
      * @return a string representing the inputted data.
@@ -80,8 +84,9 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show a success message for changing an email.
+     *
      * @param emergencyContact a boolean that represents whether the email change was that of an emergency contact
-     *                        or not.
+     *                         or not.
      */
     public void showSuccessfullyChangedEmail(boolean emergencyContact) {
         if (emergencyContact) {
@@ -93,8 +98,9 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show phone number input, taking in text from the user.
+     *
      * @param emergencyContact a boolean that represents whether the phone number change was that of an emergency
-     *                        contact or not.
+     *                         contact or not.
      * @return a String representing the inputted data.
      */
     public String showPhoneNumberPrompt(boolean emergencyContact) {
@@ -114,8 +120,9 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show a success message for changing a phone number.
+     *
      * @param emergencyContact a boolean that represents whether the phone number change was that of an emergency
-     *                        contact or not.
+     *                         contact or not.
      */
     public void showSuccessfullyChangedPhoneNumber(boolean emergencyContact) {
         if (emergencyContact) {
@@ -127,6 +134,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show Address input, taking in text from the user.
+     *
      * @return a String representing inputted data.
      */
     public String showAddressPrompt() {
@@ -149,6 +157,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show a birthday input, taking in data from the user.
+     *
      * @return a LocalDate representing the inputted data.
      */
     public LocalDate showBirthdayPrompt() {
@@ -172,6 +181,7 @@ public class ContactScreenView extends ScreenView {
 
     /**
      * Show emergency relationship input, taking in text from the user.
+     *
      * @return a String representing the inputted user data.
      */
     public String showEmergencyRelationshipPrompt() {

@@ -11,6 +11,9 @@ abstract public class MenuController extends TerminalController {
 
     /**
      * Creates a new controller for handling the state of when a user on a menu screen.
+     *
+     * @param context            Context - Context class.
+     * @param previousController UserController<?> - The previous controller.
      */
     public MenuController(Context context, UserController<?> previousController) {
         super(context);
@@ -20,16 +23,22 @@ abstract public class MenuController extends TerminalController {
     /**
      * Creates a Linked hashmap of all string representations of menu commands mapped to the method that each
      * command calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective menu commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("back", Back(previousController));
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 
+    /**
+     * Return the program to the previous controller/state.
+     *
+     * @param previousController TerminalController - Previous controller.
+     */
     protected Command Back(TerminalController previousController) {
         return (x) -> changeCurrentController(previousController);
     }

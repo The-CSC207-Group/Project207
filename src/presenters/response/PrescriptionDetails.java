@@ -1,7 +1,6 @@
 package presenters.response;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -15,8 +14,9 @@ public final class PrescriptionDetails {
 
     /**
      * Creates an instance of PrescriptionDetails.
-     * @param header String representing this prescription's header.
-     * @param body String representing this prescription's body.
+     *
+     * @param header     String representing this prescription's header.
+     * @param body       String representing this prescription's body.
      * @param expiryDate LocalDate representing this prescription's expiry date.
      */
     public PrescriptionDetails(String header, String body, LocalDate expiryDate) {

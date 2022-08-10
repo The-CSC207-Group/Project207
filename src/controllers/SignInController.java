@@ -9,7 +9,6 @@ import presenters.screenViews.SignInScreenView;
 import useCases.*;
 
 import java.util.LinkedHashMap;
-import java.util.regex.Pattern;
 
 /**
  * Controller class that processes the commands that users pass in before signing in to their accounts.
@@ -24,6 +23,7 @@ public class SignInController extends TerminalController {
 
     /**
      * Creates a new controller for handling the state of the program when a user is signing in.
+     *
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
      */
@@ -42,15 +42,17 @@ public class SignInController extends TerminalController {
     }
 
     /**
-     * Creates a linked hashmap of all string representations of sign in commands mapped to the method that each command calls.
+     * Creates a linked hashmap of all string representations of sign in commands mapped to the method that each command
+     * calls.
+     *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective sign in commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("sign in", SignInCommand());
         commands.put("view clinic info", ViewClinicInformation());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 
@@ -100,9 +102,9 @@ public class SignInController extends TerminalController {
 
     private void signIn(String username, String password) {
         boolean signedIn = adminSignIn(username, password) ||
-                            patientSignIn(username, password) ||
-                            doctorSignIn(username, password) ||
-                            secretarySignIn(username, password);
+                patientSignIn(username, password) ||
+                doctorSignIn(username, password) ||
+                secretarySignIn(username, password);
         if (!signedIn) {
             signInScreenView.showLoginError();
         }

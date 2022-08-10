@@ -6,6 +6,7 @@ import org.junit.rules.TemporaryFolder;
 import useCases.LogManager;
 import useCases.PatientManager;
 import utilities.DeleteUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class LogManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database database;
     private PatientData patientData;
     private LogManager logManager;

@@ -9,9 +9,10 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.SecretaryManager;
 import utilities.DeleteUtils;
+
 import java.io.File;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNull;
 
 /**
  * Class of unit tests for SecretaryManager use case class.
@@ -23,18 +24,18 @@ public class SecretaryManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
     private DataMapperGateway<Secretary> secretaryDatabase;
     private SecretaryManager secretaryManager;
     private SecretaryData secretaryData;
-    private final String username = "mynamejeff";
-    private final String password = "123456789";
-    
+
     /**
      * Initializes the variables used by all the tests before each unit test.
      */
     @Before
-    public void before(){
+    public void before() {
         Database originalDatabase = new Database(databaseFolder.toString());
         secretaryDatabase = originalDatabase.getSecretaryDatabase();
         secretaryManager = new SecretaryManager(originalDatabase);
@@ -180,7 +181,7 @@ public class SecretaryManagerTests {
      * Tests doesUserExist with the secretary username inputted.
      */
     @Test(timeout = 1000)
-    public void testDoesUserExist(){
+    public void testDoesUserExist() {
         assertNotNull("A secretary object should be returned when added to the database",
                 secretaryDatabase.get(secretaryData.getId()));
         assertTrue("DoesUserExist should return true since the secretary is stored in the database",
@@ -191,16 +192,16 @@ public class SecretaryManagerTests {
      * Tests does user exist with an invalid username inputted.
      */
     @Test(timeout = 1000)
-    public void testUserDoesNotExist(){
+    public void testUserDoesNotExist() {
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
-                        "inputted username", secretaryManager.doesUserExist("jimhalpert"));
+                "inputted username", secretaryManager.doesUserExist("jimhalpert"));
     }
 
     /**
      * Tests a valid use of canSignIn with a secretary's username and password.
      */
     @Test(timeout = 1000)
-    public void testCanSignInValid(){
+    public void testCanSignInValid() {
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", secretaryManager.canSignIn(username, password));
     }
@@ -209,7 +210,7 @@ public class SecretaryManagerTests {
      * Tests an invalid use of canSignIn with a secretary's username and password that does not exist in the database.
      */
     @Test(timeout = 1000)
-    public void testCanSignInInvalid(){
+    public void testCanSignInInvalid() {
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", secretaryManager.canSignIn("jimhalpert", "password"));
     }
@@ -218,7 +219,7 @@ public class SecretaryManagerTests {
      * Tests signIn with an existing patient account.
      */
     @Test(timeout = 1000)
-    public void testSignInExistingAccount(){
+    public void testSignInExistingAccount() {
         assertEquals("A correct account detail sign in should return the respective secretaryData",
                 secretaryManager.signIn(secretaryData.getUsername(), password).getId(), secretaryData.getId());
     }
@@ -227,7 +228,7 @@ public class SecretaryManagerTests {
      * Tests an invalid use of signIn with a non-existing account.
      */
     @Test(timeout = 1000)
-    public void testSignInNonExistingAccount(){
+    public void testSignInNonExistingAccount() {
         assertNull("an incorrect account detail sign in should return null", secretaryManager.signIn(
                 "jimhalpert", "password"));
     }

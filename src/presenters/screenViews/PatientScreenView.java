@@ -17,7 +17,8 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * Shows a list of prescriptions relating to patients.
-     * @param items List<PrescriptionData> of prescriptions.
+     *
+     * @param items   List<PrescriptionData> of prescriptions.
      * @param details boolean indicating whether to show the prescription in full (body, expiration ...)
      */
     private void viewPrescriptions(List<PrescriptionData> items, boolean details) {
@@ -32,7 +33,8 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * View active prescriptions of patient. i.e. unexpired prescriptions.
-     * @param items List<PrescriptionData> of prescriptions.
+     *
+     * @param items   List<PrescriptionData> of prescriptions.
      * @param details boolean indicating whether to show the prescription in full (body, expiration ...)
      */
     public void viewActivePrescriptions(List<PrescriptionData> items, boolean details) {
@@ -42,7 +44,8 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * View prescription history of patient. i.e. all prescriptions prescribed to the patient.
-     * @param items List<PrescriptionData> of prescriptions.
+     *
+     * @param items   List<PrescriptionData> of prescriptions.
      * @param details boolean indicating whether to show the prescription in full (body, expiration ...)
      */
     public void viewPrescriptionHistory(List<PrescriptionData> items, boolean details) {
@@ -52,6 +55,7 @@ public class PatientScreenView extends UserScreenView {
 
     /**
      * View all appointments of a patient.
+     *
      * @param items List<AppointmentData> of appointments.
      */
     public void viewAppointments(List<AppointmentData> items) {
@@ -63,6 +67,8 @@ public class PatientScreenView extends UserScreenView {
     /**
      * Message showed when the doctor has no appointments scheduled.
      */
-    public void showNoAppointmentsMessage(){infoMessage("No appointments scheduled.");}
+    public void showNoAppointmentsMessage() {
+        infoMessage("No appointments scheduled.");
+    }
 
 }

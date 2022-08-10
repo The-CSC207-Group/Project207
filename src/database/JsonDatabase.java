@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 /**
  * Implements the DataMapperGateway Interface with a JSON Backend.
+ *
  * @param <T> Objects of type T stored in this table/database.
  */
 public class JsonDatabase<T extends JsonSerializable> implements DataMapperGateway<T> {
@@ -30,7 +31,8 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
     /**
      * Constructs a JsonDatabase with a default KeyDelegator.
-     * @param type Type of Class the database saves/loads.
+     *
+     * @param type   Type of Class the database saves/loads.
      * @param folder Folder where the database is saved.
      */
     public JsonDatabase(Class<T> type, File folder) {
@@ -39,9 +41,10 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
     /**
      * Constructs a JsonDatabase.
-     * @param type Type of Class the database saves/loads.
+     *
+     * @param type         Type of Class the database saves/loads.
      * @param keyDelegator KeyDelegator linked to this database.
-     * @param folder Folder where the database is saved.
+     * @param folder       Folder where the database is saved.
      */
     public JsonDatabase(Class<T> type, KeyDelegator keyDelegator, File folder) {
         this.type = type;
@@ -62,6 +65,7 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
     /**
      * Gets a Method in the entity T by its name.
      * Used to initialize KeyDelegator with a unique Field as key.
+     *
      * @param name Name of Method as String.
      * @return Method in T corresponding to the given name.
      */
@@ -75,6 +79,7 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
 
     /**
      * Creates a file name based on the name of the entity T.
+     *
      * @return File where this database is stored.
      */
     private File getSaveFile() {
@@ -182,13 +187,10 @@ public class JsonDatabase<T extends JsonSerializable> implements DataMapperGatew
      * {@inheritDoc}
      */
     @Override
-    public boolean remove(Integer id) {
+    public void remove(Integer id) {
         if (database.containsKey(id)) {
             keyDelegator.removeItem(database.get(id));
             database.remove(id);
-            return true;
-        } else {
-            return false;
         }
     }
 

@@ -6,7 +6,6 @@ import useCases.ContactManager;
 import useCases.PatientManager;
 import utilities.DeleteUtils;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.time.LocalDate;
 
@@ -20,7 +19,7 @@ public class ContactManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database database;
     private ContactManager contactManager;
     private PatientData patientData;
@@ -50,7 +49,7 @@ public class ContactManagerTests {
         String databaseNameField = database.getContactDatabase().get(patientData.getContactInfoId()).getName();
 
         Assert.assertEquals("Make sure the field was updated in the contact and that the contact database" +
-                        "reflects this", databaseNameField, "Daniel Dervishi");
+                "reflects this", databaseNameField, "Daniel Dervishi");
     }
 
     /**

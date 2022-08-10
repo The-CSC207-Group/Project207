@@ -9,7 +9,9 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import useCases.PatientManager;
 import utilities.DeleteUtils;
+
 import java.io.File;
+
 import static org.junit.Assert.*;
 
 /**
@@ -22,18 +24,18 @@ public class PatientManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
     private DataMapperGateway<Patient> patientDatabase;
     private PatientManager patientManager;
     private PatientData patientData;
-    private final String username = "mynamejeff";
-    private final String password = "123456789";
 
     /**
      * Initializes the variables used by all the tests before each unit test.
      */
     @Before
-    public void before(){
+    public void before() {
         Database originalDatabase = new Database(databaseFolder.toString());
         patientDatabase = originalDatabase.getPatientDatabase();
         patientManager = new PatientManager(originalDatabase);
@@ -41,7 +43,7 @@ public class PatientManagerTests {
     }
 
     /**
-     * Tests createPatient by creating an patient in the database using a valid and unused username.
+     * Tests createPatient by creating a patient in the database using a valid and unused username.
      */
     @Test(timeout = 1000)
     public void testCreatePatientValidUnused() {
@@ -179,7 +181,7 @@ public class PatientManagerTests {
      * Tests doesUserExist with the patient username inputted.
      */
     @Test(timeout = 1000)
-    public void testDoesUserExist(){
+    public void testDoesUserExist() {
         assertNotNull("A patient object should be returned when added to the database",
                 patientDatabase.get(patientData.getId()));
         assertTrue("DoesUserExist should return true since the patient is stored in the database",
@@ -190,16 +192,16 @@ public class PatientManagerTests {
      * Tests does user exist with an invalid username inputted.
      */
     @Test(timeout = 1000)
-    public void testUserDoesNotExist(){
+    public void testUserDoesNotExist() {
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
-                        "inputted username", patientManager.doesUserExist("jimhalpert"));
+                "inputted username", patientManager.doesUserExist("jimhalpert"));
     }
 
     /**
      * Tests a valid use of canSignIn with a patient's username and password.
      */
     @Test(timeout = 1000)
-    public void testCanSignInValid(){
+    public void testCanSignInValid() {
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", patientManager.canSignIn(username, password));
     }
@@ -208,7 +210,7 @@ public class PatientManagerTests {
      * Tests an invalid use of canSignIn with a patient's username and password that does not exist in the database.
      */
     @Test(timeout = 1000)
-    public void testCanSignInInvalid(){
+    public void testCanSignInInvalid() {
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", patientManager.canSignIn("jimhalpert", "password"));
     }
@@ -217,7 +219,7 @@ public class PatientManagerTests {
      * Tests signIn with an existing patient account.
      */
     @Test(timeout = 1000)
-    public void testSignInExistingAccount(){
+    public void testSignInExistingAccount() {
         PatientData loadedPatientData = patientManager.getUserData(patientData.getUsername());
 
         assertEquals("A correct account detail sign in should return the respective patientData",
@@ -229,7 +231,7 @@ public class PatientManagerTests {
      * Tests an invalid use of signIn with a non-existing account.
      */
     @Test(timeout = 1000)
-    public void testSignInNonExistingAccount(){
+    public void testSignInNonExistingAccount() {
         assertNull("an incorrect account detail sign in should return null", patientManager.signIn(
                 "jimhalpert", "password"));
     }

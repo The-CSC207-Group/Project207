@@ -1,9 +1,14 @@
 package controllers;
 
-import dataBundles.*;
+import dataBundles.AppointmentData;
+import dataBundles.DoctorData;
+import dataBundles.PatientData;
 import entities.Doctor;
 import presenters.screenViews.DoctorScreenView;
-import useCases.*;
+import useCases.AppointmentManager;
+import useCases.ContactManager;
+import useCases.DoctorManager;
+import useCases.PatientManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,13 +44,13 @@ public class DoctorController extends UserController<Doctor> {
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
         commands.put("view appointments", ViewAppointments());
         commands.put("show schedule", ViewSchedule());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 
@@ -55,7 +60,8 @@ public class DoctorController extends UserController<Doctor> {
             String patientUsername = doctorScreenView.loadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null) {
-                doctorScreenView.showSuccessLoadingPatient(new ContactManager(getDatabase()).getContactData(loadedPatientData));
+                doctorScreenView.showSuccessLoadingPatient(
+                        new ContactManager(getDatabase()).getContactData(loadedPatientData));
                 changeCurrentController(new DoctorLoadedPatientController(
                         getContext(), currentController, doctorData, loadedPatientData));
             } else {
@@ -67,9 +73,9 @@ public class DoctorController extends UserController<Doctor> {
     private Command ViewAppointments() {
         return (x) -> {
             ArrayList<AppointmentData> appointments = appointmentManager.getDoctorAppointments(doctorData);
-            if (appointments.size() == 0){
+            if (appointments.size() == 0) {
                 doctorScreenView.showNoAppointmentsMessage();
-            }else{
+            } else {
                 doctorScreenView.viewAppointments(appointments);
             }
         };
@@ -84,12 +90,12 @@ public class DoctorController extends UserController<Doctor> {
                 return;
             }
 
-            ArrayList<AppointmentData> appointments =  new AppointmentManager(getDatabase()).
+            ArrayList<AppointmentData> appointments = new AppointmentManager(getDatabase()).
                     getSingleDayAppointment(doctorData, viewDate);
 
-            if (appointments.isEmpty()){
+            if (appointments.isEmpty()) {
                 doctorScreenView.showNoAppointmentsMessage();
-            }else{
+            } else {
                 doctorScreenView.viewAppointments(appointments);
             }
         };

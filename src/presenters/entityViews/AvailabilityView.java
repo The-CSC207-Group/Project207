@@ -8,6 +8,7 @@ import utilities.DayOfWeekUtils;
  */
 public class AvailabilityView extends EntityView<AvailabilityData> {
     private final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
+
     /**
      * @param item AvailabilityData  to view.
      * @return String representing item's full availability view.

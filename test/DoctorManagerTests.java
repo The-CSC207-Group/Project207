@@ -24,12 +24,12 @@ public class DoctorManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
+    private final String username = "mynamejeff";
+    private final String password = "123456789";
     private DataMapperGateway<Doctor> doctorDatabase;
     private DoctorManager doctorManager;
     private DoctorData doctorData;
-    private final String username = "mynamejeff";
-    private final String password = "123456789";
 
     /**
      * Initializes the variables used by all the tests before each unit test.
@@ -192,7 +192,7 @@ public class DoctorManagerTests {
      * Tests the doctor manager's method that checks if a doctor with a username exists using an existing username.
      */
     @Test(timeout = 1000)
-    public void testDoesUserExist(){
+    public void testDoesUserExist() {
         assertNotNull("A doctor object should be returned when added to the database",
                 doctorDatabase.get(doctorData.getId()));
         assertTrue("DoesUserExist should return true since the doctor is stored in the database",
@@ -203,7 +203,7 @@ public class DoctorManagerTests {
      * Tests the doctor manager's method that checks if a doctor with a username exists using a non-existent username.
      */
     @Test(timeout = 1000)
-    public void testUserDoesNotExist(){
+    public void testUserDoesNotExist() {
         assertFalse("DoesUserExist should return false if there is no account stored in the database with the" +
                         "inputted username",
                 doctorManager.doesUserExist("jimhalpert"));
@@ -213,7 +213,7 @@ public class DoctorManagerTests {
      * Tests the doctor manager's method that checks if a doctor can sign in using valid login details.
      */
     @Test(timeout = 1000)
-    public void testCanSignInValidLoginDetails(){
+    public void testCanSignInValidLoginDetails() {
         assertTrue("canSignIn should return true if given a username and password to an account in the " +
                 "database", doctorManager.canSignIn(username, password));
     }
@@ -222,7 +222,7 @@ public class DoctorManagerTests {
      * Tests the doctor manager's method that checks if a doctor can sign in using invalid login details.
      */
     @Test(timeout = 1000)
-    public void testCanSignInInvalidLoginDetails(){
+    public void testCanSignInInvalidLoginDetails() {
         assertFalse("canSignIn should return false if given a username and password not linked to an account" +
                 "in the database", doctorManager.canSignIn("jimhalpert", "password"));
     }
@@ -231,7 +231,7 @@ public class DoctorManagerTests {
      * Tests the doctor manager's method that returns a doctor's data bundle using valid login details.
      */
     @Test(timeout = 1000)
-    public void testSignInExistingAccount(){
+    public void testSignInExistingAccount() {
         DoctorData loadedDoctorData = doctorManager.getUserData(doctorData.getUsername());
 
         assertEquals("A correct account detail sign in should return the respective doctorData",
@@ -242,7 +242,7 @@ public class DoctorManagerTests {
      * Tests the doctor manager's method that returns a doctor's data bundle using invalid login details.
      */
     @Test(timeout = 1000)
-    public void testSignInNonExistingAccount(){
+    public void testSignInNonExistingAccount() {
         assertNull("an incorrect account detail sign in should return null", doctorManager.signIn(
                 "jimhalpert", "password"));
     }
