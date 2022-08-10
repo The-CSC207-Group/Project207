@@ -24,8 +24,8 @@ public class AdminUserManagementController extends MenuController {
     /**
      * Creates a new controller for handling the state of the program when an admin wants to create/delete users
      *
-     * @param context            Context - a reference to the context object, which stores the current controller and allows for
-     *                           switching between controllers.
+     * @param context            Context - a reference to the context object, which stores the current controller and
+     *                           allows for switching between controllers.
      * @param previousController AdminController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
      * @param adminData          AdminData - a data containing the ID and attributes of the current loaded admin user.

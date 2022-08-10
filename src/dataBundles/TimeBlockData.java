@@ -37,16 +37,25 @@ public class TimeBlockData implements UniversalTimeBlockWithDay {
         return timeBlock.getEndDateTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getStartTime() {
         return timeBlock.getStartTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return timeBlock.getEndTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalDate getLocalDate() {
         return timeBlock.getLocalDate();

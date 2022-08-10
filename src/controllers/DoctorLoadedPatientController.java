@@ -27,12 +27,13 @@ public class DoctorLoadedPatientController extends MenuLoadedPatientController {
     /**
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
      *
-     * @param context            Context - a reference to the context object, which stores the current controller and allows for
-     *                           switching between controllers.
+     * @param context            Context - a reference to the context object, which stores the current controller and
+     *                           allows for switching between controllers.
      * @param previousController DoctorController - stores the previous controller, allows you to easily go back to it
      *                           via the back command.
      * @param doctorData         DoctorData - a data containing the ID and attributes of the current doctor user.
-     * @param patientData        PatientData - a data containing the ID and attributes of the current loaded patient user.
+     * @param patientData        PatientData - a data containing the ID and attributes of the current loaded patient
+     *                           user.
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
@@ -103,7 +104,8 @@ public class DoctorLoadedPatientController extends MenuLoadedPatientController {
 
     private Command ViewPatientAppointments() {
         return (x) -> {
-            ArrayList<AppointmentData> appointments = new AppointmentManager(getDatabase()).getPatientAppointments(patientData);
+            ArrayList<AppointmentData> appointments = new AppointmentManager(
+                    getDatabase()).getPatientAppointments(patientData);
             if (appointments.size() == 0) {
                 doctorScreenView.showNoAppointmentsMessage();
             } else {

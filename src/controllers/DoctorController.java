@@ -60,7 +60,8 @@ public class DoctorController extends UserController<Doctor> {
             String patientUsername = doctorScreenView.loadPatientPrompt();
             PatientData loadedPatientData = patientManager.getUserData(patientUsername);
             if (loadedPatientData != null) {
-                doctorScreenView.showSuccessLoadingPatient(new ContactManager(getDatabase()).getContactData(loadedPatientData));
+                doctorScreenView.showSuccessLoadingPatient(
+                        new ContactManager(getDatabase()).getContactData(loadedPatientData));
                 changeCurrentController(new DoctorLoadedPatientController(
                         getContext(), currentController, doctorData, loadedPatientData));
             } else {

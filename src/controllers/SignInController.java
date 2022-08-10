@@ -42,7 +42,8 @@ public class SignInController extends TerminalController {
     }
 
     /**
-     * Creates a linked hashmap of all string representations of sign in commands mapped to the method that each command calls.
+     * Creates a linked hashmap of all string representations of sign in commands mapped to the method that each command
+     * calls.
      *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective sign in commands.
      */

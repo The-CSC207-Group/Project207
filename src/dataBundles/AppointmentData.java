@@ -58,17 +58,25 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
         return appointment.getId();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getStartTime() {
         return appointment.getStartTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return appointment.getEndTime();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalDate getLocalDate() {
         return appointment.getLocalDate();

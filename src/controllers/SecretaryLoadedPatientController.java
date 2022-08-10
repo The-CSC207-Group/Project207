@@ -120,7 +120,8 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
             LocalDateTime startTime = startEndTimes.getStartDateTime();
             LocalDateTime endTime = startEndTimes.getEndDateTime();
 
-            AppointmentData appointmentData = appointmentManager.bookAppointment(patientData, doctorData, startTime, endTime);
+            AppointmentData appointmentData = appointmentManager.bookAppointment(
+                    patientData, doctorData, startTime, endTime);
 
             if (appointmentData == null) {
                 secretaryScreenView.showAppointmentBookingError();
@@ -290,6 +291,5 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
     private boolean spansMultipleDays(LocalDateTime starTime, LocalDateTime endTime) {
         return starTime.getDayOfYear() != endTime.getDayOfYear();
     }
-
 
 }

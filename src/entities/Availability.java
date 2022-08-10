@@ -25,16 +25,25 @@ public class Availability implements UniversalTimeBlock {
         this.doctorEndTime = doctorEndTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getStartTime() {
         return doctorStartTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LocalTime getEndTime() {
         return doctorEndTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;

@@ -20,8 +20,8 @@ public class ClinicController extends MenuController {
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
      *
-     * @param context            Context - a reference to the context object, which stores the current controller and allows for
-     *                           switching between controllers.
+     * @param context            Context - a reference to the context object, which stores the current controller and
+     *                           allows for switching between controllers.
      * @param previousController UserController<Admin> - the object of the admin controller that switched into this
      *                           clinic controller object.
      */
