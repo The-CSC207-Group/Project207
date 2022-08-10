@@ -163,7 +163,9 @@ public class DoctorScreenView extends UserScreenView {
     /**
      * Views report in full detail.
      *
-     * @param report the report to be viewed in full detail.
+     * @param report ReportDate - The report to be viewed in full detail.
+     *
+     * @param doctorContact ContactData - The contact data of the doctor.
      */
     public void viewReport(ReportData report, ContactData doctorContact) {
         if (doctorContact == null) {
@@ -233,6 +235,9 @@ public class DoctorScreenView extends UserScreenView {
         successMessage("Successfully deleted patient report");
     }
 
+    /**
+     * Shows the user an error when there are no prescriptions to view.
+     */
     public void showNoPrescriptionError() {
         errorMessage("No prescriptions to view, please create a prescription.");
     }

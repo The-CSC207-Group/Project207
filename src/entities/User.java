@@ -23,6 +23,11 @@ public abstract class User extends JsonSerializable {
         this.contactInfoId = contactInfoId;
     }
 
+    /**
+     * Constructor for a user entity.
+     * @param username String - The user's username.
+     * @param password String - The user's password.
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;

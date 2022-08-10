@@ -45,6 +45,7 @@ public class AdminManager extends UserManager<Admin> {
      * Creates and returns an adminData of the admin associated with the login details passed in.
      *
      * @param userName String - the username of the admin that wants to sign in.
+     * @param password String - the password of the admin that wants to sign in.
      * @return AdminData - the data of the admin that wants to sign in.
      */
     public AdminData signIn(String userName, String password) {

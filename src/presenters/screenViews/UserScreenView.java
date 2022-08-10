@@ -42,6 +42,8 @@ public abstract class UserScreenView extends ScreenView {
 
     /**
      * View logs specific to the current user.
+     *
+     * @param items List<LogData> - list of the user's logs.
      */
     public void viewUserLogs(List<LogData> items) {
         LogView logView = new LogView();
@@ -61,10 +63,21 @@ public abstract class UserScreenView extends ScreenView {
         infoMessage(clinicView.viewFull(clinicData));
     }
 
+    /**
+     * Shows a welcome message to the user.
+     *
+     * @param user UserData<?> - data relating to the user.
+     */
     public void showWelcomeUserMessage(UserData<?> user) {
         infoMessage("Welcome, " + user.getUsername() + "!");
     }
 
+    /**
+     * Prompt for deleting an item from an enumeration.
+     *
+     * @param itemType String - type of the item listed.
+     * @return Integer - returns the index inputted by the user.
+     */
     protected Integer deleteItemFromEnumerationPrompt(String itemType) {
         warningMessage("This action cannot be undone!");
         Integer index = inputInt("Input " + itemType + " number to delete: ");

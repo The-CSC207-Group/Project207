@@ -110,6 +110,13 @@ public abstract class UserManager<T extends User> {
      */
     public abstract UserData<T> getUserData(String username);
 
+    /**
+     * Returns a user if the sign in info matches with that of a user in the database.
+     *
+     * @param username String - username of the user who wishes to sign in.
+     * @param password String - password of the user who wishes to sign in.
+     * @return T - user entity that corresponds to the username if the sign in was successful, null otherwise.
+     */
     protected T signInHelper(String username, String password) {
         if (canSignIn(username, password)) {
             T user = getUser(username);
@@ -136,6 +143,13 @@ public abstract class UserManager<T extends User> {
         return user.comparePassword(password);
     }
 
+    /**
+     * Return an optional containing a user associated with a given username.
+     *
+     * @param username String - username of the user to be retrieved.
+     * @return Optional<T> - Optional type containing the user associated with a given username. The optional contains
+     * null if no such user exists.
+     */
     protected Optional<T> getUserHelper(String username) {
         return Optional.ofNullable(getUser(username));
     }

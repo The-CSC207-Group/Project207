@@ -13,7 +13,7 @@ import java.util.Optional;
  * The Clinic entity's view.
  */
 public class ClinicView extends EntityView<ClinicData> {
-    final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
+    private final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
 
     /**
      * @param item ClinicData to view.

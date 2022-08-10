@@ -132,6 +132,9 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("Error: a doctor with that username does not exist.");
     }
 
+    /**
+     * Show the user an error when the doctor that an appointment is scheduled with no longer exists in the system.
+     */
     public void showDoctorNoLongerExists() {
         errorMessage("The doctor with whom the appointment was scheduled is no longer a part of the clinic.");
     }
@@ -321,6 +324,9 @@ public class SecretaryScreenView extends UserScreenView {
         errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
+    /**
+     * Show a success message when an appointment has been successfully canceled.
+     */
     public void showCancelAppointmentSuccess() {
         successMessage("Successfully canceled appointment.");
     }

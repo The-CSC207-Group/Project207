@@ -26,7 +26,7 @@ public abstract class EntityView<T> {
 
     /**
      * @param string String to be returned if a string is inputted.
-     * @return String string or 'N/A' depending on if a string was inputted in string.
+     * @return String - string or 'N/A' depending on if a string was inputted in string.
      */
     protected String getDefaultStringNA(String string) {
         return getDefaultString(string, "N/A");

@@ -47,6 +47,7 @@ public class DoctorManager extends UserManager<Doctor> {
      * Creates and returns a data of the doctor associated with the login details passed in.
      *
      * @param userName String - the username of the doctor that wants to sign in.
+     * @param password String - the password of the doctor that wants to sign in.
      * @return PatientData - the data of the doctor that wants to sign in.
      */
     public DoctorData signIn(String userName, String password) {
@@ -65,6 +66,12 @@ public class DoctorManager extends UserManager<Doctor> {
                 .orElse(null);
     }
 
+    /**
+     * Return a doctor's data by their id.
+     *
+     * @param id Integer - id of the doctor whose data will be retrieved.
+     * @return DoctorData - data of the doctor associated with the id.
+     */
     public DoctorData getUserData(Integer id) {
         Doctor doctor = doctorDatabase.get(id);
         if (doctor == null) {

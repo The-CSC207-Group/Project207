@@ -11,7 +11,11 @@ abstract public class MenuLoadedPatientController extends controllers.MenuContro
 
     /**
      * Creates a new controller for handling the state of when a user has loaded a patient.
+     *
+     * @param context            Context - Context class.
+     * @param previousController UserController<?> - The previous controller.
      */
+
     public MenuLoadedPatientController(Context context, UserController<?> previousController) {
         super(context, previousController);
         this.previousController = previousController;

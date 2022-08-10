@@ -9,6 +9,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main Class.
+ */
 public class Main {
 
     private static void bootstrapClinic(Database database) {
@@ -33,6 +36,9 @@ public class Main {
                                 LocalTime.of(16, 0))))));
     }
 
+    /**
+     * Main Method.
+     */
     public static void main(String[] args) {
         Database database = new Database();
 

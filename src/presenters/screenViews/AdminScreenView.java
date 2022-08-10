@@ -53,6 +53,8 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a failed to create user error that is thrown when username or password is in an incorrect format.
+     *
+     * @param userType String - Type of the user as a string.
      */
     public void showIncorrectFormatError(String userType) {
         errorMessage("Failed to register " + userType + " account. Make sure:" +
@@ -62,6 +64,8 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show a failed to create user error that is thrown when username is already in use.
+     *
+     * @param userType String - Type of the user as a string.
      */
     public void showUsernameInUseError(String userType) {
         errorMessage("Failed to register " + userType + " account: username is already in use.");
@@ -69,6 +73,8 @@ public class AdminScreenView extends UserScreenView {
 
     /**
      * Show success message when admin successfully creates another user.
+     *
+     * @param userType String - Type of the user as a string.
      */
     public void showRegisterUserSuccess(String userType) {
         successMessage("Created " + userType + " account successfully!");

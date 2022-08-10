@@ -20,6 +20,7 @@ public class Clinic extends JsonSerializable {
      * Creates an instance of Clinic
      *
      * @param name        String representing the name of the clinic.
+     * @param email       String representing the email of the clinic.
      * @param phoneNumber String representing the phone number of the clinic.
      * @param address     String representing the address of the clinic.
      * @param clinicHours TimeBlock representing the clinic's hours of operation.
@@ -114,6 +115,8 @@ public class Clinic extends JsonSerializable {
 
     /**
      * Removes the clinic hours of a certain day. Assumes there is at most 1 availability per day of week.
+     *
+     * @param dayOfWeek DayOfWeek - Day of week enum representing the day of whose availability should be removed.
      */
     public void removeClinicHours(DayOfWeek dayOfWeek) {
         clinicHours.removeIf(availability -> availability.getDayOfWeek().equals(dayOfWeek));

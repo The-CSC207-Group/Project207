@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * The Clinic's presenter class.
  */
 public class ClinicScreenView extends ScreenView {
-    final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
+    private final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
 
     /**
      * Shows the welcome message that is presented at the start of the screen.
@@ -157,6 +157,7 @@ public class ClinicScreenView extends ScreenView {
     /**
      * Shows a prompt for changing the hours of a clinic on a certain day.
      *
+     * @param dayOfWeek DayOfWeek - day of week whose clinic hours we would like to change.
      * @return AvailabilityDetails - a response containing DayOfWeek, StartTime and EndTime or returns null
      * if the user enters any invalid info.
      */

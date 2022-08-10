@@ -27,6 +27,9 @@ abstract public class TerminalController {
         this.context = context;
     }
 
+    /**
+     * Displays a welcome message to the user.
+     */
     public void welcomeMessage() {
         terminalScreenView.showHelpPrompt();
     }
@@ -143,6 +146,9 @@ abstract public class TerminalController {
         }
     }
 
+    /**
+     * Command for exiting the program.
+     */
     protected Command Exit() {
         return (x) -> exit();
     }

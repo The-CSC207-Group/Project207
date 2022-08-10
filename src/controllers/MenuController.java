@@ -11,6 +11,9 @@ abstract public class MenuController extends TerminalController {
 
     /**
      * Creates a new controller for handling the state of when a user on a menu screen.
+     *
+     * @param context            Context - Context class.
+     * @param previousController UserController<?> - The previous controller.
      */
     public MenuController(Context context, UserController<?> previousController) {
         super(context);
@@ -31,6 +34,11 @@ abstract public class MenuController extends TerminalController {
         return commands;
     }
 
+    /**
+     * Return the program to the previous controller/state.
+     *
+     * @param previousController TerminalController - Previous controller.
+     */
     protected Command Back(TerminalController previousController) {
         return (x) -> changeCurrentController(previousController);
     }

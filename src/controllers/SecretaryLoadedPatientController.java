@@ -150,7 +150,8 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
         return doctorData;
     }
 
-    public TimeBlockData getStartEndTimeBlockWithErrorMessages(LocalDate date) {
+
+    private TimeBlockData getStartEndTimeBlockWithErrorMessages(LocalDate date) {
         AppointmentTimeDetails appointmentTimeDetails = secretaryScreenView.bookAppointmentTimePrompt();
 
         if (appointmentTimeDetails == null) {

@@ -48,6 +48,7 @@ public class PatientManager extends UserManager<Patient> {
      * Creates and returns a data of the patient associated with the login details passed in.
      *
      * @param userName String - the username of the patient that wants to sign in.
+     * @param password String - the password of the patient that wants to sign in.
      * @return PatientData - the data of the patient that wants to sign in.
      */
     public PatientData signIn(String userName, String password) {

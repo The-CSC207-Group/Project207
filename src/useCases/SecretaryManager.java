@@ -48,6 +48,7 @@ public class SecretaryManager extends UserManager<Secretary> {
      * Creates and returns a data of the secretary associated with the login details passed in.
      *
      * @param userName String - the username of the secretary that wants to sign in.
+     * @param password String - the password of the secretary that wants to sign in.
      * @return SecretaryData - the data of the secretary that wants to sign in.
      */
     public SecretaryData signIn(String userName, String password) {

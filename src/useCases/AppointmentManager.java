@@ -28,6 +28,8 @@ public class AppointmentManager {
 
     /**
      * Initializes Appointment Manager with the appointment database, and doctor database.
+     *
+     * @param database Database - collection of all entity databases in the program.
      */
     public AppointmentManager(Database database) {
         this.appointmentDatabase = database.getAppointmentDatabase();
