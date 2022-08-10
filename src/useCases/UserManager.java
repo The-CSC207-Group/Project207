@@ -113,7 +113,7 @@ public abstract class UserManager<T extends User> {
     protected T signInHelper(String username, String password){
         if (canSignIn(username, password)) {
             T user = getUser(username);
-            logManager.addLog("signed in", user.getId());
+            logManager.addLog(getUserData(username), "signed in");
             return user;
         } else  {
             return null;
