@@ -9,11 +9,10 @@ import java.util.LinkedHashMap;
 /**
  * Controller class that processes the commands that an admin performs on a clinic's information.
  */
-public class ClinicController extends TerminalController {
+public class ClinicController extends MenuController {
 
     private final ClinicScreenView clinicScreenView;
     private final ClinicManager clinicManager;
-    private final UserController<Admin> previousController;
 
     /**
      * Creates a clinic controller object that handles the commands an admin performs on the clinic information.
@@ -23,10 +22,9 @@ public class ClinicController extends TerminalController {
      *                           clinic controller object.
      */
     public ClinicController(Context context, UserController<Admin> previousController) {
-        super(context);
+        super(context, previousController);
         this.clinicManager = new ClinicManager(getDatabase());
         this.clinicScreenView = new ClinicScreenView();
-        this.previousController = previousController;
     }
 
     @Override
@@ -45,7 +43,6 @@ public class ClinicController extends TerminalController {
         commands.put("change clinic email", ChangeClinicEmail());
         commands.put("change clinic phone number", ChangeClinicPhoneNumber());
         commands.put("change clinic address", ChangeClinicAddress());
-        commands.put("back", Back(previousController));
         commands.putAll(super.AllCommands());
         return commands;
     }

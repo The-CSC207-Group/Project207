@@ -137,10 +137,6 @@ abstract public class TerminalController {
         }
     }
 
-    protected Command Back(TerminalController previousController){
-        return (x) -> changeCurrentController(previousController);
-    }
-
     protected Command Exit() {
         return (x) -> exit();
     }

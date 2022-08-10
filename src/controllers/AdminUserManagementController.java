@@ -7,14 +7,14 @@ import presenters.response.UserCredentials;
 import presenters.screenViews.AdminScreenView;
 import useCases.*;
 
+import java.awt.*;
 import java.util.LinkedHashMap;
 
 /**
  * Controller class that handles the creation and deletion of users by an admin.
  */
-public class AdminUserManagementController extends TerminalController {
+public class AdminUserManagementController extends MenuController {
 
-    private final AdminController previousController;
     private final AdminData adminData;
     private final AdminScreenView adminScreenView = new AdminScreenView();
     private final PatientManager patientManager;
@@ -31,8 +31,7 @@ public class AdminUserManagementController extends TerminalController {
      * @param adminData AdminData - a data containing the ID and attributes of the current loaded admin user.
      */
     public AdminUserManagementController(Context context, AdminController previousController, AdminData adminData) {
-        super(context);
-        this.previousController = previousController;
+        super(context, previousController);
         this.adminData = adminData;
         this.patientManager = new PatientManager(getDatabase());
         this.secretaryManager = new SecretaryManager(getDatabase());
@@ -58,7 +57,6 @@ public class AdminUserManagementController extends TerminalController {
     @Override
     public LinkedHashMap<String, Command> AllCommands (){
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
-        commands.put("back", Back(previousController));
         commands.put("create admin", CreateAdmin());
         commands.put("create secretary", CreateSecretary());
         commands.put("create doctor", CreateDoctor());

@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 /**
  * Controller class that process the commands a doctor would use on a specific patient that they loaded.
  */
-public class DoctorLoadedPatientController extends TerminalController {
+public class DoctorLoadedPatientController extends MenuController {
 
     private final PatientData patientData;
     private final DoctorData doctorData;
@@ -36,7 +36,7 @@ public class DoctorLoadedPatientController extends TerminalController {
      */
     public DoctorLoadedPatientController(Context context, DoctorController previousController, DoctorData doctorData,
                                          PatientData patientData) {
-        super(context);
+        super(context, previousController);
         this.patientData = patientData;
         this.doctorData = doctorData;
         this.previousController = previousController;
@@ -58,7 +58,6 @@ public class DoctorLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("unload patient", Back(previousController));
-        commands.put("back", Back(previousController));
         commands.put("view appointments", ViewPatientAppointments());
         commands.put("view reports", ViewPatientReports());
         commands.put("create report", CreatePatientReport());

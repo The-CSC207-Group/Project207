@@ -11,11 +11,11 @@ import java.util.LinkedHashMap;
 /**
  * Controller class that process the commands a secretary would use on a specific patient that they loaded.
  */
-public class SecretaryLoadedPatientController extends TerminalController {
+public class SecretaryLoadedPatientController extends MenuController {
 
     private final PatientData patientData;
-    private final SecretaryController previousController;
     private final PatientManager patientManager;
+    private final SecretaryController previousController;
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
 
     /* PHASE 2 ATTRIBUTES
@@ -27,15 +27,15 @@ public class SecretaryLoadedPatientController extends TerminalController {
      * Creates a new controller for handling the state of the program when a doctor has loaded a specific patient.
      * @param context Context - a reference to the context object, which stores the current controller and allows for
      *                switching between controllers.
-     * @param secretaryController SecretaryController - the previous controller object, allowing you to easily go back.
+     * @param previousController SecretaryController - the previous controller object, allowing you to easily go back.
      * @param patientData PatientData - a data containing the ID and attributes of the current loaded
      *                    patient user.
      */
-    public SecretaryLoadedPatientController(Context context, SecretaryController secretaryController,
+    public SecretaryLoadedPatientController(Context context, SecretaryController previousController,
                                             PatientData patientData) {
-        super(context);
-        this.previousController = secretaryController;
+        super(context, previousController);
         this.patientData = patientData;
+        this.previousController = previousController;
         this.patientManager = new PatientManager(getDatabase());
 
         /* PHASE 2 INSTANTIATIONS
@@ -56,7 +56,6 @@ public class SecretaryLoadedPatientController extends TerminalController {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         commands.put("change patient password", ChangePatientPassword());
         commands.put("unload patient", Back(previousController));
-        commands.put("back", Back(previousController));
 
         /* PENDING IMPLEMENTATION IN PHASE 2
         commands.put("view appointments", ViewAppointments());
