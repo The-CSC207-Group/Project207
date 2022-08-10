@@ -175,7 +175,7 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Inputted date and time is in the past.
      */
-    public void showDayPassedError(){errorMessage("The date and time inputted has passed.");}
+    public void showDayPassedError(){errorMessage("The date/time inputted has passed.");}
 
     /**
      * Show message when user has no appointments.
@@ -228,7 +228,7 @@ public class SecretaryScreenView extends UserScreenView {
     public void showBookAppointmentSuccess(ContactData patientContact, ContactData doctorContact) {
         String patientName = contactView.viewName(patientContact);
         String doctorName = contactView.viewName(doctorContact);
-        successMessage("Successfully booked appointment for " + patientName + " with Dr." + doctorName);
+        successMessage("Successfully booked appointment for " + patientName + " with Dr ." + doctorName);
     }
 
     /**
@@ -335,7 +335,7 @@ public class SecretaryScreenView extends UserScreenView {
      * @param availabilityData List<AvailabilityData> of the doctor's availabilities.
      */
     public void viewDoctorAvailability(ContactData userContact, List<AvailabilityData> availabilityData) {
-        infoMessage("Viewing availabilities for Dr." + contactView.viewName(userContact) + ":");
+        infoMessage("Viewing availabilities for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
     }
 
@@ -345,7 +345,7 @@ public class SecretaryScreenView extends UserScreenView {
      * @param availabilityData AvailabilityData - Availability data for a given day.
      */
     public void viewDoctorAvailability(ContactData userContact, AvailabilityData availabilityData) {
-        infoMessage("Viewing availabilities for Dr." + contactView.viewName(userContact) + ":");
+        infoMessage("Viewing availabilities for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AvailabilityView().viewFull(availabilityData) + "\n");
     }
 
