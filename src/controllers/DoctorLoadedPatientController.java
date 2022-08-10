@@ -54,7 +54,7 @@ public class DoctorLoadedPatientController extends MenuLoadedPatientController {
      * patient commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         PrescriptionListCommands prescriptionListCommands = new PrescriptionListCommands(getDatabase(), patientData);
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("view appointments", ViewPatientAppointments());
@@ -67,7 +67,7 @@ public class DoctorLoadedPatientController extends MenuLoadedPatientController {
         commands.put("create prescription", CreatePatientPrescription());
         commands.put("delete prescription", DeletePatientPrescription());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

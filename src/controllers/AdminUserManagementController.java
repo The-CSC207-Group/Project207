@@ -56,7 +56,7 @@ public class AdminUserManagementController extends MenuController {
      * AdminUserManagement commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("create admin", CreateAdmin());
         commands.put("create secretary", CreateSecretary());
@@ -65,7 +65,7 @@ public class AdminUserManagementController extends MenuController {
         commands.put("delete user", DeleteUser());
         commands.put("change user password", ChangeUserPassword());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

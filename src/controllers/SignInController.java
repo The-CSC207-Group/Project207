@@ -48,11 +48,11 @@ public class SignInController extends TerminalController {
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective sign in commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("sign in", SignInCommand());
         commands.put("view clinic info", ViewClinicInformation());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

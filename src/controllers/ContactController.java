@@ -46,7 +46,7 @@ public class ContactController extends MenuController {
      *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("view contact information", ViewContactInformation());
         commands.put("change name", ChangeName());
@@ -58,7 +58,7 @@ public class ContactController extends MenuController {
         commands.put("change emergency contact email", ChangeEmergencyContactEmail());
         commands.put("change emergency contact phone number", ChangeEmergencyContactPhoneNumber());
         commands.put("change emergency contact relationship", ChangeEmergencyContactRelationship());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

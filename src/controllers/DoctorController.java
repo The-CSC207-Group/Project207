@@ -44,13 +44,13 @@ public class DoctorController extends UserController<Doctor> {
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective doctor commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("load patient", LoadPatient());
         commands.put("view appointments", ViewAppointments());
         commands.put("show schedule", ViewSchedule());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

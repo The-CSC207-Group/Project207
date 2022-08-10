@@ -43,7 +43,7 @@ public class ClinicController extends MenuController {
      *
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective contact commands.
      */
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("change clinic name", ChangeClinicName());
         commands.put("change clinic email", ChangeClinicEmail());
@@ -51,7 +51,7 @@ public class ClinicController extends MenuController {
         commands.put("change clinic address", ChangeClinicAddress());
         commands.put("change clinic hours", ChangeClinicHours());
         commands.put("remove clinic hours", RemoveClinicHours());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

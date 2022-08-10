@@ -58,7 +58,7 @@ public abstract class UserController<T extends User> extends TerminalController 
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective user commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("change password", ChangePassword());
         commands.put("get logs", GetLogs());
@@ -66,7 +66,7 @@ public abstract class UserController<T extends User> extends TerminalController 
         commands.put("view clinic info", ViewClinicInformation());
         commands.put("back", SignOut());
         commands.put("sign out", SignOut());
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

@@ -39,13 +39,13 @@ public class SecretaryController extends UserController<Secretary> {
      * commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("create patient", CreatePatientAccount());
         commands.put("load patient", LoadPatient());
         commands.put("delete patient", DeletePatient());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 

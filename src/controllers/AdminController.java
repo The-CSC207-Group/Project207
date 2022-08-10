@@ -37,13 +37,13 @@ public class AdminController extends UserController<Admin> {
      * @return LinkedHashMap<String, Command> - ordered HashMap of strings mapped to their respective admin commands.
      */
     @Override
-    public LinkedHashMap<String, Command> AllCommands() {
+    public LinkedHashMap<String, Command> allCommands() {
         LinkedHashMap<String, Command> commands = new LinkedHashMap<>();
         commands.put("manage users", LoadUserManagement());
         commands.put("change clinic info", ChangeClinicInformation());
         commands.put("delete self", DeleteSelf());
 
-        commands.putAll(super.AllCommands());
+        commands.putAll(super.allCommands());
         return commands;
     }
 
