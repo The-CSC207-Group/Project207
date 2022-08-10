@@ -56,7 +56,6 @@ public class LogManagerTests {
         LogData logA = logManager.addLog("testing1", id);
         LogData logB = logManager.addLog("testing2", id);
         LogData logC = logManager.addLog("testing3", id);
-        System.out.println(database.getLogDatabase());
 
         ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
         Assert.assertFalse("Check if logA is returned to the user as part of" +
@@ -89,7 +88,6 @@ public class LogManagerTests {
         logManager.addLog("testing1", 1);
         logManager.addLog("testing2", 1);
         logManager.addLog("testing3", 1);
-        System.out.println(database.getLogDatabase());
 
         ArrayList<LogData> logArrayList = logManager.getUserLogs(new PatientData(patient));
         Assert.assertTrue("Since the user doesn't exist, we should get an empty arraylist",
