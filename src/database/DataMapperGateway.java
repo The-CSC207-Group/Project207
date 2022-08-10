@@ -48,10 +48,8 @@ public interface DataMapperGateway<T> {
      * Remove an object of type T from the database.
      *
      * @param id The unique identifier of that object.
-     * @return boolean of whether the object was successfully deleted from the database.
-     * false is returned when id is not present in getAllIds().
      */
-    boolean remove(Integer id);
+    void remove(Integer id);
 
     /**
      * Saves the database.

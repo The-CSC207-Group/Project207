@@ -19,7 +19,7 @@ public class ContactManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database database;
     private ContactManager contactManager;
     private PatientData patientData;

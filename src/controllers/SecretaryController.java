@@ -5,8 +5,6 @@ import dataBundles.SecretaryData;
 import entities.Secretary;
 import presenters.response.UserCredentials;
 import presenters.screenViews.SecretaryScreenView;
-import useCases.AdminManager;
-import useCases.DoctorManager;
 import useCases.PatientManager;
 import useCases.SecretaryManager;
 
@@ -19,9 +17,6 @@ public class SecretaryController extends UserController<Secretary> {
 
     private final SecretaryScreenView secretaryScreenView = new SecretaryScreenView();
     private final PatientManager patientManager;
-    private final AdminManager adminManager;
-    private final DoctorManager doctorManager;
-    private final SecretaryManager secretaryManager;
 
     /**
      * Creates a new controller for handling the state of the program when a secretary is signed in.
@@ -33,11 +28,7 @@ public class SecretaryController extends UserController<Secretary> {
      */
     public SecretaryController(Context context, SecretaryData secretaryData) {
         super(context, secretaryData, new SecretaryManager(context.getDatabase()), new SecretaryScreenView());
-
-        this.doctorManager = new DoctorManager(getDatabase());
-        this.adminManager = new AdminManager(getDatabase());
         this.patientManager = new PatientManager(getDatabase());
-        this.secretaryManager = new SecretaryManager(getDatabase());
     }
 
     /**

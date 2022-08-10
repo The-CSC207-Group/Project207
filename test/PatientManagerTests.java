@@ -26,7 +26,7 @@ public class PatientManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private DataMapperGateway<Patient> patientDatabase;
     private PatientManager patientManager;
     private PatientData patientData;
@@ -43,7 +43,7 @@ public class PatientManagerTests {
     }
 
     /**
-     * Tests createPatient by creating an patient in the database using a valid and unused username.
+     * Tests createPatient by creating a patient in the database using a valid and unused username.
      */
     @Test(timeout = 1000)
     public void testCreatePatientValidUnused() {

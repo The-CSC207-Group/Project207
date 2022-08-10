@@ -69,7 +69,7 @@ public class ContactManager {
         Contact contact = contactDatabase.get(contactData.getContactId());
         //got regex from https://regexlib.com/Search.aspx?k=email
         if (contact == null ||
-                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", newEmail)) {
+                !Pattern.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$", newEmail)) {
             return false;
         }
         contact.setEmail(newEmail);
@@ -142,7 +142,7 @@ public class ContactManager {
         Contact contact = contactDatabase.get(contactData.getContactId());
         //got regex from https://regexlib.com/Search.aspx?k=email
         if (contact == null ||
-                !Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                !Pattern.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$",
                         emergencyContactEmail)) {
             return false;
         }

@@ -26,7 +26,7 @@ public class DoctorManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private DataMapperGateway<Doctor> doctorDatabase;
     private DoctorManager doctorManager;
     private DoctorData doctorData;

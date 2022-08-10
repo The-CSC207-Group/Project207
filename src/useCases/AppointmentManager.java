@@ -140,7 +140,7 @@ public class AppointmentManager {
     /**
      * Gets all doctor specific appointments in a single day.
      *
-     * @param doctorData  the data representing a specfic doctor in the database.
+     * @param doctorData  the data representing a specific doctor in the database.
      * @param selectedDay LocalDate that represents a date without a specific time attached.
      * @return ArrayList<AppointmentData> - ArrayList of AppointmentData which includes information of many Appointments.
      */

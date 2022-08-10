@@ -189,7 +189,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.deleteAppointmentPrompt(contactData, data);
             if (index == null) {
-                secretaryScreenView.showDeleteNotAnIntegerError("null");
+                secretaryScreenView.showDeleteNotAnIntegerError();
             } else if (index < 0 || index > data.size() - 1) {
                 secretaryScreenView.showDeleteOutOfRangeError();
             } else {
@@ -209,7 +209,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
             ContactData contactData = contactManager.getContactData(patientData);
             Integer index = secretaryScreenView.rescheduleAppointmentPrompt(contactData, appointments);
             if (index == null) {
-                secretaryScreenView.showRescheduleNotAnIntegerError("null");
+                secretaryScreenView.showRescheduleNotAnIntegerError();
             } else if (index < 0 || index > appointments.size() - 1) {
                 secretaryScreenView.showRescheduleOutOfRangeError();
             } else {
@@ -270,7 +270,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
         ContactData doctorContact = contactManager.getContactData(doctorData);
         AvailabilityData availabilityData = appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek());
         if (availabilityData == null) {
-            secretaryScreenView.showNoAvailabilityError(doctorContact);
+            secretaryScreenView.showNoAvailabilityError();
             return;
         }
         if (appointments.size() == 0) {
@@ -281,6 +281,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
         secretaryScreenView.viewDoctorAvailability(doctorContact, availabilityData);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isDoctorAvailableOnDay(LocalDate date) {
         AvailabilityData availabilityData = appointmentManager.getAvailabilityFromDayOfWeek(date.getDayOfWeek());
         return availabilityData != null;

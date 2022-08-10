@@ -55,8 +55,9 @@ public abstract class UserManager<T extends User> {
      * Checks if username and password adhere to regex pattern.
      * @param username username of new account.
      * @param password password of new account.
-     * @return boolean whether or not the username and password adhere to the regex pattern.
+     * @return boolean whether the username and password adhere to the regex pattern.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean regexCheck(String username, String password) {
         return Pattern.matches("^[a-zA-Z0-9]{6,}$", username) && Pattern.matches("^.{8,}$", password);
     }
@@ -100,15 +101,6 @@ public abstract class UserManager<T extends User> {
     public Boolean doesUserExist(String username) {
         return typeTDatabase.getByCondition(x -> x.getUsername().equals(username)) != null;
     }
-
-    /**
-     * Returns the data representing the user associated with the passed in username is the password is correct.
-     *
-     * @param username String - username of the user that wants to sign in.
-     * @param password String - password of the user that wants to sign in.
-     * @return UserData<T> where T extends User - the data representing the user that wants to sign in.
-     */
-    public abstract UserData<T> signIn(String username, String password);
 
     /**
      * Returns the data representing the user associated with the passed in username.

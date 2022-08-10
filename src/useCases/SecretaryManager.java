@@ -50,7 +50,6 @@ public class SecretaryManager extends UserManager<Secretary> {
      * @param userName String - the username of the secretary that wants to sign in.
      * @return SecretaryData - the data of the secretary that wants to sign in.
      */
-    @Override
     public SecretaryData signIn(String userName, String password) {
         return toSecretaryData(signInHelper(userName, password));
 

@@ -42,13 +42,6 @@ public class ReportData {
     }
 
     /**
-     * @return Integer - patient id attribute associated with the report.
-     */
-    public Integer getPatientId() {
-        return report.getPatientId();
-    }
-
-    /**
      * @return Integer - doctor id attribute associated with the report.
      */
     public Integer getDoctorId() {

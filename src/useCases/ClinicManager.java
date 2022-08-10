@@ -40,8 +40,12 @@ public class ClinicManager {
      * @return boolean - returns whether the clinic name was successfully changed or not.
      */
     public boolean changeClinicName(String newName) {
-        clinic.setName(newName);
-        return true;
+        if (clinic == null) {
+            return false;
+        } else {
+            clinic.setName(newName);
+            return true;
+        }
     }
 
     /**
@@ -51,7 +55,9 @@ public class ClinicManager {
      * @return boolean - returns whether the phone number was successfully changed or not.
      */
     public boolean changeClinicPhoneNumber(String newPhoneNumber) {
-        if (!Pattern.matches("^([0-9])+$", newPhoneNumber)) {
+        if (clinic == null) {
+            return false;
+        } else if (!Pattern.matches("^([0-9])+$", newPhoneNumber)) {
             return false;
         }
         clinic.setPhoneNumber(newPhoneNumber);
@@ -65,8 +71,10 @@ public class ClinicManager {
      * @return boolean - returns whether the email was successfully changed or not.
      */
     public boolean changeClinicEmail(String newEmail) {
-        //got regex from https://regexlib.com/Search.aspx?k=email
-        if (!Pattern.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$", newEmail)) {
+        if (clinic == null) {
+            return false;
+        } else if (!Pattern.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$", newEmail)) {
+            //got regex from https://regexlib.com/Search.aspx?k=email
             return false;
         }
         clinic.setEmail(newEmail);
@@ -80,8 +88,12 @@ public class ClinicManager {
      * @return boolean - returns whether the address was successfully changed or not.
      */
     public boolean changeClinicAddress(String newAddress) {
-        clinic.setAddress(newAddress);
-        return true;
+        if (clinic == null) {
+            return false;
+        } else {
+            clinic.setAddress(newAddress);
+            return true;
+        }
     }
 
     /**
@@ -93,6 +105,9 @@ public class ClinicManager {
      * @param endTime   LocalTime - End time of the availability.
      */
     public void changeClinicHours(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
+        if (clinic == null) {
+            return;
+        }
         Availability availability = new Availability(dayOfWeek, startTime, endTime);
         clinic.removeClinicHours(dayOfWeek);
         clinic.addClinicHours(availability);
@@ -104,6 +119,9 @@ public class ClinicManager {
      * @param dayOfWeek DayOfWeek - enum representing a day of the week.
      */
     public void removeClinicHours(DayOfWeek dayOfWeek) {
+        if (clinic == null) {
+            return;
+        }
         clinic.removeClinicHours(dayOfWeek);
     }
 

@@ -26,7 +26,7 @@ public class AdminManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private DataMapperGateway<Admin> adminDatabase;
     private AdminData adminData;
     private AdminManager adminManager;

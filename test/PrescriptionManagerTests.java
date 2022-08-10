@@ -27,7 +27,7 @@ public class PrescriptionManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private Database originalDatabase;
     private DataMapperGateway<Prescription> prescriptionDatabase;
     private PatientData patientData;

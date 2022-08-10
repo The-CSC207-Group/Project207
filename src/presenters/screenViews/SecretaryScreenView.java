@@ -13,10 +13,7 @@ import presenters.response.UserCredentials;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -148,13 +145,6 @@ public class SecretaryScreenView extends UserScreenView {
     public LocalDate bookAppointmentDayPrompt() {
         infoMessage("Booking appointment day:");
         return showLocalDatePrompt();
-    }
-
-    /**
-     * Show error when they are no available appointments on that day.
-     */
-    public void showNoAvailableAppointmentDayError() {
-        errorMessage("Appointment booking error: there are no available appointments on that day.");
     }
 
     /**
@@ -313,7 +303,7 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Error displayed when user does not input a valid integer when rescheduling an appointment
      */
-    public void showRescheduleNotAnIntegerError(String itemType) {
+    public void showRescheduleNotAnIntegerError() {
         errorMessage("Could not reschedule appointment: please input a valid integer.");
     }
 
@@ -327,7 +317,7 @@ public class SecretaryScreenView extends UserScreenView {
     /**
      * Error displayed when user does not input a valid integer when deleting an appointment
      */
-    public void showDeleteNotAnIntegerError(String itemType) {
+    public void showDeleteNotAnIntegerError() {
         errorMessage("Could not delete appointment: please input a valid integer.");
     }
 
@@ -339,7 +329,7 @@ public class SecretaryScreenView extends UserScreenView {
      * Message displayed when booking an appointment and showing clinic's availability on a given day, where there
      * is no availability.
      */
-    public void showNoAvailabilityError(ContactData userContact) {
+    public void showNoAvailabilityError() {
         errorMessage("Doctor is not available on this day.");
     }
 
@@ -366,17 +356,6 @@ public class SecretaryScreenView extends UserScreenView {
     }
 
     /**
-     * View a doctor's availabilities.
-     *
-     * @param userContact      String representing the username of the doctor who the availabilities belong to.
-     * @param availabilityData List<AvailabilityData> of the doctor's availabilities.
-     */
-    public void viewDoctorAvailability(ContactData userContact, List<AvailabilityData> availabilityData) {
-        infoMessage("Viewing availabilities for Dr. " + contactView.viewName(userContact) + ":");
-        infoMessage(new AvailabilityView().viewFullFromList(availabilityData));
-    }
-
-    /**
      * View one of a doctor's availabilities.
      *
      * @param userContact      String representing the username of the doctor who the availability belong to.
@@ -385,69 +364,6 @@ public class SecretaryScreenView extends UserScreenView {
     public void viewDoctorAvailability(ContactData userContact, AvailabilityData availabilityData) {
         infoMessage("Viewing availabilities for Dr. " + contactView.viewName(userContact) + ":");
         infoMessage(new AvailabilityView().viewFull(availabilityData) + "\n");
-    }
-
-    /**
-     * Asks user for input and gets the target doctor username.
-     *
-     * @return String representing username of the doctor.
-     */
-    public String getTargetDoctor() {
-        return input("Enter doctor username: ");
-    }
-
-    /**
-     * Prompts user to add a local start time
-     *
-     * @return LocalDateTime object with the desired input from the user.
-     */
-    public LocalDateTime addLocalDateTimeStart() {
-        infoMessage("You are about to add the START time: ");
-        LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
-                inputInt("day: "));
-        LocalTime localTime = LocalTime.MIDNIGHT;
-        return LocalDateTime.of(localDate, localTime);
-    }
-
-    /**
-     * Prompts user to add a local end time
-     *
-     * @return LocalDateTime object with the desired input from the user.
-     */
-    public LocalDateTime addLocalDateTimeEnd() {
-        infoMessage("You are about to add the END time: ");
-        LocalDate localDate = LocalDate.of(inputInt("year: "), inputInt("month: "),
-                inputInt("day: "));
-        LocalTime localTime = LocalTime.MIDNIGHT;
-        return LocalDateTime.of(localDate, localTime);
-    }
-
-    /**
-     * Prompts user to add availability
-     *
-     * @return ArrayList<Integer> consisting day, hour, minute, and length.
-     */
-    public ArrayList<Integer> addAvailabilityPrompt() {
-        Integer day = inputInt("Enter the day of the week you would like to add your availability " +
-                "time as an integer with 1 being Monday and 7 being Sunday: ");
-        Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
-        Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
-        Integer length = inputInt("Enter the length in minute that you are available: ");
-        return new ArrayList<>(Arrays.asList(day, hour, minute, length));
-    }
-
-    /**
-     * Displays prompt for the user to select an index of availability to delete.
-     *
-     * @param contactData      ContactData for the desired doctor.
-     * @param availabilityData List<AvailabilityData> representing the doctor's availabilities.
-     * @return Integer representing the index of the desired availability to be deleted.
-     */
-    public Integer deleteAvailabilityPrompt(ContactData contactData, List<AvailabilityData> availabilityData) {
-        String doctorName = contactView.viewName(contactData);
-        infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
-        new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
-        return deleteItemFromEnumerationPrompt("availability");
     }
 
 }

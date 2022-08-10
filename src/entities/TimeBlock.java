@@ -10,8 +10,8 @@ import java.time.LocalTime;
  */
 public class TimeBlock implements UniversalTimeBlockWithDay {
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
 
     /**
      * Creates an instance of TimeBlock.
@@ -43,27 +43,9 @@ public class TimeBlock implements UniversalTimeBlockWithDay {
         return startTime.toLocalTime();
     }
 
-    /**
-     * Sets the time block's start time.
-     *
-     * @param startTime LocalDateTime representing the time block's new start time.
-     */
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
     @Override
     public LocalTime getEndTime() {
         return endTime.toLocalTime();
-    }
-
-    /**
-     * Sets the time block's end time.
-     *
-     * @param endTime LocalDateTime representing the time block's new end time.
-     */
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     @Override

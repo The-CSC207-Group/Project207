@@ -9,8 +9,8 @@ import java.time.LocalTime;
 public class Availability implements UniversalTimeBlock {
 
     private final DayOfWeek dayOfWeek;
-    private LocalTime doctorStartTime;
-    private LocalTime doctorEndTime;
+    private final LocalTime doctorStartTime;
+    private final LocalTime doctorEndTime;
 
     /**
      * Creates an instance of Availability.
@@ -23,23 +23,6 @@ public class Availability implements UniversalTimeBlock {
         this.dayOfWeek = dayOfWeek;
         this.doctorStartTime = doctorStartTime;
         this.doctorEndTime = doctorEndTime;
-    }
-
-
-    /**
-     * Sets the start time of this instance of AvailabilityData.
-     *
-     * @param startTime LocalTime representing the new start time of this instance of AvailabilityData.
-     */
-    public void setDoctorStartTime(LocalTime startTime) {
-        this.doctorStartTime = startTime;
-    }
-
-    /**
-     * @return LocalTime representing the end time of this instance of AvailabilityData.
-     */
-    public void setDoctorEndTime(LocalTime endTime) {
-        this.doctorEndTime = endTime;
     }
 
     @Override

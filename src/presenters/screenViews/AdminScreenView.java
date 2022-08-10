@@ -1,13 +1,9 @@
 package presenters.screenViews;
 
 import dataBundles.ContactData;
-import dataBundles.LogData;
 import presenters.entityViews.ContactView;
-import presenters.entityViews.LogView;
 import presenters.response.PasswordResetDetails;
 import presenters.response.UserCredentials;
-
-import java.util.List;
 
 /**
  * The Admin's presenter class.
@@ -107,15 +103,6 @@ public class AdminScreenView extends UserScreenView {
      */
     public void showDeleteUserSuccess() {
         successMessage("Successfully deleted user account!");
-    }
-
-    /**
-     * View all logs by all users.
-     */
-    public void viewAllLogs(List<LogData> items) {
-        LogView logView = new LogView();
-        infoMessage("All Logs:");
-        infoMessage(logView.viewFullFromList(items));
     }
 
     /**

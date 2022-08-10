@@ -26,7 +26,7 @@ public class SecretaryManagerTests {
      * deleted after the tests.
      */
     @Rule
-    public TemporaryFolder databaseFolder = new TemporaryFolder();
+    public final TemporaryFolder databaseFolder = new TemporaryFolder();
     private DataMapperGateway<Secretary> secretaryDatabase;
     private SecretaryManager secretaryManager;
     private SecretaryData secretaryData;

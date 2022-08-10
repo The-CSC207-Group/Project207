@@ -50,13 +50,6 @@ public class ClinicData {
     }
 
     /**
-     * @return Integer - id of the clinic stored.
-     */
-    public Integer getClinicId() {
-        return clinic.getId();
-    }
-
-    /**
      * @return TimeBlock - hours of operations of the clinic stored.
      */
     public ArrayList<AvailabilityData> getClinicHours() {

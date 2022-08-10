@@ -7,7 +7,7 @@ import java.time.LocalDate;
  */
 public class Prescription extends Note {
 
-    private LocalDate expiryDate;
+    private final LocalDate expiryDate;
 
     /**
      * Creates an instance of Prescription.
@@ -29,15 +29,6 @@ public class Prescription extends Note {
      */
     public LocalDate getExpiryDate() {
         return expiryDate;
-    }
-
-    /**
-     * Sets the expiry date of the prescription.
-     *
-     * @param expiryDate LocalDate representing the new expiry date of the prescription.
-     */
-    public void setExpiryDate(LocalDate expiryDate) {
-        this.expiryDate = expiryDate;
     }
 
 }

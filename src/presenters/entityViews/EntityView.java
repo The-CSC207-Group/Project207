@@ -12,7 +12,7 @@ public abstract class EntityView<T> {
     /**
      * @param string        String to be returned if a string is inputted.
      * @param defaultString String to be returned if no string or a blank string was inputted in string.
-     * @return String string or defaultString depending on the value of string.
+     * @return String or defaultString depending on the value of string.
      */
     protected String getDefaultString(String string, String defaultString) {
         if (string == null) {

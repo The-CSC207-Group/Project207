@@ -7,7 +7,6 @@ import presenters.response.ReportDetails;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,14 +19,6 @@ public class DoctorScreenView extends UserScreenView {
      */
     private final ContactView contactView = new ContactView();
     private final ReportView reportView = new ReportView();
-
-    private void showDeleteOutOfRangeError(String itemType) {
-        errorMessage("Could not delete " + itemType + ": index out of range.");
-    }
-
-    private void showDeleteNotAnIntegerError(String itemType) {
-        errorMessage("Could not delete " + itemType + ": please input a valid integer.");
-    }
 
     /**
      * View used to delete prescriptions relating to a patient. Show an enumeration of all prescriptions
@@ -50,13 +41,6 @@ public class DoctorScreenView extends UserScreenView {
      */
     public void showSuccessfullyDeletedPrescription() {
         successMessage("Successfully deleted prescription.");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data bundle list
-     */
-    public void showDeletePrescriptionOutOfRangeError() {
-        showDeleteOutOfRangeError("prescription");
     }
 
     /**
@@ -132,13 +116,6 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeletePrescriptionNotAnIntegerError() {
-        showDeleteNotAnIntegerError("prescription");
-    }
-
-    /**
      * View used to delete reports relating to a patient. Show an enumeration of all reports and ask user for
      * integer input corresponding to a selection.
      *
@@ -176,105 +153,10 @@ public class DoctorScreenView extends UserScreenView {
     }
 
     /**
-     * Ask doctors for availability details. Used when creating a new availability time slot.
-     *
-     * @return ArrayList<Integer> containing the day of the week as an Integer, the starting hour, starting minute and
-     * length of the availability time slot.
-     */
-    public ArrayList<Integer> addAvailabilityPrompt() {
-        Integer day = inputInt("Enter the day of the week you would like to add your availability " +
-                "time as an integer with 1 being Monday and 7 being Sunday: ");
-        Integer hour = inputInt("Enter the starting hour that you are available (HH): ");
-        Integer minute = inputInt("Enter the starting minute that you are available (MM): ");
-        Integer length = inputInt("Enter the length in minute that you are available: ");
-        return new ArrayList<>(Arrays.asList(day, hour, minute, length));
-    }
-
-    /**
-     * View used to delete a doctor's availabilities. Show an enumeration of all availabilities and ask doctor for
-     * integer input corresponding to a selection.
-     *
-     * @param doctorData       ContactData of doctor.
-     * @param availabilityData List<AvailabilityData> of availability data to display.
-     * @return Integer representing the selected AvailabilityData from the list. null, if and only if the user input
-     * is not an integer.
-     */
-    public Integer deleteAvailabilityPrompt(ContactData doctorData, List<AvailabilityData> availabilityData) {
-        String doctorName = contactView.viewName(doctorData);
-        infoMessage("Viewing doctor " + doctorName + " availabilities to delete:");
-        new AvailabilityView().viewFullAsEnumerationFromList(availabilityData);
-        return deleteItemFromEnumerationPrompt("availability");
-    }
-
-    /**
-     * Success message when doctor successfully deletes an availability.
-     */
-    public void showSuccessfullyDeletedAvailability() {
-        successMessage("Successfully deleted availability.");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data list.
-     */
-    public void showDeleteAvailabilityOutOfRangeError() {
-        showDeleteOutOfRangeError("availability");
-    }
-
-    /**
      * Message showed when the doctor has no appointments scheduled.
      */
     public void showNoAppointmentsMessage() {
         infoMessage("No appointments scheduled.");
-    }
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeleteAvailabilityNotAnIntegerError() {
-        showDeleteNotAnIntegerError("availability");
-    }
-
-    /**
-     * Ask doctors for absence details. Used when creating a new absence time slot.
-     *
-     * @return ArrayList<Integer> containing the year, month as an integer, day of month and length of the absence in
-     * days.
-     */
-    public ArrayList<Integer> addAbsencePrompt() {
-        infoMessage("When is the first day of your absence?");
-        LocalDate date = showLocalDatePrompt();
-        Integer length = inputInt("How many days will you be absent?: ");
-        return new ArrayList<>(Arrays.asList(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), length));
-    }
-
-    /**
-     * View used to delete a doctor's absence. Show an enumeration of all absences and ask doctor for
-     * integer input corresponding to a selection.
-     *
-     * @param doctorData    ContactData of doctor.
-     * @param timeBlockData List<TimeBlockData> of time block data to display.
-     * @return Integer representing the selected TimeBlockData from the list. null, if and only if the user input
-     * is not an integer.
-     */
-    public Integer deleteAbsencePrompt(ContactData doctorData, List<TimeBlockData> timeBlockData) {
-        String doctorName = contactView.viewName(doctorData);
-        infoMessage("Viewing doctor " + doctorName + " absences to delete:");
-        new TimeBlockView().viewFullAsEnumerationFromList(timeBlockData);
-        return deleteItemFromEnumerationPrompt("absence");
-    }
-
-    /**
-     * Error raised when the user inputted integer is outside the size of the given data list.
-     */
-    public void showDeleteAbsenceOutOfRangeError() {
-        showDeleteOutOfRangeError("report");
-    }
-
-    /**
-     * Error raised when the user input is not an integer.
-     */
-    public void showDeleteAbsenceNotAnIntegerError() {
-        showDeleteNotAnIntegerError("report");
     }
 
 

@@ -47,7 +47,6 @@ public class AdminManager extends UserManager<Admin> {
      * @param userName String - the username of the admin that wants to sign in.
      * @return AdminData - the data of the admin that wants to sign in.
      */
-    @Override
     public AdminData signIn(String userName, String password) {
         return toAdminData(signInHelper(userName, password));
     }

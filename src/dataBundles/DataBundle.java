@@ -19,7 +19,7 @@ public abstract class DataBundle {
     }
 
     /**
-     * @return Integer - id of the entity. Id can be null when the controller creates a data bundle manually instead
+     * @return Integer - id of the entity. ID can be null when the controller creates a data bundle manually instead
      * of through use cases.
      */
     public Integer getId() {

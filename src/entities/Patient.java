@@ -48,13 +48,4 @@ public class Patient extends User {
         return healthNumber;
     }
 
-    /**
-     * Sets the patient's health number.
-     *
-     * @param healthNumber String representing the patient's new health number.
-     */
-    public void setHealthNumber(String healthNumber) {
-        this.healthNumber = healthNumber;
-    }
-
 }

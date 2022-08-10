@@ -14,7 +14,6 @@ public class AdminController extends UserController<Admin> {
 
     private final AdminData adminData;
     private final AdminManager adminManager;
-    private final AdminScreenView adminScreenView = new AdminScreenView();
     private final AdminController currentController = this;
 
     /**
@@ -48,9 +47,9 @@ public class AdminController extends UserController<Admin> {
     }
 
     private Command LoadUserManagement() {
-        return (x) -> {
-            changeCurrentController(new AdminUserManagementController(getContext(), currentController, adminData));
-        };
+        return (x) -> changeCurrentController(
+                new AdminUserManagementController(getContext(), currentController, adminData)
+        );
     }
 
     private Command DeleteSelf() {

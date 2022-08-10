@@ -21,6 +21,7 @@ public class DeleteUtils {
                 deleteDirectory(file);
             }
         }
+        //noinspection ResultOfMethodCallIgnored
         directoryToBeDeleted.delete();
     }
 

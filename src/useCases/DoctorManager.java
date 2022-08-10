@@ -49,7 +49,6 @@ public class DoctorManager extends UserManager<Doctor> {
      * @param userName String - the username of the doctor that wants to sign in.
      * @return PatientData - the data of the doctor that wants to sign in.
      */
-    @Override
     public DoctorData signIn(String userName, String password) {
         return toDoctorData(signInHelper(userName, password));
     }

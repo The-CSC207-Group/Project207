@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * The Clinic's presenter class.
  */
 public class ClinicScreenView extends ScreenView {
-    DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
+    final DayOfWeekUtils dayOfWeekUtils = new DayOfWeekUtils();
 
     /**
      * Shows the welcome message that is presented at the start of the screen.
