@@ -4,10 +4,7 @@ import dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Prescription;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 import useCases.DoctorManager;
 import useCases.PatientManager;
@@ -22,241 +19,176 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Tests for the PrescriptionManager class.
+ */
 public class PrescriptionManagerTests {
-
+    /**
+     * The variable representing the temporary folder where the databases used in these tests are stored until it is
+     * deleted after the tests.
+     */
     @Rule
     public TemporaryFolder databaseFolder = new TemporaryFolder();
+    private Database originalDatabase;
+    private DataMapperGateway<Prescription> prescriptionDatabase;
+    private PatientData patientData;
+    private DoctorData doctorData;
+    private PrescriptionManager prescriptionManager;
+    private PrescriptionData inactivePrescriptionData;
+    private PrescriptionData activePrescriptionData;
 
+
+    /**
+     * Initializes the variables used by all the tests before each unit test.
+     */
+    @Before
+    public void before(){
+        originalDatabase = new Database(databaseFolder.toString());
+        prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
+        patientData = new PatientManager(originalDatabase).createPatient("mynamejeff", "123456789");
+        doctorData = new DoctorManager(originalDatabase).createDoctor("mynamejim", "123456789");
+        prescriptionManager = new PrescriptionManager(originalDatabase);
+        LocalDate inactiveLocalExpiryDate = LocalDate.of(2020, 2, 2);
+        LocalDate activeLocalExpiryDate = LocalDate.of(2099, 1, 1);
+        inactivePrescriptionData = prescriptionManager.createPrescription("medicine", "healthy",
+                patientData, doctorData, inactiveLocalExpiryDate);
+        activePrescriptionData = prescriptionManager.createPrescription("bad", "very unhealthy",
+                patientData, doctorData, activeLocalExpiryDate);
+    }
+
+    /**
+     * Tests getAllActivePrescription with a patient that has an active prescription, and ensuring the prescription
+     * in database is the same as the one returned.
+     */
     @Test(timeout = 1000)
-    public void testGetPatientActivePrescriptionDataUsingActivePrescription() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-
-        LocalDate localExpiryDate = LocalDate.of(2050, 7, 1);
-
-        PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
-
-        Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(), doctor.getId(), localExpiryDate);
-        Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), localExpiryDate);
-
-        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
-        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
-
-        PrescriptionData originalPrescriptionBundle1 = new PrescriptionData(originalPrescription1);
-
-        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
-
+    public void testGetPatientActivePrescriptionData() {
         ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllActivePrescriptions(patient);
+                prescriptionManager.getAllActivePrescriptions(patientData);
 
-        PrescriptionData loadedPrescriptionData1 = loadedPrescriptionList.get(0);
+        assertEquals("Since there is only one non-expired prescriptions, the ArrayList have a length of 1",
+                loadedPrescriptionList.size(), 1);
+
+        PrescriptionData loadedPrescriptionData = loadedPrescriptionList.get(0);
 
         /* testing if the loaded prescription and the original prescription are equal by testing whether all
         the fields of both objects are equal */
         assertEquals("Original prescription and loaded prescription should share the same ID",
-                originalPrescriptionBundle1.getPrescriptionId(), loadedPrescriptionData1.getPrescriptionId());
+                activePrescriptionData.getPrescriptionId(), loadedPrescriptionData.getPrescriptionId());
         assertEquals("Original prescription and loaded prescription should be have been noted " +
-                "on the same date", originalPrescriptionBundle1.getDateNoted().compareTo(loadedPrescriptionData1.
+                "on the same date", activePrescriptionData.getDateNoted().compareTo(loadedPrescriptionData.
                 getDateNoted()), 0); // the compareTo function returns 0 when both dates are equal
         assertEquals("Original prescription and loaded prescription should share the same header",
-                originalPrescriptionBundle1.getHeader(), loadedPrescriptionData1.getHeader());
+                activePrescriptionData.getHeader(), loadedPrescriptionData.getHeader());
         assertEquals("Original prescription and loaded prescription should share the same body",
-                originalPrescriptionBundle1.getBody(), loadedPrescriptionData1.getBody());
+                activePrescriptionData.getBody(), loadedPrescriptionData.getBody());
         assertEquals("Original prescription and loaded prescription should share the same patient ID",
-                originalPrescriptionBundle1.getPatientId(), loadedPrescriptionData1.getPatientId());
+                activePrescriptionData.getPatientId(), loadedPrescriptionData.getPatientId());
         assertEquals("Original prescription and loaded prescription should share the same doctor ID",
-                originalPrescriptionBundle1.getDoctorId(), loadedPrescriptionData1.getDoctorId());
+                activePrescriptionData.getDoctorId(), loadedPrescriptionData.getDoctorId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
-                originalPrescriptionBundle1.getExpiryDate().compareTo(loadedPrescriptionData1.
+                activePrescriptionData.getExpiryDate().compareTo(loadedPrescriptionData.
                         getExpiryDate()), 0);
     }
-    @Test(timeout = 1000)
-    public void testGetPatientActivePrescriptionDataUsingInactivePrescription() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
 
-        PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
-
-        LocalDate localExpiryDate = LocalDate.of(2021, 7, 1);
-
-        Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), localExpiryDate);
-        Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", doctor.getId(),
-                doctor.getId(), localExpiryDate);
-
-        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
-        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
-
-        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
-
-        ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllActivePrescriptions(patient);
-
-        assertTrue("Since there are no non expired prescriptions, the ArrayList should be empty",
-                loadedPrescriptionList.isEmpty());
-    }
+    /**
+     * Tests getAllPrescriptions related to a patient, and ensuring that even expired prescriptions are returned.
+     */
     @Test(timeout = 1000)
     public void testGetPatientAllPrescriptionData() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-
-        PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
-
-        LocalDate inactiveLocalExpiryDate = LocalDate.of(2021, 7, 1);
-        LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
-
-        Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveLocalExpiryDate);
-        Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeLocalExpiryDate);
-
-        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
-        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
-
-        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
-
         ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 2 even though one of " +
                         "the prescriptions is expired", 2, loadedPrescriptionList.size());
     }
 
+    /**
+     * Tests create prescription and ensuring that the prescription created in the database is the same as the
+     * prescriptionData returned.
+     */
     @Test(timeout = 1000)
     public void testCreatePrescription() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-
-        PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
-
-        LocalDate localExpiryDate = LocalDate.of(2050, 7, 1);
-        String header = "medicine";
-        String body = "healthy";
-
-        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
-
-        PrescriptionData prescriptionData = prescriptionManager.createPrescription(header, body, patient,
-                doctor, localExpiryDate);
-
+        LocalDate activeLocalExpiryDate = LocalDate.of(2099, 1, 1);
         /* testing if the created prescription data is valid by testing if its fields match with the parameters
         * of the createPrescription method */
         assertEquals("The created prescription data should have the same header as the " +
-                        "parameters of createPrescription method", prescriptionData.getHeader(), header);
+                        "parameters of createPrescription method", activePrescriptionData.getHeader(), "bad");
         assertEquals("The created prescription data should have the same body as the " +
-                        "parameters of createPrescription method", prescriptionData.getBody(), body);
+                        "parameters of createPrescription method", activePrescriptionData.getBody(),
+                "very unhealthy");
         assertEquals("The created prescription data should have the same patient ID noted as the " +
-                        "parameters of createPrescription method", prescriptionData.getPatientId(), patient.getId());
+                        "parameters of createPrescription method",
+                activePrescriptionData.getPatientId(), patientData.getId());
         assertEquals("The created prescription data should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
+                "parameters of createPrescription method", activePrescriptionData.getDoctorId(), doctorData.getId());
         assertEquals("Original prescription and loaded prescription have the same expiry date",
-                prescriptionData.getExpiryDate().compareTo(localExpiryDate), 0);
+                activePrescriptionData.getExpiryDate().compareTo(activeLocalExpiryDate), 0);
 
-        Prescription loadedPrescription = prescriptionDatabase.get(prescriptionData.getPrescriptionId());
+        Prescription loadedPrescription = prescriptionDatabase.get(activePrescriptionData.getPrescriptionId());
 
         /* Testing if the prescription object has been correctly added to the database by testing if the fields of the
         loaded patient are equal to the parameters of createPatient */
         assertEquals("The loaded prescription object should have the same header as the " +
-                "parameters of createPrescription method", loadedPrescription.getHeader(), header);
+                "parameters of createPrescription method", loadedPrescription.getHeader(), "bad");
         assertEquals("The loaded prescription object should have the same body as the " +
-                "parameters of createPrescription method", loadedPrescription.getBody(), body);
+                "parameters of createPrescription method", loadedPrescription.getBody(), "very unhealthy");
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
-                "parameters of createPrescription method", loadedPrescription.getPatientId(), patient.getId());
+                "parameters of createPrescription method", loadedPrescription.getPatientId(), patientData.getId());
         assertEquals("The loaded prescription object should have the same patient ID noted as the " +
-                "parameters of createPrescription method", prescriptionData.getDoctorId(), doctor.getId());
+                "parameters of createPrescription method", activePrescriptionData.getDoctorId(), doctorData.getId());
         assertEquals("The loaded prescription object should have the same expiry as the parameters of " +
-                        "createPrescription method", prescriptionData.getExpiryDate().compareTo(localExpiryDate),
-                0);
+                        "createPrescription method",
+                activePrescriptionData.getExpiryDate().compareTo(activeLocalExpiryDate), 0);
     }
 
+    /**
+     * Tests remove prescription and ensures that no prescriptions exist after removed.
+     */
     @Test(timeout = 1000)
     public void testRemovePrescription() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-
-        PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
-
-        LocalDate inactiveLocalExpiryDate = LocalDate.of(2021, 7, 1);
-        LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
-
-        Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveLocalExpiryDate);
-        Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeLocalExpiryDate);
-
-        Integer prescriptionID1 = prescriptionDatabase.add(originalPrescription1);
-        Integer prescriptionID2 = prescriptionDatabase.add(originalPrescription2);
-
-        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
-
         ArrayList<PrescriptionData> loadedPrescriptionList1 =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 2 before a prescription is removed ",
                 2, loadedPrescriptionList1.size());
 
-        prescriptionManager.removePrescription(new PrescriptionData(originalPrescription2));
+        prescriptionManager.removePrescription(activePrescriptionData);
 
         ArrayList<PrescriptionData> loadedPrescriptionList2 =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertEquals("The array list should have a length of 1 after a prescription is removed ",
                 1, loadedPrescriptionList2.size());
 
-        prescriptionManager.removePrescription(new PrescriptionData(originalPrescription1));
+        prescriptionManager.removePrescription(inactivePrescriptionData);
 
         ArrayList<PrescriptionData> loadedPrescriptionList3 =
-                prescriptionManager.getAllPrescriptions(patient);
+                prescriptionManager.getAllPrescriptions(patientData);
 
         assertTrue("The array list should be empty after all prescriptions are removed",
                 loadedPrescriptionList3.isEmpty());
     }
+
+    /**
+     * Tests an invalid use of getAllPrescriptions related to a patient when no prescriptions are stored in the database.
+     */
     @Test(timeout = 1000)
     public void testGetPatientsPrescriptionsWhenTheyHaveNone() {
-        Database originalDatabase = new Database(databaseFolder.toString());
-        DataMapperGateway<Prescription> prescriptionDatabase = originalDatabase.getPrescriptionDatabase();
-
-        PatientData patient = new PatientManager(originalDatabase).createPatient("test 4", "test4");
-        PatientData patient2 = new PatientManager(originalDatabase).createPatient("test 5", "test4");
-        DoctorData doctor = new DoctorManager(originalDatabase).createDoctor("test 3", "test4");
-
-        LocalDate inactiveLocalExpiryDate = LocalDate.of(2021, 7, 1);
-        LocalDate activeLocalExpiryDate = LocalDate.of(2050, 7, 1);
-
-        Prescription originalPrescription1 = new
-                Prescription("medicine", "healthy", patient.getId(),
-                doctor.getId(), inactiveLocalExpiryDate);
-        Prescription originalPrescription2 = new
-                Prescription("bad", "very unhealthy", patient.getId(),
-                doctor.getId(), activeLocalExpiryDate);
-
-        prescriptionDatabase.add(originalPrescription1);
-        prescriptionDatabase.add(originalPrescription2);
-
-        PrescriptionManager prescriptionManager = new PrescriptionManager(originalDatabase);
-
+        PatientData newPatientData = new PatientManager(originalDatabase).createPatient(
+                "newpatient", "123456789");
         ArrayList<PrescriptionData> loadedPrescriptionList =
-                prescriptionManager.getAllPrescriptions(patient2);
+                prescriptionManager.getAllPrescriptions(newPatientData);
 
-        Assert.assertTrue("The list of this patient's prescriptions should be empty", loadedPrescriptionList.isEmpty());
+        Assert.assertTrue("The list of this patient's prescriptions should be empty",
+                loadedPrescriptionList.isEmpty());
     }
 
-
+    /**
+     * Deletes the temporary database folder used to store the database for tests after tests are done.
+     */
     @After
     public void after() {
         DeleteUtils.deleteDirectory(new File(databaseFolder.toString()));
     }
+
 }
