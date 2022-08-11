@@ -68,7 +68,7 @@ public class AppointmentManager {
      * @param appointmentData AppointmentData - data representing an appointment entity.
      */
     public void removeAppointment(AppointmentData appointmentData) {
-        appointmentDatabase.remove(appointmentData.getAppointmentId());
+        appointmentDatabase.remove(appointmentData.getId());
     }
 
     /**
@@ -84,7 +84,7 @@ public class AppointmentManager {
             AppointmentData appointmentData, LocalDateTime startTime, LocalDateTime endTime) {
         TimeBlock proposedTime = new TimeBlock(startTime, endTime);
         DoctorData doctorData = new DoctorData(doctorDatabase.get(appointmentData.getDoctorId()));
-        Appointment appointment = appointmentDatabase.get(appointmentData.getAppointmentId());
+        Appointment appointment = appointmentDatabase.get(appointmentData.getId());
         if (isValidAppointment(doctorData, proposedTime, appointment)) {
             database.getAppointmentDatabase().remove(appointment.getId());
             appointmentDatabase.add(
@@ -165,7 +165,7 @@ public class AppointmentManager {
 
     private boolean isValidAppointment(DoctorData doctorData, TimeBlock timeBlock, Appointment excludedAppointment) {
         ArrayList<AppointmentData> appointments = getDoctorAppointments(doctorData).stream().
-                filter(a -> !Objects.equals(a.getAppointmentId(), excludedAppointment.getId())).
+                filter(a -> !Objects.equals(a.getId(), excludedAppointment.getId())).
                 collect(Collectors.toCollection(ArrayList::new));
         return doesNotOverlapWithAppointments(timeBlock, appointments) && strictlyOverlapsWithClinicHours(timeBlock);
     }

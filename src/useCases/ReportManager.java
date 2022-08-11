@@ -33,7 +33,7 @@ public class ReportManager {
      * @param reportData ReportData - data associated with the report to be deleted.
      */
     public void deleteReport(ReportData reportData) {
-        reportDatabase.remove(reportData.getReportId());
+        reportDatabase.remove(reportData.getId());
     }
 
     /**

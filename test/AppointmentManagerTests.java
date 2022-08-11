@@ -64,26 +64,26 @@ public class AppointmentManagerTests {
                 startTime, startTime.plusMinutes(120));
 
         checkObjectExistsInDatabase(originalDatabase, true);
-        assertEquals(appointmentData.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(appointmentData.getAppointmentId()).getId());
+        assertEquals(appointmentData.getId(), originalDatabase.getAppointmentDatabase()
+                .get(appointmentData.getId()).getId());
 
         /* testing that the appointment object and appointment in the database are equal by comparing their fields
          and whether they are equal.*/
         assertEquals("appointment should share the same Id as the appointment in the database",
-                appointmentData.getAppointmentId(), originalDatabase.getAppointmentDatabase().get(appointmentData
-                        .getAppointmentId()).getId());
+                appointmentData.getId(), originalDatabase.getAppointmentDatabase().get(appointmentData
+                        .getId()).getId());
         assertEquals("appointment should share the same patientId as the appointment in the database",
                 appointmentData.getPatientId(), originalDatabase.getAppointmentDatabase().get(appointmentData
-                        .getAppointmentId()).getPatientId());
+                        .getId()).getPatientId());
         assertEquals("appointment should share the same doctorId as the appointment in the database",
                 appointmentData.getDoctorId(), originalDatabase.getAppointmentDatabase().get(appointmentData
-                        .getAppointmentId()).getDoctorId());
+                        .getId()).getDoctorId());
         assertEquals("appointment should share the same start time as the appointment in the database",
                 appointmentData.getTimeBlock().getStartTime(), originalDatabase.getAppointmentDatabase().get(appointmentData
-                        .getAppointmentId()).getTimeBlock().getStartTime());
+                        .getId()).getTimeBlock().getStartTime());
         assertEquals("appointment should share the same end time as the appointment in the database",
                 appointmentData.getTimeBlock().getEndTime(), originalDatabase.getAppointmentDatabase().get(appointmentData
-                        .getAppointmentId()).getTimeBlock().getEndTime());
+                        .getId()).getTimeBlock().getEndTime());
     }
 
     /**
@@ -310,10 +310,10 @@ public class AppointmentManagerTests {
                 appointmentManager.rescheduleAppointment(appointment1,
                         startTime2, startTime2.plusMinutes(60)));
         assertTrue("Appointment 1 should still exist in the database",
-                originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment1.getAppointmentId()));
+                originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment1.getId()));
 
         assertTrue("Appointment 2 should still exist in the database",
-                originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment2.getAppointmentId()));
+                originalDatabase.getAppointmentDatabase().getAllIds().contains(appointment2.getId()));
     }
 
     /**
@@ -394,19 +394,19 @@ public class AppointmentManagerTests {
         assertFalse("The valid appointment should exist in the database", originalDatabase
                 .getAppointmentDatabase().getAllIds().isEmpty());
         assertEquals("The id of the valid appointment and the appointment stored in the database should be the " +
-                "same", validAppointment.getAppointmentId(), originalDatabase.getAppointmentDatabase()
-                .get(validAppointment.getAppointmentId()).getId());
+                "same", validAppointment.getId(), originalDatabase.getAppointmentDatabase()
+                .get(validAppointment.getId()).getId());
     }
 
     private void checkGetAppointmentWithDatabase(Database originalDatabase, DoctorData doctorData) {
         for (AppointmentData doctorAppointment : appointmentManager.getDoctorAppointments(doctorData)) {
             assertTrue("Each id of a doctor appointment from getDoctorAppointment should exist in the database",
-                    originalDatabase.getAppointmentDatabase().getAllIds().contains(doctorAppointment.getAppointmentId()));
+                    originalDatabase.getAppointmentDatabase().getAllIds().contains(doctorAppointment.getId()));
         }
         for (Integer appointmentId : originalDatabase.getAppointmentDatabase().getAllIds()) {
             assertTrue("Each appointment in the database relating to the doctor should exist in getDoctorAppointment",
                     new AppointmentManager(originalDatabase).getDoctorAppointments(doctorData).stream()
-                            .map(AppointmentData::getAppointmentId)
+                            .map(AppointmentData::getId)
                             .anyMatch(x -> x.equals(appointmentId)));
         }
     }
@@ -415,12 +415,12 @@ public class AppointmentManagerTests {
         AppointmentManager appointmentManager = new AppointmentManager(originalDatabase);
         for (AppointmentData patientAppointment : appointmentManager.getPatientAppointments(patientData)) {
             assertTrue("Each id of a patient appointment from getPatientAppointment should exist in the database",
-                    originalDatabase.getAppointmentDatabase().getAllIds().contains(patientAppointment.getAppointmentId()));
+                    originalDatabase.getAppointmentDatabase().getAllIds().contains(patientAppointment.getId()));
         }
         for (Integer appointmentId : originalDatabase.getAppointmentDatabase().getAllIds()) {
             assertTrue("Each appointment in the database relating to the doctor should exist in getDoctorAppointment",
                     appointmentManager.getPatientAppointments(patientData).stream()
-                            .map(AppointmentData::getAppointmentId)
+                            .map(AppointmentData::getId)
                             .anyMatch(x -> x.equals(appointmentId)));
         }
     }
