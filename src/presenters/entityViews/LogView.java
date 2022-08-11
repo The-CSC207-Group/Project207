@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.LogData;
+import useCases.dataBundles.LogData;
 
 /**
  * The Log entity's view.

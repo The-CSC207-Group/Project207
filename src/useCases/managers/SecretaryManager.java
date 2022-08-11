@@ -1,6 +1,6 @@
-package useCases;
+package useCases.managers;
 
-import dataBundles.SecretaryData;
+import useCases.dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Secretary;

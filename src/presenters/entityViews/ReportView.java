@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.ReportData;
+import useCases.dataBundles.ReportData;
 
 /**
  * The Report entity's view.

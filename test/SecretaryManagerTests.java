@@ -1,4 +1,4 @@
-import dataBundles.SecretaryData;
+import useCases.dataBundles.SecretaryData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Secretary;
@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.SecretaryManager;
+import useCases.managers.SecretaryManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

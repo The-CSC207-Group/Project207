@@ -1,11 +1,11 @@
 package controllers.common;
 
 import controllers.Command;
-import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
+import useCases.dataBundles.PatientData;
+import useCases.dataBundles.PrescriptionData;
 import database.Database;
 import presenters.screenViews.PatientScreenView;
-import useCases.PrescriptionManager;
+import useCases.managers.PrescriptionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

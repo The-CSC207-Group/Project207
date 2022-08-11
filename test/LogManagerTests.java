@@ -1,10 +1,10 @@
-import dataBundles.LogData;
-import dataBundles.PatientData;
+import useCases.dataBundles.LogData;
+import useCases.dataBundles.PatientData;
 import database.Database;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
-import useCases.LogManager;
-import useCases.PatientManager;
+import useCases.managers.LogManager;
+import useCases.managers.PatientManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

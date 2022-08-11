@@ -1,7 +1,7 @@
-package useCases;
+package useCases.managers;
 
-import dataBundles.LogData;
-import dataBundles.UserData;
+import useCases.dataBundles.LogData;
+import useCases.dataBundles.UserData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Log;

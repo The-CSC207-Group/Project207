@@ -1,4 +1,4 @@
-package dataBundles;
+package useCases.dataBundles;
 
 import entities.Appointment;
 import entities.UniversalTimeBlockWithDay;

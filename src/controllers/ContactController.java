@@ -1,8 +1,8 @@
 package controllers;
 
-import dataBundles.ContactData;
+import useCases.dataBundles.ContactData;
 import presenters.screenViews.ContactScreenView;
-import useCases.ContactManager;
+import useCases.managers.ContactManager;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;

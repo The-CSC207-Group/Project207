@@ -1,6 +1,6 @@
 package presenters.screenViews;
 
-import dataBundles.ContactData;
+import useCases.dataBundles.ContactData;
 import presenters.entityViews.ContactView;
 import presenters.response.PasswordResetDetails;
 import presenters.response.UserCredentials;

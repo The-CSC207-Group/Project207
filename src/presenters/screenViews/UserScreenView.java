@@ -1,8 +1,8 @@
 package presenters.screenViews;
 
-import dataBundles.ClinicData;
-import dataBundles.LogData;
-import dataBundles.UserData;
+import useCases.dataBundles.ClinicData;
+import useCases.dataBundles.LogData;
+import useCases.dataBundles.UserData;
 import presenters.entityViews.ClinicView;
 import presenters.entityViews.LogView;
 import presenters.response.PasswordResetDetails;

@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.ContactData;
+import useCases.dataBundles.ContactData;
 
 /**
  * The Contact entity's view.

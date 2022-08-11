@@ -1,12 +1,12 @@
 package controllers;
 
-import dataBundles.AdminData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.SecretaryData;
+import useCases.dataBundles.AdminData;
+import useCases.dataBundles.DoctorData;
+import useCases.dataBundles.PatientData;
+import useCases.dataBundles.SecretaryData;
 import presenters.response.UserCredentials;
 import presenters.screenViews.SignInScreenView;
-import useCases.*;
+import useCases.managers.*;
 
 import java.util.LinkedHashMap;
 

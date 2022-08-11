@@ -1,11 +1,11 @@
 package controllers;
 
-import dataBundles.*;
 import entities.User;
 import presenters.response.PasswordResetDetails;
 import presenters.response.UserCredentials;
 import presenters.screenViews.AdminScreenView;
-import useCases.*;
+import useCases.dataBundles.*;
+import useCases.managers.*;
 
 import java.util.LinkedHashMap;
 

@@ -1,4 +1,4 @@
-import dataBundles.DoctorData;
+import useCases.dataBundles.DoctorData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Doctor;
@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.DoctorManager;
+import useCases.managers.DoctorManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

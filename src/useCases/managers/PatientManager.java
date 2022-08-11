@@ -1,6 +1,6 @@
-package useCases;
+package useCases.managers;
 
-import dataBundles.PatientData;
+import useCases.dataBundles.PatientData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Patient;
