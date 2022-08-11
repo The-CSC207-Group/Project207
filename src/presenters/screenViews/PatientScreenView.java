@@ -1,7 +1,7 @@
 package presenters.screenViews;
 
-import dataBundles.AppointmentData;
-import dataBundles.PrescriptionData;
+import useCases.dataBundles.AppointmentData;
+import useCases.dataBundles.PrescriptionData;
 import presenters.entityViews.AppointmentView;
 import presenters.entityViews.PrescriptionView;
 

@@ -1,9 +1,9 @@
 package presenters.screenViews;
 
-import dataBundles.AppointmentData;
-import dataBundles.AvailabilityData;
-import dataBundles.ContactData;
-import dataBundles.PatientData;
+import useCases.dataBundles.AppointmentData;
+import useCases.dataBundles.AvailabilityData;
+import useCases.dataBundles.ContactData;
+import useCases.dataBundles.PatientData;
 import presenters.entityViews.AppointmentView;
 import presenters.entityViews.AvailabilityView;
 import presenters.entityViews.ContactView;

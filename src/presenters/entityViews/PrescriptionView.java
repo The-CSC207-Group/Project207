@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.PrescriptionData;
+import useCases.dataBundles.PrescriptionData;
 
 /**
  * The Prescription entity's view.

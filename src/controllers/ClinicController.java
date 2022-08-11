@@ -3,7 +3,7 @@ package controllers;
 import entities.Admin;
 import presenters.response.AvailabilityDetails;
 import presenters.screenViews.ClinicScreenView;
-import useCases.ClinicManager;
+import useCases.managers.ClinicManager;
 
 import java.time.DayOfWeek;
 import java.util.LinkedHashMap;

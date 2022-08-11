@@ -1,6 +1,6 @@
 package utilities;
 
-import dataBundles.TimeBlockData;
+import useCases.dataBundles.TimeBlockData;
 import entities.TimeBlock;
 
 import java.time.LocalDateTime;

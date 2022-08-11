@@ -1,15 +1,15 @@
 package controllers;
 
-import dataBundles.ContactData;
-import dataBundles.LogData;
-import dataBundles.UserData;
+import useCases.dataBundles.ContactData;
+import useCases.dataBundles.LogData;
+import useCases.dataBundles.UserData;
 import entities.User;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.UserScreenView;
-import useCases.ClinicManager;
-import useCases.ContactManager;
-import useCases.LogManager;
-import useCases.UserManager;
+import useCases.managers.ClinicManager;
+import useCases.managers.ContactManager;
+import useCases.managers.LogManager;
+import useCases.managers.UserManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

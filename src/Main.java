@@ -2,7 +2,7 @@ import controllers.Context;
 import database.Database;
 import entities.Availability;
 import entities.Clinic;
-import useCases.AdminManager;
+import useCases.managers.AdminManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

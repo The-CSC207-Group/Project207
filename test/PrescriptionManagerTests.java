@@ -1,14 +1,14 @@
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.PrescriptionData;
+import useCases.dataBundles.DoctorData;
+import useCases.dataBundles.PatientData;
+import useCases.dataBundles.PrescriptionData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Prescription;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
-import useCases.DoctorManager;
-import useCases.PatientManager;
-import useCases.PrescriptionManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
+import useCases.managers.PrescriptionManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

@@ -1,8 +1,8 @@
-package useCases;
+package useCases.managers;
 
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
-import dataBundles.ReportData;
+import useCases.dataBundles.DoctorData;
+import useCases.dataBundles.PatientData;
+import useCases.dataBundles.ReportData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Report;

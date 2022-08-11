@@ -1,14 +1,14 @@
 package controllers;
 
-import dataBundles.AppointmentData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
+import useCases.dataBundles.AppointmentData;
+import useCases.dataBundles.DoctorData;
+import useCases.dataBundles.PatientData;
 import entities.Doctor;
 import presenters.screenViews.DoctorScreenView;
-import useCases.AppointmentManager;
-import useCases.ContactManager;
-import useCases.DoctorManager;
-import useCases.PatientManager;
+import useCases.managers.AppointmentManager;
+import useCases.managers.ContactManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

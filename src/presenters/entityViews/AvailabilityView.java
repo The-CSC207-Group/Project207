@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.AvailabilityData;
+import useCases.dataBundles.AvailabilityData;
 import utilities.DayOfWeekUtils;
 
 /**

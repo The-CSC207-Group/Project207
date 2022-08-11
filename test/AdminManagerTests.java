@@ -1,4 +1,4 @@
-import dataBundles.AdminData;
+import useCases.dataBundles.AdminData;
 import database.DataMapperGateway;
 import database.Database;
 import entities.Admin;
@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.AdminManager;
+import useCases.managers.AdminManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

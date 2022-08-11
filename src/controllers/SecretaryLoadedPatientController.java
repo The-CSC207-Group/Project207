@@ -1,14 +1,14 @@
 package controllers;
 
 import controllers.common.PrescriptionListCommands;
-import dataBundles.*;
+import useCases.dataBundles.*;
 import presenters.response.AppointmentTimeDetails;
 import presenters.response.PasswordResetDetails;
 import presenters.screenViews.SecretaryScreenView;
-import useCases.AppointmentManager;
-import useCases.ContactManager;
-import useCases.DoctorManager;
-import useCases.PatientManager;
+import useCases.managers.AppointmentManager;
+import useCases.managers.ContactManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
 import utilities.TimeUtils;
 
 import java.time.LocalDate;

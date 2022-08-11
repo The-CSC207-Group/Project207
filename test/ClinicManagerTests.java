@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.ClinicManager;
+import useCases.managers.ClinicManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

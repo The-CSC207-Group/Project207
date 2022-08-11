@@ -1,6 +1,6 @@
 package presenters.entityViews;
 
-import dataBundles.AppointmentData;
+import useCases.dataBundles.AppointmentData;
 
 import java.time.LocalTime;
 

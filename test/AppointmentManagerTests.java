@@ -1,6 +1,6 @@
-import dataBundles.AppointmentData;
-import dataBundles.DoctorData;
-import dataBundles.PatientData;
+import useCases.dataBundles.AppointmentData;
+import useCases.dataBundles.DoctorData;
+import useCases.dataBundles.PatientData;
 import database.Database;
 import entities.Availability;
 import entities.Clinic;
@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import useCases.AppointmentManager;
-import useCases.DoctorManager;
-import useCases.PatientManager;
+import useCases.managers.AppointmentManager;
+import useCases.managers.DoctorManager;
+import useCases.managers.PatientManager;
 import utilities.DeleteUtils;
 
 import java.io.File;

@@ -1,9 +1,9 @@
 package controllers;
 
-import dataBundles.AdminData;
+import useCases.dataBundles.AdminData;
 import entities.Admin;
 import presenters.screenViews.AdminScreenView;
-import useCases.AdminManager;
+import useCases.managers.AdminManager;
 
 import java.util.LinkedHashMap;
 

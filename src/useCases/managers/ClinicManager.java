@@ -1,6 +1,6 @@
-package useCases;
+package useCases.managers;
 
-import dataBundles.ClinicData;
+import useCases.dataBundles.ClinicData;
 import database.Database;
 import entities.Availability;
 import entities.Clinic;

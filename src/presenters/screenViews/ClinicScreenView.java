@@ -1,7 +1,7 @@
 package presenters.screenViews;
 
 
-import dataBundles.ClinicData;
+import useCases.dataBundles.ClinicData;
 import presenters.entityViews.ClinicView;
 import presenters.response.AvailabilityDetails;
 import utilities.DayOfWeekUtils;

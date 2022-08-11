@@ -1,7 +1,7 @@
 package presenters.entityViews;
 
-import dataBundles.AvailabilityData;
-import dataBundles.ClinicData;
+import useCases.dataBundles.AvailabilityData;
+import useCases.dataBundles.ClinicData;
 import utilities.DayOfWeekUtils;
 
 import java.time.DayOfWeek;
