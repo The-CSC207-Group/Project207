@@ -41,23 +41,23 @@ accordingly inside the `.idea` folder.
 
 ## UML Diagram
 
-The uml diagram can be found in the `design/designdoc1.pdf` file in the Project207 directory.
+The uml diagram can be found in the `design/design1.pdf` file in the Project207 directory.
 
 ## Usage of Design Patterns
 
-Please read: `design/designdoc2.pdf`.
+Please read: `design/design2.pdf`.
 
 ## Features added in phase 2
 
 This document contains a list of decisions and explanations about how our code has improved since Phase 1.
 
-Please read: `design/designdoc3.pdf`
+Please read: `design/design3.pdf`
 
 ## The 7 Principles of Universal Design
 
 This document contains a description of how our program does or could follow the 7 principles of universal design.
 
-Please read: `design/designdoc4.pdf`
+Please read: `design/design4.pdf`
 
 ## Usage of Git and GitHub Features
 
@@ -161,8 +161,6 @@ To properly close the program, use the built-in `exit` command.
 
 ### Doctor Loaded Patient Commands
 _Note: These commands can only be accessed by loading a patient through the `load patient` doctor command. To all other account types, these commands are unreachable._
-* `unload patient` - Unloads the patient, returning the doctor to the doctor post-login screen. 
-* `back` - Back is an alias for the `unload patient` command (ease of access purposes). 
 * `view appointments` - Shows a list of all appointments that the loaded patient has with details such as date, duration and time.
 * `view reports` - Shows a list of all the reports of the loaded patient.
 * `create report` - Creates a new report related to the loaded patient based on inputted data.
@@ -173,6 +171,8 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 * `view all prescriptions` - Shows a list of all expired and active prescriptions' headers related to a user.
 * `create prescription` - Creates a new prescription related to the loaded patient based on inputted data.
 * `delete prescription` - Deletes a prescription related to the loaded patient.
+* `unload patient` - Unloads the patient, returning the doctor to the doctor post-login screen.
+* `back` - Back is an alias for the `unload patient` command (ease of access purposes).
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
@@ -193,14 +193,14 @@ _Note: These commands can only be accessed by loading a patient through the `loa
 * `exit` - Terminates the program.
 
 ### User Management Terminal Commands
-_Note: These commands can only be accessed by an admin through the `manage users` admin command. To all other account types, these commands are unreachable._
-* `back` - Returns the admin to the basic admin command screen. 
+_Note: These commands can only be accessed by an admin through the `manage users` admin command. To all other account types, these commands are unreachable._ 
 * `create admin` - Create a new admin account and store it in the JsonDatabase.
 * `create secretary` - Create a new secretary account and store it in the JsonDatabase.
 * `create doctor` - Create a new doctor account and store it in the JsonDatabase.
 * `create patient`- Create a new patient account and store it in the Json Database.
 * `delete user` - Delete another user's account permanently by inputting their username.
 * `change user password` - Change the password of another user's account by inputting the user's unique username and new password.
+* `back` - Returns the admin to the basic admin command screen.
 * `help` - Shows a list of all available commands, available at any point in the program.
 * `exit` - Terminates the program.
 
