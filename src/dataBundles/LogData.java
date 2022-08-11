@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 /**
  * Wrapper class for Log entity.
  */
-public class LogData {
+public class LogData extends DataBundle {
 
     private final Log log;
 
@@ -17,14 +17,8 @@ public class LogData {
      * @param log Log - log to be stored.
      */
     public LogData(Log log) {
+        super(log);
         this.log = log;
-    }
-
-    /**
-     * @return Integer - id of the stored log.
-     */
-    public Integer getId() {
-        return log.getId();
     }
 
     /**

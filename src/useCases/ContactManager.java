@@ -48,7 +48,7 @@ public class ContactManager {
      * @return boolean - true if the contactData stores an id associated with a valid contact object. false otherwise.
      */
     public boolean changeName(ContactData contactData, String newName) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null) {
             return false;
         }
@@ -66,7 +66,7 @@ public class ContactManager {
      * associated with the id stored in contactData. true otherwise.
      */
     public boolean changeEmail(ContactData contactData, String newEmail) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         //got regex from https://regexlib.com/Search.aspx?k=email
         if (contact == null ||
                 !Pattern.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$", newEmail)) {
@@ -86,7 +86,7 @@ public class ContactManager {
      * associated with the id stored in contactData. true otherwise.
      */
     public boolean changePhoneNumber(ContactData contactData, String phoneNumber) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null || !Pattern.matches("^([0-9])+$", phoneNumber)) {
             return false;
         }
@@ -103,7 +103,7 @@ public class ContactManager {
      * @return false if there is not a contact associated with the id stored in contactData. true otherwise.
      */
     public boolean changeAddress(ContactData contactData, String address) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null) {
             return false;
         }
@@ -121,7 +121,7 @@ public class ContactManager {
      * @return false if there is not a contact associated with the id stored in contactData. true otherwise.
      */
     public boolean changeBirthday(ContactData contactData, LocalDate birthday) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null) {
             return false;
         }
@@ -139,7 +139,7 @@ public class ContactManager {
      * associated with the id stored in contactData. true otherwise.
      */
     public boolean changeEmergencyContactEmail(ContactData contactData, String emergencyContactEmail) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         //got regex from https://regexlib.com/Search.aspx?k=email
         if (contact == null ||
                 !Pattern.matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$",
@@ -159,7 +159,7 @@ public class ContactManager {
      * @return boolean - true if the contactData stores an id associated with a valid contact object. false otherwise.
      */
     public boolean changeEmergencyContactName(ContactData contactData, String emergencyContactName) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null) {
             return false;
         }
@@ -177,7 +177,7 @@ public class ContactManager {
      * associated with the id stored in contactData. true otherwise.
      */
     public boolean changeEmergencyContactPhoneNumber(ContactData contactData, String emergencyContactPhoneNumber) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null || !Pattern.matches("^([0-9])+$", emergencyContactPhoneNumber)) {
             return false;
         }
@@ -194,7 +194,7 @@ public class ContactManager {
      * @return boolean - true if the contactData stores an id associated with a valid contact object. false otherwise.
      */
     public boolean changeEmergencyRelationship(ContactData contactData, String emergencyRelationship) {
-        Contact contact = contactDatabase.get(contactData.getContactId());
+        Contact contact = contactDatabase.get(contactData.getId());
         if (contact == null) {
             return false;
         }

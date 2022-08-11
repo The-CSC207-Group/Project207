@@ -79,7 +79,7 @@ public class PrescriptionManager {
      * @param prescriptionData PrescriptionData - data pertaining to a prescription in the prescription database.
      */
     public void removePrescription(PrescriptionData prescriptionData) {
-        prescriptionsDatabase.remove(prescriptionData.getPrescriptionId());
+        prescriptionsDatabase.remove(prescriptionData.getId());
     }
 
     private boolean isExpiredPrescription(Prescription prescription) {

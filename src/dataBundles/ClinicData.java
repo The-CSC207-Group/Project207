@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Wrapper class for Clinic entity.
  */
-public class ClinicData {
+public class ClinicData extends DataBundle {
 
     private final Clinic clinic;
 
@@ -18,6 +18,7 @@ public class ClinicData {
      * @param clinic Clinic - Clinic entity.
      */
     public ClinicData(Clinic clinic) {
+        super(clinic);
         this.clinic = clinic;
     }
 

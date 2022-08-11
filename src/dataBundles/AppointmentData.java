@@ -9,7 +9,7 @@ import java.time.LocalTime;
 /**
  * Wrapper class for appointment entity.
  */
-public class AppointmentData implements UniversalTimeBlockWithDay {
+public class AppointmentData extends DataBundle implements UniversalTimeBlockWithDay {
 
     private final Appointment appointment;
 
@@ -19,6 +19,7 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
      * @param appointment Appointment - appointment entity.
      */
     public AppointmentData(Appointment appointment) {
+        super(appointment);
         this.appointment = appointment;
     }
 
@@ -47,15 +48,6 @@ public class AppointmentData implements UniversalTimeBlockWithDay {
      */
     public Integer getPatientId() {
         return appointment.getPatientId();
-    }
-
-    /**
-     * Get the stored appointment's id.
-     *
-     * @return Integer - the appointment's id.
-     */
-    public Integer getAppointmentId() {
-        return appointment.getId();
     }
 
     /**

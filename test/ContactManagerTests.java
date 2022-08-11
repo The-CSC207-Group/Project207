@@ -266,7 +266,7 @@ public class ContactManagerTests {
     public void getContactInfoTest() {
         Assert.assertEquals("Test to see if the contact id stored in the patient is the same as the one" +
                         "retrieved when getting contact info by username through contact manager.",
-                contactManager.getContactData(patientData).getContactId(), patientData.getContactInfoId());
+                contactManager.getContactData(patientData).getId(), patientData.getContactInfoId());
     }
 
     /**

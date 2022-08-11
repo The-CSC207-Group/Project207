@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  * Wrapper class for Report entity.
  */
-public class ReportData {
+public class ReportData extends DataBundle {
 
     private final Report report;
 
@@ -17,6 +17,7 @@ public class ReportData {
      * @param report Report - report to be stored.
      */
     public ReportData(Report report) {
+        super(report);
         this.report = report;
     }
 
@@ -46,13 +47,6 @@ public class ReportData {
      */
     public Integer getDoctorId() {
         return report.getDoctorId();
-    }
-
-    /**
-     * @return Integer - id of the report stored.
-     */
-    public Integer getReportId() {
-        return report.getId();
     }
 
 }

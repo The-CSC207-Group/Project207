@@ -261,7 +261,7 @@ public class SecretaryLoadedPatientController extends MenuLoadedPatientControlle
         ArrayList<AppointmentData> appointments = appointmentManager.getSingleDayAppointment(
                 doctorData, LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
         appointments = appointments.stream().
-                filter(a -> !a.getAppointmentId().equals(excludedAppointment.getAppointmentId())).
+                filter(a -> !a.getId().equals(excludedAppointment.getId())).
                 collect(Collectors.toCollection(ArrayList::new));
         viewDoctorScheduleGivenAppointments(doctorData, date, appointments);
     }

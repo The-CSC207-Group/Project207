@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  * Wrapper class for Contact entity.
  */
-public class ContactData {
+public class ContactData extends DataBundle {
 
     private final Contact contact;
 
@@ -17,6 +17,7 @@ public class ContactData {
      * @param contact Contact - Contact entity.
      */
     public ContactData(Contact contact) {
+        super(contact);
         this.contact = contact;
     }
 
@@ -81,13 +82,6 @@ public class ContactData {
      */
     public String getEmergencyRelationship() {
         return contact.getEmergencyRelationship();
-    }
-
-    /**
-     * @return Integer - id of the stored contact.
-     */
-    public Integer getContactId() {
-        return contact.getId();
     }
 
 }

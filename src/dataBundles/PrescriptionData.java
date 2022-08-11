@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  * Wrapper class for Prescription entity.
  */
-public class PrescriptionData {
+public class PrescriptionData extends DataBundle {
 
     private final Prescription prescription;
 
@@ -17,6 +17,7 @@ public class PrescriptionData {
      * @param prescription Prescription - prescription to be stored.
      */
     public PrescriptionData(Prescription prescription) {
+        super(prescription);
         this.prescription = prescription;
     }
 
@@ -60,13 +61,6 @@ public class PrescriptionData {
      */
     public String getHeader() {
         return prescription.getHeader();
-    }
-
-    /**
-     * @return Integer - id of the prescription stored.
-     */
-    public Integer getPrescriptionId() {
-        return prescription.getId();
     }
 
 }
